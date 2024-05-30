@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/ProfileinfoCard.dart';
+import 'package:frontend/widgets/additional_information.dart';
+import 'package:frontend/widgets/personal_information.dart';
+import 'package:frontend/widgets/profile_perference.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  int clickedItem = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +69,20 @@ class Profile extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Personal \nInformation",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    clickedItem = 1;
+                                  });
+                                },
+                                child: Text(
+                                  "Personal \nInformation",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: clickedItem == 1
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Container(
@@ -73,10 +90,20 @@ class Profile extends StatelessWidget {
                                 height: 50,
                                 color: Colors.black,
                               ),
-                              const Text(
-                                "Additional \nInformation",
-                                style: TextStyle(
-                                  fontSize: 14,
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    clickedItem = 2;
+                                  });
+                                },
+                                child: Text(
+                                  "Additional \nInformation",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: clickedItem == 2
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Container(
@@ -84,10 +111,20 @@ class Profile extends StatelessWidget {
                                 height: 50,
                                 color: Colors.black,
                               ),
-                              const Text(
-                                "Preference",
-                                style: TextStyle(
-                                  fontSize: 14,
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    clickedItem = 3;
+                                  });
+                                },
+                                child: Text(
+                                  "Preference",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: clickedItem == 3
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
                                 ),
                               ),
                             ],
@@ -97,36 +134,12 @@ class Profile extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Profileinfocard(
-                        name: "Email",
-                        text: "Shahabuddin@Akhon.com",
-                        icon: Icons.email,
-                      ),
-                      const Profileinfocard(
-                        name: "Name",
-                        text: "Shahabuddin Akhon",
-                        icon: Icons.person,
-                      ),
-                      const Profileinfocard(
-                        name: "Mobile",
-                        text: "+8801982711168",
-                        icon: Icons.call,
-                      ),
-                      const Profileinfocard(
-                        name: "Date of Birth",
-                        text: "12/02/2001",
-                        icon: Icons.calendar_month,
-                      ),
-                      const Profileinfocard(
-                        name: "Gender",
-                        text: "Male",
-                        icon: Icons.wc,
-                      ),
-                      const Profileinfocard(
-                        name: "Address",
-                        text: "Jatrabari,Dhaka-1236",
-                        icon: Icons.home,
-                      ),
+                      if (clickedItem == 1)
+                        const PersonalInformation()
+                      else if (clickedItem == 2)
+                        const AdditionalInformation()
+                      else if (clickedItem == 3)
+                        const ProfilePerference()
                     ],
                   ),
                 ),
