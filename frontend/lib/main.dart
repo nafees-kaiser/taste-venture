@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/MyApp.dart';
-import 'package:frontend/pages/Profile.dart';
+import 'package:frontend/screens/MyApp.dart';
+import 'package:frontend/screens/Profile.dart';
 
 void main() {
   runApp(MaterialApp(
