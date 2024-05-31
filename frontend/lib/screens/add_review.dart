@@ -11,6 +11,7 @@ class AddReview extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Add Review",
           style: TextStyle(
@@ -174,13 +175,16 @@ class AddReview extends StatelessWidget {
                       top: 10.0,
                       bottom: 20,
                     ),
-                    child: TextField(
-                      maxLines: null,
-                      expands: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your Review',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.all(20),
+                    child: SizedBox(
+                      height: 100,
+                      child: TextField(
+                        maxLines: null,
+                        expands: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your Review',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(20),
+                        ),
                       ),
                     ),
                   ),
