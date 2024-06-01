@@ -1,6 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
+import 'package:frontend/widgets/top_customer.dart';
+import 'package:frontend/widgets/user_indivisual_review.dart';
 
 class ManagerHome extends StatelessWidget {
   const ManagerHome({super.key});
@@ -47,10 +50,44 @@ class ManagerHome extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 20,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  ManagerServiceInformation(
+                    icon: Icons.people,
+                    percent: "23%",
+                    header: "Total Customers",
+                    number: "1289",
+                  ),
+                  ManagerServiceInformation(
+                    icon: Icons.list_alt,
+                    percent: "10%",
+                    header: "Total Orders",
+                    number: "450",
+                  ),
+                  ManagerServiceInformation(
+                    icon: Icons.widgets,
+                    percent: "-13%",
+                    header: "Total Products",
+                    number: "52",
+                  ),
+                  ManagerServiceInformation(
+                    icon: Icons.payments,
+                    percent: "32%",
+                    header: "Total Revenue",
+                    number: "120000",
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
               const Text(
                 "Customer analysis",
                 style: TextStyle(
@@ -137,7 +174,7 @@ class ManagerHome extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 width: double.infinity,
-                height: 300,
+                height: 250,
                 child: PieChart(
                   PieChartData(
                     sections: [
@@ -173,6 +210,27 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+              const Text(
+                "Top Customers",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const TopCustomer(),
+              const SizedBox(height: 20),
+              const Text(
+                "Recent Reviews",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const UserIndivisualReview(),
+              const UserIndivisualReview(),
+              const UserIndivisualReview(),
             ],
           ),
         ),
