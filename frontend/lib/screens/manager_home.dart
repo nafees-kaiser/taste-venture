@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
+import 'package:frontend/widgets/review_overview.dart';
 import 'package:frontend/widgets/top_customer.dart';
 import 'package:frontend/widgets/user_indivisual_review.dart';
 
@@ -228,6 +229,9 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(height: 10),
+              const ReviewOverview(),
+              const SizedBox(height: 10),
               const UserIndivisualReview(),
               const UserIndivisualReview(),
               const UserIndivisualReview(),
