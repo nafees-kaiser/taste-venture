@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/MyApp.dart';
 import 'package:frontend/screens/manager_home.dart';
+import 'package:frontend/screens/manager_menu_informations.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/',
+    initialRoute: '/update-menu',
     routes: {
       '/': (context) => const ManagerHome(),
-      '/add_review': (context) => const AddReview(),
+      '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
+      '/update-menu': (context) => const ManagerMenuInformations(),
     },
   ));
 }
