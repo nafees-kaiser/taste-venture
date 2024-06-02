@@ -9,7 +9,7 @@ import 'package:frontend/screens/add_review.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/update-vanue',
+    initialRoute: '/profile',
     routes: {
       '/': (context) => const ManagerHome(),
       '/add-review': (context) => const AddReview(),
