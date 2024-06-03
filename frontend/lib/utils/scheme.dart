@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/elevated_button_theme.dart';
 import 'package:frontend/utils/text_theme.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class Scheme {
   Scheme();
