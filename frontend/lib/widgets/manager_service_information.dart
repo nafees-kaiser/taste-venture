@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class ManagerServiceInformation extends StatelessWidget {
   final IconData icon;
@@ -13,9 +14,9 @@ class ManagerServiceInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2 - 24,
+      width: MediaQuery.of(context).size.width / 2 - 30,
       height: 175,
-      padding: const EdgeInsets.all(10),
+      padding: Theme.of(context).insideCardPadding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: Colors.white,

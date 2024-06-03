@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/additional_information.dart';
 import 'package:frontend/widgets/personal_information.dart';
 import 'package:frontend/widgets/profile_perference.dart';
@@ -17,7 +18,16 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.grey[400],
+        iconTheme: const IconThemeData(color: Colors.white),
+        centerTitle: true,
+        title: const Text(
+          "Profile Information",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -26,7 +36,7 @@ class _ProfileState extends State<Profile> {
             Container(
               height: 150,
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.all(6),
+              padding: Theme.of(context).defaultPadding,
               child: const Text(
                 "My \nProfile",
                 style: TextStyle(
@@ -65,7 +75,7 @@ class _ProfileState extends State<Profile> {
                         width: double.infinity,
                         height: 50,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class UserIndivisualReview extends StatefulWidget {
   const UserIndivisualReview({super.key});
@@ -13,11 +14,11 @@ class _UserIndivisualReviewState extends State<UserIndivisualReview> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: Theme.of(context).subSectionDividerPadding,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: Colors.black,
+          color: Colors.grey,
         ),
         borderRadius: BorderRadius.circular(3),
         color: Colors.white,

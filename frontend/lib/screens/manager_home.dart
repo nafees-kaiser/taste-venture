@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:frontend/widgets/review_overview.dart';
@@ -13,7 +14,6 @@ class ManagerHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const ManagerSidebar(),
-      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
@@ -51,10 +51,7 @@ class ManagerHome extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 20,
-          ),
+          padding: Theme.of(context).largeHorizontalAndVerticalPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,7 +85,7 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 20),
               const Text(
                 "Customer analysis",
                 style: TextStyle(
@@ -96,10 +93,10 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10),
               Container(
                 width: double.infinity,
                 height: 400,
+                padding: Theme.of(context).subSectionDividerPadding,
                 child: LineChart(
                   LineChartData(
                     minY: 0,
@@ -164,7 +161,7 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Text(
                 "Food analysis",
                 style: TextStyle(
@@ -172,10 +169,10 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
               Container(
                 width: double.infinity,
                 height: 250,
+                padding: Theme.of(context).subSectionDividerPadding,
                 child: PieChart(
                   PieChartData(
                     sections: [
@@ -188,7 +185,7 @@ class ManagerHome extends StatelessWidget {
                       ),
                       PieChartSectionData(
                         value: 30,
-                        title: 'Japanese',
+                        title: 'Thai',
                         showTitle: true,
                         radius: 50,
                         color: Colors.blueGrey[200],
@@ -211,7 +208,7 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Text(
                 "Top Customers",
                 style: TextStyle(
@@ -219,9 +216,8 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
               const TopCustomer(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Text(
                 "Recent Reviews",
                 style: TextStyle(
@@ -229,9 +225,7 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10),
               const ReviewOverview(),
-              const SizedBox(height: 10),
               const UserIndivisualReview(),
               const UserIndivisualReview(),
               const UserIndivisualReview(),

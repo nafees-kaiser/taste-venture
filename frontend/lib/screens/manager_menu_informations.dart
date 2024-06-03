@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/manager_menu_bottom_navigation.dart';
 import 'package:frontend/widgets/manager_menu_card.dart';
 
@@ -8,7 +9,6 @@ class ManagerMenuInformations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -20,40 +20,43 @@ class ManagerMenuInformations extends StatelessWidget {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            ManagerMenuCard(
-              image: "assets/pizza.jpg",
-              heading: "Chicken Fajita Pizza",
-              description: "8\" pizza with regular soft drink",
-              price: "\$15",
-            ),
-            ManagerMenuCard(
-              image: "assets/pizza.jpg",
-              heading: "Chicken Fajita Pizza",
-              description: "8\" pizza with regular soft drink",
-              price: "\$15",
-            ),
-            ManagerMenuCard(
-              image: "assets/pizza.jpg",
-              heading: "Chicken Fajita Pizza",
-              description: "8\" pizza with regular soft drink",
-              price: "\$15",
-            ),
-            ManagerMenuCard(
-              image: "assets/pizza.jpg",
-              heading: "Chicken Fajita Pizza",
-              description: "8\" pizza with regular soft drink",
-              price: "\$15",
-            ),
-            ManagerMenuCard(
-              image: "assets/pizza.jpg",
-              heading: "Chicken Fajita Pizza",
-              description: "8\" pizza with regular soft drink",
-              price: "\$15",
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: Theme.of(context).largemainPadding,
+          child: const Column(
+            children: [
+              ManagerMenuCard(
+                image: "assets/pizza.jpg",
+                heading: "Chicken Fajita Pizza",
+                description: "8\" pizza with regular soft drink",
+                price: "\$15",
+              ),
+              ManagerMenuCard(
+                image: "assets/pizza.jpg",
+                heading: "Chicken Fajita Pizza",
+                description: "8\" pizza with regular soft drink",
+                price: "\$15",
+              ),
+              ManagerMenuCard(
+                image: "assets/pizza.jpg",
+                heading: "Chicken Fajita Pizza",
+                description: "8\" pizza with regular soft drink",
+                price: "\$15",
+              ),
+              ManagerMenuCard(
+                image: "assets/pizza.jpg",
+                heading: "Chicken Fajita Pizza",
+                description: "8\" pizza with regular soft drink",
+                price: "\$15",
+              ),
+              ManagerMenuCard(
+                image: "assets/pizza.jpg",
+                heading: "Chicken Fajita Pizza",
+                description: "8\" pizza with regular soft drink",
+                price: "\$15",
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const ManagerMenuBottomNavigation(),

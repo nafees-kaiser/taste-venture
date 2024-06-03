@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/rating_progress_bar.dart';
 
 class ReviewOverview extends StatelessWidget {
@@ -11,9 +12,8 @@ class ReviewOverview extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: Colors.grey[100],
       ),
-      padding: const EdgeInsets.all(10),
+      padding: Theme.of(context).subSectionDividerPadding,
       alignment: Alignment.center,
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,

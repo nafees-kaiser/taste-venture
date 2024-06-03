@@ -11,8 +11,18 @@ class ManagerSidebar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text("Shahabuddin"),
-            accountEmail: const Text("shavoddin54@gmail.com"),
+            accountName: const Text(
+              "Shahabuddin",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            accountEmail: const Text(
+              "shavoddin54@gmail.com",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset('assets/profile.png'),
