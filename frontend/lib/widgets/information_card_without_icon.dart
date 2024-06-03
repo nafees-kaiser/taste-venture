@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class InformationCardWithoutIcon extends StatelessWidget {
   final String heading, text;
@@ -9,13 +10,8 @@ class InformationCardWithoutIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(
-        bottom: 15,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
-      ),
+      margin: Theme.of(context).subSectionDividerPadding,
+      padding: Theme.of(context).insideCardPadding,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

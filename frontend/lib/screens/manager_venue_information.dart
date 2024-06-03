@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/information_card_without_icon.dart';
 import 'package:frontend/widgets/manager_menu_bottom_navigation.dart';
 
@@ -8,7 +9,6 @@ class ManagerVenueInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -22,51 +22,50 @@ class ManagerVenueInformation extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.all(5),
-          child: const Column(
+          padding: Theme.of(context).largemainPadding,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              InformationCardWithoutIcon(
+              const InformationCardWithoutIcon(
                 heading: "Venue Name",
                 text: "Grand Tour venue",
               ),
-              InformationCardWithoutIcon(
+              const InformationCardWithoutIcon(
                 heading: "Official Email",
                 text: "grand.tour420@gmail.com",
               ),
-              InformationCardWithoutIcon(
+              const InformationCardWithoutIcon(
                 heading: "Address",
                 text: "6/41/2, jartrabari, Dhaka-1236",
               ),
-              InformationCardWithoutIcon(
+              const InformationCardWithoutIcon(
                 heading: "Phone Number",
                 text: "01982711168",
               ),
-              InformationCardWithoutIcon(
+              const InformationCardWithoutIcon(
                 heading: "Tags",
                 text: "Natural, Lake, Forest.",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Usual open time range",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -95,14 +94,14 @@ class ManagerVenueInformation extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "To :",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       SizedBox(
@@ -111,8 +110,8 @@ class ManagerVenueInformation extends StatelessWidget {
                           maxLines: null,
                           decoration: InputDecoration(
                             hintText: "To",
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.all(12),
+                            border: const OutlineInputBorder(),
+                            contentPadding: Theme.of(context).defaultPadding,
                           ),
                         ),
                       ),
@@ -120,17 +119,17 @@ class ManagerVenueInformation extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Description :",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               SizedBox(
@@ -141,8 +140,8 @@ class ManagerVenueInformation extends StatelessWidget {
                   expands: true,
                   decoration: InputDecoration(
                     hintText: "Write here..",
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.all(12),
+                    border: const OutlineInputBorder(),
+                    contentPadding: Theme.of(context).defaultPadding,
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class TopCustomer extends StatelessWidget {
   const TopCustomer({super.key});
@@ -7,6 +8,7 @@ class TopCustomer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        padding: Theme.of(context).subSectionDividerPadding,
         child: DataTable(
             border: TableBorder.all(
               width: 1,

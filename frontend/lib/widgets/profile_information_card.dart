@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class Profileinfocard extends StatelessWidget {
   final String name, text;
@@ -9,7 +10,7 @@ class Profileinfocard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: Theme.of(context).defaultPadding,
       child: Container(
         width: 350,
         decoration: BoxDecoration(

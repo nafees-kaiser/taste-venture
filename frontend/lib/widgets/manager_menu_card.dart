@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/custom_theme.dart';
 
 class ManagerMenuCard extends StatelessWidget {
   final String image;
@@ -14,8 +15,7 @@ class ManagerMenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
+      padding: Theme.of(context).subSectionDividerPadding,
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(

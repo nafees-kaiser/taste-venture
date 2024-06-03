@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 
 class AddReview extends StatelessWidget {
@@ -7,7 +9,7 @@ class AddReview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -27,7 +29,7 @@ class AddReview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: Theme.of(context).largemainPadding,
               child: Column(
                 children: [
                   Container(
@@ -60,7 +62,7 @@ class AddReview extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: Theme.of(context).sectionDividerPadding,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
                     ),
@@ -70,8 +72,7 @@ class AddReview extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: Theme.of(context).subSectionDividerPadding,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -128,13 +129,10 @@ class AddReview extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 10,
-              ),
+              padding: Theme.of(context).largeHorizontalAndVerticalPadding,
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Color.fromARGB(255, 246, 243, 243),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50),
                   topRight: Radius.circular(50),
@@ -150,7 +148,7 @@ class AddReview extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    padding: Theme.of(context).subSectionDividerPadding,
                     child: RatingStars(
                       editable: true,
                       rating: 3.5,
@@ -158,9 +156,9 @@ class AddReview extends StatelessWidget {
                       iconSize: 35,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
+                  Padding(
+                    padding: Theme.of(context).subSectionDividerPadding,
+                    child: const Text(
                       textAlign: TextAlign.center,
                       "Please share your opinion\nabout the product",
                       style: TextStyle(
@@ -170,12 +168,9 @@ class AddReview extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 20,
-                    ),
-                    child: SizedBox(
+                  Padding(
+                    padding: Theme.of(context).subSectionDividerPadding,
+                    child: const SizedBox(
                       height: 100,
                       child: TextField(
                         maxLines: null,
@@ -191,7 +186,6 @@ class AddReview extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black),
                       minimumSize: WidgetStateProperty.all(
                           const Size(double.infinity, 45)),
                     ),
