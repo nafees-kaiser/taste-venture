@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
-import 'package:frontend/widgets/manager_menu_bottom_navigation.dart';
 import 'package:frontend/widgets/manager_menu_card.dart';
 
 class ManagerMenuInformations extends StatelessWidget {
@@ -59,7 +58,6 @@ class ManagerMenuInformations extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const ManagerMenuBottomNavigation(),
     );
   }
 }

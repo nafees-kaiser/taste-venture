@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/information_card_without_icon.dart';
-import 'package:frontend/widgets/manager_menu_bottom_navigation.dart';
 
 class ManagerVenueInformation extends StatelessWidget {
   const ManagerVenueInformation({super.key});
@@ -149,7 +148,6 @@ class ManagerVenueInformation extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const ManagerMenuBottomNavigation(),
     );
   }
 }

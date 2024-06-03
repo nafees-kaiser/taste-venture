@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/manager_menu_informations.dart';
+import 'package:frontend/widgets/manager_venue_information.dart';
 
 class ManagerMenuBottomNavigation extends StatefulWidget {
   const ManagerMenuBottomNavigation({super.key});
@@ -10,20 +12,32 @@ class ManagerMenuBottomNavigation extends StatefulWidget {
 
 class _ManagerMenuBottomNavigationState
     extends State<ManagerMenuBottomNavigation> {
-  final double customselectedIndex = 1;
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
+    return Scaffold(
+      body: _selectedIndex == 0
+          ? const ManagerVenueInformation()
+          : const ManagerMenuInformations(),
+      bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.grey[100],
         height: 70,
         indicatorColor: Colors.grey[100],
-        selectedIndex: 1,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
         destinations: [
           NavigationDestination(
             icon: Icon(
               Icons.home,
               size: 30,
-              color: customselectedIndex == 0 ? Colors.green : Colors.grey,
+              color: _selectedIndex == 0 ? Colors.green : Colors.grey,
             ),
             label: "Restaurant",
           ),
@@ -31,10 +45,12 @@ class _ManagerMenuBottomNavigationState
             icon: Icon(
               Icons.list_alt,
               size: 30,
-              color: customselectedIndex == 1 ? Colors.green : Colors.grey,
+              color: _selectedIndex == 1 ? Colors.green : Colors.grey,
             ),
-            label: "menu",
+            label: "Menu",
           ),
-        ]);
+        ],
+      ),
+    );
   }
 }
