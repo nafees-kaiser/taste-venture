@@ -42,7 +42,9 @@ class ManagerSidebar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text("Edit Information"),
-            onTap: () => print('edit information tapped'),
+            onTap: () {
+              Navigator.pushNamed(context, '/edit-information');
+            },
           ),
           ListTile(
             leading: const Icon(Icons.book_online),
