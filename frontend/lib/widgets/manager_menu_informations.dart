@@ -9,14 +9,8 @@ class ManagerMenuInformations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Menu information",
-          style: TextStyle(
-            color: Colors.white,
-          ),
         ),
       ),
       body: SingleChildScrollView(

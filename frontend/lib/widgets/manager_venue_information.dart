@@ -9,14 +9,8 @@ class ManagerVenueInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Venue information",
-          style: TextStyle(
-            color: Colors.white,
-          ),
         ),
       ),
       body: SingleChildScrollView(

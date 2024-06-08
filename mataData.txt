@@ -1,3 +1,7 @@
 username:admin
 password:admin,
 email:admin@gmail.com
+
+to jump virtual environment
+run it on the terminal:  .\.venv\Scripts\activate
+then install what you want: pip install psycopg2
