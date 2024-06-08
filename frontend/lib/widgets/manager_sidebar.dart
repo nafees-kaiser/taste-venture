@@ -14,13 +14,13 @@ class ManagerSidebar extends StatelessWidget {
             accountName: const Text(
               "Shahabuddin",
               style: TextStyle(
-                color: Colors.white,
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
             accountEmail: const Text(
               "shavoddin54@gmail.com",
               style: TextStyle(
-                color: Colors.white,
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
             currentAccountPicture: CircleAvatar(
@@ -29,7 +29,7 @@ class ManagerSidebar extends StatelessWidget {
               ),
             ),
             decoration: const BoxDecoration(
-              color: Colors.black,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           ListTile(

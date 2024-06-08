@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
@@ -15,8 +16,6 @@ class ManagerHome extends StatelessWidget {
     return Scaffold(
       drawer: const ManagerSidebar(),
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
         title: Container(
           width: double.infinity,
           alignment: Alignment.center,
@@ -33,7 +32,7 @@ class ManagerHome extends StatelessWidget {
               Text(
                 "Jatrabari, Dhaka-1236",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: 15,
                 ),
               ),
@@ -147,11 +146,11 @@ class ManagerHome extends StatelessWidget {
                           FlSpot(6, 70),
                         ],
                         isCurved: true,
-                        color: Colors.indigo[500],
+                        color: PRIMARY_COLOR,
                         barWidth: 6,
                         belowBarData: BarAreaData(
                           show: true,
-                          color: Colors.indigo.withOpacity(0.3),
+                          color: PRIMARY_COLOR.withOpacity(0.2),
                         ),
                         dotData: const FlDotData(
                           show: true,
@@ -181,28 +180,28 @@ class ManagerHome extends StatelessWidget {
                         title: 'Indian',
                         showTitle: true,
                         radius: 50,
-                        color: Colors.indigo[400],
+                        color: PRIMARY_COLOR.withOpacity(0.9),
                       ),
                       PieChartSectionData(
                         value: 30,
                         title: 'Thai',
                         showTitle: true,
                         radius: 50,
-                        color: Colors.blueGrey[200],
+                        color: PRIMARY_COLOR.withOpacity(0.7),
                       ),
                       PieChartSectionData(
                         value: 15,
                         title: 'Chinese',
                         showTitle: true,
                         radius: 50,
-                        color: Colors.yellow[100],
+                        color: PRIMARY_COLOR.withOpacity(0.5),
                       ),
                       PieChartSectionData(
                         value: 15,
                         title: 'Italian',
                         showTitle: true,
                         radius: 50,
-                        color: Colors.indigo[200],
+                        color: PRIMARY_COLOR.withOpacity(0.3),
                       ),
                     ],
                   ),

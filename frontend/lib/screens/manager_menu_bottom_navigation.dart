@@ -37,7 +37,7 @@ class _ManagerMenuBottomNavigationState
             icon: Icon(
               Icons.home,
               size: 30,
-              color: _selectedIndex == 0 ? Colors.green : Colors.grey,
+              color: _selectedIndex == 0 ? Colors.orange : Colors.grey,
             ),
             label: "Restaurant",
           ),
@@ -45,7 +45,7 @@ class _ManagerMenuBottomNavigationState
             icon: Icon(
               Icons.list_alt,
               size: 30,
-              color: _selectedIndex == 1 ? Colors.green : Colors.grey,
+              color: _selectedIndex == 1 ? Colors.orange : Colors.grey,
             ),
             label: "Menu",
           ),

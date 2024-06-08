@@ -9,18 +9,9 @@ class AddReview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Add Review",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-          ),
         ),
       ),
       body: SingleChildScrollView(

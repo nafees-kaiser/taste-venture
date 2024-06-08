@@ -8,7 +8,7 @@ import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/',
+    initialRoute: '/edit-information',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
