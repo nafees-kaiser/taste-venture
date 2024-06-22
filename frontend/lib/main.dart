@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
@@ -8,7 +9,7 @@ import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/edit-information',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -16,6 +17,7 @@ void main() {
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),
+      '/login' : (context) => Login(),
     },
   ));
 }
