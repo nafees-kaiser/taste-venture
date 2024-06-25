@@ -247,8 +247,9 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onTap: () {
-                      print(
-                          "Want to add your restaurant or tourist spot? tapped");
+                      Navigator.pushNamed(context, '/add-restaurant');
+                      // print(
+                      //     "Want to add your restaurant or tourist spot? tapped");
                     },
                   ),
                 ],
