@@ -24,4 +24,5 @@ extension CustomThemeData on ThemeData {
         vertical: 10,
         horizontal: 15,
       );
+  double get buttonTextSize => 18.0;
 }

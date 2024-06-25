@@ -8,10 +8,10 @@ class TElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,
-      backgroundColor: SECONDARY_COLOR,
+      backgroundColor: PRIMARY_COLOR,
       disabledForegroundColor: DISABLE,
       disabledBackgroundColor: DISABLE,
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 5),
+      // padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 5),
       textStyle: const TextStyle(
           fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

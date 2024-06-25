@@ -10,7 +10,7 @@ class Scheme {
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: SECONDARY_COLOR,
+      primaryColor: PRIMARY_COLOR,
       scaffoldBackgroundColor: BACKGROUND,
       textTheme: TextThemes.lightTheme,
       elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
