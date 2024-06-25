@@ -4,7 +4,7 @@ import 'package:frontend/utils/constant.dart';
 class TAppbarThemeData {
   TAppbarThemeData();
 
-  static final lightAppbar = AppBarTheme(
+  static const lightAppbar = AppBarTheme(
     elevation: 0,
     centerTitle: false,
     backgroundColor: BACKGROUND,

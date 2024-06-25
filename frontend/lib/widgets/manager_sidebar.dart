@@ -59,7 +59,9 @@ class ManagerSidebar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text("Logout"),
-            onTap: () => print('logout tapped'),
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
           ),
         ],
       ),
