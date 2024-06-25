@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/registration_form_customer.dart';
-import 'package:frontend/widgets/textbox.dart';
+// import 'package:frontend/widgets/textbox.dart';
 
 class RegistrationCustomer extends StatelessWidget {
   const RegistrationCustomer({super.key});
