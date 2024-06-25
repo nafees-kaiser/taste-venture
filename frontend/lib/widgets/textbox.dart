@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Textbox extends StatelessWidget{
-  final String hintText;
+class Textbox extends StatelessWidget {
+  final TextEditingController? controller;
+  final InputDecoration? decoration;
+  final String? Function(String?)? validator;
 
-  const Textbox({super.key, required this.hintText});
+  const Textbox({super.key, this.controller, this.decoration, this.validator});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return TextField(
-      decoration: InputDecoration(
-        hintText: hintText,
-        border: OutlineInputBorder(),
-        // label: Text("Full Name")
-      ),
+    return Column(
+      children: [
+        TextFormField(
+          controller: controller,
+          decoration: decoration,
+          validator: validator,
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
-  
 }

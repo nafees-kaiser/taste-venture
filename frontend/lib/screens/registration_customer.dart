@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/registration_form_customer.dart';
 import 'package:frontend/widgets/textbox.dart';
 
 class RegistrationCustomer extends StatelessWidget {
@@ -16,8 +17,8 @@ class RegistrationCustomer extends StatelessWidget {
           horizontal: 20,
           vertical: 10,
         ),
-        child: const SingleChildScrollView(
-          child: Textbox(hintText: "Enter your full name"),
+        child: SingleChildScrollView(
+          child: const RegistrationFormCustomer(),
         ),
       ),
     );
