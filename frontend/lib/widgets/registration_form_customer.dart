@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 // import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/widgets/textbox.dart';
 import 'package:intl/intl.dart';
@@ -13,22 +14,25 @@ class RegistrationFormCustomer extends StatefulWidget {
 
 class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
   final _formKey = GlobalKey<FormState>();
-  int index = 0;
-  final textEditingController = TextEditingController();
   final controller = List<TextEditingController>.generate(
       9, (int index) => TextEditingController());
   final List<String> _gender = ['Male', 'Female', 'Others'];
   final List<String> _isMarried = ['Yes', 'No'];
 
-  late List<DropdownMenuEntry<String>> _genderMenuItems =
+  late final List<DropdownMenuEntry<String>> _genderMenuItems =
       _gender.map((toElement) {
     return DropdownMenuEntry(value: toElement, label: toElement);
   }).toList();
 
-  late List<DropdownMenuEntry<String>> _isMarriedMenuItems =
+  late final List<DropdownMenuEntry<String>> _isMarriedMenuItems =
       _isMarried.map((toElement) {
     return DropdownMenuEntry(value: toElement, label: toElement);
   }).toList();
+
+  bool isButtonEnabled = false;
+
+  bool showPassword = false;
+  bool showRetypePassword = false;
 
   // final [fullName, contact, email] = controller;
   void _showDatePicker() {
@@ -36,7 +40,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime(2028),
+      lastDate: DateTime.now(),
     ).then((onValue) => setState(() {
           // _dateTime = onValue!;
           controller[3].text = DateFormat('dd/MM/yyyy').format(onValue!);
@@ -48,28 +52,36 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     // TODO: implement initState
     super.initState();
     for (final i in controller) {
-      i.addListener(_valuePrint);
+      i.addListener(_enableOrDesableButton);
     }
-    textEditingController.addListener(_textValue);
   }
 
   @override
   void dispose() {
-    textEditingController.dispose();
     for (final i in controller) {
       i.dispose();
     }
     super.dispose();
   }
 
-  void _textValue() {
-    final text = textEditingController.text;
-    debugPrint(text);
-  }
-
   void _valuePrint() {
     for (final i in controller) {
       debugPrint('${i.text} ** ');
+    }
+  }
+
+  void _enableOrDesableButton() {
+    for (final i in controller) {
+      if (i.text.isEmpty) {
+        setState(() {
+          isButtonEnabled = false;
+        });
+        break;
+      } else {
+        setState(() {
+          isButtonEnabled = true;
+        });
+      }
     }
   }
 
@@ -127,6 +139,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
           ),
           // DateTextbox(),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Textbox(
@@ -136,7 +149,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                     labelText: "Date of birth",
                     suffixIcon: IconButton(
                       onPressed: _showDatePicker,
-                      icon: Icon(Icons.date_range),
+                      icon: Icon(Icons.date_range, color: HINT_TEXT_COLOR),
                     ),
                   ),
                   validator: (value) {
@@ -153,16 +166,26 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                   controller: controller[4],
                   dropdownMenuEntries: _genderMenuItems,
                   label: const Text('Gender'),
+                  expandedInsets: EdgeInsets.zero,
                 ),
               ),
             ],
           ),
           Textbox(
+            obscureText: !showPassword,
             controller: controller[5],
-            decoration: const InputDecoration(
-              hintText: '*** *** ***',
-              labelText: 'Password',
-            ),
+            decoration: InputDecoration(
+                hintText: '*** *** ***',
+                labelText: 'Password',
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                  icon: showPassword ? Icon(Icons.visibility, color: HINT_TEXT_COLOR)
+                  : Icon(Icons.visibility_off, color: HINT_TEXT_COLOR),
+                )),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter your password";
@@ -171,11 +194,20 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
           Textbox(
+            obscureText: !showRetypePassword,
             controller: controller[6],
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: '*** *** ***',
               labelText: 'Retype password',
-            ),
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      showRetypePassword = !showRetypePassword;
+                    });
+                  },
+                  icon: showRetypePassword ? Icon(Icons.visibility, color: HINT_TEXT_COLOR)
+                  : Icon(Icons.visibility_off, color: HINT_TEXT_COLOR),
+                )),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter your password";
@@ -196,21 +228,39 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
               return null;
             },
           ),
+
           DropdownMenu(
             dropdownMenuEntries: _isMarriedMenuItems,
             label: const Text('Marital status'),
             controller: controller[8],
+            expandedInsets: EdgeInsets.zero,
           ),
+
+          // Container(
+          //   width: double.infinity,
+          //   child: DropdownMenu(
+          //     dropdownMenuEntries: _isMarriedMenuItems,
+          //     label: const Text('Marital status'),
+          //     controller: controller[8],
+          //     expandedInsets: EdgeInsets.zero,
+          //   ),
+          // ),
+          SizedBox(height: 25),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                // If the form is valid, display a snackbar. In the real world,
-                // you'd often call a server or save the information in a database.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')),
-                );
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(content: Text('Processing Data')),
+                // );
+                Navigator.pushNamed(context, '/login');
               }
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: isButtonEnabled
+                  ? Color.fromRGBO(252, 81, 16, 1)
+                  : Color.fromRGBO(149, 149, 149, 1),
+              minimumSize: const Size(double.infinity, 0),
+            ),
             child: Text("Register"),
           ),
         ],

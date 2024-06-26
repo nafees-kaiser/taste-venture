@@ -12,7 +12,7 @@ import 'package:frontend/screens/registration_manager.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/favorite',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
