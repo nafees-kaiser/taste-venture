@@ -4,6 +4,7 @@ import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
+import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
@@ -12,7 +13,7 @@ import 'package:frontend/screens/registration_manager.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
+    initialRoute: '/restaurant/information',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -22,6 +23,7 @@ void main() {
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),
       '/registration/customer' : (context)=> const RegistrationCustomer(),
       '/login' : (context) => Login(),
+      '/restaurant/information' : (context) => RestaurantInfo(),
       '/favorite': (context) => const Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
     },
