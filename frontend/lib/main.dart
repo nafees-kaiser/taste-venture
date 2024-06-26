@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
@@ -11,11 +12,12 @@ import 'package:frontend/screens/registration_manager.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/favorite',
+    initialRoute: '/customer-homepage',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
       '/': (context) => const ManagerHome(),
+      '/customer-homepage': (context) => const CustomerHomepage(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),
