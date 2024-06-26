@@ -5,6 +5,7 @@ class TextThemes {
   TextThemes();
 
   static TextTheme lightTheme = TextTheme(
+    
       headlineLarge: const TextStyle()
           .copyWith(fontSize: 32.0, fontWeight: FontWeight.bold, color: TEXT),
       headlineMedium: const TextStyle()
