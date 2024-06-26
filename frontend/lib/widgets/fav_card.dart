@@ -17,8 +17,8 @@ class FavCard extends StatelessWidget {
       width: double.infinity,
       height: 230,
       padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
-      child: Card.outlined(
-        //elevation: 1,
+      child: Card(
+        elevation: 1,
         borderOnForeground: true,
         clipBehavior: Clip.hardEdge,
         shape: const RoundedRectangleBorder(
