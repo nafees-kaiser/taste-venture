@@ -6,6 +6,7 @@ import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
+import 'package:frontend/screens/registration_manager.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,8 +19,9 @@ void main() {
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),
-      '/login' : (context) => Login(),
-      '/favorite' : (context) => const Favorite(),
+      '/login': (context) => Login(),
+      '/favorite': (context) => const Favorite(),
+      '/add-restaurant': (context) => RegistrationVenueManager(),
     },
   ));
 }
