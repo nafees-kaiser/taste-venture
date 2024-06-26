@@ -5,19 +5,21 @@ class RestaurantDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        Container(
-          child: const Image(
-              image: AssetImage('assets/yum-cha-district-banani.jpg')),
-        ),
-        SizedBox(height: 13),
-        RestaurantHeading(theme: theme),
-        SizedBox(height: 13),
-        RestaurantTimeAndDistance(theme: theme),
-        SizedBox(height: 13),
-        DescAndButton(theme: theme),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            child: const Image(
+                image: AssetImage('assets/yum-cha-district-banani.jpg')),
+          ),
+          SizedBox(height: 13),
+          RestaurantHeading(theme: theme),
+          SizedBox(height: 13),
+          RestaurantTimeAndDistance(theme: theme),
+          SizedBox(height: 13),
+          DescAndButton(theme: theme),
+        ],
+      ),
     );
   }
 }
