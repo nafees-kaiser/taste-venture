@@ -15,9 +15,10 @@ class FavCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 240,
+      height: 230,
       padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
       child: Card.outlined(
+        //elevation: 1,
         borderOnForeground: true,
         clipBehavior: Clip.hardEdge,
         shape: const RoundedRectangleBorder(
@@ -37,17 +38,20 @@ class FavCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 1.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 4.0, 0.0, 1.0),
               child: Text(foodName,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   )),
             ),
-            Text(storeName,
-                style: const TextStyle(
-                  fontSize: 16,
-                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
+              child: Text(storeName,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  )),
+            ),
           ],
         ),
       ),
