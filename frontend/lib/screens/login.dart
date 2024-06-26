@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -15,8 +16,30 @@ class _LoginState extends State<Login> {
   String email = "", password = "";
   String demoEmail = "rafsanprove@gmail.com", demoPassword = "password123";
   String alert = "";
+  bool isButtonEnabled = false;
 
   // methods
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(updateButtonState);
+    passwordController.addListener(updateButtonState);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void updateButtonState() {
+    setState(() {
+      isButtonEnabled =
+          emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    });
+  }
+
   void check() {
     print("Login Button Pressed");
     setState(() {
@@ -33,12 +56,49 @@ class _LoginState extends State<Login> {
       });
     } else {
       if (email == demoEmail && password == demoPassword) {
+        /*
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Login Successful'),
+              content: Text('You have logged in successfully.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        */
+
+        Fluttertoast.showToast(
+            msg: "Login Successful",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
         Navigator.pushNamed(context, '/');
       } else {
         setState(() {
           alert = "Warning: Invalid email or password";
         });
       }
+    }
+  }
+
+  bool isEmpty() {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -120,7 +180,9 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       onPressed: check,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(149, 149, 149, 1),
+                        backgroundColor: isButtonEnabled
+                            ? Color.fromRGBO(252, 81, 16, 1)
+                            : Color.fromRGBO(149, 149, 149, 1),
                         minimumSize: const Size(340, 25),
                       ),
                       child: const Text(
@@ -166,7 +228,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onTap: () {
-                      print("Don't have an account? tapped");
+                      // print("Don't have an account? tapped");
+                      Navigator.pushNamed(context, '/registration/customer');
                     },
                   ),
 
@@ -185,8 +248,9 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onTap: () {
-                      print(
-                          "Want to add your restaurant or tourist spot? tapped");
+                      Navigator.pushNamed(context, '/add-restaurant');
+                      // print(
+                      //     "Want to add your restaurant or tourist spot? tapped");
                     },
                   ),
                 ],
