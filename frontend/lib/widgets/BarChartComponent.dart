@@ -52,25 +52,25 @@ class BarChartComponent extends StatelessWidget {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = 'Mn';
+        text = 'Mon';
         break;
       case 1:
-        text = 'Te';
+        text = 'Tue';
         break;
       case 2:
-        text = 'Wd';
+        text = 'Wed';
         break;
       case 3:
-        text = 'Tu';
+        text = 'Thu';
         break;
       case 4:
-        text = 'Fr';
+        text = 'Fri';
         break;
       case 5:
-        text = 'St';
+        text = 'Sat';
         break;
       case 6:
-        text = 'Sn';
+        text = 'Sun';
         break;
       default:
         text = '';
