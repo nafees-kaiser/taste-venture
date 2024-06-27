@@ -9,6 +9,9 @@ import 'package:frontend/screens/registration_customer.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
 import 'package:frontend/screens/registration_manager.dart';
+import 'package:frontend/screens/manager_criteria.dart';
+import 'package:frontend/screens/manager_criteria_1.dart';
+// import 'package:frontend/screens/review.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -26,6 +29,9 @@ void main() {
       '/restaurant/information' : (context) => RestaurantInfo(),
       '/favorite': (context) => const Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
+      '/criteria': (context) => ManagerCriteria(),
+      '/criteria1': (context) => ManagerCriteria1(),
+      // '/review': (context) => Reviews(),
     },
   ));
 }
