@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/manager_menu_informations.dart';
 import 'package:frontend/widgets/manager_venue_information.dart';
 
@@ -37,7 +38,7 @@ class _ManagerMenuBottomNavigationState
             icon: Icon(
               Icons.home,
               size: 30,
-              color: _selectedIndex == 0 ? Colors.orange : Colors.grey,
+              color: _selectedIndex == 0 ? PRIMARY_COLOR : Colors.grey,
             ),
             label: "Restaurant",
           ),
@@ -45,7 +46,7 @@ class _ManagerMenuBottomNavigationState
             icon: Icon(
               Icons.list_alt,
               size: 30,
-              color: _selectedIndex == 1 ? Colors.orange : Colors.grey,
+              color: _selectedIndex == 1 ? PRIMARY_COLOR : Colors.grey,
             ),
             label: "Menu",
           ),
