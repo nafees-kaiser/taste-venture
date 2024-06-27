@@ -16,14 +16,14 @@ void main() {
     initialRoute: '/restaurant/information',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
-    routes: { 
+    routes: {
       '/': (context) => const ManagerHome(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),
-      '/registration/customer' : (context)=> const RegistrationCustomer(),
-      '/login' : (context) => Login(),
-      '/restaurant/information' : (context) => RestaurantInfo(),
+      '/registration/customer': (context) => const RegistrationCustomer(),
+      '/login': (context) => Login(),
+      '/restaurant/information': (context) => RestaurantInfo(),
       '/favorite': (context) => const Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
     },
