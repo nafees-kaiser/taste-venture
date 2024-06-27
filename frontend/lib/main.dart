@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/customer_preferences.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/login.dart';
@@ -19,11 +20,11 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/customer-homepage',
-
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
-    routes: {
+    routes: { 
+      '/manager-home': (context) => const ManagerHome(),
       '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
       '/add-review': (context) => const AddReview(),
@@ -37,6 +38,7 @@ void main() {
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
+      '/preference': (context) => CustomerPreferences(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
     },

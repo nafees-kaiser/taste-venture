@@ -20,7 +20,7 @@ class Scheme {
       appBarTheme: TAppbarThemeData.lightAppbar,
       inputDecorationTheme: TTextFiledThemeData.customInputDecoration,
       menuTheme: TDropdownThemeData.customMenuTheme,
-      // fontFamily: GoogleFonts.getFont('Inter'),
+      fontFamily: GoogleFonts.getFont('Inter').fontFamily,
       );
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,

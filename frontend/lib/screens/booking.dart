@@ -80,7 +80,7 @@ class _BookingState extends State<Booking> {
               _buildConfirmButton(),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pop(context),
                   child: Text(
                     'Cancel',
                     style: GoogleFonts.inter(
