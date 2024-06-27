@@ -10,7 +10,7 @@ import 'package:frontend/screens/manager_criteria.dart';
 import 'package:frontend/screens/manager_criteria_1.dart';
 import 'package:frontend/screens/review.dart';
 import 'package:frontend/screens/booking.dart';
-// import 'package:frontend/screens/restaurants.dart';
+import 'package:frontend/screens/restaurants.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -29,7 +29,7 @@ void main() {
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
       '/booking': (context) => Booking(),
-      // '/restaurant-view': (context) => Restaurant(),
+      '/restaurant-view': (context) => Restaurant(),
     },
   ));
 }
