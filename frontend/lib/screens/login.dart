@@ -229,7 +229,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onTap: () {
-                      print("Don't have an account? tapped");
+                      // print("Don't have an account? tapped");
+                      Navigator.pushNamed(context, '/registration/customer');
                     },
                   ),
 

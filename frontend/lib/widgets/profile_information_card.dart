@@ -57,7 +57,6 @@ class Profileinfocard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.black,
-                  letterSpacing: 2,
                   fontWeight: FontWeight.w500,
                 ),
               ),

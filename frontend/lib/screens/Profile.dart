@@ -16,7 +16,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(217, 255, 199, 173),
       appBar: AppBar(
         title: const Text(
           "Profile Information",
@@ -30,15 +30,6 @@ class _ProfileState extends State<Profile> {
               height: 150,
               alignment: Alignment.topLeft,
               padding: Theme.of(context).defaultPadding,
-              child: const Text(
-                "My \nProfile",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3,
-                ),
-              ),
             ),
             Stack(
               clipBehavior: Clip.none,
