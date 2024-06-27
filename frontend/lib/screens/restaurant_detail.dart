@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
 class RestaurantDetail extends StatelessWidget {
@@ -74,8 +75,8 @@ class RestaurantTimeAndDistance extends StatelessWidget {
             theme: theme,
             icon: Icon(
               Icons.schedule,
-              size: 50,
-              color: Colors.black,
+              size: 40,
+              color: HINT_TEXT_COLOR,
             ),
             text: Text(
               '10:00 AM - 08:00 PM',
@@ -87,8 +88,8 @@ class RestaurantTimeAndDistance extends StatelessWidget {
             theme: theme,
             icon: Icon(
               Icons.location_on,
-              size: 50,
-              color: Colors.black,
+              size: 40,
+              color: HINT_TEXT_COLOR,
             ),
             text: Text('1.5 km', style: theme.textTheme.headlineSmall),
           )
