@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 
 class FavCard extends StatelessWidget {
   String image, foodName, storeName;
@@ -24,7 +25,7 @@ class FavCard extends StatelessWidget {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
-        color: Colors.white,
+        color: BACKGROUND,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
