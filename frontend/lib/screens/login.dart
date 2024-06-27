@@ -239,7 +239,7 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
-                          "Want to add your restaurant or tourist spot?",
+                          "Want to add your restaurant?",
                           style: TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.bold,

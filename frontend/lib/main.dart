@@ -13,11 +13,11 @@ import 'package:frontend/screens/registration_manager.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/restaurant/information',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
-      '/': (context) => const ManagerHome(),
+      '/manager-home': (context) => const ManagerHome(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
       '/edit-information': (context) => const ManagerMenuBottomNavigation(),

@@ -239,7 +239,9 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextButton(
-                            onPressed: allFieldsFilled ? () {} : null,
+                            onPressed: allFieldsFilled ? () {
+                              
+                            } : null,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 18),
