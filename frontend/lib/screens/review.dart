@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Reviews extends StatelessWidget {
@@ -180,7 +181,7 @@ class Reviews extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFFF4778)),
+                    border: Border.all(color: PRIMARY_COLOR),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
@@ -282,7 +283,7 @@ class Reviews extends StatelessWidget {
               widthFactor: barWidthFraction,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF4778),
+                  color: PRIMARY_COLOR,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),

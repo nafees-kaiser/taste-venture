@@ -25,7 +25,7 @@ void main() {
     themeMode: ThemeMode.system,
     routes: { 
       '/manager-home': (context) => const ManagerHome(),
-      '/': (context) => const ManagerHome(),
+      // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),

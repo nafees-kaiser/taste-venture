@@ -68,7 +68,8 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           ),
                         ),
                         onTap: () {
-                          print("See all tapped");
+                          // print("See all tapped");
+                          Navigator.pushNamed(context, '/restaurant-view');
                         },
                       ),
                     ],

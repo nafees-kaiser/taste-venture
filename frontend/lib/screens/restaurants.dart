@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Restaurant extends StatelessWidget {
@@ -86,7 +87,7 @@ class Restaurant extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: Color(0xFFFF4778),
+                      color: PRIMARY_COLOR,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Padding(
