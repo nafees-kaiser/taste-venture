@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_input_field.dart';
+import 'package:frontend/screens/manager_criteria.dart';
 
 class RegistrationVenueManager extends StatefulWidget {
   @override
@@ -232,14 +233,24 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             color: allFieldsFilled
-                                ? Color(0xFFFFA500)
+                                ? Color(0xFFFC5110)
                                 : Color(0xFF959595),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextButton(
-                            onPressed: allFieldsFilled ? () {} : null,
+                            onPressed: allFieldsFilled
+                                ? () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ManagerCriteria()),
+                                    );
+                                  }
+                                : null,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 18),
