@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/restaurant_detail.dart';
 import 'package:frontend/screens/restaurant_menu_view.dart';
+import 'package:frontend/screens/review.dart';
 
 class RestaurantInfo extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
       // body: SingleChildScrollView(child: RestaurantDetail()),
       body: switch (page) {
         1 => RestaurantMenuView(),
-        2 => Placeholder(),
+        2 => Reviews(),
         _ => RestaurantDetail()
       },
       bottomNavigationBar: Padding(

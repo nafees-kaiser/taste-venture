@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/customer_preferences.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
@@ -16,7 +17,7 @@ import 'package:frontend/screens/review.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
+    initialRoute: '/restaurant',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -32,6 +33,7 @@ void main() {
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
+      '/restaurant': (context) => CustomerPreferences(),
     },
   ));
 }
