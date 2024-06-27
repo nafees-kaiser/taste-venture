@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:frontend/utils/constant.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -181,8 +182,8 @@ class _LoginState extends State<Login> {
                       onPressed: check,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isButtonEnabled
-                            ? Color.fromRGBO(252, 81, 16, 1)
-                            : Color.fromRGBO(149, 149, 149, 1),
+                            ? const Color.fromRGBO(252, 81, 16, 1)
+                            : const Color.fromRGBO(149, 149, 149, 1),
                         minimumSize: const Size(340, 25),
                       ),
                       child: const Text(
@@ -202,7 +203,7 @@ class _LoginState extends State<Login> {
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: TEXT,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -221,7 +222,7 @@ class _LoginState extends State<Login> {
                         child: Text(
                           "Don't have an account?",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: TEXT,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -241,7 +242,7 @@ class _LoginState extends State<Login> {
                         child: Text(
                           "Want to add your restaurant or tourist spot?",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: TEXT,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
