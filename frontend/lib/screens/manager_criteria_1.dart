@@ -164,10 +164,13 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
             MaterialPageRoute(builder: (context) => ManagerCriteria()),
           );
         }
+        else{
+          Navigator.pushNamed(context, '/manager-home');
+        }
       },
       child: Container(
         decoration: BoxDecoration(
-          color: title == 'Next' ? Color(0xFF959595) : Color(0xFFFC5110),
+          color:Color(0xFFFC5110),
           borderRadius: BorderRadius.circular(8),
         ),
         width: 100,
