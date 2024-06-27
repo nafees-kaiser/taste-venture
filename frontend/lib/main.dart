@@ -19,7 +19,7 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/restaurant',
+    initialRoute: '/restaurant-view',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -35,7 +35,7 @@ void main() {
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
-      '/restaurant': (context) => CustomerPreferences(),
+      '/preference': (context) => CustomerPreferences(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
     },
