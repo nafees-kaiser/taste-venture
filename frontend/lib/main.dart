@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/customer_preferences.dart';
+import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/login.dart';
@@ -20,7 +20,7 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
+    initialRoute: '/preference',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -38,7 +38,7 @@ void main() {
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
-      '/preference': (context) => CustomerPreferences(),
+      '/preference': (context) => CustomerPreferencePage(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
     },

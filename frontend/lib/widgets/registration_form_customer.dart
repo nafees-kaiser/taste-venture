@@ -119,7 +119,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return "Please enter your full name";
+                return "Please enter your contact";
               }
               return null;
             },
@@ -132,7 +132,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return "Please enter your full name";
+                return "Please enter your email";
               }
               return null;
             },
@@ -149,7 +149,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                     labelText: "Date of birth",
                     suffixIcon: IconButton(
                       onPressed: _showDatePicker,
-                      icon: Icon(Icons.date_range, color: HINT_TEXT_COLOR),
+                      icon: Icon(Icons.date_range, color: SECONDARY_BACKGROUND),
                     ),
                   ),
                   validator: (value) {
@@ -167,6 +167,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                   dropdownMenuEntries: _genderMenuItems,
                   label: const Text('Gender'),
                   expandedInsets: EdgeInsets.zero,
+                  initialSelection: _gender[0],
                 ),
               ),
             ],
@@ -183,8 +184,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                       showPassword = !showPassword;
                     });
                   },
-                  icon: showPassword ? Icon(Icons.visibility, color: HINT_TEXT_COLOR)
-                  : Icon(Icons.visibility_off, color: HINT_TEXT_COLOR),
+                  icon: showPassword ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
+                  : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
                 )),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -205,8 +206,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                       showRetypePassword = !showRetypePassword;
                     });
                   },
-                  icon: showRetypePassword ? Icon(Icons.visibility, color: HINT_TEXT_COLOR)
-                  : Icon(Icons.visibility_off, color: HINT_TEXT_COLOR),
+                  icon: showRetypePassword ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
+                  : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
                 )),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -230,6 +231,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
           ),
 
           DropdownMenu(
+            initialSelection: _isMarried[0],
             dropdownMenuEntries: _isMarriedMenuItems,
             label: const Text('Marital status'),
             controller: controller[8],
@@ -252,7 +254,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/preference');
               }
             },
             style: ElevatedButton.styleFrom(

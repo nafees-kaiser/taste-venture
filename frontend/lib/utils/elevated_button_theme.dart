@@ -9,7 +9,7 @@ class TElevatedButtonTheme {
       elevation: 0,
       foregroundColor: Colors.white,
       backgroundColor: PRIMARY_COLOR,
-      disabledForegroundColor: DISABLE,
+      disabledForegroundColor: Colors.white38,
       disabledBackgroundColor: DISABLE,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
       textStyle: const TextStyle(
