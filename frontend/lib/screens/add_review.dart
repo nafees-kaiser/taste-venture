@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/constant.dart';
 // import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
@@ -102,12 +103,12 @@ class AddReview extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.fork_right,
-                              color: Colors.blue,
+                              color: PRIMARY_COLOR,
                             ),
                             Text(
                               "Visit the Restaurant",
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: PRIMARY_COLOR,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
