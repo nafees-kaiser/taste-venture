@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/widgets/textbox.dart';
 import 'package:intl/intl.dart';
@@ -99,10 +100,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       child: Column(
         children: [
           Textbox(
+            label: 'Full name',
             controller: controller[0],
             decoration: const InputDecoration(
               hintText: 'Enter your full name',
-              labelText: 'Full name',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -112,10 +113,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
           Textbox(
+            label: 'Contact',
             controller: controller[1],
             decoration: const InputDecoration(
               hintText: 'eg 01XXXXXXXXX',
-              labelText: 'Contact',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -125,10 +126,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
           Textbox(
+            label: 'Email',
             controller: controller[2],
             decoration: const InputDecoration(
               hintText: 'eg email@email.com',
-              labelText: 'Email',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -143,10 +144,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             children: [
               Expanded(
                 child: Textbox(
+                  label: "Date of birth",
                   controller: controller[3],
                   decoration: InputDecoration(
                     hintText: "dd/mm/yyyy",
-                    labelText: "Date of birth",
                     suffixIcon: IconButton(
                       onPressed: _showDatePicker,
                       icon: Icon(Icons.date_range, color: SECONDARY_BACKGROUND),
@@ -162,30 +163,30 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
               ),
               SizedBox(width: 10),
               Expanded(
-                child: DropdownMenu<String>(
+                child: CustomDropdownMenu(
                   controller: controller[4],
-                  dropdownMenuEntries: _genderMenuItems,
-                  label: const Text('Gender'),
-                  expandedInsets: EdgeInsets.zero,
-                  initialSelection: _gender[0],
+                  menuItems: _genderMenuItems,
+                  initialValue: _gender[0],
+                  label: 'Gender',
                 ),
               ),
             ],
           ),
           Textbox(
+            label: 'Password',
             obscureText: !showPassword,
             controller: controller[5],
             decoration: InputDecoration(
                 hintText: '*** *** ***',
-                labelText: 'Password',
                 suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
                       showPassword = !showPassword;
                     });
                   },
-                  icon: showPassword ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
-                  : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
+                  icon: showPassword
+                      ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
+                      : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
                 )),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -195,19 +196,20 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
           Textbox(
+            label: 'Retype password',
             obscureText: !showRetypePassword,
             controller: controller[6],
             decoration: InputDecoration(
-              hintText: '*** *** ***',
-              labelText: 'Retype password',
-              suffixIcon: IconButton(
+                hintText: '*** *** ***',
+                suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
                       showRetypePassword = !showRetypePassword;
                     });
                   },
-                  icon: showRetypePassword ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
-                  : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
+                  icon: showRetypePassword
+                      ? Icon(Icons.visibility, color: SECONDARY_BACKGROUND)
+                      : Icon(Icons.visibility_off, color: SECONDARY_BACKGROUND),
                 )),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -217,10 +219,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
           Textbox(
+            label: 'Address',
             controller: controller[7],
             decoration: const InputDecoration(
               hintText: 'eg h#1, r#1, Mirpur, Dhaka',
-              labelText: 'Address',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -230,12 +232,11 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
           ),
 
-          DropdownMenu(
-            initialSelection: _isMarried[0],
-            dropdownMenuEntries: _isMarriedMenuItems,
-            label: const Text('Marital status'),
+          CustomDropdownMenu(
             controller: controller[8],
-            expandedInsets: EdgeInsets.zero,
+            menuItems: _isMarriedMenuItems,
+            initialValue: _isMarried[0],
+            label: 'Marital status',
           ),
 
           // Container(
@@ -259,8 +260,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: isButtonEnabled
-                  ? Color.fromRGBO(252, 81, 16, 1)
-                  : Color.fromRGBO(149, 149, 149, 1),
+                  ? PRIMARY_COLOR
+                  : DISABLE,
               minimumSize: const Size(double.infinity, 0),
             ),
             child: Text("Register"),
