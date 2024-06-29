@@ -22,7 +22,7 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/visiting-history',
+    initialRoute: '/registration/customer',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
