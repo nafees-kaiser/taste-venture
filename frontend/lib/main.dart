@@ -9,6 +9,7 @@ import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
+import 'package:frontend/screens/visiting_history_page.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
 import 'package:frontend/screens/registration_manager.dart';
@@ -21,7 +22,7 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/notification',
+    initialRoute: '/visiting-history',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -43,6 +44,7 @@ void main() {
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
       '/notification': (context) => NotificationPage(),
+      '/visiting-history' : (contex) => VisitingHistoryPage(),
     },
   ));
 }
