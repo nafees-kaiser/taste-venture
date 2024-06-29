@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/preference_contents.dart';
 
 class CustomerPreferenceGrid extends StatelessWidget {

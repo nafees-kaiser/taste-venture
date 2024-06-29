@@ -6,6 +6,7 @@ class Textbox extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final String label;
+  final int? maxLines;
 
   const Textbox(
       {super.key,
@@ -13,7 +14,8 @@ class Textbox extends StatelessWidget {
       this.decoration,
       this.validator,
       this.obscureText = false,
-      this.label = ''});
+      this.label = '',
+      this.maxLines = 1});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,6 +32,9 @@ class Textbox extends StatelessWidget {
           controller: controller,
           decoration: decoration,
           validator: validator,
+          // expands: true,
+          maxLines: maxLines,
+          // minLines: null,
         ),
         const SizedBox(height: 15),
       ],

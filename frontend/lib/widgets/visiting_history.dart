@@ -22,6 +22,6 @@ class VisitingHistory extends StatelessWidget {
         itemCount: 20,
       ),
     );
-    ;
+    
   }
 }
