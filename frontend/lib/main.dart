@@ -4,6 +4,7 @@ import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
+import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
 import 'package:frontend/screens/restaurant_info.dart';
@@ -20,7 +21,7 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/preference',
+    initialRoute: '/notification',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: { 
@@ -41,6 +42,7 @@ void main() {
       '/preference': (context) => CustomerPreferencePage(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
+      '/notification': (context) => NotificationPage(),
     },
   ));
 }
