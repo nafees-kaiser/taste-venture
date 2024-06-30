@@ -181,9 +181,8 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       onPressed: check,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isButtonEnabled
-                            ? const Color.fromRGBO(252, 81, 16, 1)
-                            : const Color.fromRGBO(149, 149, 149, 1),
+                        backgroundColor:
+                            isButtonEnabled ? PRIMARY_COLOR : DISABLE,
                         minimumSize: const Size(340, 25),
                       ),
                       child: const Text(
@@ -249,8 +248,8 @@ class _LoginState extends State<Login> {
                     ),
                     onTap: () {
                       Navigator.pushNamed(context, '/add-restaurant');
-                      // print(
-                      //     "Want to add your restaurant or tourist spot? tapped");
+                      print(
+                          "Want to add your restaurant or tourist spot? tapped");
                     },
                   ),
                 ],

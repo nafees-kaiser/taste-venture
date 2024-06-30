@@ -80,29 +80,36 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                   children: [
                     Container(
                         width: 170,
-                        height: 210,
-                        child: Card(
+                        height: 220,
+                        child: Card.outlined(
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
-                            ),
-                          ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20.0),
+                              ),
+                              side: BorderSide(
+                                color: DISABLE,
+                                width: 1,
+                              )),
                           color: BACKGROUND,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  "assets/pizza.jpg",
-                                  width: double.infinity,
-                                  height: 120,
-                                  fit: BoxFit.fitHeight,
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 8.0, 8.0, 0.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                    "assets/pizza.jpg",
+                                    width: double.infinity,
+                                    height: 120,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(8.0, 8.0, 4.0, 0.0),
+                                    EdgeInsets.fromLTRB(8.0, 4.0, 4.0, 0.0),
                                 child: Text(
                                   "Restaurant name",
                                   style: TextStyle(
