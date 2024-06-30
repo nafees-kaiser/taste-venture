@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/add_menu_page.dart';
+import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
+import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
+import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
+import 'package:frontend/screens/visiting_history_page.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
 import 'package:frontend/screens/registration_manager.dart';
@@ -19,12 +24,12 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/customer-homepage',
-
+    initialRoute: '/add-menu',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
-    routes: {
-      '/': (context) => const ManagerHome(),
+    routes: { 
+      '/manager-home': (context) => const ManagerHome(),
+      // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
@@ -37,8 +42,13 @@ void main() {
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
+      '/preference': (context) => CustomerPreferencePage(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
+      '/notification': (context) => NotificationPage(),
+      '/visiting-history' : (contex) => VisitingHistoryPage(),
+      '/add-menu' : (context) => AddMenuPage(),
+      '/initial-menu' : (context) => InitialMenu(),
     },
   ));
 }

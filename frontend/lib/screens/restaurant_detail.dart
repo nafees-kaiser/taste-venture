@@ -45,7 +45,7 @@ class DescAndButton extends StatelessWidget {
           Container(
             alignment: Alignment.topRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/booking'),
               child: Text('Reserve', style: TextStyle(fontSize: theme.buttonTextSize),),
             ),
           ),
@@ -76,7 +76,7 @@ class RestaurantTimeAndDistance extends StatelessWidget {
             icon: Icon(
               Icons.schedule,
               size: 40,
-              color: HINT_TEXT_COLOR,
+              color: SECONDARY_BACKGROUND,
             ),
             text: Text(
               '10:00 AM - 08:00 PM',
@@ -89,7 +89,7 @@ class RestaurantTimeAndDistance extends StatelessWidget {
             icon: Icon(
               Icons.location_on,
               size: 40,
-              color: HINT_TEXT_COLOR,
+              color: SECONDARY_BACKGROUND,
             ),
             text: Text('1.5 km', style: theme.textTheme.headlineSmall),
           )

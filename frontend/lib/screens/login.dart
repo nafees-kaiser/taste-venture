@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
             textColor: Colors.white,
             fontSize: 16.0);
 
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamed(context, '/customer-homepage');
       } else {
         setState(() {
           alert = "Warning: Invalid email or password";
@@ -239,7 +239,7 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
-                          "Want to add your restaurant or tourist spot?",
+                          "Want to add your restaurant?",
                           style: TextStyle(
                             color: TEXT,
                             fontWeight: FontWeight.bold,
