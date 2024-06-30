@@ -55,15 +55,27 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
 
                       // See all
                       GestureDetector(
-                        child: const Center(
+                        child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              'See all',
-                              style: TextStyle(
-                                color: Color.fromRGBO(252, 81, 16, 1),
-                                fontWeight: FontWeight.w400,
-                              ),
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'See all',
+                                  style: TextStyle(
+                                    color: PRIMARY_COLOR,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Transform.scale(
+                                  scaleX: -1,
+                                  child: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: PRIMARY_COLOR,
+                                    size: 14,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -79,71 +91,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                 // Top reviewed restaurant Cards
                 Row(
                   children: [
-                    Container(
-                        width: 170,
-                        height: 220,
-                        child: Card.outlined(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20.0),
-                              ),
-                              side: BorderSide(
-                                color: DISABLE,
-                                width: 1,
-                              )),
-                          color: BACKGROUND,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 8.0, 8.0, 0.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    "assets/pizza.jpg",
-                                    width: double.infinity,
-                                    height: 120,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 4.0, 4.0, 0.0),
-                                child: Text(
-                                  "Restaurant name",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 4.0),
-                                child: Text(
-                                  "Restaurant address",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 0.0),
-                                child: Text(
-                                  "Restaurant rating",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
+                    TopResCard(),
                   ],
                 )
               ],
@@ -152,5 +100,103 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
         ),
       ),
     );
+  }
+}
+
+class TopResCard extends StatelessWidget {
+  const TopResCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 170,
+        height: 220,
+        child: Card.outlined(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0),
+              ),
+              side: BorderSide(
+                color: DISABLE,
+                width: 1,
+              )),
+          color: BACKGROUND,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    8.0, 8.0, 8.0, 0.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    "assets/pizza.jpg",
+                    width: double.infinity,
+                    height: 120,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(8.0, 4.0, 4.0, 0.0),
+                child: SizedBox(
+                  width: 130,
+                  child: Text(
+                    "Restaurant name",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 4.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on,
+                        size: 13, color: Colors.black),
+                    SizedBox(
+                      width: 130,
+                      child: Text(
+                        "Restaurant address",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.fromLTRB(8.0, 2.0, 4.0, 0.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.star,
+                        size: 13, color: Colors.black),
+                    Text(
+                      "4.8",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
