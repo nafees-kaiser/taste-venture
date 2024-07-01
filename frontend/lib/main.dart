@@ -24,10 +24,10 @@ import 'package:frontend/screens/restaurants.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/add-menu',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
-    routes: { 
+    routes: {
       '/manager-home': (context) => const ManagerHome(),
       // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
@@ -46,9 +46,9 @@ void main() {
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
       '/notification': (context) => NotificationPage(),
-      '/visiting-history' : (contex) => VisitingHistoryPage(),
-      '/add-menu' : (context) => AddMenuPage(),
-      '/initial-menu' : (context) => InitialMenu(),
+      '/visiting-history': (contex) => VisitingHistoryPage(),
+      '/add-menu': (context) => AddMenuPage(),
+      '/initial-menu': (context) => InitialMenu(),
     },
   ));
 }
