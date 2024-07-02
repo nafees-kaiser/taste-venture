@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
 
-class TopResCard extends StatelessWidget {
+class TopResCard extends StatefulWidget {
   String restaurantImage, restaurantName, restaurantAddress;
   double restaurantRating;
   TopResCard(
@@ -12,9 +12,14 @@ class TopResCard extends StatelessWidget {
       required this.restaurantRating});
 
   @override
+  State<TopResCard> createState() => _TopResCardState();
+}
+
+class _TopResCardState extends State<TopResCard> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-        width: 170,
+        width: 150,
         height: 220,
         child: Card.outlined(
           shape: const RoundedRectangleBorder(
@@ -34,7 +39,7 @@ class TopResCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    restaurantImage,
+                    widget.restaurantImage,
                     width: double.infinity,
                     height: 120,
                     fit: BoxFit.fitHeight,
@@ -44,9 +49,9 @@ class TopResCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 4.0, 4.0, 0.0),
                 child: SizedBox(
-                  width: 130,
+                  width: 110,
                   child: Text(
-                    restaurantName,
+                    widget.restaurantName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -63,9 +68,9 @@ class TopResCard extends StatelessWidget {
                     const Icon(Icons.location_on,
                         size: 13, color: Colors.black),
                     SizedBox(
-                      width: 130,
+                      width: 110,
                       child: Text(
-                        restaurantAddress,
+                        widget.restaurantAddress,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -84,7 +89,7 @@ class TopResCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.star, size: 13, color: Colors.black),
                     Text(
-                      restaurantRating.toString(),
+                      widget.restaurantRating.toString(),
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
