@@ -101,8 +101,8 @@ class _TopTourCardState extends State<TopTourCard> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () => Navigator.push(
-                        context, widget.tourURL as Route<Object?>),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/tour_spot/information'),
                     child: const Text(
                       "View",
                       style: TextStyle(fontSize: 16, color: Colors.white),
