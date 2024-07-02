@@ -16,6 +16,7 @@ import 'package:frontend/screens/manager_criteria_1.dart';
 import 'package:frontend/screens/review.dart';
 import 'package:frontend/screens/booking.dart';
 import 'package:frontend/screens/restaurants.dart';
+import 'package:frontend/screens/tour_spot_view.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -23,7 +24,7 @@ void main() {
     initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
-    routes: { 
+    routes: {
       '/manager-home': (context) => const ManagerHome(),
       // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
@@ -41,6 +42,7 @@ void main() {
       '/preference': (context) => CustomerPreferences(),
       '/booking': (context) => Booking(),
       '/restaurant-view': (context) => Restaurant(),
+      '/tourspot-view': (context) => TourSpot(),
     },
   ));
 }
