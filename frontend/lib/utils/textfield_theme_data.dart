@@ -34,7 +34,7 @@ class TTextFiledThemeData{
             color: Colors.black,
           ),
           hintStyle: TextStyle(
-            color: HINT_TEXT_COLOR,
+            color: SECONDARY_BACKGROUND,
             fontSize: 12
           ),
   );
