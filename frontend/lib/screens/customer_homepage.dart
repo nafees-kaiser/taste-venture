@@ -1,5 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/widgets/top_restaurant_card.dart';
+import 'package:frontend/widgets/top_tour_card.dart';
 
 class CustomerHomepage extends StatefulWidget {
   const CustomerHomepage({super.key});
@@ -41,9 +43,112 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                       ),
                     )),
 
-                // Top reviewed restaurant
+                // Browse
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                          child: SizedBox(
+                              width: 170,
+                              height: 170,
+                              child: Card.outlined(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                    side: BorderSide(
+                                      color: DISABLE,
+                                      width: 1,
+                                    )),
+                                color: BACKGROUND,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          10.0, 10.0, 10.0, 0.0),
+                                      child: Text(
+                                        "Browse Restaurant",
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          "assets/restaurant.png",
+                                          width: double.infinity,
+                                          height: 80,
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          onTap: () {
+                            Navigator.pushNamed(context, "/restaurant-view");
+                          }),
+                      GestureDetector(
+                          child: SizedBox(
+                              width: 170,
+                              height: 170,
+                              child: Card.outlined(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                    side: BorderSide(
+                                      color: DISABLE,
+                                      width: 1,
+                                    )),
+                                color: BACKGROUND,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          10.0, 10.0, 10.0, 0.0),
+                                      child: Text(
+                                        "Browse Tourist Venue",
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          "assets/tourVenue.png",
+                                          width: double.infinity,
+                                          height: 80,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          onTap: () {
+                            Navigator.pushNamed(context, "/tourist_venue-view");
+                          }),
+                    ],
+                  ),
+                ),
+
+                // Top reviewed restaurant
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 15.0),
                   child: Row(
                     children: [
                       const Text("Top reviewed restaurant",
@@ -55,15 +160,27 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
 
                       // See all
                       GestureDetector(
-                        child: const Center(
+                        child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              'See all',
-                              style: TextStyle(
-                                color: Color.fromRGBO(252, 81, 16, 1),
-                                fontWeight: FontWeight.w400,
-                              ),
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'See all',
+                                  style: TextStyle(
+                                    color: PRIMARY_COLOR,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Transform.scale(
+                                  scaleX: -1,
+                                  child: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: PRIMARY_COLOR,
+                                    size: 14,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -77,68 +194,85 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                 ),
 
                 // Top reviewed restaurant Cards
-                Row(
-                  children: [
-                    Container(
-                        width: 170,
-                        height: 210,
-                        child: Card(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < 5; i++)
+                          GestureDetector(
+                              child: TopResCard(
+                                restaurantImage: "assets/pizza.jpg",
+                                restaurantName: "PizzaBurg",
+                                restaurantAddress: "14/A Mirpur-1, Dhaka-1211",
+                                restaurantRating: 4.7,
+                              ),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, '/restaurant/information');
+                              })
+                      ],
+                    )),
+
+                // Top reviewed restaurant
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 15.0),
+                  child: Row(
+                    children: [
+                      const Text("Top tour spots",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      const Expanded(child: SizedBox()),
+
+                      // See all
+                      GestureDetector(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'See all',
+                                  style: TextStyle(
+                                    color: PRIMARY_COLOR,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Transform.scale(
+                                  scaleX: -1,
+                                  child: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: PRIMARY_COLOR,
+                                    size: 14,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          color: BACKGROUND,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  "assets/pizza.jpg",
-                                  width: double.infinity,
-                                  height: 120,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 8.0, 4.0, 0.0),
-                                child: Text(
-                                  "Restaurant name",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 4.0),
-                                child: Text(
-                                  "Restaurant address",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 0.0),
-                                child: Text(
-                                  "Restaurant rating",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ],
-                )
+                        ),
+                        onTap: () {
+                          // print("See all tapped");
+                          Navigator.pushNamed(context, '/restaurant-view');
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                // Top tour spot Cards
+                SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        for (int i = 0; i < 5; i++)
+                          TopTourCard(
+                            tourImage: "assets/pizza.jpg",
+                            tourName: "PizzaBurg",
+                            tourAddress: "14/A Mirpur-1, Dhaka-1211",
+                            tourURL: '/login',
+                          )
+                      ],
+                    )),
               ],
             ),
           ),

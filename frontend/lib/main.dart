@@ -25,7 +25,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/add-menu',
+    initialRoute: '/customer-homepage',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -48,9 +48,9 @@ void main() {
       '/restaurant-view': (context) => Restaurant(),
       '/tourspot-view': (context) => TourSpot(),
       '/notification': (context) => NotificationPage(),
-      '/visiting-history' : (contex) => VisitingHistoryPage(),
-      '/add-menu' : (context) => AddMenuPage(),
-      '/initial-menu' : (context) => InitialMenu(),
+      '/visiting-history': (contex) => VisitingHistoryPage(),
+      '/add-menu': (context) => AddMenuPage(),
+      '/initial-menu': (context) => InitialMenu(),
     },
   ));
 }
