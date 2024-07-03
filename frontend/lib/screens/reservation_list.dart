@@ -33,7 +33,7 @@ class _ReservationListState extends State<ReservationList> {
   Container ReservationCard() {
     return Container(
       width: 340,
-      height: 260,
+      height: 220,
       child: Card.outlined(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -54,21 +54,7 @@ class _ReservationListState extends State<ReservationList> {
               titleText("Reservation Information:"),
               infoText("Date", "12 JAN, 2024"),
               infoText("Time", "10 AM - 12 PM"),
-              infoText("No. of Person", "2"),
-
-              // Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                      onPressed: () => print(false),
-                      child: const Text("Reject")),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                      onPressed: () => print(true),
-                      child: const Text("Accept")),
-                ],
-              )
+              infoText("Reserve", "2"),
             ],
           ),
         ),
@@ -78,6 +64,22 @@ class _ReservationListState extends State<ReservationList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reservation List'),
+      ),
+      body: SingleChildScrollView(
+          child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReservationCard(),
+            ReservationCard(),
+            ReservationCard(),
+          ],
+        ),
+      )),
+    );
   }
 }

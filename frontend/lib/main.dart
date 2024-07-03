@@ -9,6 +9,7 @@ import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
+import 'package:frontend/screens/reservation_list.dart';
 import 'package:frontend/screens/reservation_manager.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
@@ -26,7 +27,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/restaurant/reservation-manager',
+    initialRoute: '/restaurant/reservation-list',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -39,7 +40,7 @@ void main() {
       '/registration/customer': (context) => const RegistrationCustomer(),
       '/login': (context) => Login(),
       '/restaurant/information': (context) => RestaurantInfo(),
-      '/favorite': (context) => const Favorite(),
+      '/favorite': (context) => Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
@@ -53,6 +54,7 @@ void main() {
       '/add-menu': (context) => AddMenuPage(),
       '/initial-menu': (context) => InitialMenu(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
+      '/restaurant/reservation-list': (context) => ReservationList(),
     },
   ));
 }
