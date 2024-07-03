@@ -20,7 +20,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
   List<XFile> itemImage = [];
   bool isButtonEnabled = false;
   final controller = List<TextEditingController>.generate(
-      7, (int index) => TextEditingController());
+      6, (int index) => TextEditingController());
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
 
   void _enableOrDesableButton() {
     for (final i in controller) {
-      if (i.text.isEmpty) {
+      if (i.text.isEmpty || itemImage.isEmpty) {
         setState(() {
           isButtonEnabled = false;
         });
@@ -155,11 +155,26 @@ class _AddMenuFormState extends State<AddMenuForm> {
                   CustomImageInput(
                     label: 'Picture',
                     inputImage: itemImage,
-                    onImageSelected: (value) => setState(() {
-                      itemImage.add(value);
-                    }),
+                    onImageSelected: (value) {
+                      setState(() {
+                        itemImage.add(value);
+                      });
+                      for (final i in controller) {
+                        if (i.text.isEmpty) {
+                          setState(() {
+                            isButtonEnabled = false;
+                          });
+                          break;
+                        } else {
+                          setState(() {
+                            isButtonEnabled = true;
+                          });
+                        }
+                      }
+                    },
                     onImageRemoved: (image, index) => setState(() {
                       itemImage.remove(image);
+                      isButtonEnabled = false;
                     }),
                   )
                 ],
