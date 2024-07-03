@@ -33,6 +33,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                   child:
                       const Image(image: AssetImage('assets/water_garden.png')),
                 ),
+                SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
