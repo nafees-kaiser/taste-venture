@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
+import 'package:frontend/screens/customer_reservation.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/forget_password.dart';
 import 'package:frontend/screens/initial_menu.dart';
@@ -31,7 +32,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
+    initialRoute: '/customer/reservation',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -63,6 +64,7 @@ void main() {
       '/restaurant/reservation-manager': (context) => ReservationManager(),
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/tourspot-detail' : (context) => TourSpotDetailsPage(),
+      '/customer/reservation' : (context) => CustomerReservation(),
     },
   ));
 }
