@@ -1,8 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
-import 'package:frontend/widgets/BarChartComponent.dart';
+import 'package:frontend/widgets/bar_chart_component.dart';
+import 'package:frontend/widgets/pie_chart_component.dart';
 import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:frontend/widgets/review_overview.dart';
@@ -52,10 +51,10 @@ class ManagerHome extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: Theme.of(context).largeHorizontalAndVerticalPadding,
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Wrap(
+              Wrap(
                 spacing: 16,
                 runSpacing: 16,
                 children: [
@@ -85,86 +84,48 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              const Text(
+              SizedBox(height: 20),
+              Text(
                 "Customer analysis",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const AspectRatio(
+              AspectRatio(
                 aspectRatio: 1.6,
                 child: BarChartComponent(),
               ),
-              const SizedBox(height: 10),
-              const Text(
+              SizedBox(height: 10),
+              Text(
                 "Food analysis",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 250,
-                padding: Theme.of(context).subSectionDividerPadding,
-                child: PieChart(
-                  PieChartData(
-                    sections: [
-                      PieChartSectionData(
-                        value: 40,
-                        title: 'Indian',
-                        showTitle: true,
-                        radius: 50,
-                        color: PRIMARY_COLOR.withOpacity(0.9),
-                      ),
-                      PieChartSectionData(
-                        value: 30,
-                        title: 'Thai',
-                        showTitle: true,
-                        radius: 50,
-                        color: PRIMARY_COLOR.withOpacity(0.7),
-                      ),
-                      PieChartSectionData(
-                        value: 15,
-                        title: 'Chinese',
-                        showTitle: true,
-                        radius: 50,
-                        color: PRIMARY_COLOR.withOpacity(0.5),
-                      ),
-                      PieChartSectionData(
-                        value: 15,
-                        title: 'Italian',
-                        showTitle: true,
-                        radius: 50,
-                        color: PRIMARY_COLOR.withOpacity(0.3),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
+              PieChartComponent(),
+              SizedBox(height: 10),
+              Text(
                 "Top Customers",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const TopCustomer(),
-              const SizedBox(height: 10),
-              const Text(
+              TopCustomer(),
+              SizedBox(height: 10),
+              Text(
                 "Recent Reviews",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const ReviewOverview(),
-              const UserIndivisualReview(),
-              const UserIndivisualReview(),
-              const UserIndivisualReview(),
+              ReviewOverview(),
+              UserIndivisualReview(),
+              UserIndivisualReview(),
+              UserIndivisualReview(),
             ],
           ),
         ),
