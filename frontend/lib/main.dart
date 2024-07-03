@@ -27,7 +27,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/customer-homepage',
+    initialRoute: '/tourspot-detail',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
