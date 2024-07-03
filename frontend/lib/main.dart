@@ -12,6 +12,7 @@ import 'package:frontend/screens/add_review.dart';
 import 'package:frontend/screens/reservation_manager.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
+import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/screens/visiting_history_page.dart';
 import 'package:frontend/utils/scheme.dart';
 import 'package:frontend/screens/manager_menu_bottom_navigation.dart';
@@ -26,7 +27,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/restaurant/reservation-manager',
+    initialRoute: '/customer-homepage',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -53,6 +54,7 @@ void main() {
       '/add-menu': (context) => AddMenuPage(),
       '/initial-menu': (context) => InitialMenu(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
+      '/tourspot-detail' : (context) => TourSpotDetailsPage(),
     },
   ));
 }
