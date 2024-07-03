@@ -102,7 +102,7 @@ class _ReservationManagerState extends State<ReservationManager> {
               titleText("Reservation Information:"),
               infoText("Date", "12 JAN, 2024"),
               infoText("Time", "10 AM - 12 PM"),
-              infoText("No. of Person", "2"),
+              infoText("Reserve", "2 person"),
 
               // Button
               Row(
