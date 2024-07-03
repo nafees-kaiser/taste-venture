@@ -30,49 +30,58 @@ class CustomInputField extends StatefulWidget {
 class _CustomInputFieldState extends State<CustomInputField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      width: widget.width, // Set the width of the input field
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.label,
-            style: GoogleFonts.getFont(
-              'Inter',
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: Color(0xFF020D07),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: Container(
+        width: widget.width, // Set the width of the input field
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.label,
+              style: GoogleFonts.getFont(
+                'Inter',
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Color(0xFF020D07),
+              ),
             ),
-          ),
-          SizedBox(height: 7),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            height: widget.height, // Set the height of the input field
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFFBEC5D1)),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: TextField(
-              controller: widget.controller,
-              obscureText: widget.obscureText,
-              keyboardType: widget.keyboardType,
-              maxLines:
-                  widget.keyboardType == TextInputType.multiline ? null : 1,
-              onChanged: widget.onChanged,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: widget.hintText,
-                hintStyle: GoogleFonts.getFont(
+            SizedBox(height: 7),
+            Container(
+              // padding: EdgeInsets.symmetric(horizontal: 10),
+              // height: widget.height, // Set the height of the input field
+              // decoration: BoxDecoration(
+              //   border: Border.all(color: Color(0xFFBEC5D1)),
+              //   borderRadius: BorderRadius.circular(12),
+              // ),
+              child: TextField(
+                controller: widget.controller,
+                obscureText: widget.obscureText,
+                keyboardType: widget.keyboardType,
+                maxLines:
+                    widget.keyboardType == TextInputType.multiline ? null : 1,
+                onChanged: widget.onChanged,
+                style: GoogleFonts.getFont(
                   'Inter',
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
-                  color: Color(0xFF9CA3AF),
+                  color: Color(0xFF020D07),
+                ),
+                decoration: InputDecoration(
+                  // border: InputBorder.none,
+                  border: OutlineInputBorder(),
+                  hintText: widget.hintText,
+                  hintStyle: GoogleFonts.getFont(
+                    'Inter',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Color(0xFF9CA3AF),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
