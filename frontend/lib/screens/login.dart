@@ -210,7 +210,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onTap: () {
-                      print("Forgot Password? tapped");
+                      Navigator.pushNamed(context, '/forget-password');
+                      // print("Forgot Password? tapped");
                     },
                   ),
 
