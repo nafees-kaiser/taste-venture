@@ -131,14 +131,17 @@ class _LoginState extends State<Login> {
                     child: TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(149, 149, 149, 1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: const BorderSide(
+                              color: Color.fromRGBO(149, 149, 149, 1),
+                            ),
                           ),
-                        ),
-                        hintText: "Enter your email address",
-                      ),
+                          hintText: "Enter your email address",
+                          hintStyle: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              color: Color.fromRGBO(149, 149, 149, 1))),
                     ),
                   ),
 
@@ -154,14 +157,17 @@ class _LoginState extends State<Login> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(149, 149, 149, 1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: const BorderSide(
+                              color: Color.fromRGBO(149, 149, 149, 1),
+                            ),
                           ),
-                        ),
-                        hintText: "Enter your password",
-                      ),
+                          hintText: "Enter your password",
+                          hintStyle: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              color: Color.fromRGBO(149, 149, 149, 1))),
                     ),
                   ),
 
@@ -171,25 +177,27 @@ class _LoginState extends State<Login> {
                     child: Center(
                       child: Text(alert,
                           style:
-                              const TextStyle(fontSize: 14, color: Colors.red)),
+                              const TextStyle(fontSize: 14, color: INCORRECT)),
                     ),
                   ),
 
                   // Login button
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 20.0),
-                    child: ElevatedButton(
-                      onPressed: check,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isButtonEnabled
-                            ? const Color.fromRGBO(252, 81, 16, 1)
-                            : const Color.fromRGBO(149, 149, 149, 1),
-                        minimumSize: const Size(340, 25),
-                      ),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 18,
+                    child: SizedBox(
+                      height: 55,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: check,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              isButtonEnabled ? PRIMARY_COLOR : DISABLE,
+                        ),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
@@ -251,8 +259,8 @@ class _LoginState extends State<Login> {
                     ),
                     onTap: () {
                       Navigator.pushNamed(context, '/add-restaurant');
-                      // print(
-                      //     "Want to add your restaurant or tourist spot? tapped");
+                      print(
+                          "Want to add your restaurant or tourist spot? tapped");
                     },
                   ),
                 ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/widgets/customer_preference_grid.dart';
+import 'package:frontend/widgets/preference_addtional_info.dart';
 
 class CustomerPreferences extends StatefulWidget {
   @override
@@ -13,10 +15,18 @@ class _CustomerPreferencesState extends State<CustomerPreferences> {
   int currentPage = 0;
   final int totalPage = 3;
 
+  late Text heading = switch (currentPage) {
+    1 => Text('Select your favourite food type'),
+    2 => Text('Additional Information'),
+    _ => Text('Select your favourite cuisinies')
+  };
+
   late final firstPreference = CustomerPreferenceGrid(
-          selectPreference: selectPreference, itemSize: itemSize);
+      selectPreference: selectPreference, itemSize: itemSize);
   late final secondPreference = CustomerPreferenceGrid(
-          selectPreference: selectPreference, itemSize: itemSize);
+      selectPreference: selectPreference, itemSize: itemSize);
+
+  late final preferenceAdditionalInfo = PreferenceAddtionalInfo();
 
   final List<String> allCuisineType = [
     'Italian',
@@ -41,7 +51,7 @@ class _CustomerPreferencesState extends State<CustomerPreferences> {
         selectedPreferences.add(allCuisineType[index]);
       }
     });
-    print('|| $selectedPreferences ||');
+    // print('|| $selectedPreferences ||');
   }
 
   @override
@@ -51,14 +61,19 @@ class _CustomerPreferencesState extends State<CustomerPreferences> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Select your favourite cuisinies'),
+          // heading,
+          switch (currentPage) {
+            1 => Text('Select your favourite food type'),
+            2 => Text('Additional Information'),
+            _ => Text('Select your favourite cuisinies')
+          },
           SizedBox(
             height: 25,
           ),
           Expanded(
               child: switch (currentPage) {
             1 => secondPreference,
-            2 => Placeholder(),
+            2 => preferenceAdditionalInfo,
             _ => firstPreference
           }),
           SizedBox(height: 10),
@@ -77,13 +92,26 @@ class _CustomerPreferencesState extends State<CustomerPreferences> {
                 width: 10,
               ),
               ElevatedButton(
-                onPressed: currentPage == totalPage - 1
-                    ? null
-                    : () => setState(() {
-                          currentPage++;
-                          print(currentPage);
-                        }),
-                child: Text('Next'),
+                onPressed: () {
+                  if (currentPage != totalPage - 1) {
+                    setState(() {
+                      currentPage++;
+                    });
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: 'Registration successful!',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 3,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                    Navigator.pushNamed(context, '/login');
+                  }
+                },
+                child:
+                    currentPage != totalPage - 1 ? Text('Next') : Text('Done'),
               ),
             ],
           ),
@@ -92,6 +120,3 @@ class _CustomerPreferencesState extends State<CustomerPreferences> {
     );
   }
 }
-
-
-
