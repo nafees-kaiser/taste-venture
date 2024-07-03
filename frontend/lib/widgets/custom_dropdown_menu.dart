@@ -31,6 +31,7 @@ class CustomDropdownMenu extends StatelessWidget {
           expandedInsets: EdgeInsets.zero,
           initialSelection: _initialValue,
         ),
+        SizedBox(height: 15),
       ],
     );
   }
