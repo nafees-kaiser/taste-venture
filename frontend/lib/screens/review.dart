@@ -41,9 +41,9 @@ class Reviews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Reviews & Ratings"),
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Reviews & Ratings"),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +77,7 @@ class Reviews extends StatelessWidget {
             //     ],
             //   ),
             // ),
+            SizedBox(height: 18),
             Padding(
               padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: Text(
