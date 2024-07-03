@@ -11,7 +11,7 @@ class Booking extends StatefulWidget {
 
 class _BookingState extends State<Booking> {
   TextEditingController _dateController = TextEditingController();
-  String _selectedGuests = '10 AM-12 PM';
+  String _selectedGuests = '2 Persons';
 
   @override
   void dispose() {
@@ -80,7 +80,7 @@ class _BookingState extends State<Booking> {
               _buildConfirmButton(),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pop(context),
                   child: Text(
                     'Cancel',
                     style: GoogleFonts.inter(
@@ -167,11 +167,11 @@ class _BookingState extends State<Booking> {
             });
           },
           items: [
-            '10 AM-12 PM',
-            '12 PM - 3 PM',
-            '4 PM - 6 PM',
-            '6 PM - 8 PM',
-            '8 PM -11 PM',
+            '2 Persons',
+            '3 Persons',
+            '4 Persons',
+            '5 Persons',
+            '6 Persons',
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

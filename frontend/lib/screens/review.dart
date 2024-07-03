@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Reviews extends StatelessWidget {
@@ -37,35 +38,35 @@ class Reviews extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              // color: Color(0xFFFF4778),
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Padding(
-                  // padding: const EdgeInsets.only(left: 3.0),
-                  SvgPicture.asset(
-                    'assets/vectors/vector_3_x2.svg',
-                    width: 20,
-                    height: 20,
-                  ),
-                  // ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Ratings and Reviews',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.getFont('Inter',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
-                          letterSpacing: -0.2,
-                          color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   // color: Color(0xFFFF4778),
+            //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       // Padding(
+            //       // padding: const EdgeInsets.only(left: 3.0),
+            //       SvgPicture.asset(
+            //         'assets/vectors/vector_3_x2.svg',
+            //         width: 20,
+            //         height: 20,
+            //       ),
+            //       // ),
+            //       SizedBox(width: 12),
+            //       Expanded(
+            //         child: Text(
+            //           'Ratings and Reviews',
+            //           textAlign: TextAlign.center,
+            //           style: GoogleFonts.getFont('Inter',
+            //               fontWeight: FontWeight.w500,
+            //               fontSize: 25,
+            //               letterSpacing: -0.2,
+            //               color: Colors.black),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: Text(
@@ -180,7 +181,7 @@ class Reviews extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFFF4778)),
+                    border: Border.all(color: PRIMARY_COLOR),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
@@ -282,7 +283,7 @@ class Reviews extends StatelessWidget {
               widthFactor: barWidthFraction,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF4778),
+                  color: PRIMARY_COLOR,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
