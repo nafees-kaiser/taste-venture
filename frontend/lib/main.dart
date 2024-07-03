@@ -11,6 +11,7 @@ import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
+import 'package:frontend/screens/reservation_list.dart';
 import 'package:frontend/screens/reset_password.dart';
 import 'package:frontend/screens/reservation_manager.dart';
 import 'package:frontend/screens/restaurant_info.dart';
@@ -43,7 +44,7 @@ void main() {
       '/registration/customer': (context) => const RegistrationCustomer(),
       '/login': (context) => Login(),
       '/restaurant/information': (context) => RestaurantInfo(),
-      '/favorite': (context) => const Favorite(),
+      '/favorite': (context) => Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
@@ -60,6 +61,7 @@ void main() {
       '/otp-page': (context) => OtpPage(),
       '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
+      '/restaurant/reservation-list': (context) => ReservationList(),
       '/tourspot-detail' : (context) => TourSpotDetailsPage(),
     },
   ));
