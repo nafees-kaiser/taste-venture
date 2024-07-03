@@ -3,12 +3,15 @@ import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
+import 'package:frontend/screens/forget_password.dart';
 import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/notification_page.dart';
+import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
 import 'package:frontend/screens/add_review.dart';
+import 'package:frontend/screens/reset_password.dart';
 import 'package:frontend/screens/reservation_manager.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/registration_customer.dart';
@@ -27,7 +30,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/tourspot-detail',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -53,6 +56,9 @@ void main() {
       '/visiting-history': (contex) => VisitingHistoryPage(),
       '/add-menu': (context) => AddMenuPage(),
       '/initial-menu': (context) => InitialMenu(),
+      '/forget-password': (context) => ForgetPassword(),
+      '/otp-page': (context) => OtpPage(),
+      '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
       '/tourspot-detail' : (context) => TourSpotDetailsPage(),
     },
