@@ -68,7 +68,6 @@ void main() {
       '/tourspot-detail': (context) => TourSpotDetailsPage(),
       '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
-      '/tourspot-detail': (context) => TourSpotDetailsPage(),
       '/customer/reservation': (context) => CustomerReservation(),
       '/manager-profile': (context) => ManagerProfile(),
     },
