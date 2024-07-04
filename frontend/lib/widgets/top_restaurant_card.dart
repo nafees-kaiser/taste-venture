@@ -22,15 +22,19 @@ class _TopResCardState extends State<TopResCard> {
         width: 150,
         height: 220,
         child: Card.outlined(
+          elevation: 5,
+          surfaceTintColor: PRIMARY_COLOR,
+          color: Colors.white,
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20.0),
-              ),
-              side: BorderSide(
-                color: DISABLE,
-                width: 1,
-              )),
-          color: BACKGROUND,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+            // side: BorderSide(
+            //   color: DISABLE,
+            //   width: 1,
+            // )
+          ),
+          //color: BACKGROUND,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

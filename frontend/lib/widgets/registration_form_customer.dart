@@ -53,7 +53,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     print('***${dateFormat.parse(dob)}****');
 
     Customer customer = Customer(
-      fullName: fullName,
+      full_name: fullName,
       contact: contact,
       email: email,
       dob: dob,
@@ -63,17 +63,15 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       password: password,
     );
 
-
-
     final response = await http.post(
       Uri.parse(uri),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(customer.toJson()),
+      body: customer.toJson(),
     );
 
-    print(response.statusCode);
+    print("Response Code: ${response.statusCode}");
   }
 
   // final [fullName, contact, email] = controller;
@@ -296,8 +294,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
-                register();
-                // Navigator.pushNamed(context, '/preference');
+                // register();
+                Navigator.pushNamed(context, '/preference');
               }
             },
             style: ElevatedButton.styleFrom(

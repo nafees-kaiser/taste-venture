@@ -10,7 +10,7 @@ class CustomerPreferences extends StatefulWidget {
 
 class _CustomerPreferencesState extends State<CustomerPreferences> {
   List<String> selectedPreferences = <String>[];
-  int itemSize = 10;
+  int itemSize = 5;
 
   int currentPage = 0;
   final int totalPage = 3;
