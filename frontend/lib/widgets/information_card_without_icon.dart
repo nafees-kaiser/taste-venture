@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
-class InformationCardWithoutIcon extends StatelessWidget {
-  final String heading, text;
-  const InformationCardWithoutIcon(
+class InformationCardWithoutIcon extends StatefulWidget {
+  String heading, text;
+  InformationCardWithoutIcon(
       {super.key, required this.heading, required this.text});
+
+  @override
+  _InformationCardWithoutIconState createState() =>
+      _InformationCardWithoutIconState();
+}
+
+class _InformationCardWithoutIconState
+    extends State<InformationCardWithoutIcon> {
+  bool isEditing = false;
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.text);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,29 +53,55 @@ class InformationCardWithoutIcon extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                heading,
+                widget.heading,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
                 ),
               ),
-              Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1,
-                ),
-              ),
+              isEditing
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 8.0),
+                      width: 240,
+                      child: TextField(
+                        controller: _controller,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter text',
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Text(
+                      widget.text,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 1,
+                      ),
+                    ),
             ],
           ),
-          const Text(
-            "Edit",
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 15,
-              letterSpacing: 1,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                if (isEditing) {
+                  // Save the edited text
+                  widget.text = _controller.text;
+                }
+                isEditing = !isEditing;
+              });
+            },
+            child: Text(
+              isEditing ? "Save" : "Edit",
+              style: const TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 15,
+                letterSpacing: 1,
+              ),
             ),
           )
         ],
