@@ -33,7 +33,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/registration/customer',
+    initialRoute: '/restaurant/information',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {

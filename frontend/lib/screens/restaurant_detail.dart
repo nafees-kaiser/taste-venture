@@ -9,16 +9,46 @@ class RestaurantDetail extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            child: const Image(
-                image: AssetImage('assets/yum-cha-district-banani.jpg')),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                // height: 200,
+                child: const Image(
+                    image: AssetImage('assets/yum-cha-district-banani.jpg')),
+              ),
+              Positioned(
+                bottom: 15,
+                right: 20,
+                child: Container(
+                  alignment: Alignment.topRight,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/booking'),
+                    child: Text(
+                      'Reserve',
+                      style: TextStyle(fontSize: theme.buttonTextSize),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
+          // Container(
+          //   child: const Image(
+          //       image: AssetImage('assets/yum-cha-district-banani.jpg')),
+          // ),
           SizedBox(height: 13),
           RestaurantHeading(theme: theme),
           SizedBox(height: 13),
           RestaurantTimeAndDistance(theme: theme),
           SizedBox(height: 13),
-          DescAndButton(theme: theme),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+                'Welcome to Grand Restaurant, the ultimate destination for culinary adventurers and food enthusiasts! Nestled in the heart of the city, our restaurant offers an extraordinary dining experience that seamlessly blends the rich flavors of Italy with the exquisite tastes of Japan.'),
+          ),
+          SizedBox(height: 16),
+          // DescAndButton(theme: theme),
         ],
       ),
     );
@@ -46,7 +76,10 @@ class DescAndButton extends StatelessWidget {
             alignment: Alignment.topRight,
             child: ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/booking'),
-              child: Text('Reserve', style: TextStyle(fontSize: theme.buttonTextSize),),
+              child: Text(
+                'Reserve',
+                style: TextStyle(fontSize: theme.buttonTextSize),
+              ),
             ),
           ),
         ],
@@ -119,7 +152,8 @@ class RestaurantHeading extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Yumcha District', style: theme.textTheme.headlineMedium),
+                  Text('Yumcha District',
+                      style: theme.textTheme.headlineMedium),
                   Text('Banani, Dhaka'),
                 ],
               ),

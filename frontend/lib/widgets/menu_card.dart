@@ -81,3 +81,60 @@ class MenuCard extends StatelessWidget {
     );
   }
 }
+
+class MenuCard2 extends StatelessWidget {
+  const MenuCard2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      height: 130,
+      decoration: BoxDecoration(
+          border: Border.all(color: BORDER_COLOR),
+          borderRadius: BorderRadius.circular(7)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            clipBehavior: Clip.antiAlias,
+            // padding: EdgeInsets.fromLTRB(0, 0, 5, 5),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(7)),
+            width: 80,
+            height: 80,
+            child: const Image(image: AssetImage('assets/pizza.jpg')),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Nigiri Sushi',
+                    style: Theme.of(context).textTheme.headlineSmall),
+                SizedBox(height: 3),
+                Expanded(
+                  child: Text(
+                    'Fresh slices of fish or seafood atop vinegared rice.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                  ),
+                ),
+                // SizedBox(height: 7),
+                Text(
+                  '340 Taka',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
