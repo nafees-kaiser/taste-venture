@@ -39,7 +39,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
                         thickness: 3,
                       ),
                       SizedBox(height: 13),
-                      MenuCard(),
+                      MenuCard2(),
                     ],
                   ),
                 ),

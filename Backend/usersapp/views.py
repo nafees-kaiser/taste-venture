@@ -14,7 +14,9 @@ def users_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        print(request.data)
         serializer = UserSerializer(data=request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
