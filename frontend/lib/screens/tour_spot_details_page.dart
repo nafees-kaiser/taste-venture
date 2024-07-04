@@ -28,7 +28,8 @@ class TourSpotDetailsPageContents extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 360,
+                  // width: 360,
+                  width: double.infinity,
                   height: 157,
                   child:
                       const Image(image: AssetImage('assets/water_garden.png')),
@@ -141,7 +142,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: ElevatedButton(
-            onPressed: ()=>Navigator.pushNamed(context, '/booking'),
+            onPressed: () => Navigator.pushNamed(context, '/booking'),
             child: Text('Reserve'),
             style: ElevatedButton.styleFrom(
               backgroundColor: SECONDARY_COLOR,

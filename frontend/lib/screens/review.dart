@@ -28,12 +28,22 @@ class Reviews extends StatelessWidget {
       'reviewText':
           'Absolutely loved the food at Fusion Delights! The flavors were amazing and the service was exceptional. Highly recommend!',
     },
+    {
+      'user': 'John Doe',
+      'date': '06/15/2024',
+      'ratingStars': [5, 5, 5, 5, 5], // Assuming all 5 stars
+      'reviewText':
+          'Absolutely loved the food at Fusion Delights! The flavors were amazing and the service was exceptional. Highly recommend!',
+    },
     // Add more reviews as needed
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text("Reviews & Ratings"),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,6 +77,7 @@ class Reviews extends StatelessWidget {
             //     ],
             //   ),
             // ),
+            SizedBox(height: 18),
             Padding(
               padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: Text(

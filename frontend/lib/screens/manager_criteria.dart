@@ -13,7 +13,7 @@ class _ManagerCriteriaState extends State<ManagerCriteria> {
   final List<Map<String, String>> cuisines = [
     {
       'name': 'French',
-      'image': 'assets/images/rectangle_387.jpeg',
+      'image': 'assets/rectangle_387.jpeg',
     },
     {
       'name': 'Italian',
@@ -45,37 +45,28 @@ class _ManagerCriteriaState extends State<ManagerCriteria> {
     },
   ];
 
+  Set<int> selectedCuisines = {}; // Set to keep track of selected cuisines
   int currentPage = 1; // Current page indicator
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Criteria"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
           ),
-          padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Text(
-                  'Criteria',
-                  style: GoogleFonts.getFont(
-                    'Inter',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 28,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(height: 25),
-              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 13),
                 child: Text(
-                  'What cuisines you offer?',
+                  'What cuisines do you offer?',
                   style: GoogleFonts.getFont(
                     'Inter',
                     fontWeight: FontWeight.w400,
@@ -96,32 +87,48 @@ class _ManagerCriteriaState extends State<ManagerCriteria> {
                 ),
                 itemCount: cuisines.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: Color(0xFFFAFAFA)),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(cuisines[index]['image']!),
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (selectedCuisines.contains(index)) {
+                          selectedCuisines.remove(index);
+                        } else {
+                          selectedCuisines.add(index);
+                        }
+                      });
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              color: selectedCuisines.contains(index)
+                                  ? Color(0xFFFC5110)
+                                  : Color(0xFFFAFAFA),
+                              width: 2,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(cuisines[index]['image']!),
+                            ),
+                          ),
+                          width: 145.2,
+                          height: 100,
+                        ),
+                        SizedBox(height: 7),
+                        Text(
+                          cuisines[index]['name']!,
+                          style: GoogleFonts.getFont(
+                            'Inter',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
                         ),
-                        width: 145.2,
-                        height: 100,
-                      ),
-                      SizedBox(height: 7),
-                      Text(
-                        cuisines[index]['name']!,
-                        style: GoogleFonts.getFont(
-                          'Inter',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),

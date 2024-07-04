@@ -10,7 +10,9 @@ class InitialMenuContent extends StatefulWidget {
 }
 
 class _InitialMenuContentState extends State<InitialMenuContent> {
-  List<String>? menuItems = [];
+  List<String>? menuItems = [
+    'Pizza',
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +41,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
                         thickness: 3,
                       ),
                       SizedBox(height: 13),
-                      MenuCard(),
+                      MenuCard2(),
                     ],
                   ),
                 ),
@@ -49,13 +51,16 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: ()=>Navigator.pushNamed(context, '/add-menu'),
+              onPressed: () => Navigator.pushNamed(context, '/add-menu'),
               child: Text('Add'),
             ),
             SizedBox(width: 12),
             ElevatedButton(
-              onPressed:
-                  (menuItems == null || menuItems!.isEmpty) ? null : () {},
+              onPressed: (menuItems == null || menuItems!.isEmpty)
+                  ? null
+                  : () {
+                      Navigator.pushNamed(context, '/manager-home');
+                    },
               child: Text('Done'),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/add_menu_page.dart';
+import 'package:frontend/screens/add_tourspot_additional_info.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/customer_reservation.dart';
@@ -8,6 +9,7 @@ import 'package:frontend/screens/forget_password.dart';
 import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
+import 'package:frontend/screens/manager_profile.dart';
 import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
@@ -30,6 +32,7 @@ import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/screens/tour_spot_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/customer-homepage',
@@ -62,9 +65,12 @@ void main() {
       '/otp-page': (context) => OtpPage(),
       '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
+      '/tourspot-detail': (context) => TourSpotDetailsPage(),
+      '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/tourspot-detail': (context) => TourSpotDetailsPage(),
       '/customer/reservation': (context) => CustomerReservation(),
+      '/manager-profile': (context) => ManagerProfile(),
     },
   ));
 }

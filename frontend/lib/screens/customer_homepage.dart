@@ -176,7 +176,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                 ),
                               )),
                           onTap: () {
-                            Navigator.pushNamed(context, "/tourist_venue-view");
+                            Navigator.pushNamed(context, "/tourspot-view");
                           }),
                     ],
                   ),
@@ -289,7 +289,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                         ),
                         onTap: () {
                           // print("See all tapped");
-                          Navigator.pushNamed(context, '/restaurant-view');
+                          Navigator.pushNamed(context, '/tourspot-view');
                         },
                       ),
                     ],
@@ -305,7 +305,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                             tourImage: "assets/pizza.jpg",
                             tourName: "PizzaBurg",
                             tourAddress: "14/A Mirpur-1, Dhaka-1211",
-                            tourURL: '/login',
+                            tourURL: '/tourspot-detail',
                           )
                       ],
                     )),

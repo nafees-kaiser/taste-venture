@@ -36,7 +36,8 @@ class ManagerSidebar extends StatelessWidget {
             leading: const Icon(Icons.account_box),
             title: const Text("Account settings"),
             onTap: () {
-              Navigator.pushNamed(context, '/profile');
+              // Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(context, '/manager-profile');
             },
           ),
           ListTile(
@@ -49,12 +50,18 @@ class ManagerSidebar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.book_online),
             title: const Text("Reservations"),
-            onTap: () => print('reservations tapped'),
+            onTap: () {
+              Navigator.pushNamed(context, '/restaurant/reservation-manager');
+              // print('reservations tapped'),
+            },
           ),
           ListTile(
             leading: const Icon(Icons.notifications),
             title: const Text("Notifications"),
-            onTap: () => print('notification tapped'),
+            onTap: () {
+              Navigator.pushNamed(context, '/notification');
+              // print('notification tapped'),
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),

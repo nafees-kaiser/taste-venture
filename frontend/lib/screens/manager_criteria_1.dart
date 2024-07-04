@@ -25,7 +25,7 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
     },
     {
       'name': 'Spicy',
-      'image': 'assets/images/rectangle_3810.png',
+      'image': 'assets/SpicyFood.png',
     },
     {
       'name': 'Sour',
@@ -37,107 +37,116 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
     },
   ];
 
+  Set<int> selectedCuisines = {}; // Set to keep track of selected cuisines
   int currentPage = 2; // Current page indicator
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: Text(
-                'Criteria',
-                style: GoogleFonts.getFont(
-                  'Inter',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 28,
-                  color: Colors.black,
+      appBar: AppBar(
+        title: const Text("Criteria"),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 13),
+                child: Text(
+                  'What type of food do you offer?',
+                  style: GoogleFonts.getFont(
+                    'Inter',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 13),
-              child: Text(
-                'What type of food you offer?',
-                style: GoogleFonts.getFont(
-                  'Inter',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                  color: Colors.black,
+              SizedBox(height: 10),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 28,
+                  crossAxisSpacing: 24,
+                  childAspectRatio: (145.2 / 125), // width / (height + text)
                 ),
-              ),
-            ),
-            SizedBox(height: 10),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 28,
-                crossAxisSpacing: 24,
-                childAspectRatio: (145.2 / 125), // width / (height + text)
-              ),
-              itemCount: cuisines.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Color(0xFFFAFAFA)),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(cuisines[index]['image']!),
+                itemCount: cuisines.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (selectedCuisines.contains(index)) {
+                          selectedCuisines.remove(index);
+                        } else {
+                          selectedCuisines.add(index);
+                        }
+                      });
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              color: selectedCuisines.contains(index)
+                                  ? Color(0xFFFC5110)
+                                  : Color(0xFFFAFAFA),
+                              width: 2,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(cuisines[index]['image']!),
+                            ),
+                          ),
+                          width: 145.2,
+                          height: 100,
                         ),
-                      ),
-                      width: 145.2,
-                      height: 100,
+                        SizedBox(height: 7),
+                        Text(
+                          cuisines[index]['name']!,
+                          style: GoogleFonts.getFont(
+                            'Inter',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 7),
-                    Text(
-                      cuisines[index]['name']!,
-                      style: GoogleFonts.getFont(
-                        'Inter',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            SizedBox(height: 24),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildDot(currentPage == 1),
-                    _buildDot(currentPage == 2),
-                  ],
-                ),
-                SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _buildButton('Previous'),
-                    SizedBox(width: 16),
-                    _buildButton('Next'),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  );
+                },
+              ),
+              SizedBox(height: 24),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildDot(currentPage == 1),
+                      _buildDot(currentPage == 2),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _buildButton('Previous'),
+                      SizedBox(width: 16),
+                      _buildButton('Next'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -163,14 +172,13 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
             context,
             MaterialPageRoute(builder: (context) => ManagerCriteria()),
           );
-        }
-        else{
-          Navigator.pushNamed(context, '/manager-home');
+        } else {
+          Navigator.pushNamed(context, '/initial-menu');
         }
       },
       child: Container(
         decoration: BoxDecoration(
-          color:Color(0xFFFC5110),
+          color: title == 'Previous' ? Color(0xFF959595) : Color(0xFFFC5110),
           borderRadius: BorderRadius.circular(8),
         ),
         width: 100,

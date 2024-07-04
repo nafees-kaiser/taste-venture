@@ -105,7 +105,7 @@ class _TopTourCardState extends State<TopTourCard> {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.pushNamed(context, '/tour_spot/information'),
+                        Navigator.pushNamed(context, '/tourspot-detail'),
                     child: const Text(
                       "View",
                       style: TextStyle(fontSize: 16, color: Colors.white),
