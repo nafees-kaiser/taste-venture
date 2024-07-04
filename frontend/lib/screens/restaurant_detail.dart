@@ -75,7 +75,8 @@ class DescAndButton extends StatelessWidget {
           Container(
             alignment: Alignment.topRight,
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/booking'),
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/customer/reservation'),
               child: Text(
                 'Reserve',
                 style: TextStyle(fontSize: theme.buttonTextSize),
