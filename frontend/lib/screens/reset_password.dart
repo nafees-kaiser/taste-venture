@@ -14,9 +14,9 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Reset Password'),
-      // ),
+      appBar: AppBar(
+        title: Text('Reset Password'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -63,7 +63,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   String confirmPassword = _confirmPasswordController.text;
                   if (password.isNotEmpty && confirmPassword.isNotEmpty) {
                     if (password == confirmPassword) {
-                      Navigator.pushNamed(context, '/customer-homepage');
+                      Navigator.pushNamed(context, '/login');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Password reset successfully')),
                       );

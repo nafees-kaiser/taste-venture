@@ -42,7 +42,9 @@ class ManagerHome extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/notification');
+            },
             icon: const Icon(Icons.notifications),
           ),
         ],

@@ -11,9 +11,9 @@ class _OTPPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Enter OTP'),
-      // ),
+      appBar: AppBar(
+        title: Text('Enter OTP'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -40,7 +40,7 @@ class _OTPPageState extends State<OtpPage> {
                 hintText: 'OTP',
               ),
               keyboardType: TextInputType.number,
-              // maxLength: 6,
+              maxLength: 6,
             ),
             SizedBox(height: 30.0),
             SizedBox(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Booking extends StatefulWidget {
@@ -198,7 +199,7 @@ class _BookingState extends State<Booking> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(252, 81, 16, 1),
+        color: SECONDARY_COLOR,
         borderRadius: BorderRadius.circular(5),
       ),
       padding: EdgeInsets.symmetric(vertical: 16.5),
