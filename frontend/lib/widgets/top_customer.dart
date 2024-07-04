@@ -8,17 +8,17 @@ class TopCustomer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        width: double.infinity,
         padding: Theme.of(context).subSectionDividerPadding,
         child: DataTable(
             border: TableBorder.all(
               width: 1,
             ),
             headingRowHeight: 40,
-            dataRowHeight: 30,
             sortColumnIndex: 0,
             sortAscending: true,
             dataTextStyle: const TextStyle(
-              fontSize: 17,
+              fontSize: 15,
             ),
             headingTextStyle: const TextStyle(
               fontSize: 15,

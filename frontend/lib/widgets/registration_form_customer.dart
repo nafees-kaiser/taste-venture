@@ -60,7 +60,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       married: married,
       password: password,
     );
-
+    print("Clicked");
     final response = await http.post(
       Uri.parse(uri),
       body: jsonEncode(customer.toJson()),

@@ -5,3 +5,4 @@ email:admin@gmail.com
 to jump virtual environment
 run it on the terminal:  .\.venv\Scripts\activate
 then install what you want: pip install psycopg2
+for adding database: 1.migration 2.makemigrations 3.startapp
