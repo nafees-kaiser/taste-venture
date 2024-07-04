@@ -60,13 +60,16 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       married: married,
       password: password,
     );
-    print("Clicked");
+
     final response = await http.post(
-      Uri.parse(uri),
+      Uri.parse('http://10.0.2.2:8000/users/register/'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: jsonEncode(customer.toJson()),
     );
 
-    print(response.statusCode);
+    print("Response Code: ${response.statusCode}");
   }
 
   // final [fullName, contact, email] = controller;
