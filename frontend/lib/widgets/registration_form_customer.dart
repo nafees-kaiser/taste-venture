@@ -50,19 +50,26 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     final String address = controller[7].text;
     final String married = controller[8].text;
 
+    print('***${dateFormat.parse(dob)}****');
+
     Customer customer = Customer(
       fullName: fullName,
       contact: contact,
       email: email,
-      dob: dateFormat.parse(dob),
+      dob: dob,
       address: address,
       gender: gender,
       married: married,
       password: password,
     );
 
+
+
     final response = await http.post(
       Uri.parse(uri),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: jsonEncode(customer.toJson()),
     );
 

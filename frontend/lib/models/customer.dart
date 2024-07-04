@@ -5,7 +5,7 @@ class Customer {
   String fullName;
   String contact;
   String email;
-  DateTime dob;
+  String dob;
   String address;
   String gender;
   String married;
@@ -28,7 +28,7 @@ class Customer {
     String? fullName,
     String? contact,
     String? email,
-    DateTime? dob,
+    String? dob,
     String? address,
     String? gender,
     String? married,
@@ -51,7 +51,7 @@ class Customer {
       'fullName': fullName,
       'contact': contact,
       'email': email,
-      'dob': dob.millisecondsSinceEpoch,
+      'dob': dob,
       'address': address,
       'gender': gender,
       'married': married,
@@ -64,7 +64,7 @@ class Customer {
       fullName: map['fullName'] as String,
       contact: map['contact'] as String,
       email: map['email'] as String,
-      dob: DateTime.fromMillisecondsSinceEpoch(map['dob'] as int),
+      dob: map['dob'] as String,
       address: map['address'] as String,
       gender: map['gender'] as String,
       married: map['married'] as String,
