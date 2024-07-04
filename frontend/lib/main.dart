@@ -32,7 +32,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/customer/reservation',
+    initialRoute: '/customer-homepage',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -63,8 +63,8 @@ void main() {
       '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
       '/restaurant/reservation-list': (context) => ReservationList(),
-      '/tourspot-detail' : (context) => TourSpotDetailsPage(),
-      '/customer/reservation' : (context) => CustomerReservation(),
+      '/tourspot-detail': (context) => TourSpotDetailsPage(),
+      '/customer/reservation': (context) => CustomerReservation(),
     },
   ));
 }

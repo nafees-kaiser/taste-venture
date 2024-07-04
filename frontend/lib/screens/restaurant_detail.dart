@@ -45,8 +45,12 @@ class DescAndButton extends StatelessWidget {
           Container(
             alignment: Alignment.topRight,
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/booking'),
-              child: Text('Reserve', style: TextStyle(fontSize: theme.buttonTextSize),),
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/customer/reservation'),
+              child: Text(
+                'Reserve',
+                style: TextStyle(fontSize: theme.buttonTextSize),
+              ),
             ),
           ),
         ],
@@ -119,7 +123,8 @@ class RestaurantHeading extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Yumcha District', style: theme.textTheme.headlineMedium),
+                  Text('Yumcha District',
+                      style: theme.textTheme.headlineMedium),
                   Text('Banani, Dhaka'),
                 ],
               ),

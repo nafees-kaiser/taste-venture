@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:intl/intl.dart';
 
@@ -43,12 +42,26 @@ class _CustomerReservationState extends State<CustomerReservation> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> selectDate() async {
+      DateTime? date = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2100));
+
+      if (date != null) {
+        setState(() {
+          dateController.text = DateFormat("dd/MM/yyyy").format(date);
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Reservation Information"),
         backgroundColor: Colors.white,
       ),
-      body: Center(
+      body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -75,7 +88,7 @@ class _CustomerReservationState extends State<CustomerReservation> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: titleText("Time:"),
             ),
             DropdownButtonFormField<String>(
@@ -116,7 +129,7 @@ class _CustomerReservationState extends State<CustomerReservation> {
                 ),
               ),
             ]),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Row(
               children: [
                 Radio<String>(
@@ -161,19 +174,5 @@ class _CustomerReservationState extends State<CustomerReservation> {
         ),
       )),
     );
-  }
-
-  Future<void> selectDate() async {
-    DateTime? date = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2100));
-
-    if (date != null) {
-      setState(() {
-        dateController.text = DateFormat("dd/MM/yyyy").format(date);
-      });
-    }
   }
 }

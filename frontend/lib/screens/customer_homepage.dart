@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/top_restaurant_card.dart';
 import 'package:frontend/widgets/top_tour_card.dart';
 
@@ -14,8 +15,38 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       appBar: AppBar(
-        title: const Text("Customer Homepage"),
+        title: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.pin_drop,
+                size: 18,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Jatrabari, Dhaka-1236",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 15,
+                ),
+              ),
+            ],
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, '/notification'),
+            icon: const Icon(Icons.notifications),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -50,18 +81,18 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     children: [
                       GestureDetector(
                           child: SizedBox(
-                              width: 170,
+                              width: double.infinity,
                               height: 170,
-                              child: Card.outlined(
+                              child: Card(
+                                elevation: 5,
+                                surfaceTintColor: PRIMARY_COLOR,
+                                color: Colors.white,
                                 shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20.0),
-                                    ),
-                                    side: BorderSide(
-                                      color: DISABLE,
-                                      width: 1,
-                                    )),
-                                color: BACKGROUND,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
+                                //color: BACKGROUND,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -97,18 +128,23 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           }),
                       GestureDetector(
                           child: SizedBox(
-                              width: 170,
+                              width: double.infinity,
                               height: 170,
                               child: Card.outlined(
+                                elevation: 5,
+                                surfaceTintColor: SECONDARY_COLOR,
+                                color: Colors.white,
                                 shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20.0),
-                                    ),
-                                    side: BorderSide(
-                                      color: DISABLE,
-                                      width: 1,
-                                    )),
-                                color: BACKGROUND,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                  //     side: BorderSide(
+                                  //       color: DISABLE,
+                                  //       width: 1,
+                                  //     )
+                                ),
+                                // color: BACKGROUND,
+
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
