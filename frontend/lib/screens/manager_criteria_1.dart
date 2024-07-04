@@ -25,7 +25,7 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
     },
     {
       'name': 'Spicy',
-      'image': 'assets/images/rectangle_3810.png',
+      'image': 'assets/SpicyFood.png',
     },
     {
       'name': 'Sour',
@@ -42,27 +42,30 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Criteria"),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
         ),
-        padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: Text(
-                'Criteria',
-                style: GoogleFonts.getFont(
-                  'Inter',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 28,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            SizedBox(height: 25),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 18),
+            //   child: Text(
+            //     'Criteria',
+            //     style: GoogleFonts.getFont(
+            //       'Inter',
+            //       fontWeight: FontWeight.w500,
+            //       fontSize: 28,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 25),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 13),
               child: Text(
@@ -163,14 +166,13 @@ class _ManagerCriteriaState1 extends State<ManagerCriteria1> {
             context,
             MaterialPageRoute(builder: (context) => ManagerCriteria()),
           );
-        }
-        else{
-          Navigator.pushNamed(context, '/manager-home');
+        } else {
+          Navigator.pushNamed(context, '/initial-menu');
         }
       },
       child: Container(
         decoration: BoxDecoration(
-          color:Color(0xFFFC5110),
+          color: Color(0xFFFC5110),
           borderRadius: BorderRadius.circular(8),
         ),
         width: 100,

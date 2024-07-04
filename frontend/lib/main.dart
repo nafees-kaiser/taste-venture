@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/add_menu_page.dart';
+import 'package:frontend/screens/add_tourspot_additional_info.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/favorite.dart';
@@ -62,6 +63,8 @@ void main() {
       '/otp-page': (context) => OtpPage(),
       '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
+      '/tourspot-detail': (context) => TourSpotDetailsPage(),
+      '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/tourspot-detail': (context) => TourSpotDetailsPage(),
     },

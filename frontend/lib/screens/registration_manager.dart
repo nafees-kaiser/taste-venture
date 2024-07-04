@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
-import 'package:frontend/screens/manager_criteria.dart';
 
 class RegistrationVenueManager extends StatefulWidget {
   @override
@@ -14,7 +12,6 @@ class RegistrationVenueManager extends StatefulWidget {
 class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
   String selectedVenueType = 'Restaurant';
 
-  // Track field completion
   final Map<String, bool> fieldStatus = {
     'Venue Name': false,
     'Manager Name': false,
@@ -71,35 +68,32 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
     super.dispose();
   }
 
+  void navigateToCriteria() {
+    if (selectedVenueType == 'Restaurant') {
+      Navigator.pushNamed(context, '/criteria');
+    } else if (selectedVenueType == 'Tour Spot') {
+      Navigator.pushNamed(context, '/tourspot-info');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool allFieldsFilled = fieldStatus.values.every((filled) => filled);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add Your Venue"),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Add Your Venue',
-                      style: GoogleFonts.getFont(
-                        'Inter',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
-                        height: 1.2,
-                        color: Color(0xFF000000),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 35),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,11 +143,7 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                           }).toList(),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Column(
-                    children: [
+                      SizedBox(height: 16),
                       CustomInputField(
                         label: 'Venue Name',
                         hintText: 'Enter your venue name',
@@ -178,7 +168,6 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         onChanged: (_) => checkAllFieldsFilled(),
                         controller: _emailAddressController,
                       ),
-                      SizedBox(height: 16),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -229,26 +218,21 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         onChanged: (_) => checkAllFieldsFilled(),
                         controller: _reTypePasswordController,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 25),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: allFieldsFilled
-                                ? Color(0xFFFC5110)
+                                ? PRIMARY_COLOR
                                 : Color(0xFF959595),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextButton(
                             onPressed: allFieldsFilled
                                 ? () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ManagerCriteria()),
-                                    );
+                                    navigateToCriteria();
                                   }
                                 : null,
                             child: Container(

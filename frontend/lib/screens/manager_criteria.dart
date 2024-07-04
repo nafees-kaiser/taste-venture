@@ -13,7 +13,7 @@ class _ManagerCriteriaState extends State<ManagerCriteria> {
   final List<Map<String, String>> cuisines = [
     {
       'name': 'French',
-      'image': 'assets/images/rectangle_387.jpeg',
+      'image': 'assets/rectangle_387.jpeg',
     },
     {
       'name': 'Italian',
@@ -50,28 +50,31 @@ class _ManagerCriteriaState extends State<ManagerCriteria> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Criteria"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
           ),
-          padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Text(
-                  'Criteria',
-                  style: GoogleFonts.getFont(
-                    'Inter',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 28,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(height: 25),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 18),
+              //   child: Text(
+              //     'Criteria',
+              //     style: GoogleFonts.getFont(
+              //       'Inter',
+              //       fontWeight: FontWeight.w500,
+              //       fontSize: 28,
+              //       color: Colors.black,
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 25),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 13),
                 child: Text(
