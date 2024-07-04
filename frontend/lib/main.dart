@@ -8,6 +8,7 @@ import 'package:frontend/screens/forget_password.dart';
 import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
+import 'package:frontend/screens/manager_profile.dart';
 import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
@@ -33,7 +34,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/registration/customer',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
@@ -67,6 +68,7 @@ void main() {
       '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/tourspot-detail': (context) => TourSpotDetailsPage(),
+      '/manager-profile': (context) => ManagerProfile(),
     },
   ));
 }

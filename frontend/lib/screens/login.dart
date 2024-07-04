@@ -16,6 +16,7 @@ class _LoginState extends State<Login> {
 
   String email = "", password = "";
   String demoEmail = "rafsanprove@gmail.com", demoPassword = "password123";
+  String demoManagerEmail = "mayome@gmail.com", demoManagerPassword = "123";
   String alert = "";
   bool isButtonEnabled = false;
 
@@ -87,6 +88,17 @@ class _LoginState extends State<Login> {
             fontSize: 16.0);
 
         Navigator.pushNamed(context, '/customer-homepage');
+      } else if (email == demoManagerEmail && password == demoManagerPassword) {
+        Fluttertoast.showToast(
+            msg: "Login Successful",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Navigator.pushNamed(context, '/manager-home');
       } else {
         setState(() {
           alert = "Warning: Invalid email or password";
