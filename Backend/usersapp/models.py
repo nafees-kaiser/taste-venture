@@ -1,6 +1,7 @@
 from django.db import models
 from django.db import models
 
+
 class Users(models.Model):
     full_name = models.CharField(max_length=200)
     contact = models.CharField(max_length=200, unique=True)
