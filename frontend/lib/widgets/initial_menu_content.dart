@@ -49,13 +49,16 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: ()=>Navigator.pushNamed(context, '/add-menu'),
+              onPressed: () => Navigator.pushNamed(context, '/add-menu'),
               child: Text('Add'),
             ),
             SizedBox(width: 12),
             ElevatedButton(
-              onPressed:
-                  (menuItems == null || menuItems!.isEmpty) ? null : () {},
+              onPressed: (menuItems == null || menuItems!.isEmpty)
+                  ? null
+                  : () {
+                      Navigator.pushNamed(context, '/manager-home');
+                    },
               child: Text('Done'),
             ),
           ],
