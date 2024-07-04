@@ -88,7 +88,9 @@ class ManagerMenuInformations extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/add-menu');
+        },
         backgroundColor: PRIMARY_COLOR,
         child: const Icon(
           Icons.add,

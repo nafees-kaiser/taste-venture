@@ -75,9 +75,7 @@ class _RestaurantState extends State<Restaurant> {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Handle notification icon press
-            },
+            onPressed: () => Navigator.pushNamed(context, '/notification'),
           ),
         ],
       ),
