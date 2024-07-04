@@ -70,9 +70,7 @@ class _TourSpotState extends State<TourSpot> {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Handle notification icon press
-            },
+            onPressed: () => Navigator.pushNamed(context, '/notification'),
           ),
         ],
       ),

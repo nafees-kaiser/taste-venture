@@ -79,105 +79,113 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   child: Row(
                     children: [
-                      GestureDetector(
-                          child: SizedBox(
-                              width: double.infinity,
-                              height: 170,
-                              child: Card(
-                                elevation: 5,
-                                surfaceTintColor: PRIMARY_COLOR,
-                                color: Colors.white,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
+                      Expanded(
+                        child: GestureDetector(
+                            child: Container(
+                                width: double.infinity,
+                                height: 170,
+                                child: Card(
+                                  elevation: 5,
+                                  surfaceTintColor: PRIMARY_COLOR,
+                                  color: Colors.white,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
                                   ),
-                                ),
-                                //color: BACKGROUND,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      child: Text(
-                                        "Browse Restaurant",
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900,
+                                  //color: BACKGROUND,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            10.0, 10.0, 10.0, 0.0),
+                                        child: Text(
+                                          "Browse Restaurant",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w900,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                          "assets/restaurant.png",
-                                          width: double.infinity,
-                                          height: 80,
-                                          fit: BoxFit.fitWidth,
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.asset(
+                                            "assets/restaurant.png",
+                                            width: double.infinity,
+                                            height: 80,
+                                            fit: BoxFit.fitWidth,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          onTap: () {
-                            Navigator.pushNamed(context, "/restaurant-view");
-                          }),
-                      GestureDetector(
-                          child: SizedBox(
-                              width: double.infinity,
-                              height: 170,
-                              child: Card.outlined(
-                                elevation: 5,
-                                surfaceTintColor: SECONDARY_COLOR,
-                                color: Colors.white,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
+                                    ],
                                   ),
-                                  //     side: BorderSide(
-                                  //       color: DISABLE,
-                                  //       width: 1,
-                                  //     )
-                                ),
-                                // color: BACKGROUND,
+                                )),
+                            onTap: () {
+                              Navigator.pushNamed(context, "/restaurant-view");
+                            }),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                            child: Container(
+                                width: double.infinity,
+                                height: 170,
+                                child: Card.outlined(
+                                  elevation: 5,
+                                  surfaceTintColor: SECONDARY_COLOR,
+                                  color: Colors.white,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                    //     side: BorderSide(
+                                    //       color: DISABLE,
+                                    //       width: 1,
+                                    //     )
+                                  ),
+                                  // color: BACKGROUND,
 
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      child: Text(
-                                        "Browse Tourist Venue",
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            10.0, 10.0, 10.0, 0.0),
+                                        child: Text(
+                                          "Browse Tourist Venue",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w900,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                          "assets/tourVenue.png",
-                                          width: double.infinity,
-                                          height: 80,
-                                          fit: BoxFit.fitHeight,
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.asset(
+                                            "assets/tourVenue.png",
+                                            width: double.infinity,
+                                            height: 80,
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          onTap: () {
-                            Navigator.pushNamed(context, "/tourspot-view");
-                          }),
+                                    ],
+                                  ),
+                                )),
+                            onTap: () {
+                              Navigator.pushNamed(context, "/tourspot-view");
+                            }),
+                      ),
                     ],
                   ),
                 ),
@@ -302,8 +310,8 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                       children: [
                         for (int i = 0; i < 5; i++)
                           TopTourCard(
-                            tourImage: "assets/pizza.jpg",
-                            tourName: "PizzaBurg",
+                            tourImage: "assets/tourVenue.png",
+                            tourName: "Mirpur Picnic spot",
                             tourAddress: "14/A Mirpur-1, Dhaka-1211",
                             tourURL: '/tourspot-detail',
                           )
