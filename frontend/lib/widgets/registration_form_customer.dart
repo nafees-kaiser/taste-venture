@@ -24,6 +24,9 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       9, (int index) => TextEditingController());
   final List<String> _gender = ['Male', 'Female', 'Others'];
   final List<String> _isMarried = ['Yes', 'No'];
+  bool isButtonEnabled = false;
+  bool showPassword = false;
+  bool showRetypePassword = false;
 
   late final List<DropdownMenuEntry<String>> _genderMenuItems =
       _gender.map((toElement) {
@@ -35,12 +38,9 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     return DropdownMenuEntry(value: toElement, label: toElement);
   }).toList();
 
-  bool isButtonEnabled = false;
+  
 
-  bool showPassword = false;
-  bool showRetypePassword = false;
-
-  Future<void> register() async {
+  Future<int> register() async {
     final String fullName = controller[0].text;
     final String contact = controller[1].text;
     final String email = controller[2].text;
@@ -50,7 +50,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     final String address = controller[7].text;
     final String married = controller[8].text;
 
-    print('***${dateFormat.parse(dob)}****');
+    // print('***${dateFormat.parse(dob)}****');
 
     Customer customer = Customer(
       full_name: fullName,
@@ -63,15 +63,21 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       password: password,
     );
 
-    final response = await http.post(
-      Uri.parse(uri),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: customer.toJson(),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse(uri),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: customer.toJson(),
+      );
+      return response.statusCode;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 404;
+    }
 
-    print("Response Code: ${response.statusCode}");
+    // print("Response Code: ${response.statusCode}");
   }
 
   // final [fullName, contact, email] = controller;
@@ -177,7 +183,6 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
               return null;
             },
           ),
-          // DateTextbox(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -270,32 +275,29 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
               return null;
             },
           ),
-
           CustomDropdownMenu(
             controller: controller[8],
             menuItems: _isMarriedMenuItems,
             initialValue: _isMarried[0],
             label: 'Marital status',
           ),
-
-          // Container(
-          //   width: double.infinity,
-          //   child: DropdownMenu(
-          //     dropdownMenuEntries: _isMarriedMenuItems,
-          //     label: const Text('Marital status'),
-          //     controller: controller[8],
-          //     expandedInsets: EdgeInsets.zero,
-          //   ),
-          // ),
           SizedBox(height: 25),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async{
               if (_formKey.currentState!.validate()) {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
+                int status = await register();
+                if (status == 201) {
+                  Navigator.pushNamed(context, '/preference');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error: registration failed')),
+                  );
+                }
                 // register();
-                Navigator.pushNamed(context, '/preference');
+                // Navigator.pushNamed(context, '/preference');
               }
             },
             style: ElevatedButton.styleFrom(
