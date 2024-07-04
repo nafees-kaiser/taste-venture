@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class Customer {
-  String fullName;
+  String full_name;
   String contact;
   String email;
   String dob;
@@ -10,9 +10,9 @@ class Customer {
   String gender;
   String married;
   String password;
-  
+
   Customer({
-    required this.fullName,
+    required this.full_name,
     required this.contact,
     required this.email,
     required this.dob,
@@ -21,8 +21,6 @@ class Customer {
     required this.married,
     required this.password,
   });
-
-  
 
   Customer copyWith({
     String? fullName,
@@ -35,7 +33,7 @@ class Customer {
     String? password,
   }) {
     return Customer(
-      fullName: fullName ?? this.fullName,
+      full_name: fullName ?? this.full_name,
       contact: contact ?? this.contact,
       email: email ?? this.email,
       dob: dob ?? this.dob,
@@ -48,7 +46,7 @@ class Customer {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'fullName': fullName,
+      'full_name': full_name,
       'contact': contact,
       'email': email,
       'dob': dob,
@@ -61,7 +59,7 @@ class Customer {
 
   factory Customer.fromMap(Map<String, dynamic> map) {
     return Customer(
-      fullName: map['fullName'] as String,
+      full_name: map['full_name'] as String,
       contact: map['contact'] as String,
       email: map['email'] as String,
       dob: map['dob'] as String,
@@ -74,37 +72,37 @@ class Customer {
 
   String toJson() => json.encode(toMap());
 
-  factory Customer.fromJson(String source) => Customer.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Customer.fromJson(String source) =>
+      Customer.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Customer(fullName: $fullName, contact: $contact, email: $email, dob: $dob, address: $address, gender: $gender, married: $married, password: $password)';
+    return 'Customer(fullName: $full_name, contact: $contact, email: $email, dob: $dob, address: $address, gender: $gender, married: $married, password: $password)';
   }
 
   @override
   bool operator ==(covariant Customer other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.fullName == fullName &&
-      other.contact == contact &&
-      other.email == email &&
-      other.dob == dob &&
-      other.address == address &&
-      other.gender == gender &&
-      other.married == married &&
-      other.password == password;
+
+    return other.full_name == full_name &&
+        other.contact == contact &&
+        other.email == email &&
+        other.dob == dob &&
+        other.address == address &&
+        other.gender == gender &&
+        other.married == married &&
+        other.password == password;
   }
 
   @override
   int get hashCode {
-    return fullName.hashCode ^
-      contact.hashCode ^
-      email.hashCode ^
-      dob.hashCode ^
-      address.hashCode ^
-      gender.hashCode ^
-      married.hashCode ^
-      password.hashCode;
+    return full_name.hashCode ^
+        contact.hashCode ^
+        email.hashCode ^
+        dob.hashCode ^
+        address.hashCode ^
+        gender.hashCode ^
+        married.hashCode ^
+        password.hashCode;
   }
 }

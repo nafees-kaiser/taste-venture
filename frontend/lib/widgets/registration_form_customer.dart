@@ -53,7 +53,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     print('***${dateFormat.parse(dob)}****');
 
     Customer customer = Customer(
-      fullName: fullName,
+      full_name: fullName,
       contact: contact,
       email: email,
       dob: dob,
@@ -68,10 +68,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(customer.toJson()),
+      body: customer.toJson(),
     );
 
-    print(response.statusCode);
+    print("Response Code: ${response.statusCode}");
   }
 
   // final [fullName, contact, email] = controller;
