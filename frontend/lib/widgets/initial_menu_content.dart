@@ -10,7 +10,9 @@ class InitialMenuContent extends StatefulWidget {
 }
 
 class _InitialMenuContentState extends State<InitialMenuContent> {
-  List<String>? menuItems = [];
+  List<String>? menuItems = [
+    'Pizza',
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +41,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
                         thickness: 3,
                       ),
                       SizedBox(height: 13),
-                      MenuCard(),
+                      MenuCard2(),
                     ],
                   ),
                 ),
