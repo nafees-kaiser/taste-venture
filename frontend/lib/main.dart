@@ -30,6 +30,7 @@ import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/screens/tour_spot_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/registration/customer',
@@ -65,7 +66,7 @@ void main() {
       '/tourspot-detail': (context) => TourSpotDetailsPage(),
       '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
-      '/tourspot-detail' : (context) => TourSpotDetailsPage(),
+      '/tourspot-detail': (context) => TourSpotDetailsPage(),
     },
   ));
 }

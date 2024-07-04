@@ -22,23 +22,23 @@ class ManagerVenueInformation extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const InformationCardWithoutIcon(
+              InformationCardWithoutIcon(
                 heading: "Venue Name",
                 text: "Grand Tour venue",
               ),
-              const InformationCardWithoutIcon(
+              InformationCardWithoutIcon(
                 heading: "Official Email",
                 text: "grand.tour420@gmail.com",
               ),
-              const InformationCardWithoutIcon(
+              InformationCardWithoutIcon(
                 heading: "Address",
                 text: "6/41/2, jartrabari, Dhaka-1236",
               ),
-              const InformationCardWithoutIcon(
+              InformationCardWithoutIcon(
                 heading: "Phone Number",
                 text: "01982711168",
               ),
-              const InformationCardWithoutIcon(
+              InformationCardWithoutIcon(
                 heading: "Tags",
                 text: "Natural, Lake, Forest.",
               ),
@@ -58,85 +58,116 @@ class ManagerVenueInformation extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "From :",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        width: 170,
-                        child: TextField(
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: "From",
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.all(12),
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "From",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "10:23 AM",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
                           ),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "To :",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        width: 170,
-                        child: TextField(
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: "To",
-                            border: const OutlineInputBorder(),
-                            contentPadding: Theme.of(context).defaultPadding,
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "To",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "11:00 PM",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
                           ),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Description :",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 140,
-                child: TextField(
-                  maxLines: null,
-                  expands: true,
-                  decoration: InputDecoration(
-                    hintText: "Write here..",
-                    border: const OutlineInputBorder(),
-                    contentPadding: Theme.of(context).defaultPadding,
-                  ),
-                ),
+              InformationCardWithoutIcon(
+                heading: "Description",
+                text: "A tempting snacks",
               ),
             ],
           ),
