@@ -32,7 +32,7 @@ import 'package:frontend/screens/tour_spot_view.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
+    initialRoute: '/registration/customer',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
