@@ -21,12 +21,15 @@ class _TopTourCardState extends State<TopTourCard> {
     return Container(
       width: double.infinity,
       height: 115,
-      child: Card.outlined(
+      child: Card(
+          elevation: 5,
+          surfaceTintColor: SECONDARY_COLOR,
+          color: Colors.white,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            side: BorderSide(color: DISABLE, width: 1.0),
+            //side: BorderSide(color: DISABLE, width: 1.0),
           ),
-          color: BACKGROUND,
+          //color: BACKGROUND,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
