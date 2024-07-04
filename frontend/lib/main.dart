@@ -33,7 +33,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/manager-home',
+    initialRoute: '/registration/customer',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {

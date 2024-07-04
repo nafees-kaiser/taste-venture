@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/models/customer.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/widgets/textbox.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationFormCustomer extends StatefulWidget {
   const RegistrationFormCustomer({super.key});
@@ -15,6 +19,7 @@ class RegistrationFormCustomer extends StatefulWidget {
 
 class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
   final _formKey = GlobalKey<FormState>();
+  final dateFormat = DateFormat('dd/MM/yyyy');
   final controller = List<TextEditingController>.generate(
       9, (int index) => TextEditingController());
   final List<String> _gender = ['Male', 'Female', 'Others'];
@@ -35,6 +40,35 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
   bool showPassword = false;
   bool showRetypePassword = false;
 
+  Future<void> register() async {
+    final String fullName = controller[0].text;
+    final String contact = controller[1].text;
+    final String email = controller[2].text;
+    final String dob = controller[3].text;
+    final String gender = controller[4].text;
+    final String password = controller[5].text;
+    final String address = controller[7].text;
+    final String married = controller[8].text;
+
+    Customer customer = Customer(
+      fullName: fullName,
+      contact: contact,
+      email: email,
+      dob: dateFormat.parse(dob),
+      address: address,
+      gender: gender,
+      married: married,
+      password: password,
+    );
+
+    final response = await http.post(
+      Uri.parse(uri),
+      body: jsonEncode(customer.toJson()),
+    );
+
+    print(response.statusCode);
+  }
+
   // final [fullName, contact, email] = controller;
   void _showDatePicker() {
     showDatePicker(
@@ -44,7 +78,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       lastDate: DateTime.now(),
     ).then((onValue) => setState(() {
           // _dateTime = onValue!;
-          controller[3].text = DateFormat('dd/MM/yyyy').format(onValue!);
+          controller[3].text = dateFormat.format(onValue!);
         }));
   }
 
@@ -255,13 +289,12 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
-                Navigator.pushNamed(context, '/preference');
+                register();
+                // Navigator.pushNamed(context, '/preference');
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: isButtonEnabled
-                  ? PRIMARY_COLOR
-                  : DISABLE,
+              backgroundColor: isButtonEnabled ? PRIMARY_COLOR : DISABLE,
               minimumSize: const Size(double.infinity, 0),
             ),
             child: Text("Register"),
