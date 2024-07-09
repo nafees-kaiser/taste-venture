@@ -19,4 +19,4 @@ for adding database model:
 2. py manage.py makemigrations 
 
 to run the backend server:
-py manage.py runserver
+py manage.py runserver 0.0.0.0:8000
