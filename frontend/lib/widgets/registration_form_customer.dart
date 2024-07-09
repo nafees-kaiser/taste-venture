@@ -110,12 +110,6 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     super.dispose();
   }
 
-  void _valuePrint() {
-    for (final i in controller) {
-      debugPrint('${i.text} ** ');
-    }
-  }
-
   void _enableOrDesableButton() {
     for (final i in controller) {
       if (i.text.isEmpty) {
