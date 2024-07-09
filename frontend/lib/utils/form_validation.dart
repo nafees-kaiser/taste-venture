@@ -6,5 +6,10 @@ class FormValidation {
     return null;
   }
 
-  
+  String? emailValidation(String? value, String? message) {
+    if (generalValidation(value, message) == null) {
+      return null;
+    }
+    
+  }
 }

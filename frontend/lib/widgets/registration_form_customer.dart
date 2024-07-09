@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/customer.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/password_encryption.dart';
 import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/widgets/textbox.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 class RegistrationFormCustomer extends StatefulWidget {
   const RegistrationFormCustomer({super.key});
@@ -39,18 +38,28 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
   }).toList();
 
   
+  ApiSettings api = ApiSettings(endPoint: 'users/register');
 
-  Future<int> register() async {
+  Future<int> _register() async {
     final String fullName = controller[0].text;
     final String contact = controller[1].text;
     final String email = controller[2].text;
     final String dob = controller[3].text;
     final String gender = controller[4].text;
-    final String password = controller[5].text;
+    final String password = PasswordHashing().encryptPassword(controller[5].text);
     final String address = controller[7].text;
     final String married = controller[8].text;
 
     // print('***${dateFormat.parse(dob)}****');
+
+    // String p = 'password';
+    // String hp1 = PasswordHashing().encryptPassword(p);
+    // String hp2 = PasswordHashing().encryptPassword(p);
+
+    // print('$hp1 -> ${PasswordHashing().verifyPassword(p, hp1)}');
+    // print('$hp2 -> ${PasswordHashing().verifyPassword(p, hp2)}');
+
+    // print('***$password****');
 
     Customer customer = Customer(
       full_name: fullName,
@@ -63,21 +72,14 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
       password: password,
     );
 
+    // return 0;
     try {
-      final response = await http.post(
-        Uri.parse(uri),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: customer.toJson(),
-      );
+      final response = await api.postMethod(customer.toJson());
       return response.statusCode;
     } catch (e) {
       debugPrint(e.toString());
       return 404;
     }
-
-    // print("Response Code: ${response.statusCode}");
   }
 
   // final [fullName, contact, email] = controller;
@@ -282,12 +284,12 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
-                int status = await register();
+                int status = await _register();
                 if (status == 201) {
                   Navigator.pushNamed(context, '/preference');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Error: registration failed')),
+                    SnackBar(content: Text('Error $status: registration failed')),
                   );
                 }
                 // register();
