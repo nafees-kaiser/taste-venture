@@ -8,7 +8,7 @@ class MenuItem(models.Model):
     cuisine = models.CharField(max_length=200)
     food_type = models.CharField(max_length=200)
     ingredients = models.CharField(max_length=200)
-    description = models.TextField(max_length=1000)
+    description = models.TextField()
     category = models.CharField(max_length=80)
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)

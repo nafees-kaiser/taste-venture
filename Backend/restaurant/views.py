@@ -26,12 +26,12 @@ def edit_menu(request):
     try:
         menu_item = MenuItem.objects.get(pk=update_request_fields['id'])
     except MenuItem.DoesNotExist:
-        return Response("Menu item does not exist",status=status.HTTP_404_NOT_FOUND)
+        return Response("Menu item does not exist", status=status.HTTP_404_NOT_FOUND)
 
     for key, value in update_request_fields.items():
         setattr(menu_item, key, value)
         # menu_item
     menu_item.save()
-    return Response("Updated successfully",status=status.HTTP_200_OK)
+    return Response("Updated successfully", status=status.HTTP_200_OK)
 
 
