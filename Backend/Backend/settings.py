@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'usersapp.apps.UsersappConfig',
     'rest_framework',
     'corsheaders',
+    'restaurant.apps.RestaurantConfig',
 ]
 
 MIDDLEWARE = [
