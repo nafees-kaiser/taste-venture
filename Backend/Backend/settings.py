@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'restaurant.apps.RestaurantConfig',
+    'tourspot.apps.TourspotConfig',
     'rest_framework_simplejwt',
     'rest_framework.authtoken'
 ]
