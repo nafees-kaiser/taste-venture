@@ -30,9 +30,36 @@ import 'package:frontend/screens/review.dart';
 import 'package:frontend/screens/booking.dart';
 import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/screens/tour_spot_view.dart';
+import 'package:frontend/utils/constant.dart';
+import 'dart:io';
 
-void main() {
+Future<String> getWifiIPv4Address() async {
+  try {
+    for (var interface in await NetworkInterface.list()) {
+      if (interface.name == 'wlan0' || interface.name == 'Wi-Fi' || interface.name.toLowerCase().contains('wifi')) {
+        for (var addr in interface.addresses) {
+          if (addr.type == InternetAddressType.IPv4) {
+            return addr.address;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    print('Failed to get IP address: $e');
+  }
+  return 'Unknown';
+}
+
+Future<void> initializeConstants() async {
+  String port = '8000';
+  String ipAddress = await getWifiIPv4Address();
+  Constant.apiUri = 'http://$ipAddress:$port/';
+  print('Constant.apiUri: ${Constant.apiUri}');
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeConstants();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/customer-homepage',

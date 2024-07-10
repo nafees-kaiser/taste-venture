@@ -11,5 +11,14 @@ const Color INCORRECT = Colors.red;
 const Color RATING_FILL = Color(0xFFFFA432);
 
 // const String uri = 'http://10.0.2.2:8000/users/register/';
-const String uri = 'http://192.168.0.9:8000/users/register/';
+// const String uri = 'http://192.168.0.9:8000/users/register/';
+// const String uri = 'http://192.168.0.8:8000/users/register';
+const String uri = 'http://192.168.0.105:8000/users/register';
 // const String uri = 'http://192.168.18.170:8000/users/register/';
+
+const String baseUri = "http://192.168.0.100:8000/";
+
+class Constant {
+  static String apiUri = '';
+}
+
