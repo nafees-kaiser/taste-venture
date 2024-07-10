@@ -47,8 +47,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     final String email = controller[2].text;
     final String dob = controller[3].text;
     final String gender = controller[4].text;
-    final String password =controller[5].text;
-        // PasswordHashing().encryptPassword(controller[5].text);
+    final String password = controller[5].text;
+    // PasswordHashing().encryptPassword(controller[5].text);
     final String address = controller[7].text;
     final String married = controller[8].text;
 
@@ -252,12 +252,12 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 int status = await _register();
                 if (status == 201) {
                   Navigator.pushNamed(context, '/preference');
-                } 
+                }
                 // else if (status == 0) {
                 //   ScaffoldMessenger.of(context).showSnackBar(
                 //     SnackBar(content: Text('email check')),
                 //   );
-                // } 
+                // }
                 else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
