@@ -10,7 +10,7 @@ class Users(models.Model):
     address = models.CharField(max_length=200)
     gender = models.CharField(max_length=50)
     married = models.CharField(max_length=50)
-    password = models.CharField(max_length=200)
+    password = models.CharField(max_length=500)
 
     def __str__(self):
         return self.full_name
