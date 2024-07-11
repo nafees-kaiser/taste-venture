@@ -1,0 +1,22 @@
+To install all the required packages:
+cd .\Backend\ (if already not)
+pip freeze > requirements.txt
+pip install -r .\requirements.txt
+
+To create a superuser admin, provide the following:
+username:admin
+password:admin,
+email:admin@gmail.com
+
+**If you set venv (python virtual environment - recommended)
+to jump virtual environment
+run it on the terminal:  .\.venv\Scripts\activate **
+
+then install what you want: pip install psycopg2
+
+for adding database model:
+1. py manage.py migration
+2. py manage.py makemigrations 
+
+to run the backend server:
+py manage.py runserver 0.0.0.0:8000
