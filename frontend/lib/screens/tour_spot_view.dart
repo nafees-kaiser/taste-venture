@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:frontend/utils/api_settings.dart';
 
 class TourSpot extends StatefulWidget {
   @override
@@ -10,30 +13,30 @@ class TourSpot extends StatefulWidget {
 }
 
 class _TourSpotState extends State<TourSpot> {
-  final List<Map<String, dynamic>> tourSpots = [
-    {
-      'imagePath': 'assets/image.jpeg',
-      'name': 'Water Garden Resort & Spa',
-      'location': 'Dinajpore, Karatia, Tangail',
-      'rating': 4,
-      'favorite': true,
-    },
-    {
-      'imagePath': 'assets/image.jpeg',
-      'name': 'Another Tour Spot',
-      'location': 'Location XYZ',
-      'rating': 4.5,
-      'favorite': true,
-    },
-    {
-      'imagePath': 'assets/image.jpeg',
-      'name': 'Another Tour Spot',
-      'location': 'Location XYZ',
-      'rating': 4.5,
-      'favorite': false,
-    },
-    // Add more tour spot data as needed
-  ];
+  List<Map<String, dynamic>> tourSpots = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTourSpots();
+  }
+
+  ApiSettings api = ApiSettings(endPoint: 'tourspot/view-list');
+
+  Future<void> fetchTourSpots() async {
+    final response = await api.getMethod();
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      print(data);
+      setState(() {
+        tourSpots = data.map((item) => item as Map<String, dynamic>).toList();
+      });
+    } else {
+      // Handle the error
+      throw Exception('Failed to load tour spots');
+    }
+  }
 
   void toggleFavorite(int i) {
     setState(() {
@@ -202,7 +205,8 @@ class _TourSpotState extends State<TourSpot> {
                                       topRight: Radius.circular(16),
                                     ),
                                     child: Image.asset(
-                                      tourSpots[i]['imagePath'],
+                                      'assets/image.jpeg',
+                                      // tourSpots[i]['imagePath'],
                                       fit: BoxFit.cover,
                                       height: 120,
                                     ),
@@ -234,7 +238,7 @@ class _TourSpotState extends State<TourSpot> {
                                             SizedBox(width: 4),
                                             Expanded(
                                               child: Text(
-                                                tourSpots[i]['location'],
+                                                tourSpots[i]['address'],
                                                 style: GoogleFonts.getFont(
                                                   'Inter',
                                                   fontWeight: FontWeight.w400,
@@ -249,9 +253,8 @@ class _TourSpotState extends State<TourSpot> {
                                         SizedBox(height: 5.1),
                                         Row(
                                           children: [
-                                            for (int j = 0;
-                                                j < tourSpots[i]['rating'];
-                                                j++)
+                                            // for (int j = 0;j < tourSpots[i]['rating'];j++)
+                                            for (int j = 0; j < 5; j++)
                                               SvgPicture.asset(
                                                   'assets/vectors/star_5_x2.svg'),
                                             SizedBox(width: 4.5),
@@ -275,7 +278,8 @@ class _TourSpotState extends State<TourSpot> {
                               bottom: 0,
                               right: 0,
                               child: GestureDetector(
-                                child: tourSpots[i]['favorite']
+                                // child: tourSpots[i]['favorite']
+                                child: true
                                     ? Icon(
                                         Icons.favorite,
                                         color: Colors.pink,

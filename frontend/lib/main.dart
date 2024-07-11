@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/tourspot.dart';
 import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/add_tourspot_additional_info.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
@@ -36,7 +37,9 @@ import 'dart:io';
 Future<String> getWifiIPv4Address() async {
   try {
     for (var interface in await NetworkInterface.list()) {
-      if (interface.name == 'wlan0' || interface.name == 'Wi-Fi' || interface.name.toLowerCase().contains('wifi')) {
+      if (interface.name == 'wlan0' ||
+          interface.name == 'Wi-Fi' ||
+          interface.name.toLowerCase().contains('wifi')) {
         for (var addr in interface.addresses) {
           if (addr.type == InternetAddressType.IPv4) {
             return addr.address;
