@@ -1,12 +1,34 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 
 class OtpPage extends StatefulWidget {
+  String? email;
+  String? nextPath;
+  OtpPage({super.key});
+  OtpPage.setEmail({super.key, this.email, this.nextPath});
   @override
   _OTPPageState createState() => _OTPPageState();
 }
 
 class _OTPPageState extends State<OtpPage> {
+  ApiSettings api = ApiSettings(endPoint: 'users/verify-otp');
   final TextEditingController _otpController = TextEditingController();
+
+  Future<String> verifyOtp() async{
+    final data = {
+      'email': widget.email!,
+      'otp': _otpController.text
+    };
+    try {
+      final response = await api.postMethod(json.encode(data));
+      return response.body;
+    } catch (e) {
+      return e.toString();
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +69,17 @@ class _OTPPageState extends State<OtpPage> {
               height: 42,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String otp = _otpController.text;
                   if (otp.isNotEmpty) {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text('OTP is verified')),
+                    // );
+                    final response = await verifyOtp();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('OTP is verified')),
+                      SnackBar(content: Text(response)),
                     );
-                    Navigator.pushNamed(context, '/reset-pass');
+                    // Navigator.pushNamed(context, '/reset-pass');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Please enter the OTP')),
