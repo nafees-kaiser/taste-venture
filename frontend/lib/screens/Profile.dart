@@ -3,6 +3,7 @@ import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/additional_information.dart';
 import 'package:frontend/widgets/personal_information.dart';
 import 'package:frontend/widgets/profile_perference.dart';
+import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,6 +14,24 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int clickedItem = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    get_Information();
+  }
+
+  void get_Information() {
+    final response = http.get(
+      Uri.parse('http://localhost:8000/users/profile/rahman@gmail.com/'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    print("Response: ${response}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

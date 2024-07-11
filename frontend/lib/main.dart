@@ -35,7 +35,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/customer-homepage',
+    initialRoute: '/login',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {

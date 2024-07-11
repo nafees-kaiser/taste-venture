@@ -294,8 +294,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Processing Data')),
                 // );
-                // register();
-                Navigator.pushNamed(context, '/preference');
+                register();
+                // Navigator.pushNamed(context, '/preference');
               }
             },
             style: ElevatedButton.styleFrom(
