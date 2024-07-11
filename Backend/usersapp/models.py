@@ -1,6 +1,7 @@
 from django.db import models
 from django.db import models
 
+
 class Users(models.Model):
     full_name = models.CharField(max_length=200)
     contact = models.CharField(max_length=200, unique=True)
@@ -13,3 +14,9 @@ class Users(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class OTPAuthentication(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/restaurants.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../models/restaurant.dart';
 import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
 import 'package:frontend/models/tourspot.dart';
@@ -11,6 +14,7 @@ class RegistrationVenueManager extends StatefulWidget {
 }
 
 class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
+  ApiSettings api = ApiSettings(endPoint: 'restaurant/add-restaurant');
   String selectedVenueType = 'Restaurant';
 
   final Map<String, bool> fieldStatus = {
@@ -51,8 +55,9 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _reTypePasswordController =
-      TextEditingController();
+  final TextEditingController _reTypePasswordController = TextEditingController();
+
+  
 
   @override
   void dispose() {
@@ -69,6 +74,7 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
     super.dispose();
   }
 
+  Future<int?> navigateToCriteria() async {
   void navigateToCriteria() {
     Tourspot tourspot = Tourspot(
       name: _venueNameController.text,
@@ -87,8 +93,40 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
       pool: "",
       other_services: "",
     );
+    
     if (selectedVenueType == 'Restaurant') {
+
+      final String name = _venueNameController.text;
+      final String managerName = _managerNameController.text;
+      final String contact = _contactController.text;
+      final String emailAddress = _emailAddressController.text;
+      final String openingTime = _openingTimeController.text;
+      final String closingTime = _closingTimeController.text;
+      final String description = _descriptionController.text;
+      final String address = _addressController.text;
+      final String password = _passwordController.text;
+      
+      RestaurantModel restaurant = RestaurantModel(
+          name: name,
+          email: emailAddress,
+          password : password,
+          address : address,
+          phone : contact,
+          cuisine : 'Cuisine',
+          foodType : 'Food Type',
+          openingTime : openingTime,
+          closingTime : closingTime,
+          description : description
+        );
+
+      try {
+      final response = await api.postMethod(restaurant.toJson());
       Navigator.pushNamed(context, '/criteria');
+      return response.statusCode;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 404;
+    }
     } else if (selectedVenueType == 'Tour Spot') {
       Navigator.pushNamed(context, '/tourspot-info', arguments: tourspot);
     }
