@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/restaurant.dart';
 import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
+import 'package:frontend/models/tourspot.dart';
 
 class RegistrationVenueManager extends StatefulWidget {
   @override
@@ -74,6 +75,25 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
   }
 
   Future<int?> navigateToCriteria() async {
+  void navigateToCriteria() {
+    Tourspot tourspot = Tourspot(
+      name: _venueNameController.text,
+      manager_name: _managerNameController.text,
+      contact: _contactController.text,
+      email: _emailAddressController.text,
+      opening_time: _openingTimeController.text,
+      closing_time: _closingTimeController.text,
+      description: _descriptionController.text,
+      address: _addressController.text,
+      password: _passwordController.text,
+      entry_fee: "",
+      wifi: "",
+      parking: "",
+      food: "",
+      pool: "",
+      other_services: "",
+    );
+    
     if (selectedVenueType == 'Restaurant') {
 
       final String name = _venueNameController.text;
@@ -108,8 +128,14 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
       return 404;
     }
     } else if (selectedVenueType == 'Tour Spot') {
-      Navigator.pushNamed(context, '/tourspot-info');
+      Navigator.pushNamed(context, '/tourspot-info', arguments: tourspot);
     }
+
+    // Navigator.pushNamed(
+    //   context,
+    //   '/criteria',
+    //   arguments: venue,
+    // );
   }
 
   @override
