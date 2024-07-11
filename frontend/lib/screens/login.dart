@@ -256,17 +256,16 @@ class _LoginState extends State<Login> {
                   },
                 ),
 
-                  // Want to add your restaurant or tourist spot?
-                  GestureDetector(
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
-                        child: Text(
-                          "Want to add your restaurant or tourist spot?",
-                          style: TextStyle(
-                            color: TEXT,
-                            fontWeight: FontWeight.bold,
-                          ),
+                // Want to add your restaurant or tourist spot?
+                GestureDetector(
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
+                      child: Text(
+                        "Want to add your restaurant or tourist spot?",
+                        style: TextStyle(
+                          color: TEXT,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
