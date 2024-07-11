@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/customer.dart';
+import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/form_validation.dart';
-import 'package:frontend/utils/password_encryption.dart';
 import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
 import 'package:frontend/widgets/textbox.dart';
@@ -48,20 +48,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     final String dob = controller[3].text;
     final String gender = controller[4].text;
     final String password = controller[5].text;
-    // PasswordHashing().encryptPassword(controller[5].text);
     final String address = controller[7].text;
     final String married = controller[8].text;
-
-    // print('***${dateFormat.parse(dob)}****');
-
-    // String p = 'password';
-    // String hp1 = PasswordHashing().encryptPassword(p);
-    // String hp2 = PasswordHashing().encryptPassword(p);
-
-    // print('$hp1 -> ${PasswordHashing().verifyPassword(p, hp1)}');
-    // print('$hp2 -> ${PasswordHashing().verifyPassword(p, hp2)}');
-
-    // print('***$password****');
 
     Customer customer = Customer(
       full_name: fullName,
@@ -251,7 +239,14 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
               if (_formKey.currentState!.validate()) {
                 int status = await _register();
                 if (status == 201) {
-                  Navigator.pushNamed(context, '/preference');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OtpPage.setEmail(
+                        email: 'oyonafees2001@gmail.com',
+                      ),
+                    ),
+                  );
                 }
                 // else if (status == 0) {
                 //   ScaffoldMessenger.of(context).showSnackBar(
