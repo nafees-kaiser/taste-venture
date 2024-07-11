@@ -41,7 +41,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
 
   ApiSettings api = ApiSettings(endPoint: 'users/register');
 
-  Future<int> _register() async {
+  Future<(dynamic, int)> _register() async {
     final String fullName = controller[0].text;
     final String contact = controller[1].text;
     final String email = controller[2].text;
@@ -65,10 +65,10 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     // return 0;
     try {
       final response = await api.postMethod(customer.toJson());
-      return response.statusCode;
+      return (response.body, response.statusCode);
     } catch (e) {
       debugPrint(e.toString());
-      return 404;
+      return (e.toString(), 404);
     }
   }
 
@@ -237,7 +237,8 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                int status = await _register();
+                final (data, status) = await _register();
+                print(data);
                 if (status == 201) {
                   Navigator.push(
                     context,

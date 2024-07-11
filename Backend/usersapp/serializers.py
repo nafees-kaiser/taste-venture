@@ -7,6 +7,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# class UsersDetailSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Users
+#         fields = ['email']
+
+
 class OTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
     otp = serializers.CharField()

@@ -26,6 +26,7 @@ def users_list(request):
         user = serializer.save(password=hashed_password)
         otp = send_otp(email)
         OTPAuthentication.objects.create(user=user, otp=otp)
+        # added_user = UsersDetailSerializer(user, many=False)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
