@@ -16,7 +16,7 @@ from .utils import send_otp
 
 @api_view(['POST'])
 @csrf_exempt
-def users_list(request):
+def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         password = serializer.validated_data.get('password')
@@ -61,7 +61,9 @@ def login(request):
     except Users.DoesNotExist:
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
+
 @api_view(['POST'])
+@csrf_exempt
 def verify_otp(request):
     # email = 'oyonafees2001@gmail.com'
     # send_otp(email)
@@ -87,3 +89,18 @@ def verify_otp(request):
         except User.DoesNotExist:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
     return Response(OTP_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def update_password(request):
+    password = request.data.get('password')
+    email = request.data.get('email')
+    user = Users.objects.get(email=email)
+    try:
+        password = make_password(password)
+        user.password = password
+        user.save()
+        return Response("Password updated successfully", status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
