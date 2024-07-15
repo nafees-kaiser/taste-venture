@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from usersapp.models import Users
+from ml_models.model import get_restaurant_sentiment
 from .models import MenuItem, Restaurant
 from .serializers import MenuItemSerializer
 from .serializers import RestaurantSerializer
@@ -60,3 +60,12 @@ def restaurant_details(request, restaurant_id):
 #     user = Users.objects.get(email=email)
 #     recommended_restaurants = Restaurant.objects.filter(user=user)
 
+
+@api_view(['POST'])
+def add_restaurant_review(request):
+    if request.method == 'POST':
+        review = request.data['review']
+        prediction = get_restaurant_sentiment(review)
+        return Response(prediction, status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
