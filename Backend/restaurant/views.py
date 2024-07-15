@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from ml_models.model import get_restaurant_sentiment
-from .models import MenuItem
+from .models import MenuItem, Restaurant
 from .serializers import MenuItemSerializer
 from .serializers import RestaurantSerializer
 
@@ -45,6 +45,20 @@ def add_restaurant(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def restaurant_details(request, restaurant_id):
+    try:
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        restaurant_serializer = RestaurantSerializer(restaurant)
+        return Response(restaurant_serializer.data, status=status.HTTP_200_OK)
+    except Restaurant.DoesNotExist:
+        return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+
+# @api_view(['GET'])
+# def recommended_restaurants(request, email):
+#     user = Users.objects.get(email=email)
+#     recommended_restaurants = Restaurant.objects.filter(user=user)
 
 
 @api_view(['POST'])
