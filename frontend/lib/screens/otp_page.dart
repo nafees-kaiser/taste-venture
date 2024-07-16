@@ -5,9 +5,9 @@ import 'package:frontend/utils/api_settings.dart';
 
 class OtpPage extends StatefulWidget {
   String? email;
-  String? nextPath;
+  String nextPath = '/reset-pass';
   OtpPage({super.key});
-  OtpPage.setEmail({super.key, this.email, this.nextPath});
+  OtpPage.setEmail({super.key, this.email, this.nextPath = '/reset-pass'});
   @override
   _OTPPageState createState() => _OTPPageState();
 }
@@ -16,18 +16,14 @@ class _OTPPageState extends State<OtpPage> {
   ApiSettings api = ApiSettings(endPoint: 'users/verify-otp');
   final TextEditingController _otpController = TextEditingController();
 
-  Future<String> verifyOtp() async{
-    final data = {
-      'email': widget.email!,
-      'otp': _otpController.text
-    };
+  Future<(String, int)> verifyOtp() async {
+    final data = {'email': widget.email!, 'otp': _otpController.text};
     try {
       final response = await api.postMethod(json.encode(data));
-      return response.body;
+      return (response.body, response.statusCode);
     } catch (e) {
-      return e.toString();
+      return (e.toString(), 404);
     }
-
   }
 
   @override
@@ -75,10 +71,18 @@ class _OTPPageState extends State<OtpPage> {
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(content: Text('OTP is verified')),
                     // );
-                    final response = await verifyOtp();
+                    final (body, status) = await verifyOtp();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(response)),
+                      SnackBar(content: Text(body)),
                     );
+                    if (status == 200) {
+                      Navigator.pushNamed(context, widget.nextPath);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(body)),
+                      );
+                    }
+
                     // Navigator.pushNamed(context, '/reset-pass');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
