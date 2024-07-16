@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:frontend/utils/api_settings.dart';
 
@@ -175,11 +176,19 @@ class _TourSpotState extends State<TourSpot> {
                 children: [
                   for (int i = 0; i < tourSpots.length; i++)
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(
+                      onTap: () => Navigator.push(
                         context,
-                        '/tourspot-detail',
-                        arguments: tourSpots[i],
+                        MaterialPageRoute(
+                          builder: (context) => TourSpotDetailsPage(
+                            id: tourSpots[i]['id'],
+                          ),
+                        ),
                       ),
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   '/tourspot-detail',
+                      //   arguments: tourSpots[i],
+                      // ),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),
                         child: Stack(

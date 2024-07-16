@@ -95,7 +95,7 @@ Future<void> main() async {
       '/otp-page': (context) => OtpPage(),
       '/reset-pass': (context) => ResetPassword(),
       '/restaurant/reservation-manager': (context) => ReservationManager(),
-      '/tourspot-detail': (context) => TourSpotDetailsPage(),
+      '/tourspot-detail': (context) => TourSpotDetailsPage(id: 1),
       '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/customer/reservation': (context) => CustomerReservation(),
