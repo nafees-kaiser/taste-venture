@@ -10,6 +10,7 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review
 from .serializers import MenuItemSerializer, ReviewSerializer
 from .serializers import RestaurantSerializer
+from .serializers import ReservationSerializer
 
 
 # Create your views here.
@@ -104,3 +105,12 @@ def get_restaurant_reviews(request, restaurant_id):
         "total_reviews": total_reviews
     }
     return Response(response, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@csrf_exempt
+def add_reservation(request):
+    serializer = ReservationSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
