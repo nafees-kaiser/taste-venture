@@ -1,5 +1,8 @@
 from django.db import models
 
+from usersapp.models import Users
+
+
 # Create your models here.
 
 
@@ -70,3 +73,12 @@ class Restaurant(models.Model):
     def __str__(self):
         return f'{self.id} -> {self.name}'
 
+
+class Review(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    review = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.id} -> {self.review}'
