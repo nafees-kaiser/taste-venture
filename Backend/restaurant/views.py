@@ -86,7 +86,6 @@ def add_restaurant_review(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-
 @api_view(['GET'])
 def get_restaurant_reviews(request, restaurant_id):
     ratings ={"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
