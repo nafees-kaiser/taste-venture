@@ -1,24 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/api_settings.dart';
+import 'dart:convert';
 
 class TourSpotDetailsPage extends StatelessWidget {
+  final int id;
+
+  TourSpotDetailsPage({required this.id});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Day-tour spot"),
       ),
-      body: TourSpotDetailsPageContents(),
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: fetchTourSpotDetails(id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            return Center(child: Text('No data available'));
+          } else if (snapshot.hasData) {
+            return TourSpotDetailsPageContents(data: snapshot.data!);
+          } else {
+            return Center(child: Text('Unknown error occurred'));
+          }
+        },
+      ),
     );
+  }
+
+  Future<Map<String, dynamic>> fetchTourSpotDetails(int id) async {
+    ApiSettings api = ApiSettings(endPoint: 'tourspot/view-list/$id');
+    final response = await api.getMethod();
+    return json.decode(response.body);
   }
 }
 
 class TourSpotDetailsPageContents extends StatelessWidget {
-  final String otherServices =
-      '• Restaurant\n• Fitness centre\n• Air conditioning\n• Refrigerator in some rooms\n• Coffee maker';
+  final Map<String, dynamic> data;
+
+  TourSpotDetailsPageContents({required this.data});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final otherServices = data['other_services'] ?? '';
+
+    List<String> servicesList = otherServices is String
+        ? otherServices.split(',').map((e) => e.trim()).toList()
+        : [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -28,7 +63,6 @@ class TourSpotDetailsPageContents extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  // width: 360,
                   width: double.infinity,
                   height: 157,
                   child:
@@ -41,7 +75,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Water Garden Resort & Spa',
+                        data['name'] ?? '',
                         style: theme.textTheme.headlineMedium,
                       ),
                       SizedBox(height: 3),
@@ -52,7 +86,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                             color: SECONDARY_BACKGROUND,
                           ),
                           Text(
-                            'Dapnajore, Karatia, Tangail',
+                            data['address'] ?? '',
                             style: TextStyle(
                               color: SECONDARY_BACKGROUND,
                             ),
@@ -106,8 +140,8 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Check-in time: 02:00 PM'),
-                              Text('Check-out time: 12:00 PM'),
+                              Text('Check-in time: ${data['opening_time']}'),
+                              Text('Check-out time: ${data['closing_time']}'),
                             ],
                           ),
                           Column(
@@ -120,18 +154,47 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        'Resort details',
+                        'Tourspot details',
                         style: theme.textTheme.headlineSmall,
                       ),
                       SizedBox(height: 5),
-                      ResortDetailsGrid(),
+                      ResortDetailsGrid(data: data),
                       SizedBox(height: 20),
                       Text(
                         'Other services',
                         style: theme.textTheme.headlineSmall,
                       ),
                       SizedBox(height: 3),
-                      Text(otherServices),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: servicesList
+                              .map((service) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            service,
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -155,41 +218,44 @@ class TourSpotDetailsPageContents extends StatelessWidget {
 }
 
 class ResortDetailsGrid extends StatelessWidget {
-  final resortDetailWifi = const ResortDetailsCard(
-    icon: Icons.wifi,
-    text: 'Free WiFi',
-  );
-  final resortDetailBreakfast = const ResortDetailsCard(
-    icon: Icons.coffee,
-    text: 'Free breakfast',
-  );
-  final resortDetailParking = const ResortDetailsCard(
-    icon: Icons.local_parking,
-    text: 'Free parking',
-  );
-  final resortDetailPool = const ResortDetailsCard(
-    icon: Icons.pool,
-    text: 'Indoor pool',
-  );
+  final Map<String, dynamic> data;
+
+  ResortDetailsGrid({required this.data});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            resortDetailWifi,
+            ResortDetailsCard(
+              icon: data['wifi'] == 'Yes'
+                  ? Icons.wifi
+                  : Icons.signal_wifi_connected_no_internet_4_rounded,
+              text: data['wifi'] == 'Yes' ? 'Free WiFi' : 'No WiFi',
+            ),
             SizedBox(width: 48),
-            resortDetailBreakfast,
+            ResortDetailsCard(
+              icon:
+                  data['food'] == 'Yes' ? Icons.coffee : Icons.no_food_outlined,
+              text: data['food'] == 'Yes' ? 'Free breakfast' : 'No breakfast',
+            ),
           ],
         ),
         SizedBox(height: 16),
         Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            resortDetailParking,
+            ResortDetailsCard(
+              icon: data['parking'] == 'Yes'
+                  ? Icons.local_parking
+                  : Icons.car_crash,
+              text: data['parking'] == 'Yes' ? 'Free parking' : 'No parking',
+            ),
             SizedBox(width: 30),
-            resortDetailPool,
+            ResortDetailsCard(
+              icon: data['pool'] == 'Yes' ? Icons.pool : Icons.clear_outlined,
+              text: data['pool'] == 'Yes' ? 'Indoor pool' : 'No pool',
+            ),
           ],
         ),
       ],
@@ -222,9 +288,7 @@ class ResortDetailsCard extends StatelessWidget {
 }
 
 class RatingStar extends StatelessWidget {
-  const RatingStar({
-    super.key,
-  });
+  const RatingStar({super.key});
 
   @override
   Widget build(BuildContext context) {
