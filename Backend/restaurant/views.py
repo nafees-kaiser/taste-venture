@@ -4,8 +4,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from ml_models.model import get_restaurant_sentiment
-from .models import MenuItem, Restaurant
-from .serializers import MenuItemSerializer
+from usersapp.models import Users
+from usersapp.serializers import UserSerializer
+from .models import MenuItem, Restaurant, Review
+from .serializers import MenuItemSerializer, ReviewSerializer
 from .serializers import RestaurantSerializer
 
 
@@ -65,7 +67,16 @@ def restaurant_details(request, restaurant_id):
 def add_restaurant_review(request):
     if request.method == 'POST':
         review = request.data['review']
+        email = request.data['email']
+        rating = request.data['rating']
         prediction = get_restaurant_sentiment(review)
-        return Response(prediction, status=status.HTTP_200_OK)
+        if prediction:
+            customer = Users.objects.get(email=email)
+            review = Review.objects.create(user=customer, review=review, rating=rating)
+            serializer = ReviewSerializer(review)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Fake review", status=status.HTTP_200_OK)
+
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
