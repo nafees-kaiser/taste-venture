@@ -1,7 +1,24 @@
 from django.db import models
+from usersapp.models import Users
 
 # Create your models here.
 
+class Restaurant(models.Model):
+    name = models.CharField(max_length=70)
+    email = models.EmailField(max_length=70)
+    password = models.CharField(max_length=200)
+    address = models.CharField(max_length=70)
+    phone = models.CharField(max_length=20)
+    cuisine = models.CharField(max_length=70)
+    food_type = models.CharField(max_length=70)
+    opening_time = models.CharField(max_length=70)
+    closing_time = models.CharField(max_length=70)
+    description = models.TextField()
+    # menuList = models.ForeignKey(MenuItem)
+    
+    def __str__(self):
+        return f'{self.id} -> {self.name}'
+    
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=200)
@@ -13,15 +30,13 @@ class MenuItem(models.Model):
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     # image = models.ImageField(upload_to='images/')
-    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, default=None, null=True, blank=True)
+    restaurant = models.ForeignKey('Restaurant' , on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
 
     def __str__(self):
         return f'{self.id} -> {self.name}'
 
 
-class Menu(models.Model):
-    name = models.CharField(max_length=200)
-    restaurant_name = models.OneToOneField('Restaurant', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
 
 class Cuisine(models.Model):
     French = 'FN', 'French'
@@ -54,19 +69,15 @@ class FoodType(models.Model):
     Sour = 'SR', 'Sour'
     FastFood = 'FF', 'Fast Food'
 
-class Restaurant(models.Model):
-    name = models.CharField(max_length=70)
-    email = models.EmailField(max_length=70)
-    password = models.CharField(max_length=200)
-    address = models.CharField(max_length=70)
-    phone = models.CharField(max_length=20)
-    cuisine = models.CharField(max_length=70)
-    food_type = models.CharField(max_length=70)
-    opening_time = models.CharField(max_length=70)
-    closing_time = models.CharField(max_length=70)
-    description = models.TextField()
-    # menuList = models.ForeignKey(MenuItem)
     
-    def __str__(self):
-        return f'{self.id} -> {self.name}'
+    
+class Reservation(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    reservation_type = models.BooleanField() # True = Full-restaurant, False = Custom
+    number_of_people = models.IntegerField() # if reservation_type = False, then this field is required
+    message = models.TextField()
+    restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE, default=None, blank=True)
 
