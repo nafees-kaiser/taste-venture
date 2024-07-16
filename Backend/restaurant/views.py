@@ -1,3 +1,4 @@
+from django.db.models import Avg, Count
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -84,6 +85,26 @@ def add_restaurant_review(request):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def get_restaurant_reviews(request, restaurant_id):
+    ratings ={"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+    reviews = Review.objects.filter(restaurant_id=restaurant_id)
+    for review in reviews:
+        ratings[str(review.rating)] += 1
+
+    aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
+    average_rating = aggregate_data['average_rating']
+    total_reviews = aggregate_data['total_reviews']
+
+    serializer = ReviewSerializer(reviews, many=True)
+    response = {
+        "ratings": ratings,
+        "reviews": serializer.data,
+        "avg_rating": average_rating,
+        "total_reviews": total_reviews
+    }
+    return Response(response, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @csrf_exempt

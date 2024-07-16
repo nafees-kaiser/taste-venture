@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from usersapp.serializers import UserSerializer
 from .models import MenuItem, Review
 from .models import Restaurant
 from .models import Reservation
@@ -19,6 +21,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Review
         fields = '__all__'
