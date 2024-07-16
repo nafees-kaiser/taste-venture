@@ -1,3 +1,4 @@
+import email
 import random
 from django.utils import timezone
 
@@ -37,7 +38,6 @@ def login(request):
     email = data.get('email')
     password = data.get('password')
     print(password)
-
 
     try:
         user = Users.objects.get(email=email)
@@ -104,3 +104,28 @@ def update_password(request):
         return Response("Password updated successfully", status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def get_user_details(request):
+    email = request.data.get('email')
+    user = Users.objects.get(email=email)
+    serializer = UserSerializer(user)
+    if serializer.data:
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+@api_view(['POST'])
+def update_user_details(request):
+    tag = request.data.get('tag')
+    info = request.data.get('info')
+    user = Users.objects.get(email=request.data.get('email'))
+    setattr(user, tag, info)
+    user.save()
+    serializer = UserSerializer(user)
+    if serializer.data:
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
