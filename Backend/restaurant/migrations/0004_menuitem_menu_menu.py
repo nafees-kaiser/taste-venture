@@ -14,14 +14,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='menuitem',
             name='menu',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant'),
+            field=models.ForeignKey(default=None, null=True, blank=True, on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant'),
         ),
         migrations.CreateModel(
             name='Menu',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
-                ('restaurant_name', models.OneToOneField(default=None, on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant')),
+                ('restaurant_name', models.OneToOneField(default=None, null=True, blank=True, on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant')),
             ],
         ),
     ]

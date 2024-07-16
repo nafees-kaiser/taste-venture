@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='menu',
             name='restaurant_name',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant', null=True, blank=True),
         ),
         migrations.AlterField(
             model_name='menuitem',
             name='menu',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurant.menu'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurant.menu', null=True, blank=True),
         ),
     ]
