@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import MenuItem, Review
 from .models import Restaurant
+from .models import Reservation
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -30,4 +31,9 @@ def create(self, validated_data):
         return restaurant
 
     #return MenuItem.objects.create(**validated_data)
+    
+class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = '__all__'
 
