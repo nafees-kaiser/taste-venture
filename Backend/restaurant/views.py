@@ -9,6 +9,7 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review
 from .serializers import MenuItemSerializer, ReviewSerializer
 from .serializers import RestaurantSerializer
+from .serializers import ReservationSerializer
 
 
 # Create your views here.
@@ -82,3 +83,13 @@ def add_restaurant_review(request):
 
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def add_reservation(request):
+    serializer = ReservationSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
