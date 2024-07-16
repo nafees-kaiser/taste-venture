@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='menuitem',
             name='menu',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant', null=True, blank=True),
         ),
         migrations.DeleteModel(
             name='Menu',

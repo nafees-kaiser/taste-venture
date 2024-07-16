@@ -13,7 +13,7 @@ class MenuItem(models.Model):
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     # image = models.ImageField(upload_to='images/')
-    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, default=None)
+    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, default=None, null=True, blank=True)
 
     def __str__(self):
         return f'{self.id} -> {self.name}'
@@ -21,7 +21,7 @@ class MenuItem(models.Model):
 
 class Menu(models.Model):
     name = models.CharField(max_length=200)
-    restaurant_name = models.OneToOneField('Restaurant', on_delete=models.CASCADE, default=None)
+    restaurant_name = models.OneToOneField('Restaurant', on_delete=models.CASCADE, default=None, null=True, blank=True)
 
 class Cuisine(models.Model):
     French = 'FN', 'French'
