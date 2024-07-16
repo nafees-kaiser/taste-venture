@@ -104,3 +104,13 @@ def update_password(request):
         return Response("Password updated successfully", status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def get_user_details(request):
+    email = request.data.get('email')
+    user = Users.objects.get(email=email)
+    serializer = UserSerializer(user)
+    if serializer.data:
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
