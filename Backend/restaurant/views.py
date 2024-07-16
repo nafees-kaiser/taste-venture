@@ -69,10 +69,12 @@ def add_restaurant_review(request):
         review = request.data['review']
         email = request.data['email']
         rating = request.data['rating']
+        restaurant_id = request.data['restaurant_id']
         prediction = get_restaurant_sentiment(review)
         if prediction:
             customer = Users.objects.get(email=email)
-            review = Review.objects.create(user=customer, review=review, rating=rating)
+            restaurant = Restaurant.objects.get(pk=restaurant_id)
+            review = Review.objects.create(user=customer, restaurant=restaurant, review=review, rating=rating)
             serializer = ReviewSerializer(review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
