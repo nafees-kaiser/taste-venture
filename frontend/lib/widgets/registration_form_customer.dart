@@ -41,7 +41,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
 
   ApiSettings api = ApiSettings(endPoint: 'users/register');
 
-  Future<(dynamic, int)> _register() async {
+  Future<void> _register(BuildContext context) async {
     final String fullName = controller[0].text;
     final String contact = controller[1].text;
     final String email = controller[2].text;
@@ -63,12 +63,34 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     );
 
     // return 0;
-    try {
-      final response = await api.postMethod(customer.toJson());
-      return (response.body, response.statusCode);
-    } catch (e) {
-      debugPrint(e.toString());
-      return (e.toString(), 404);
+    if (_formKey.currentState!.validate()) {
+      try {
+        final response = await api.postMethod(customer.toJson());
+        // print(response.body);
+        Customer new_customer = Customer.fromJson(response.body);
+        // print(new_customer.email);
+        if (response.statusCode == 201) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpPage.setEmail(
+                email: new_customer.email,
+                nextPath: '/preference',
+              ),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content:
+                    Text('Error ${response.statusCode}: registration failed')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+      }
     }
   }
 
@@ -235,33 +257,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
           ),
           SizedBox(height: 25),
           ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                final (data, status) = await _register();
-                print(data);
-                if (status == 201) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OtpPage.setEmail(
-                        email: 'oyonafees2001@gmail.com',
-                      ),
-                    ),
-                  );
-                }
-                // else if (status == 0) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     SnackBar(content: Text('email check')),
-                //   );
-                // }
-                else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: Text('Error $status: registration failed')),
-                  );
-                }
-              }
-            },
+            onPressed: () async => await _register(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: isButtonEnabled ? PRIMARY_COLOR : DISABLE,
               minimumSize: const Size(double.infinity, 0),
