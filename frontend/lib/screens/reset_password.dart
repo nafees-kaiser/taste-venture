@@ -1,6 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
+import 'package:http/http.dart';
 
 class ResetPassword extends StatefulWidget {
+  final String? email;
+
+  ResetPassword({super.key, this.email});
+  // const ResetPassword.setEmail({super.key, required this.email});
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
 }
@@ -58,15 +66,36 @@ class _ResetPasswordState extends State<ResetPassword> {
               height: 42,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String password = _passwordController.text;
                   String confirmPassword = _confirmPasswordController.text;
+
                   if (password.isNotEmpty && confirmPassword.isNotEmpty) {
                     if (password == confirmPassword) {
-                      Navigator.pushNamed(context, '/login');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Password reset successfully')),
-                      );
+                      final data = {
+                        "email": widget.email,
+                        "password": password,
+                      };
+                      try {
+                        final response =
+                            await ApiSettings(endPoint: 'users/update-password')
+                                .postMethod(json.encode(data));
+                        if (response.statusCode == 200) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Password reset successfully')),
+                          );
+                          Navigator.pushNamed(context, '/login');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(response.body)),
+                          );
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(e.toString())),
+                        );
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Passwords do not match')),
