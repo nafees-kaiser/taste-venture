@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from ml_models.model import get_restaurant_sentiment
 from usersapp.models import Users
 from usersapp.serializers import UserSerializer
-from .models import MenuItem, Restaurant, Review
+from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import MenuItemSerializer, ReviewSerializer
 from .serializers import RestaurantSerializer
 from .serializers import ReservationSerializer
@@ -134,11 +134,14 @@ def get_restaurant_reviews(request, restaurant_id):
 @api_view(['POST'])
 @csrf_exempt
 def add_reservation(request):
-    serializer = ReservationSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
+    user = Users.objects.get(id=request.data['user_id'])
+    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+    reservation = Reservation.objects.create(user=user, date=request.data['date'], start_time=request.data['start_time'], end_time=request.data['end_time'], reservation_type=request.data['reservation_type'], number_of_people=request.data['number_of_people'], message=request.data['message'], restaurant=restaurant)
+    serializer = ReservationSerializer(reservation)
+    try:
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return Response("Error occured during reservation", status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
