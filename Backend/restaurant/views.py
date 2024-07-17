@@ -58,6 +58,21 @@ def restaurant_details(request, restaurant_id):
         return Response(restaurant_serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['POST'])
+def edit_restaurant(request):
+    # print(request.data)
+    update_request_fields = request.data
+    try:
+        menu_item = MenuItem.objects.get(pk=update_request_fields['id'])
+    except MenuItem.DoesNotExist:
+        return Response("Menu item does not exist", status=status.HTTP_404_NOT_FOUND)
+
+    for key, value in update_request_fields.items():
+        setattr(menu_item, key, value)
+        # menu_item
+    menu_item.save()
+    return Response("Updated successfully", status=status.HTTP_200_OK)
 
 # @api_view(['GET'])
 # def recommended_restaurants(request, email):
