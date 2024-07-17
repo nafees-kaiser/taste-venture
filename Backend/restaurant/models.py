@@ -33,7 +33,7 @@ class MenuItem(models.Model):
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     # image = models.ImageField(upload_to='images/')
-    restaurant = models.ForeignKey('Restaurant' , on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
+    restaurant = models.ForeignKey(Restaurant , on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
 
     def __str__(self):
         return f'{self.id} -> {self.name}'
@@ -75,14 +75,14 @@ class FoodType(models.Model):
     
     
 class Reservation(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, default=None, blank=True)
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     reservation_type = models.BooleanField() # True = Full-restaurant, False = Custom
     number_of_people = models.IntegerField() # if reservation_type = False, then this field is required
     message = models.TextField()
-    restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE, default=None, blank=True)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, blank=True)
 
 
 class Review(models.Model):
