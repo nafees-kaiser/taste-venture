@@ -44,17 +44,11 @@ def edit_menu(request):
 def view_menu(request, restaurant_id):
     try:
         restaurant = Restaurant.objects.get(pk=restaurant_id)
-        restaurant_serializer = RestaurantSerializer(restaurant)
-        
-        
         menu_item_list = MenuItem.objects.filter(restaurant=restaurant)
         menu_item_list_serializer = MenuItemSerializer(menu_item_list, many=True)
-        
         return Response(menu_item_list_serializer.data, status=status.HTTP_200_OK)
-    
-        
     except Restaurant.DoesNotExist:
-        return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+        return Response(menu_item_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST'])
