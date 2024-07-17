@@ -1,4 +1,4 @@
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Max
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -114,4 +114,18 @@ def add_reservation(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def get_top_restaurants(request):
+    review = Review.objects.all()
+    restaurant_ratings = review.values('restaurant').annotate(avg_rating=Avg('rating'))
+    top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
+    top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
+    top_restaurant_details = Restaurant.objects.filter(id__in=top_restaurant_ids)
+    serializer = RestaurantSerializer(top_restaurant_details, many=True)
+    if serializer.data:
+        return Response(serializer.data, status.HTTP_200_OK)
+    else:
+        return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
 
