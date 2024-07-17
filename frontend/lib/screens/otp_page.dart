@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/reset_password.dart';
 import 'package:frontend/utils/api_settings.dart';
 
 class OtpPage extends StatefulWidget {
@@ -76,7 +77,18 @@ class _OTPPageState extends State<OtpPage> {
                       SnackBar(content: Text(body)),
                     );
                     if (status == 200) {
-                      Navigator.pushNamed(context, widget.nextPath);
+                      if (widget.nextPath == '/reset-pass') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ResetPassword(
+                              email: widget.email!,
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushNamed(context, widget.nextPath);
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(body)),

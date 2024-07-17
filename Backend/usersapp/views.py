@@ -37,11 +37,11 @@ def login(request):
     data = request.data
     email = data.get('email')
     password = data.get('password')
-    print(password)
+    # print(password)
 
     try:
         user = Users.objects.get(email=email)
-        print(type(user))
+        # print(type(user))
         if user is not None and check_password(password, user.password):
             serializer = UserSerializer(user)
 
@@ -65,14 +65,11 @@ def login(request):
 @api_view(['POST'])
 @csrf_exempt
 def verify_otp(request):
-    # email = 'oyonafees2001@gmail.com'
-    # send_otp(email)
-    # return Response("All okay", status=status.HTTP_200_OK)
     OTP_serializer = OTPSerializer(data=request.data)
     if OTP_serializer.is_valid():
         otp = OTP_serializer.validated_data.get('otp')
         email = OTP_serializer.validated_data.get('email')
-        print(email)
+        # print(email)
         try:
             user = Users.objects.get(email=email)
             gen_otp = OTPAuthentication.objects.get(user=user, otp=otp)
@@ -102,7 +99,7 @@ def update_password(request):
         user.password = password
         user.save()
         return Response("Password updated successfully", status=status.HTTP_200_OK)
-    except User.DoesNotExist:
+    except Users.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
 
@@ -128,4 +125,20 @@ def update_user_details(request):
     if serializer.data:
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def verify_email(request):
+    try:
+        email = request.data.get('email')
+        user = Users.objects.get(email=email)
+        otp = send_otp(email)
+        OTPAuthentication.objects.create(user=user, otp=otp)
+        return Response("Email verified", status=status.HTTP_200_OK)
+    except Users.DoesNotExist:
+        return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
+
+
+
 
