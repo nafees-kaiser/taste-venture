@@ -1,23 +1,45 @@
-// ignore_for_file: prefer_final_fields, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Booking extends StatefulWidget {
+  final String fee;
+
+  Booking({required this.fee});
   @override
   _BookingState createState() => _BookingState();
 }
 
 class _BookingState extends State<Booking> {
   TextEditingController _dateController = TextEditingController();
-  String _selectedGuests = '2 Persons';
+  int _guestCount = 1;
+  late int _fee;
+
+  @override
+  void initState() {
+    super.initState();
+    _fee = int.parse(widget.fee); // Convert the string fee to int
+  }
 
   @override
   void dispose() {
     _dateController.dispose();
     super.dispose();
+  }
+
+  void _incrementGuest() {
+    setState(() {
+      _guestCount++;
+    });
+  }
+
+  void _decrementGuest() {
+    setState(() {
+      if (_guestCount > 1) {
+        _guestCount--;
+      }
+    });
   }
 
   @override
@@ -45,7 +67,7 @@ class _BookingState extends State<Booking> {
               _buildDatePicker(),
               SizedBox(height: 27.2),
               _buildSectionTitle('No. Of Guest'),
-              _buildGuestDropdown(),
+              _buildGuestCounter(),
               SizedBox(height: 34.6),
               Center(
                 child: Column(
@@ -65,7 +87,7 @@ class _BookingState extends State<Booking> {
                             width: 16.8, height: 20.3),
                         SizedBox(width: 8.5),
                         Text(
-                          '7890.00',
+                          '${_fee * _guestCount}', // Use the converted fee here
                           style: GoogleFonts.mulish(
                             fontWeight: FontWeight.w400,
                             fontSize: 36,
@@ -155,42 +177,74 @@ class _BookingState extends State<Booking> {
     );
   }
 
-  Widget _buildGuestDropdown() {
+  Widget _buildGuestCounter() {
     return Container(
-      decoration: BoxDecoration(color: Color(0xFFF4F4F5)),
       padding: EdgeInsets.symmetric(vertical: 13.8, horizontal: 20),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: _selectedGuests,
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedGuests = newValue!;
-            });
-          },
-          items: [
-            '2 Persons',
-            '3 Persons',
-            '4 Persons',
-            '5 Persons',
-            '6 Persons',
-          ].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: GoogleFonts.mulish(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  height: 1.3,
-                  color: Color(0xFF495560),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: _decrementGuest,
+            child: Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.black,
+              ),
+              child: Center(
+                child: Text(
+                  '-',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
               ),
-            );
-          }).toList(),
-          isExpanded: true,
-          icon: SvgPicture.asset('assets/vectors/vector_13_x2.svg',
-              width: 9.6, height: 5.8),
-        ),
+            ),
+          ),
+          SizedBox(width: 40),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 13.8, horizontal: 26),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Color(0xFFF4F4F5),
+            ),
+            child: Text(
+              '$_guestCount Person',
+              style: GoogleFonts.mulish(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                height: 1.3,
+                color: Color(0xFF495560),
+              ),
+            ),
+          ),
+          SizedBox(width: 40),
+          GestureDetector(
+            onTap: _incrementGuest,
+            child: Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.black,
+              ),
+              child: Center(
+                child: Text(
+                  '+',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

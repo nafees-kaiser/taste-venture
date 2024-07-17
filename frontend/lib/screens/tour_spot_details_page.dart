@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/booking.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'dart:convert';
@@ -205,7 +206,15 @@ class TourSpotDetailsPageContents extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/booking'),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Booking(
+                  fee: data['entry_fee'],
+                ),
+              ),
+            ),
+            // Navigator.pushNamed(context, '/booking'),
             child: Text('Reserve'),
             style: ElevatedButton.styleFrom(
               backgroundColor: SECONDARY_COLOR,

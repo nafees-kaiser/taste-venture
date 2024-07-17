@@ -1,5 +1,8 @@
 from django.db import models
 
+from usersapp.models import Users
+
+
 # Create your models here.
 class Tourspot(models.Model):
     name = models.CharField(max_length=200)
@@ -18,7 +21,13 @@ class Tourspot(models.Model):
     pool = models.CharField(max_length=50)
     other_services = models.TextField()
 
-
-
     def __str__(self):
         return self.name
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    date = models.DateField()
+    number_of_people = models.IntegerField()
+    message = models.TextField()
+    tourspot = models.ForeignKey('Tourspot', on_delete=models.CASCADE, default=None, blank=True)
