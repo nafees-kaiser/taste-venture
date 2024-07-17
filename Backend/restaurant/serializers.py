@@ -19,21 +19,22 @@ class RestaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = '__all__'
 
+    def create(self, validated_data):
+        menu_item_list = validated_data.pop('menu_item')
+        restaurant = Restaurant.objects.create(**validated_data)
+        for menu_item in menu_item_list:
+            MenuItem.objects.create(restaurant=restaurant, **menu_item)
+            return restaurant
+
+        #return MenuItem.objects.create(**validated_data)
+        
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Review
         fields = '__all__'
-
-def create(self, validated_data):
-    menu_item_list = validated_data.pop('menu_item')
-    restaurant = Restaurant.objects.create(**validated_data)
-    for menu_item in menu_item_list:
-        MenuItem.objects.create(restaurant=restaurant, **menu_item)
-        return restaurant
-
-    #return MenuItem.objects.create(**validated_data)
+    
     
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
