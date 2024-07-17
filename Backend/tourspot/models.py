@@ -29,5 +29,6 @@ class Booking(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     date = models.DateField()
     number_of_people = models.IntegerField()
-    message = models.TextField()
+    subtotal = models.IntegerField()
+    message = models.TextField(blank=True, null=True)
     tourspot = models.ForeignKey('Tourspot', on_delete=models.CASCADE, default=None, blank=True)

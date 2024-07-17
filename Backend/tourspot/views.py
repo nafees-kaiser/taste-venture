@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 
 from tourspot.models import Tourspot
-from tourspot.serializers import  TourspotSerializer
+from tourspot.serializers import TourspotSerializer, BookingSerializer
+
 
 # Create your views here.
 @api_view(['POST'])
@@ -52,3 +53,13 @@ def view_tourspot_detail(request, id):
         return Response(tourspot_data, status=status.HTTP_200_OK)
     except Tourspot.DoesNotExist:
         return Response({'error': 'Tourspot not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def add_booking(request):
+    serializer = BookingSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
