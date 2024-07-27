@@ -7,6 +7,7 @@ import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/top_restaurant_card.dart';
 import 'package:frontend/widgets/top_tour_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerHomepage extends StatefulWidget {
   const CustomerHomepage({super.key});
@@ -17,6 +18,7 @@ class CustomerHomepage extends StatefulWidget {
 
 class _CustomerHomepageState extends State<CustomerHomepage> {
   late Future<List<RestaurantAndRatings>> topRestaurants;
+  late Future<bool> emailPresent;
   ApiSettings top_restaurant_api =
       ApiSettings(endPoint: 'restaurant/get-top-restaurant');
 
@@ -24,6 +26,13 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
   void initState() {
     super.initState();
     topRestaurants = fetchTopRestaurants();
+    emailPresent = getInfo();
+  }
+
+  Future<bool> getInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('userEmail');
+    return email != null;
   }
 
   Future<List<RestaurantAndRatings>> fetchTopRestaurants() async {
@@ -69,9 +78,37 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/notification'),
-            icon: const Icon(Icons.notifications),
+          FutureBuilder<bool>(
+            future: emailPresent,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(); // Can display a loader here if needed
+              } else if (snapshot.hasData && snapshot.data == true) {
+                return IconButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/notification'),
+                  icon: const Icon(Icons.notifications),
+                );
+              } else {
+                return Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: SECONDARY_COLOR,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),
