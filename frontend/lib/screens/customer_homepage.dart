@@ -1,4 +1,8 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:frontend/models/restaurant_and_ratings.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/top_restaurant_card.dart';
@@ -12,6 +16,29 @@ class CustomerHomepage extends StatefulWidget {
 }
 
 class _CustomerHomepageState extends State<CustomerHomepage> {
+  late Future<List<RestaurantAndRatings>> topRestaurants;
+  ApiSettings top_restaurant_api =
+      ApiSettings(endPoint: 'restaurant/get-top-restaurant');
+
+  @override
+  void initState() {
+    super.initState();
+    topRestaurants = fetchTopRestaurants();
+  }
+
+  Future<List<RestaurantAndRatings>> fetchTopRestaurants() async {
+    final response = await top_restaurant_api.getMethod();
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((restaurant) => RestaurantAndRatings.fromJson(restaurant))
+          .toList();
+    } else {
+      throw Exception('Failed to load top restaurants');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,23 +266,37 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
 
                 // Top reviewed restaurant Cards
                 SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < 5; i++)
-                          GestureDetector(
+                  scrollDirection: Axis.horizontal,
+                  child: FutureBuilder<List<RestaurantAndRatings>>(
+                    future: topRestaurants,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No data available');
+                      } else {
+                        return Row(
+                          children: snapshot.data!.map((restaurant) {
+                            return GestureDetector(
                               child: TopResCard(
                                 restaurantImage: "assets/pizza.jpg",
-                                restaurantName: "PizzaBurg",
-                                restaurantAddress: "14/A Mirpur-1, Dhaka-1211",
-                                restaurantRating: 4.7,
+                                restaurantName: restaurant.name,
+                                restaurantAddress: restaurant.address,
+                                restaurantRating: restaurant.averageRating,
                               ),
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, '/restaurant/information');
-                              })
-                      ],
-                    )),
+                                Navigator.pushNamed(context,
+                                    '/restaurant/information'); //restaurant_id = restaurant.id
+                              },
+                            );
+                          }).toList(),
+                        );
+                      }
+                    },
+                  ),
+                ),
 
                 // Top reviewed restaurant
                 Padding(
