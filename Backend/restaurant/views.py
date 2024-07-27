@@ -1,4 +1,4 @@
-from django.db.models import Avg, Count, Max
+from django.db.models import Avg, Count, Max, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -8,7 +8,7 @@ from ml_models.model import get_restaurant_sentiment
 from usersapp.models import Users
 from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
-from .serializers import MenuItemSerializer, ReviewSerializer
+from .serializers import MenuItemSerializer, ReviewSerializer, RestaurantAndAvgRating
 from .serializers import RestaurantSerializer
 from .serializers import ReservationSerializer
 
@@ -150,8 +150,16 @@ def get_top_restaurants(request):
     restaurant_ratings = review.values('restaurant').annotate(avg_rating=Avg('rating'))
     top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
     top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
-    top_restaurant_details = Restaurant.objects.filter(id__in=top_restaurant_ids)
-    serializer = RestaurantSerializer(top_restaurant_details, many=True)
+
+    restaurants = Restaurant.objects.filter(id__in=top_restaurant_ids).annotate(
+        average_rating=Subquery(
+            Review.objects.filter(restaurant=OuterRef('pk')).values('restaurant').annotate(
+                avg_rating=Avg('rating')
+            ).values('avg_rating')
+        )
+    )
+
+    serializer = RestaurantAndAvgRating(restaurants, many=True)
     if serializer.data:
         return Response(serializer.data, status.HTTP_200_OK)
     else:

@@ -11,10 +11,10 @@ class MenuItemSerializer(serializers.ModelSerializer):
         model = MenuItem
         fields = '__all__'
 
-        
-        
+
 class RestaurantSerializer(serializers.ModelSerializer):
     menu_item = MenuItemSerializer(many=True)
+
     class Meta:
         model = Restaurant
         fields = '__all__'
@@ -27,17 +27,25 @@ class RestaurantSerializer(serializers.ModelSerializer):
             return restaurant
 
         #return MenuItem.objects.create(**validated_data)
-        
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Review
         fields = '__all__'
-    
-    
+
+
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = '__all__'
 
+
+class RestaurantAndAvgRating(serializers.ModelSerializer):
+    average_rating = serializers.FloatField()
+
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'name', 'address', 'average_rating']
