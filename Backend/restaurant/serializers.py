@@ -44,8 +44,11 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 
 class RestaurantAndAvgRating(serializers.ModelSerializer):
-    average_rating = serializers.FloatField()
+    average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Restaurant
         fields = ['id', 'name', 'address', 'average_rating']
+
+    def get_average_rating(self, obj):
+        return format(obj.average_rating, '.2f')

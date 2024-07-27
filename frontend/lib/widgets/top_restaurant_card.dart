@@ -3,7 +3,7 @@ import 'package:frontend/utils/constant.dart';
 
 class TopResCard extends StatefulWidget {
   String restaurantImage, restaurantName, restaurantAddress;
-  double restaurantRating;
+  String restaurantRating;
   TopResCard(
       {super.key,
       required this.restaurantImage,

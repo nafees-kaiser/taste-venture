@@ -157,7 +157,7 @@ def get_top_restaurants(request):
                 avg_rating=Avg('rating')
             ).values('avg_rating')
         )
-    )
+    ).order_by('-average_rating')
 
     serializer = RestaurantAndAvgRating(restaurants, many=True)
     if serializer.data:

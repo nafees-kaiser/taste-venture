@@ -10,9 +10,9 @@ const Color SECONDARY_BACKGROUND = Color(0xFF9CA3AF);
 const Color INCORRECT = Colors.red;
 const Color RATING_FILL = Color(0xFFFFA432);
 
-
-const String baseUri = "http://192.168.0.7:8000/";
+// const String baseUri = "http://192.168.0.7:8000/";
 // const String baseUri = "http://192.168.0.102:8000/";
+const String baseUri = "http://10.0.2.2:8000/";
 
 class Constant {
   static String apiUri = '';
