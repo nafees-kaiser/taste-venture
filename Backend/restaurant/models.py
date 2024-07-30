@@ -1,8 +1,6 @@
 from django.db import models
 from usersapp.models import Users
 
-from usersapp.models import Users
-
 
 # Create your models here.
 
