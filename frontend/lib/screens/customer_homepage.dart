@@ -1,8 +1,13 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:frontend/models/restaurant_and_ratings.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/top_restaurant_card.dart';
 import 'package:frontend/widgets/top_tour_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerHomepage extends StatefulWidget {
   const CustomerHomepage({super.key});
@@ -12,6 +17,37 @@ class CustomerHomepage extends StatefulWidget {
 }
 
 class _CustomerHomepageState extends State<CustomerHomepage> {
+  late Future<List<RestaurantAndRatings>> topRestaurants;
+  late Future<bool> emailPresent;
+  ApiSettings top_restaurant_api =
+      ApiSettings(endPoint: 'restaurant/get-top-restaurant');
+
+  @override
+  void initState() {
+    super.initState();
+    topRestaurants = fetchTopRestaurants();
+    emailPresent = getInfo();
+  }
+
+  Future<bool> getInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('userEmail');
+    return email != null;
+  }
+
+  Future<List<RestaurantAndRatings>> fetchTopRestaurants() async {
+    final response = await top_restaurant_api.getMethod();
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((restaurant) => RestaurantAndRatings.fromJson(restaurant))
+          .toList();
+    } else {
+      throw Exception('Failed to load top restaurants');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +78,37 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/notification'),
-            icon: const Icon(Icons.notifications),
+          FutureBuilder<bool>(
+            future: emailPresent,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(); // Can display a loader here if needed
+              } else if (snapshot.hasData && snapshot.data == true) {
+                return IconButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/notification'),
+                  icon: const Icon(Icons.notifications),
+                );
+              } else {
+                return Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: SECONDARY_COLOR,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),
@@ -239,23 +303,37 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
 
                 // Top reviewed restaurant Cards
                 SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < 5; i++)
-                          GestureDetector(
+                  scrollDirection: Axis.horizontal,
+                  child: FutureBuilder<List<RestaurantAndRatings>>(
+                    future: topRestaurants,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No data available');
+                      } else {
+                        return Row(
+                          children: snapshot.data!.map((restaurant) {
+                            return GestureDetector(
                               child: TopResCard(
                                 restaurantImage: "assets/pizza.jpg",
-                                restaurantName: "PizzaBurg",
-                                restaurantAddress: "14/A Mirpur-1, Dhaka-1211",
-                                restaurantRating: 4.7,
+                                restaurantName: restaurant.name,
+                                restaurantAddress: restaurant.address,
+                                restaurantRating: restaurant.averageRating,
                               ),
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, '/restaurant/information');
-                              })
-                      ],
-                    )),
+                                Navigator.pushNamed(context,
+                                    '/restaurant/information'); //restaurant_id = restaurant.id
+                              },
+                            );
+                          }).toList(),
+                        );
+                      }
+                    },
+                  ),
+                ),
 
                 // Top reviewed restaurant
                 Padding(
