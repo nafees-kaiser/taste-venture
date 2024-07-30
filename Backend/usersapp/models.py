@@ -1,6 +1,7 @@
 from django.db import models
 from django.db import models
 
+from tourspot.models import Tourspot
 
 class Users(models.Model):
     full_name = models.CharField(max_length=200)
@@ -20,3 +21,12 @@ class OTPAuthentication(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     otp = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+class Favorite(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(to='restaurant.Restaurant', on_delete=models.CASCADE)
+    # tourspot = models.ForeignKey(Tourspot, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.full_name

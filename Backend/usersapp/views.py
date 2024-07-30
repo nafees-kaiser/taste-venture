@@ -140,5 +140,13 @@ def verify_email(request):
         return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
 
 
-
+@api_view(['GET'])
+def view_favorite(request, user_id):
+    try:
+        user = Users.objects.get(pk=user_id)
+        favorite_list = Favorite.objects.filter(user=user)
+        favorite_list_serializer = FavoriteSerializer(favorite_list, many=True)
+        return Response(favorite_list_serializer.data, status=status.HTTP_200_OK)
+    except user.DoesNotExist:
+        return Response(favorite_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
