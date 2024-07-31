@@ -10,4 +10,5 @@ urlpatterns = [
     path('update-user-info', views.update_user_details, name='update_user_details'),
     path('verify-email', views.verify_email, name='verify_email'),
     path('view-favorite/<int:user_id>/', views.view_favorite, name='view_favorite'),
+    path('add-to-favorite', views.add_to_favorite, name='add_to_favorite'),
 ]

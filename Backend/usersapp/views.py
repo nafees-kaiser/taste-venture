@@ -149,4 +149,14 @@ def view_favorite(request, user_id):
         return Response(favorite_list_serializer.data, status=status.HTTP_200_OK)
     except user.DoesNotExist:
         return Response(favorite_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    
+
+@api_view(['POST'])
+@csrf_exempt
+def add_to_favorite(request):
+    serializer = FavoriteSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
