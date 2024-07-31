@@ -28,5 +28,10 @@ class Favorite(models.Model):
     restaurant = models.ForeignKey(to='restaurant.Restaurant', on_delete=models.CASCADE)
     # tourspot = models.ForeignKey(Tourspot, on_delete=models.CASCADE)
     
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'restaurant'], name='unique_user_restaurant')
+        ]
+    
     def __str__(self):
         return self.full_name
