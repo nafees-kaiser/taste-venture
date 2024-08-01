@@ -81,6 +81,7 @@ class Reservation(models.Model):
     number_of_people = models.IntegerField() # if reservation_type = False, then this field is required
     message = models.TextField()
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, blank=True)
+    status = models.TextField(default="pending")
 
 
 class Review(models.Model):
