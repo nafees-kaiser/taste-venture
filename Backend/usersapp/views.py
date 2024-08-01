@@ -158,12 +158,12 @@ def view_favorite(request, user_id):
 def add_to_favorite(request):
     user = Users.objects.get(pk=request.data['user_id'])
     restaurant = Restaurant.objects.get(pk=request.data['restaurant_id'])
-    favorite = Favorite.objects.create(user= user, restaurant= restaurant)
-    serializer = FavoriteSerializer(favorite)
-    try:
+    object_data = { "user": user.pk, "restaurant": restaurant.pk}
+    serializer = FavoriteSerializer(data= object_data)
+    if serializer.is_valid():
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    except:
-        return Response("Error occured during adding to favorite", status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @csrf_exempt
