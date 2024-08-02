@@ -14,6 +14,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .utils import send_otp
 
+from restaurant.models import Restaurant
+
 
 @api_view(['POST'])
 @csrf_exempt
@@ -154,7 +156,10 @@ def view_favorite(request, user_id):
 @api_view(['POST'])
 @csrf_exempt
 def add_to_favorite(request):
-    serializer = FavoriteSerializer(data=request.data)
+    user = Users.objects.get(pk=request.data['user_id'])
+    restaurant = Restaurant.objects.get(pk=request.data['restaurant_id'])
+    object_data = { "user": user.pk, "restaurant": restaurant.pk}
+    serializer = FavoriteSerializer(data= object_data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -164,7 +169,7 @@ def add_to_favorite(request):
 @csrf_exempt
 def remove_from_favorite(request):
     try:
-        favorite = Favorite.objects.get(user=request.data['user'], restaurant=request.data['restaurant'])
+        favorite = Favorite.objects.get(user=request.data['user_id'], restaurant=request.data['restaurant_id'])
         favorite.delete()
         return Response('Restaurant removed from Favorite', status=status.HTTP_200_OK)
     except favorite.DoesNotExist:

@@ -13,4 +13,5 @@ urlpatterns = [
     path('get-restaurant-reviews/<int:restaurant_id>', views.get_restaurant_reviews),
     path('add-reservation', views.add_reservation),
     path('get-top-restaurant', views.get_top_restaurants),
+    path('accept-reservation', views.accept_reservation),
 ]

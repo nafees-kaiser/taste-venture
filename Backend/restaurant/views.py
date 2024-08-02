@@ -134,11 +134,11 @@ def get_restaurant_reviews(request, restaurant_id):
 @api_view(['POST'])
 @csrf_exempt
 def add_reservation(request):
-    user = Users.objects.get(id=request.data['user_id'])
-    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-    reservation = Reservation.objects.create(user=user, date=request.data['date'], start_time=request.data['start_time'], end_time=request.data['end_time'], reservation_type=request.data['reservation_type'], number_of_people=request.data['number_of_people'], message=request.data['message'], restaurant=restaurant)
-    serializer = ReservationSerializer(reservation)
     try:
+        user = Users.objects.get(id=request.data['user_id'])
+        restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+        reservation = Reservation.objects.create(user=user, date=request.data['date'], start_time=request.data['start_time'], end_time=request.data['end_time'], reservation_type=request.data['reservation_type'], number_of_people=request.data['number_of_people'], restaurant=restaurant, status="pending")
+        serializer = ReservationSerializer(reservation)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
         return Response("Error occured during reservation", status=status.HTTP_400_BAD_REQUEST)
@@ -165,3 +165,16 @@ def get_top_restaurants(request):
     else:
         return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+@csrf_exempt
+def accept_reservation(request):
+    user = Users.objects.get(id=request.data['user_id'])
+    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+    reservation = Reservation.objects.get(user=user, restaurant=restaurant)
+    setattr(reservation, 'status', "accepted")
+    setattr(reservation, 'message', request.data['message'])
+    try:
+        return Response("Reservation Accepted", status=status.HTTP_201_CREATED)
+    except:
+        return Response("Error occured during reservation processing", status=status.HTTP_400_BAD_REQUEST)

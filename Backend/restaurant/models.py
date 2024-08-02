@@ -81,6 +81,12 @@ class Reservation(models.Model):
     number_of_people = models.IntegerField() # if reservation_type = False, then this field is required
     message = models.TextField()
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, blank=True)
+    status = models.TextField(default="pending")
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'restaurant', 'start_time'], name='unique_restaurant_reservation')
+        ]
 
 
 class Review(models.Model):
