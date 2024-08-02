@@ -178,3 +178,16 @@ def accept_reservation(request):
         return Response("Reservation Accepted", status=status.HTTP_201_CREATED)
     except:
         return Response("Error occured during reservation processing", status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@csrf_exempt
+def reject_reservation(request):
+    user = Users.objects.get(id=request.data['user_id'])
+    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+    reservation = Reservation.objects.get(user=user, restaurant=restaurant)
+    setattr(reservation, 'status', "rejected")
+    setattr(reservation, 'message', request.data['message'])
+    try:
+        return Response("Reservation Rejected", status=status.HTTP_201_CREATED)
+    except:
+        return Response("Error occured during reservation processing", status=status.HTTP_400_BAD_REQUEST)
