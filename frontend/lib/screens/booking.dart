@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/models/booking.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,6 +19,8 @@ class _BookingState extends State<Booking> {
   TextEditingController _dateController = TextEditingController();
   int _guestCount = 1;
   late int _fee;
+
+  ApiSettings api = ApiSettings(endPoint: 'users/login');
 
   @override
   void initState() {
@@ -40,6 +46,31 @@ class _BookingState extends State<Booking> {
         _guestCount--;
       }
     });
+  }
+
+  Future<void> check() async {
+    int number_of_people = _guestCount;
+    int subtotal = _fee * _guestCount;
+    BookSpot bookspot = BookSpot(
+        userId: userId,
+        date: _dateController.text,
+        numberOfPeople: number_of_people,
+        subtotal: subtotal,
+        tourspotId: tourspotId;
+    );
+
+    try {
+        final response = await api.postMethod(bookspot.toJson());
+
+        if (response.statusCode == 200) {
+          // Login successful
+          var jsonResponse = jsonDecode(response.body);
+          var user = jsonResponse['user'];
+          var token = jsonResponse['tokens']['access'];
+
+          Navigator.pushNamed(context, '/customer-homepage');
+        } 
+      }
   }
 
   @override
