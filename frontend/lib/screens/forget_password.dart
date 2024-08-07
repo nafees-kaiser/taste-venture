@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_regex/flutter_regex.dart';
+import 'package:frontend/screens/otp_page.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -49,10 +55,36 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     height: 42,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         String email = _inputController.text;
-                        if (email.isNotEmpty) {
-                          Navigator.pushNamed(context, '/otp-page');
+                        if (email.isNotEmpty && email.isEmail()) {
+                          ApiSettings api =
+                              ApiSettings(endPoint: 'users/verify-email');
+                          try {
+                            final response = await api
+                                .postMethod(json.encode({"email": email}));
+                            if (response.statusCode == 200) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OtpPage.setEmail(
+                                    email: email,
+                                    nextPath: '/reset-pass',
+                                  ),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(response.body)),
+                              );
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())),
+                            );
+                          }
+                          // Navigator.pushNamed(context, '/otp-page');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

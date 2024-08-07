@@ -15,6 +15,7 @@ Future<void> saveToken(String token) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   return prefs.getString('token');
 // }
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -78,6 +79,11 @@ class _LoginState extends State<Login> {
           var token = jsonResponse['tokens']['access'];
           print(token);
           await saveToken(token);
+
+          // Store login info using shared_preferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userEmail', email);
+          await prefs.setString('userToken', token);
 
           Fluttertoast.showToast(
             msg: "Login Successful",

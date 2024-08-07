@@ -14,6 +14,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .utils import send_otp
 
+from restaurant.models import Restaurant
+
 
 @api_view(['POST'])
 @csrf_exempt
@@ -37,11 +39,11 @@ def login(request):
     data = request.data
     email = data.get('email')
     password = data.get('password')
-    print(password)
+    # print(password)
 
     try:
         user = Users.objects.get(email=email)
-        print(type(user))
+        # print(type(user))
         if user is not None and check_password(password, user.password):
             serializer = UserSerializer(user)
 
@@ -65,14 +67,11 @@ def login(request):
 @api_view(['POST'])
 @csrf_exempt
 def verify_otp(request):
-    # email = 'oyonafees2001@gmail.com'
-    # send_otp(email)
-    # return Response("All okay", status=status.HTTP_200_OK)
     OTP_serializer = OTPSerializer(data=request.data)
     if OTP_serializer.is_valid():
         otp = OTP_serializer.validated_data.get('otp')
         email = OTP_serializer.validated_data.get('email')
-        print(email)
+        # print(email)
         try:
             user = Users.objects.get(email=email)
             gen_otp = OTPAuthentication.objects.get(user=user, otp=otp)
@@ -102,7 +101,7 @@ def update_password(request):
         user.password = password
         user.save()
         return Response("Password updated successfully", status=status.HTTP_200_OK)
-    except User.DoesNotExist:
+    except Users.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
 
@@ -129,3 +128,49 @@ def update_user_details(request):
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+@csrf_exempt
+def verify_email(request):
+    try:
+        email = request.data.get('email')
+        user = Users.objects.get(email=email)
+        otp = send_otp(email)
+        OTPAuthentication.objects.create(user=user, otp=otp)
+        return Response("Email verified", status=status.HTTP_200_OK)
+    except Users.DoesNotExist:
+        return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def view_favorite(request, user_id):
+    try:
+        user = Users.objects.get(pk=user_id)
+        favorite_list = Favorite.objects.filter(user=user)
+        favorite_list_serializer = FavoriteSerializer(favorite_list, many=True)
+        return Response(favorite_list_serializer.data, status=status.HTTP_200_OK)
+    except user.DoesNotExist:
+        return Response(favorite_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    
+
+@api_view(['POST'])
+@csrf_exempt
+def add_to_favorite(request):
+    user = Users.objects.get(pk=request.data['user_id'])
+    restaurant = Restaurant.objects.get(pk=request.data['restaurant_id'])
+    object_data = { "user": user.pk, "restaurant": restaurant.pk}
+    serializer = FavoriteSerializer(data= object_data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@csrf_exempt
+def remove_from_favorite(request):
+    try:
+        favorite = Favorite.objects.get(user=request.data['user_id'], restaurant=request.data['restaurant_id'])
+        favorite.delete()
+        return Response('Restaurant removed from Favorite', status=status.HTTP_200_OK)
+    except favorite.DoesNotExist:
+        return Response(favorite.errors, status=status.HTTP_404_NOT_FOUND)
