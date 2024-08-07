@@ -1,7 +1,7 @@
 from django.db import models
 from django.db import models
 
-from tourspot.models import Tourspot
+# from tourspot.models import Tourspot
 
 class Users(models.Model):
     full_name = models.CharField(max_length=200)

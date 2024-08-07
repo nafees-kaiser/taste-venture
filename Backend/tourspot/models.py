@@ -30,5 +30,11 @@ class Booking(models.Model):
     date = models.DateField()
     number_of_people = models.IntegerField()
     subtotal = models.IntegerField()
-    message = models.TextField(blank=True, null=True)
-    tourspot = models.ForeignKey('Tourspot', on_delete=models.CASCADE, default=None)
+    message = models.TextField()
+    tourspot = models.ForeignKey(Tourspot, on_delete=models.CASCADE, default=None)
+    status = models.TextField(default="pending")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'tourspot', 'date'], name='unique_tourspot_booking')
+        ]

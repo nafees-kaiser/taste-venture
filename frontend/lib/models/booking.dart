@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class BookSpot {
   int userId;
-  DateTime date;
+  String date;
   int numberOfPeople;
   int subtotal;
   String? message;
@@ -19,7 +19,7 @@ class BookSpot {
 
   BookSpot copyWith({
     int? userId,
-    DateTime? date,
+    String? date,
     int? numberOfPeople,
     int? subtotal,
     String? message,
@@ -38,7 +38,7 @@ class BookSpot {
   Map<String, dynamic> toMap() {
     return {
       'user_id': userId,
-      'date': date.toIso8601String(),
+      'date': date,
       'number_of_people': numberOfPeople,
       'subtotal': subtotal,
       'message': message,
@@ -49,7 +49,7 @@ class BookSpot {
   factory BookSpot.fromMap(Map<String, dynamic> map) {
     return BookSpot(
       userId: map['user_id'],
-      date: DateTime.parse(map['date']),
+      date: map['date'],
       numberOfPeople: map['number_of_people'],
       subtotal: map['subtotal'],
       message: map['message'],

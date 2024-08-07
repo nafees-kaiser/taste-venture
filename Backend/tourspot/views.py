@@ -5,8 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 
-from tourspot.models import Tourspot
+from tourspot.models import Tourspot, Booking
 from tourspot.serializers import TourspotSerializer, BookingSerializer
+from usersapp.models import Users
 
 
 # Create your views here.
@@ -58,6 +59,17 @@ def view_tourspot_detail(request, id):
 @api_view(['POST'])
 @csrf_exempt
 def add_booking(request):
+    try:
+        user = Users.objects.get(id=request.data['user_id'])
+        tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
+        booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'], number_of_people=request.data['number_of_people'], tourspot=tourspot, status="pending")
+        serializer = BookingSerializer(booking)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except:
+        return Response("Error occured during reservation", status=status.HTTP_400_BAD_REQUEST)
+
+
+
     serializer = BookingSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

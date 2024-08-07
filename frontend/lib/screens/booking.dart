@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/models/booking.dart';
+import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:intl/intl.dart';
 
 class Booking extends StatefulWidget {
   final String fee;
@@ -54,36 +56,44 @@ class _BookingState extends State<Booking> {
 
   Future<void> check() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getString('userToken');
 
     if (token != null) {
-      print(token);
-      print("hi");
-      print(_tourspotId);
+      // print(token);
+      // print(_tourspotId);
       final jwt = JWT.decode(token);
       final userId = jwt.payload['user_id'];
-      print(userId);
+      // print(userId);
       int numberOfPeople = _guestCount;
       int subtotal = _fee * _guestCount;
       DateTime date = DateTime.parse(_dateController.text);
-      print(date);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      // print(formattedDate);
 
       BookSpot bookspot = BookSpot(
-          // userId: userId,
-          userId: 1,
-          date: date,
-          numberOfPeople: numberOfPeople,
-          subtotal: subtotal,
-          tourspotId: 3
-          // tourspotId: _tourspotId,m
-          );
+        userId: userId,
+        date: formattedDate,
+        numberOfPeople: numberOfPeople,
+        subtotal: subtotal,
+        tourspotId: _tourspotId,
+      );
 
       try {
         final response = await api.postMethod(bookspot.toJson());
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 201) {
           // Booking added successfully
-          Navigator.pushNamed(context, '/customer-homepage');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TourSpotDetailsPage(
+                id: _tourspotId,
+              ),
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Booking added successfully')),
+          );
         }
       } catch (error) {
         // Handle error
@@ -205,7 +215,7 @@ class _BookingState extends State<Booking> {
         );
         if (pickedDate != null) {
           setState(() {
-            _dateController.text = "${pickedDate.toLocal()}".split(' ')[0];
+            _dateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
           });
         }
       },
