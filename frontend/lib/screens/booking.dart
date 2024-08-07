@@ -57,6 +57,12 @@ class _BookingState extends State<Booking> {
   Future<void> check() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('userToken');
+    if (_dateController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please Select a Date')),
+      );
+      return;
+    }
 
     if (token != null) {
       // print(token);
@@ -94,9 +100,15 @@ class _BookingState extends State<Booking> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Booking added successfully')),
           );
+        } else if (response.statusCode == 400) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('An error occured during Booking process')),
+          );
         }
       } catch (error) {
-        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occured during Booking process')),
+        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

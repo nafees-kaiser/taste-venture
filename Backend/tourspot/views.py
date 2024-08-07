@@ -66,7 +66,7 @@ def add_booking(request):
         serializer = BookingSerializer(booking)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
-        return Response("Error occured during reservation", status=status.HTTP_400_BAD_REQUEST)
+        return Response("Error occured during booking", status=status.HTTP_400_BAD_REQUEST)
 
 
 
