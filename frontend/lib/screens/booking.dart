@@ -1,16 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/models/booking.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class Booking extends StatefulWidget {
   final String fee;
+  final int tourspotId;
 
-  Booking({required this.fee});
+  Booking({required this.fee, required this.tourspotId});
+
   @override
   _BookingState createState() => _BookingState();
 }
@@ -19,13 +21,15 @@ class _BookingState extends State<Booking> {
   TextEditingController _dateController = TextEditingController();
   int _guestCount = 1;
   late int _fee;
+  late int _tourspotId;
 
-  ApiSettings api = ApiSettings(endPoint: 'users/login');
+  ApiSettings api = ApiSettings(endPoint: 'tourspot/add-booking');
 
   @override
   void initState() {
     super.initState();
-    _fee = int.parse(widget.fee); // Convert the string fee to int
+    _fee = int.parse(widget.fee);
+    _tourspotId = widget.tourspotId;
   }
 
   @override
@@ -49,35 +53,54 @@ class _BookingState extends State<Booking> {
   }
 
   Future<void> check() async {
-    int number_of_people = _guestCount;
-    int subtotal = _fee * _guestCount;
-    BookSpot bookspot = BookSpot(
-        userId: userId,
-        date: _dateController.text,
-        numberOfPeople: number_of_people,
-        subtotal: subtotal,
-        tourspotId: tourspotId;
-    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
 
-    try {
+    if (token != null) {
+      print(token);
+      print("hi");
+      print(_tourspotId);
+      final jwt = JWT.decode(token);
+      final userId = jwt.payload['user_id'];
+      print(userId);
+      int numberOfPeople = _guestCount;
+      int subtotal = _fee * _guestCount;
+      DateTime date = DateTime.parse(_dateController.text);
+      print(date);
+
+      BookSpot bookspot = BookSpot(
+          // userId: userId,
+          userId: 1,
+          date: date,
+          numberOfPeople: numberOfPeople,
+          subtotal: subtotal,
+          tourspotId: 3
+          // tourspotId: _tourspotId,m
+          );
+
+      try {
         final response = await api.postMethod(bookspot.toJson());
 
         if (response.statusCode == 200) {
-          // Login successful
-          var jsonResponse = jsonDecode(response.body);
-          var user = jsonResponse['user'];
-          var token = jsonResponse['tokens']['access'];
-
+          // Booking added successfully
           Navigator.pushNamed(context, '/customer-homepage');
-        } 
+        }
+      } catch (error) {
+        // Handle error
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please login at first')),
+      );
+      Navigator.pushNamed(context, '/login');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 94.3, horizontal: 29),
+        padding: const EdgeInsets.symmetric(vertical: 94.3, horizontal: 29),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,11 +137,14 @@ class _BookingState extends State<Booking> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset('assets/vectors/vector_7_x2.svg',
-                            width: 16.8, height: 20.3),
+                        SvgPicture.asset(
+                          'assets/vectors/vector_7_x2.svg',
+                          width: 16.8,
+                          height: 20.3,
+                        ),
                         SizedBox(width: 8.5),
                         Text(
-                          '${_fee * _guestCount}', // Use the converted fee here
+                          '${_fee * _guestCount}',
                           style: GoogleFonts.mulish(
                             fontWeight: FontWeight.w400,
                             fontSize: 36,
@@ -185,7 +211,7 @@ class _BookingState extends State<Booking> {
       },
       child: Container(
         decoration: BoxDecoration(color: Color(0xFFF4F4F5)),
-        padding: EdgeInsets.symmetric(vertical: 13.8, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 13.8, horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -200,8 +226,11 @@ class _BookingState extends State<Booking> {
                 color: Color(0xFF495560),
               ),
             ),
-            SvgPicture.asset('assets/vectors/bxbx_calendar_x2.svg',
-                width: 18, height: 18),
+            SvgPicture.asset(
+              'assets/vectors/bxbx_calendar_x2.svg',
+              width: 18,
+              height: 18,
+            ),
           ],
         ),
       ),
@@ -210,7 +239,7 @@ class _BookingState extends State<Booking> {
 
   Widget _buildGuestCounter() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 13.8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 13.8, horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -237,8 +266,8 @@ class _BookingState extends State<Booking> {
           ),
           SizedBox(width: 40),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            padding: EdgeInsets.symmetric(vertical: 13.8, horizontal: 26),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 13.8, horizontal: 26),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: Color(0xFFF4F4F5),
@@ -281,20 +310,23 @@ class _BookingState extends State<Booking> {
   }
 
   Widget _buildConfirmButton() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: SECONDARY_COLOR,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: EdgeInsets.symmetric(vertical: 16.5),
-      child: Center(
-        child: Text(
-          'Confirm Booking',
-          style: GoogleFonts.mulish(
-            fontWeight: FontWeight.w700,
-            fontSize: 15,
-            color: Color(0xFFFFFFFF),
+    return GestureDetector(
+      onTap: check,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: SECONDARY_COLOR,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 16.5),
+        child: Center(
+          child: Text(
+            'Confirm Booking',
+            style: GoogleFonts.mulish(
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              color: Color(0xFFFFFFFF),
+            ),
           ),
         ),
       ),

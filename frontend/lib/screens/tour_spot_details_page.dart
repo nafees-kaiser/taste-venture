@@ -211,6 +211,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => Booking(
                   fee: data['entry_fee'],
+                  tourspotId: data['id'],
                 ),
               ),
             ),

@@ -84,7 +84,7 @@ Future<void> main() async {
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
       '/preference': (context) => CustomerPreferencePage(),
-      '/booking': (context) => Booking(fee: "0"),
+      '/booking': (context) => Booking(fee: '0', tourspotId: 1),
       '/restaurant-view': (context) => Restaurant(),
       '/tourspot-view': (context) => TourSpot(),
       '/notification': (context) => NotificationPage(),
