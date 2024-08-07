@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dart_jsonwebtoken: ^2.0.1
   google_fonts: ^6.2.1
   rate_in_stars: ^0.0.3
   fl_chart: ^0.68.0
