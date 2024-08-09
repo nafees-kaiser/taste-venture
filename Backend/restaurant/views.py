@@ -11,6 +11,9 @@ from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import MenuItemSerializer, ReviewSerializer, RestaurantAndAvgRating
 from .serializers import RestaurantSerializer
 from .serializers import ReservationSerializer
+from .serializers import StandardResultsSetPagination
+from rest_framework.pagination import PageNumberPagination
+
 
 
 # Create your views here.
@@ -206,7 +209,9 @@ def reject_reservation(request):
 def view_restaurant(request):
     try:
         restaurant_list = Restaurant.objects.filter()
-        restaurant_list_serializer = RestaurantSerializer(restaurant_list, many=True)
+        paginator = StandardResultsSetPagination()
+        paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
+        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
         return Response(restaurant_list_serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
