@@ -10,6 +10,7 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import MenuItemSerializer, ReviewSerializer, RestaurantAndAvgRating
 from .serializers import RestaurantSerializer
+from .serializers import ShowRestaurantSerializer
 from .serializers import ReservationSerializer
 from .serializers import StandardResultsSetPagination
 from rest_framework.pagination import PageNumberPagination
@@ -211,7 +212,7 @@ def view_restaurant(request):
         restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+        restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
         return Response(restaurant_list_serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)

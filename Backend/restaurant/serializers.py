@@ -29,6 +29,12 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
         #return MenuItem.objects.create(**validated_data)
 
+class ShowRestaurantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = '__all__'
+        exclue = ['password', 'menu_item']
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
