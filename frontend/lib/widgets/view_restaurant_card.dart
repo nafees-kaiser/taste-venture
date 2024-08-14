@@ -93,17 +93,23 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                 Row(
                   children: [
                     RatingBar.builder(
-                        itemSize: 25,
-                        allowHalfRating: true,
-                        initialRating: widget.restaurants[widget.i]['rating'],
-                        itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 20,
-                            ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        }),
+                      ignoreGestures: true,
+                      itemSize: 25,
+                      allowHalfRating: true,
+                      initialRating: (widget.restaurants[widget.i]['rating'] -
+                                  widget.restaurants[widget.i]['rating']
+                                      .floor()) !=
+                              0.0
+                          ? (widget.restaurants[widget.i]['rating'].floor() +
+                              0.5)
+                          : (widget.restaurants[widget.i]['rating']),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 20,
+                      ),
+                      onRatingUpdate: (double value) {},
+                    ),
                     // for (int j = 0;
                     //     j < widget.restaurants[widget.i]['rating'];
                     //     j++)
