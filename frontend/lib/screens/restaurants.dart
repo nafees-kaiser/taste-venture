@@ -6,6 +6,7 @@ import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class Restaurant extends StatefulWidget {
   final bool isPersonalizedView;
@@ -17,9 +18,8 @@ class Restaurant extends StatefulWidget {
 }
 
 class _RestaurantState extends State<Restaurant> {
-  ApiSettings api = ApiSettings(endPoint: 'restaurant/view-restaurant');
-  int numberOfPages = 0;
-  int currentPage = 0;
+  int numberOfPages = 10;
+  int currentPage = 1;
 
   @override
   void initState() {
@@ -53,6 +53,8 @@ class _RestaurantState extends State<Restaurant> {
   ];
 
   Future<void> fetchRestaurants() async {
+    ApiSettings api =
+        ApiSettings(endPoint: 'restaurant/view-restaurant?page=$currentPage');
     final response = await api.getMethod();
 
     try {
@@ -260,6 +262,22 @@ class _RestaurantState extends State<Restaurant> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: NumberPaginator(
+                initialPage: 0,
+                numberPages: numberOfPages,
+                config: const NumberPaginatorUIConfig(
+                    buttonSelectedBackgroundColor: PRIMARY_COLOR,
+                    buttonUnselectedForegroundColor: TEXT),
+                onPageChange: (index) {
+                  setState(() {
+                    currentPage = index + 1;
+                  });
+                  fetchRestaurants();
+                },
+              ),
+            )
           ],
         ),
       ),
