@@ -18,6 +18,8 @@ class Restaurant extends StatefulWidget {
 
 class _RestaurantState extends State<Restaurant> {
   ApiSettings api = ApiSettings(endPoint: 'restaurant/view-restaurant');
+  int numberOfPages = 0;
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -55,11 +57,16 @@ class _RestaurantState extends State<Restaurant> {
 
     try {
       if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
+        //List<dynamic> data = jsonDecode(response.body);
+        dynamic data = jsonDecode(response.body);
+        List<dynamic> restaurantsData = data["results"];
         print(data);
         setState(() {
-          restaurants =
-              data.map((item) => item as Map<String, dynamic>).toList();
+          restaurants = restaurantsData
+              .map((item) => item as Map<String, dynamic>)
+              .toList();
+          numberOfPages = (data["count"] / data["page_size"]).ceil();
+          print(numberOfPages);
         });
       } else {
         // Handle the error

@@ -212,7 +212,15 @@ def view_restaurant(request):
         restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
+        
         restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
-        return Response(restaurant_list_serializer.data, status=status.HTTP_200_OK)
+        
+        response_data = { 
+            "count" : restaurant_list.count(),
+            "page_size" : StandardResultsSetPagination.page_size,
+            "results" : restaurant_list_serializer.data
+        }
+        
+        return Response(response_data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)

@@ -32,8 +32,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
 class ShowRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
-        fields = '__all__'
-        exclue = ['password', 'menu_item']
+        fields = ['id', 'name', 'email', 'address', 'phone', 'cuisine', 'food_type', 'opening_time', 'closing_time', 'description', 'rating']
+        #exclude = ['password', 'menu_item']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
