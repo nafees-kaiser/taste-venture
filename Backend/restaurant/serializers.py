@@ -5,6 +5,8 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Review
 from .models import Restaurant
 from .models import Reservation
+from usersapp.models import Favorite
+
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -30,10 +32,30 @@ class RestaurantSerializer(serializers.ModelSerializer):
         #return MenuItem.objects.create(**validated_data)
 
 class ShowRestaurantSerializer(serializers.ModelSerializer):
+    #is_favorite = serializers.SerializerMethodField()
+    
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'email', 'address', 'phone', 'cuisine', 'food_type', 'opening_time', 'closing_time', 'description', 'rating']
+        fields = [
+            'id',
+            'name',
+            'email',
+            'address',
+            'phone',
+            'cuisine',
+            'food_type',
+            'opening_time',
+            'closing_time',
+            'description',
+            'rating',
+            #'is_favorite'
+            ]
         #exclude = ['password', 'menu_item']
+    
+    # def get_is_favorite(self, obj):
+    #     user = self.context['request'].user
+    #     return Favorite.objects.filter(user=user, restaurant=obj).exists()
+    
 
 
 class ReviewSerializer(serializers.ModelSerializer):
