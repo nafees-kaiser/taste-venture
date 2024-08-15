@@ -48,6 +48,16 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
     }
   }
 
+  Future<dynamic> navigateToRestaurant() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        });
+    await Navigator.pushNamed(context, "/restaurant-view");
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,9 +200,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                     ],
                                   ),
                                 )),
-                            onTap: () {
-                              Navigator.pushNamed(context, "/restaurant-view");
-                            }),
+                            onTap: () => navigateToRestaurant()),
                       ),
                       Expanded(
                         child: GestureDetector(
