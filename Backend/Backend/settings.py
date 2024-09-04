@@ -32,6 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Authorized user model
+AUTH_USER_MODEL = 'common.AppUser'
 
 # Application definition
 
@@ -48,7 +50,8 @@ INSTALLED_APPS = [
     'restaurant.apps.RestaurantConfig',
     'tourspot.apps.TourspotConfig',
     'rest_framework_simplejwt',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'common.apps.CommonConfig',
 ]
 
 MIDDLEWARE = [

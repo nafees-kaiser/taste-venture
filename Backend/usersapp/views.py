@@ -20,15 +20,20 @@ from .utils import send_otp
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        password = serializer.validated_data.get('password')
-        email = serializer.validated_data.get('email')
-        hashed_password = make_password(password)
-
-        user = serializer.save(password=hashed_password)
-        otp = send_otp(email)
-        OTPAuthentication.objects.create(user=user, otp=otp)
-        # added_user = UsersDetailSerializer(user, many=False)
+        serializer.save()
+        # print(serializer)
+        # registered_serializer = UserSerializer(registered_user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # password = serializer.validated_data.get('password')
+        # email = serializer.validated_data.get('email')
+        # hashed_password = make_password(password)
+        #
+        # user = serializer.save(password=hashed_password)
+        # otp = send_otp(email)
+        # OTPAuthentication.objects.create(user=user, otp=otp)
+        # # added_user = UsersDetailSerializer(user, many=False)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED)
+    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
