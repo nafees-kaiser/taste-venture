@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('usersapp', '0005_alter_users_password_otpauthentication'),
+        ('usersapp', '0007_favorite_unique_user_restaurant'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

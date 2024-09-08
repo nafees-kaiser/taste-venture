@@ -8,3 +8,8 @@ class AppUserSerializer(serializers.ModelSerializer):
         model = AppUser
         fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class OTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()

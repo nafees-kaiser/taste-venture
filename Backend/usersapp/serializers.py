@@ -45,11 +45,6 @@ class UserSerializer(serializers.ModelSerializer):
         representation.update(user_representation)
         representation.pop('user')
         return representation
-
-
-class OTPSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    otp = serializers.CharField()
     
     
 class FavoriteSerializer(serializers.ModelSerializer):

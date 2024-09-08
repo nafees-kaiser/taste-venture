@@ -22,3 +22,9 @@ class AppUser(AbstractUser):
 
     def __str__(self):
         return f'{self.name}, {self.email}'
+
+
+class OTPAuthentication(models.Model):
+    app_user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
