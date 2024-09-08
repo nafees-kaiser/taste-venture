@@ -4,6 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/models/loggedin.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Future<String?> getToken() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   return prefs.getString('token');
+// }
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -66,6 +72,11 @@ class _LoginState extends State<Login> {
           var user = jsonResponse['user'];
           var token = jsonResponse['tokens']['access'];
           print(token);
+
+          // Store login info using shared_preferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userEmail', email);
+          await prefs.setString('userToken', token);
 
           Fluttertoast.showToast(
             msg: "Login Successful",

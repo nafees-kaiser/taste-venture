@@ -1,5 +1,8 @@
 from django.db import models
 
+from usersapp.models import Users
+
+
 # Create your models here.
 class Tourspot(models.Model):
     name = models.CharField(max_length=200)
@@ -18,7 +21,20 @@ class Tourspot(models.Model):
     pool = models.CharField(max_length=50)
     other_services = models.TextField()
 
-
-
     def __str__(self):
         return self.name
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, default=None)
+    date = models.DateField()
+    number_of_people = models.IntegerField()
+    subtotal = models.IntegerField()
+    message = models.TextField()
+    tourspot = models.ForeignKey(Tourspot, on_delete=models.CASCADE, default=None)
+    status = models.TextField(default="pending")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'tourspot', 'date'], name='unique_tourspot_booking')
+        ]

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerSidebar extends StatelessWidget {
   const CustomerSidebar({super.key});
@@ -59,7 +60,10 @@ class CustomerSidebar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.login),
             title: const Text("Login"),
-            onTap: () {
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('userEmail');
+              await prefs.remove('token');
               Navigator.pushNamed(context, '/login');
             },
           ),
