@@ -1,9 +1,6 @@
-import email
-import random
 from django.utils import timezone
 
 from django.contrib.auth.hashers import check_password, make_password
-from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -20,20 +17,11 @@ from .utils import send_otp
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
-        # print(serializer)
-        # registered_serializer = UserSerializer(registered_user)
+        user = serializer.save()
+        email = serializer.validated_data.get('user').get('email')
+        otp = send_otp(email)
+        OTPAuthentication.objects.create(user=user, otp=otp)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # password = serializer.validated_data.get('password')
-        # email = serializer.validated_data.get('email')
-        # hashed_password = make_password(password)
-        #
-        # user = serializer.save(password=hashed_password)
-        # otp = send_otp(email)
-        # OTPAuthentication.objects.create(user=user, otp=otp)
-        # # added_user = UsersDetailSerializer(user, many=False)
-        # return Response(serializer.data, status=status.HTTP_201_CREATED)
-    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -45,9 +33,10 @@ def login(request):
     # print(password)
 
     try:
-        user = Users.objects.get(email=email)
+        customer = AppUser.objects.get(email=email)
+        user = Users.objects.get(user=customer)
         # print(type(user))
-        if user is not None and check_password(password, user.password):
+        if user is not None and check_password(password, customer.password):
             serializer = UserSerializer(user)
 
             refresh = RefreshToken.for_user(user)
@@ -55,7 +44,6 @@ def login(request):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
             }
-
             response_data = {
                 'user': serializer.data,
                 'tokens': token,
@@ -76,7 +64,8 @@ def verify_otp(request):
         email = OTP_serializer.validated_data.get('email')
         # print(email)
         try:
-            user = Users.objects.get(email=email)
+            customer = AppUser.objects.get(email=email)
+            user = Users.objects.get(user=customer)
             gen_otp = OTPAuthentication.objects.get(user=user, otp=otp)
 
             if (timezone.now() - gen_otp.created_at).seconds > 30000:
@@ -88,7 +77,7 @@ def verify_otp(request):
                 return Response("Invalid OTP", status=status.HTTP_400_BAD_REQUEST)
             gen_otp.delete()
             return Response("OTP verified", status=status.HTTP_200_OK)
-        except User.DoesNotExist:
+        except Users.DoesNotExist:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
     return Response(OTP_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -98,7 +87,7 @@ def verify_otp(request):
 def update_password(request):
     password = request.data.get('password')
     email = request.data.get('email')
-    user = Users.objects.get(email=email)
+    user = AppUser.objects.get(email=email)
     try:
         password = make_password(password)
         user.password = password
@@ -111,7 +100,8 @@ def update_password(request):
 @api_view(['POST'])
 def get_user_details(request):
     email = request.data.get('email')
-    user = Users.objects.get(email=email)
+    customer = AppUser.objects.get(email=email)
+    user = Users.objects.get(user=customer)
     serializer = UserSerializer(user)
     if serializer.data:
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -123,10 +113,17 @@ def get_user_details(request):
 def update_user_details(request):
     tag = request.data.get('tag')
     info = request.data.get('info')
-    user = Users.objects.get(email=request.data.get('email'))
-    setattr(user, tag, info)
-    user.save()
-    serializer = UserSerializer(user)
+    user = AppUser.objects.get(email=request.data.get('email'))
+    customer = Users.objects.get(user=user)
+
+    if hasattr(user, tag):
+        setattr(user, tag, info)
+        user.save()
+    else:
+        setattr(customer, tag, info)
+        customer.save()
+
+    serializer = UserSerializer(customer)
     if serializer.data:
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -137,13 +134,10 @@ def update_user_details(request):
 def verify_email(request):
     try:
         email = request.data.get('email')
-        user = Users.objects.get(email=email)
+        customer = AppUser.objects.get(email=email)
+        user = Users.objects.get(user=customer)
         otp = send_otp(email)
         OTPAuthentication.objects.create(user=user, otp=otp)
         return Response("Email verified", status=status.HTTP_200_OK)
     except Users.DoesNotExist:
         return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
-
-
-
-

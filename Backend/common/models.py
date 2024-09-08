@@ -20,12 +20,5 @@ class AppUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    class Meta:
-        abstract = True
-
     def __str__(self):
         return f'{self.name}, {self.email}'
-
-
-
-# Create your models here.

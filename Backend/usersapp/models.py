@@ -1,18 +1,13 @@
 from django.db import models
 # from Backend import settings
-# from django.conf import settings
-from common.models import AppUser
+from django.conf import settings
 
 
-class Users(AppUser):
-    # full_name = models.CharField(max_length=200)
-    # contact = models.CharField(max_length=200, unique=True)
-    # email = models.EmailField(unique=True)
+class Users(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     dob = models.CharField(max_length=200)
-    # address = models.CharField(max_length=200)
     gender = models.CharField(max_length=50)
     married = models.CharField(max_length=50)
-    # password = models.CharField(max_length=500)
 
     REQUIRED_FIELDS = []
 
