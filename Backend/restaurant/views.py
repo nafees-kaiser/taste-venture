@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from common.models import OTPAuthentication, AppUser
+from common.utils import send_otp
 from ml_models.model import get_restaurant_sentiment
 from usersapp.models import Users
 from usersapp.serializers import UserSerializer
@@ -14,7 +16,6 @@ from .serializers import ShowRestaurantSerializer
 from .serializers import ReservationSerializer
 from .serializers import StandardResultsSetPagination
 from rest_framework.pagination import PageNumberPagination
-
 
 
 # Create your views here.
@@ -44,6 +45,7 @@ def edit_menu(request):
     menu_item.save()
     return Response("Updated successfully", status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def view_menu(request, restaurant_id):
     try:
@@ -60,19 +62,26 @@ def view_menu(request, restaurant_id):
 def add_restaurant(request):
     serializer = RestaurantSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        rest = serializer.save()
+        email = serializer.validated_data.get('user').get('email')
+        otp = send_otp(email)
+        OTPAuthentication.objects.create(app_user=rest.user, otp=otp)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def restaurant_details(request, restaurant_id):
     try:
         restaurant = Restaurant.objects.get(pk=restaurant_id)
         restaurant_serializer = RestaurantSerializer(restaurant)
-        return Response(restaurant_serializer.data, status=status.HTTP_200_OK)
+        if restaurant_serializer:
+            return Response(restaurant_serializer.data, status=status.HTTP_200_OK)
+        return Response(restaurant_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except Restaurant.DoesNotExist:
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
-    
+
+
 @api_view(['POST'])
 def edit_restaurant(request, restaurant_id):
     # print(request.data)
@@ -83,10 +92,16 @@ def edit_restaurant(request, restaurant_id):
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
 
     for key, value in update_request_fields.items():
-        setattr(restaurant, key, value)
+        if hasattr(restaurant, key):
+            setattr(restaurant, key, value)
+        else:
+            setattr(restaurant.user, key, value)
+
         # restaurant
+    restaurant.user.save()
     restaurant.save()
     return Response("Updated successfully", status=status.HTTP_200_OK)
+
 
 # @api_view(['GET'])
 # def recommended_restaurants(request, email):
@@ -103,7 +118,8 @@ def add_restaurant_review(request):
         restaurant_id = request.data['restaurant_id']
         prediction = get_restaurant_sentiment(review)
         if prediction:
-            customer = Users.objects.get(email=email)
+            user = AppUser.objects.get(email=email)
+            customer = Users.objects.get(user=user)
             restaurant = Restaurant.objects.get(pk=restaurant_id)
             review = Review.objects.create(user=customer, restaurant=restaurant, review=review, rating=rating)
             serializer = ReviewSerializer(review)
@@ -117,7 +133,7 @@ def add_restaurant_review(request):
 
 @api_view(['GET'])
 def get_restaurant_reviews(request, restaurant_id):
-    ratings ={"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+    ratings = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
     reviews = Review.objects.filter(restaurant_id=restaurant_id)
     for review in reviews:
         ratings[str(review.rating)] += 1
@@ -135,6 +151,7 @@ def get_restaurant_reviews(request, restaurant_id):
     }
     return Response(response, status=status.HTTP_200_OK)
 
+
 @api_view(['POST'])
 @csrf_exempt
 def add_reservation(request):
@@ -142,14 +159,14 @@ def add_reservation(request):
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
         reservation = Reservation.objects.create(
-            user=user, 
+            user=user,
             date=request.data['date'],
             start_time=request.data['start_time'],
             end_time=request.data['end_time'],
             reservation_type=request.data['reservation_type'],
-            number_of_people=request.data['number_of_people'], 
+            number_of_people=request.data['number_of_people'],
             restaurant=restaurant, status="pending"
-            )
+        )
         serializer = ReservationSerializer(reservation)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
@@ -184,7 +201,8 @@ def accept_reservation(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'], start_time=request.data['start_time'])
+        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'],
+                                              start_time=request.data['start_time'])
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -192,35 +210,38 @@ def accept_reservation(request):
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 @csrf_exempt
 def reject_reservation(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'], start_time=request.data['start_time'])
+        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'],
+                                              start_time=request.data['start_time'])
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
         return Response("Reservation Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
-    
+
+
 @api_view(['GET'])
 def view_restaurant(request):
     try:
         restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-        
-        restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
-        
-        response_data = { 
-            "count" : restaurant_list.count(),
-            "page_size" : StandardResultsSetPagination.page_size,
-            "results" : restaurant_list_serializer.data
+
+        # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
+        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+        response_data = {
+            "count": restaurant_list.count(),
+            "page_size": StandardResultsSetPagination.page_size,
+            "results": restaurant_list_serializer.data
         }
-        
+
         return Response(response_data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
