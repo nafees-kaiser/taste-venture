@@ -15,6 +15,7 @@ class Restaurant(models.Model):
     opening_time = models.CharField(max_length=70)
     closing_time = models.CharField(max_length=70)
     description = models.TextField()
+    rating = models.FloatField(default=0)
     # menuList = models.ForeignKey(MenuItem)
     
     def __str__(self):
@@ -85,7 +86,7 @@ class Reservation(models.Model):
     
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user', 'restaurant', 'start_time'], name='unique_restaurant_reservation')
+            models.UniqueConstraint(fields=['user', 'restaurant', 'date', 'start_time'], name='unique_restaurant_reservation')
         ]
 
 

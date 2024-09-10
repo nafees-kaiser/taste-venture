@@ -10,7 +10,11 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import MenuItemSerializer, ReviewSerializer, RestaurantAndAvgRating
 from .serializers import RestaurantSerializer
+from .serializers import ShowRestaurantSerializer
 from .serializers import ReservationSerializer
+from .serializers import StandardResultsSetPagination
+from rest_framework.pagination import PageNumberPagination
+
 
 
 # Create your views here.
@@ -137,7 +141,15 @@ def add_reservation(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-        reservation = Reservation.objects.create(user=user, date=request.data['date'], start_time=request.data['start_time'], end_time=request.data['end_time'], reservation_type=request.data['reservation_type'], number_of_people=request.data['number_of_people'], restaurant=restaurant, status="pending")
+        reservation = Reservation.objects.create(
+            user=user, 
+            date=request.data['date'],
+            start_time=request.data['start_time'],
+            end_time=request.data['end_time'],
+            reservation_type=request.data['reservation_type'],
+            number_of_people=request.data['number_of_people'], 
+            restaurant=restaurant, status="pending"
+            )
         serializer = ReservationSerializer(reservation)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
@@ -169,25 +181,46 @@ def get_top_restaurants(request):
 @api_view(['POST'])
 @csrf_exempt
 def accept_reservation(request):
-    user = Users.objects.get(id=request.data['user_id'])
-    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-    reservation = Reservation.objects.get(user=user, restaurant=restaurant)
-    setattr(reservation, 'status', "accepted")
-    setattr(reservation, 'message', request.data['message'])
     try:
-        return Response("Reservation Accepted", status=status.HTTP_201_CREATED)
+        user = Users.objects.get(id=request.data['user_id'])
+        restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'], start_time=request.data['start_time'])
+        setattr(reservation, 'status', "accepted")
+        setattr(reservation, 'message', request.data['message'])
+        reservation.save()
+        return Response("Reservation Accepted", status=status.HTTP_200_OK)
     except:
-        return Response("Error occured during reservation processing", status=status.HTTP_400_BAD_REQUEST)
+        return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @csrf_exempt
 def reject_reservation(request):
-    user = Users.objects.get(id=request.data['user_id'])
-    restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-    reservation = Reservation.objects.get(user=user, restaurant=restaurant)
-    setattr(reservation, 'status', "rejected")
-    setattr(reservation, 'message', request.data['message'])
     try:
-        return Response("Reservation Rejected", status=status.HTTP_201_CREATED)
+        user = Users.objects.get(id=request.data['user_id'])
+        restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
+        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'], start_time=request.data['start_time'])
+        setattr(reservation, 'status', "rejected")
+        setattr(reservation, 'message', request.data['message'])
+        reservation.save()
+        return Response("Reservation Rejected", status=status.HTTP_200_OK)
     except:
-        return Response("Error occured during reservation processing", status=status.HTTP_400_BAD_REQUEST)
+        return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+def view_restaurant(request):
+    try:
+        restaurant_list = Restaurant.objects.filter()
+        paginator = StandardResultsSetPagination()
+        paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
+        
+        restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
+        
+        response_data = { 
+            "count" : restaurant_list.count(),
+            "page_size" : StandardResultsSetPagination.page_size,
+            "results" : restaurant_list_serializer.data
+        }
+        
+        return Response(response_data, status=status.HTTP_200_OK)
+    except Restaurant.DoesNotExist:
+        return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
