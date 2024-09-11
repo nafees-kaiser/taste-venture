@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/models/customer_response.dart';
+import 'package:frontend/models/user_email.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/additional_information.dart';
 import 'package:frontend/widgets/personal_information.dart';
 import 'package:frontend/widgets/profile_perference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,6 +19,32 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int clickedItem = 1;
+  late Future<Customer_response?> user;
+  ApiSettings get_user_api = ApiSettings(endPoint: 'users/get-user');
+
+  @override
+  void initState() {
+    super.initState();
+    user = getUserInfo();
+  }
+
+  Future<Customer_response?> getUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('userEmail');
+    if (email == null) {
+      return null;
+    }
+    UserEmail data = UserEmail(email: email);
+    final response = await get_user_api.postMethod(data.toJson());
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
+      print(jsonResponse);
+      return Customer_response.fromJson(jsonResponse);
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
