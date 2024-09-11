@@ -81,3 +81,32 @@ def add_booking(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def accept_booking(request):
+    try:
+        user = Users.objects.get(id=request.data['user_id'])
+        tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
+        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        setattr(booking, 'status', "accepted")
+        setattr(booking, 'message', request.data['message'])
+        booking.save()
+        return Response("Tourspot Booking Accepted", status=status.HTTP_200_OK)
+    except:
+        return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@csrf_exempt
+def reject_booking(request):
+    try:
+        user = Users.objects.get(id=request.data['user_id'])
+        tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
+        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        setattr(booking, 'status', "rejected")
+        setattr(booking, 'message', request.data['message'])
+        booking.save()
+        return Response("Tourspot Booking Rejected", status=status.HTTP_200_OK)
+    except:
+        return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)

@@ -201,8 +201,13 @@ def accept_reservation(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'],
-                                              start_time=request.data['start_time'])
+
+        reservation = Reservation.objects.get(user=user, 
+                                            restaurant=restaurant, 
+                                            date=request.data['date'], 
+                                            start_time=request.data['start_time'], 
+                                            status="pending")
+        
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -217,8 +222,12 @@ def reject_reservation(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-        reservation = Reservation.objects.get(user=user, restaurant=restaurant, date=request.data['date'],
-                                              start_time=request.data['start_time'])
+
+        reservation = Reservation.objects.get(user=user,
+                                            restaurant=restaurant,
+                                            date=request.data['date'],
+                                            start_time=request.data['start_time'],
+                                            status="pending")
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()

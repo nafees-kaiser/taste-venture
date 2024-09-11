@@ -3,7 +3,11 @@ from rest_framework.pagination import PageNumberPagination
 from common.serializers import AppUserSerializer
 from common.utils import add_user, represent_user, create_common_user
 from usersapp.serializers import UserSerializer
+
 from .models import *
+
+from usersapp.models import Favorite
+
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -45,11 +49,31 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class ShowRestaurantSerializer(serializers.ModelSerializer):
+    #is_favorite = serializers.SerializerMethodField()
+    
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'email', 'address', 'phone', 'cuisine', 'food_type', 'opening_time', 'closing_time',
-                  'description', 'rating']
-        # exclude = ['password', 'menu_item']
+
+        fields = [
+            'id',
+            'name',
+            'email',
+            'address',
+            'phone',
+            'cuisine',
+            'food_type',
+            'opening_time',
+            'closing_time',
+            'description',
+            'rating',
+            #'is_favorite'
+            ]
+        #exclude = ['password', 'menu_item']
+    
+    # def get_is_favorite(self, obj):
+    #     user = self.context['request'].user
+    #     return Favorite.objects.filter(user=user, restaurant=obj).exists()
+    
 
 
 class ReviewSerializer(serializers.ModelSerializer):
