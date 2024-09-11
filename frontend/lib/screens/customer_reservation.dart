@@ -20,11 +20,10 @@ class _CustomerReservationState extends State<CustomerReservation> {
       userId: 1000,
       restaurantId: 7,
       date: dateController.text,
-      startTime: _selectedTime,
-      end_time: _selectedTime+,
+      startTime: _selectedTime, // TODO: Convert to time format
+      endTime: _selectedTime, // TODO: Convert to time format
+      reservationType: 1,
       numberOfPeople: int.parse(numberOfPeopleController.text),
-      
-      option: _selectedOption,
     );
 
     try {
