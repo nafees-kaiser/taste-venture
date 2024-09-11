@@ -34,12 +34,13 @@ def login(request):
 
     try:
         customer = AppUser.objects.get(email=email)
-        user = Users.objects.get(user=customer)
+        # user = Users.objects.get(user=customer)
         # print(type(user))
-        if user is not None and check_password(password, customer.password):
-            serializer = UserSerializer(user)
+        if customer is not None and check_password(password, customer.password):
+            # serializer = UserSerializer(customer)
+            serializer = AppUserSerializer(customer)
 
-            refresh = RefreshToken.for_user(user)
+            refresh = RefreshToken.for_user(customer)
             token = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
@@ -51,7 +52,7 @@ def login(request):
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-    except Users.DoesNotExist:
+    except AppUser.DoesNotExist:
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 

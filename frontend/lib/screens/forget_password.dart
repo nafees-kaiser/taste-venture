@@ -59,7 +59,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         String email = _inputController.text;
                         if (email.isNotEmpty && email.isEmail()) {
                           ApiSettings api =
-                              ApiSettings(endPoint: 'users/verify-email');
+                              ApiSettings(endPoint: 'all-users/verify-email');
                           try {
                             final response = await api
                                 .postMethod(json.encode({"email": email}));

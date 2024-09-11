@@ -69,9 +69,10 @@ class _LoginState extends State<Login> {
         if (response.statusCode == 200) {
           // Login successful
           var jsonResponse = jsonDecode(response.body);
-          var user = jsonResponse['user'];
+          var user = jsonResponse['user'] as Map<String, dynamic>;
           var token = jsonResponse['tokens']['access'];
-          print(token);
+          String userType = user['user_type'] as String;
+          // print(token);
 
           // Store login info using shared_preferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -88,7 +89,13 @@ class _LoginState extends State<Login> {
             fontSize: 16.0,
           );
 
-          Navigator.pushNamed(context, '/customer-homepage');
+          if(userType == "customer"){
+            Navigator.pushNamed(context, '/customer-homepage');
+          } else{
+            Navigator.pushNamed(context, '/manager-home');
+          }
+
+          
         } else if (response.statusCode == 400) {
           // Invalid credentials
           setState(() {
@@ -104,9 +111,9 @@ class _LoginState extends State<Login> {
           throw Exception('Failed to login: ${response.statusCode}');
         }
       } catch (e) {
-        print('Error: $e');
+        print('Error: ${e.toString()}');
         Fluttertoast.showToast(
-          msg: "Error occurred. Please try again later.",
+          msg: "Error occurred. Please try again later.}",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 2,
