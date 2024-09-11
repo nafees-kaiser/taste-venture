@@ -1,8 +1,6 @@
 from django.db import models
 from usersapp.models import Users
 
-from usersapp.models import Users
-
 
 # Create your models here.
 
@@ -17,6 +15,7 @@ class Restaurant(models.Model):
     opening_time = models.CharField(max_length=70)
     closing_time = models.CharField(max_length=70)
     description = models.TextField()
+    rating = models.FloatField(default=0)
     # menuList = models.ForeignKey(MenuItem)
     
     def __str__(self):
@@ -83,6 +82,12 @@ class Reservation(models.Model):
     number_of_people = models.IntegerField() # if reservation_type = False, then this field is required
     message = models.TextField()
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, blank=True)
+    status = models.TextField(default="pending")
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'restaurant', 'date', 'start_time'], name='unique_restaurant_reservation')
+        ]
 
 
 class Review(models.Model):

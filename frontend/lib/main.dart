@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/tourspot.dart';
 import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/add_tourspot_additional_info.dart';
+import 'package:frontend/screens/booking_manager.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/customer_reservation.dart';
@@ -84,7 +85,7 @@ Future<void> main() async {
       '/criteria1': (context) => ManagerCriteria1(),
       '/review': (context) => Reviews(),
       '/preference': (context) => CustomerPreferencePage(),
-      '/booking': (context) => Booking(),
+      '/booking': (context) => Booking(fee: '0', tourspotId: 1),
       '/restaurant-view': (context) => Restaurant(),
       '/tourspot-view': (context) => TourSpot(),
       '/notification': (context) => NotificationPage(),
@@ -100,6 +101,7 @@ Future<void> main() async {
       '/restaurant/reservation-list': (context) => ReservationList(),
       '/customer/reservation': (context) => CustomerReservation(),
       '/manager-profile': (context) => ManagerProfile(),
+      '/tourspot/booking-list': (context) => BookingManager(),
     },
   ));
 }

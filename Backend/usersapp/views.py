@@ -14,6 +14,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .utils import send_otp
 
+from restaurant.models import Restaurant
+
 
 @api_view(['POST'])
 @csrf_exempt
@@ -140,5 +142,35 @@ def verify_email(request):
         return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
 
 
+@api_view(['GET'])
+def view_favorite(request, user_id):
+    try:
+        user = Users.objects.get(pk=user_id)
+        favorite_list = Favorite.objects.filter(user=user)
+        favorite_list_serializer = FavoriteSerializer(favorite_list, many=True)
+        return Response(favorite_list_serializer.data, status=status.HTTP_200_OK)
+    except user.DoesNotExist:
+        return Response(favorite_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    
 
+@api_view(['POST'])
+@csrf_exempt
+def add_to_favorite(request):
+    user = Users.objects.get(pk=request.data['user_id'])
+    restaurant = Restaurant.objects.get(pk=request.data['restaurant_id'])
+    object_data = { "user": user.pk, "restaurant": restaurant.pk}
+    serializer = FavoriteSerializer(data= object_data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@csrf_exempt
+def remove_from_favorite(request):
+    try:
+        favorite = Favorite.objects.get(user=request.data['user_id'], restaurant=request.data['restaurant_id'])
+        favorite.delete()
+        return Response('Restaurant removed from Favorite', status=status.HTTP_200_OK)
+    except favorite.DoesNotExist:
+        return Response(favorite.errors, status=status.HTTP_404_NOT_FOUND)
