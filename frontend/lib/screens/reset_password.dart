@@ -78,7 +78,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       };
                       try {
                         final response =
-                            await ApiSettings(endPoint: 'users/update-password')
+                            await ApiSettings(endPoint: 'all-users/update-password')
                                 .postMethod(json.encode(data));
                         if (response.statusCode == 200) {
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -14,7 +14,7 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OTPPageState extends State<OtpPage> {
-  ApiSettings api = ApiSettings(endPoint: 'users/verify-otp');
+  ApiSettings api = ApiSettings(endPoint: 'all-users/verify-otp');
   final TextEditingController _otpController = TextEditingController();
 
   Future<(String, int)> verifyOtp() async {

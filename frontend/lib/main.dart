@@ -66,7 +66,7 @@ Future<void> main() async {
   await initializeConstants();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/manager-home',
+    initialRoute: '/customer-homepage',
     theme: Scheme.lightTheme,
     themeMode: ThemeMode.system,
     routes: {
