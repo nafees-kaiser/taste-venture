@@ -1,19 +1,16 @@
 from django.db import models
-
+from django.conf import settings
 from usersapp.models import Users
 
 
 # Create your models here.
 class Tourspot(models.Model):
-    name = models.CharField(max_length=200)
-    manager_name = models.CharField(max_length=200)
-    contact = models.CharField(max_length=200, unique=True)
-    email = models.EmailField(unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+
+    tourspot_name = models.CharField(max_length=200, null=True, blank=True)
     opening_time = models.CharField(max_length=70)
     closing_time = models.CharField(max_length=70)
     description = models.TextField()
-    address = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
     entry_fee = models.CharField(max_length=50)
     wifi = models.CharField(max_length=50)
     parking = models.CharField(max_length=50)
@@ -21,8 +18,10 @@ class Tourspot(models.Model):
     pool = models.CharField(max_length=50)
     other_services = models.TextField()
 
+    REQUIRED_FIELDS = []
+
     def __str__(self):
-        return self.name
+        return f'{self.id} -> {self.tourspot_name}'
 
 
 class Booking(models.Model):
