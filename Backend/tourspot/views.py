@@ -83,7 +83,10 @@ def accept_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(user=user,
+                                    tourspot=tourspot,
+                                    date=request.data['date'],
+                                    status="pending")
         setattr(booking, 'status', "accepted")
         setattr(booking, 'message', request.data['message'])
         booking.save()
@@ -97,7 +100,10 @@ def reject_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(user=user,
+                                    tourspot=tourspot,
+                                    date=request.data['date'],
+                                    status="pending")
         setattr(booking, 'status', "rejected")
         setattr(booking, 'message', request.data['message'])
         booking.save()
