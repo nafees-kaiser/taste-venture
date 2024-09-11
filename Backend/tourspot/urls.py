@@ -7,4 +7,6 @@ urlpatterns = [
     path('view-list', views.view_tourspot_list, name='view_tourspot_list'),
     path('view-list/<int:id>/', views.view_tourspot_detail, name='tourspot_detail'),
     path('add-booking', views.add_booking, name='add_booking'),
+    path('accept-booking', views.accept_booking),
+    path('reject-booking', views.reject_booking),
 ]
