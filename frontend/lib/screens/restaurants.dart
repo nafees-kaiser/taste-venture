@@ -239,7 +239,7 @@ class _RestaurantState extends State<Restaurant> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -270,11 +270,18 @@ class _RestaurantState extends State<Restaurant> {
                 config: const NumberPaginatorUIConfig(
                     buttonSelectedBackgroundColor: PRIMARY_COLOR,
                     buttonUnselectedForegroundColor: TEXT),
-                onPageChange: (index) {
+                onPageChange: (index) async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(child: CircularProgressIndicator());
+                      });
+
                   setState(() {
                     currentPage = index + 1;
                   });
                   fetchRestaurants();
+                  Navigator.of(context).pop();
                 },
               ),
             )
