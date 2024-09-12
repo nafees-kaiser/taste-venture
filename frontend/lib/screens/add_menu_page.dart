@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/menu_item.dart';
 import 'package:frontend/widgets/add_menu_form.dart';
 
 class AddMenuPage extends StatelessWidget {

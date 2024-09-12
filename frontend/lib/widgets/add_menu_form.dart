@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/menu_item.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/form_validation.dart';
 import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:frontend/widgets/textbox.dart';
@@ -51,19 +52,18 @@ class _AddMenuFormState extends State<AddMenuForm> {
         try {
           final response = await api.postMethod(menuItem.toJson());
           if (response.statusCode == 201 || response.statusCode == 200) {
+            successToast("Menu added successfully");
             // Navigator.pushNamed(context, '/initial-menu');
             Navigator.pop(context);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content:
-                      Text('Error ${response.statusCode}: Failed to add menu')),
-            );
+            errorToast("Error ${response.statusCode}: please try again");
           }
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.toString())),
-          );
+          debugPrint(e.toString());
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(e.toString())),
+          // );
+          errorToast("Something went wrong. Please try again");
         }
       }
     }

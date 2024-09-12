@@ -3,6 +3,7 @@ import 'package:frontend/models/customer.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/form_validation.dart';
 import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
@@ -69,6 +70,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
         // Customer newCustomer = Customer.fromJson(response.body);
         // print(newCustomer);
         if (response.statusCode == 201) {
+          successToast("Regitered successfully!");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -79,17 +81,12 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             ),
           );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content:
-                    Text('Error ${response.statusCode}: registration failed')),
-          );
+          errorToast('Error ${response.statusCode}: registration failed');
           // print(response);
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        debugPrint(e.toString());
+        errorToast("Something went wrong");
         // print(e.toString());
       }
     }
