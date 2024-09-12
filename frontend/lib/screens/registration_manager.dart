@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/restaurant.dart';
 import '../utils/constant.dart';
@@ -104,25 +106,34 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
       final String password = _passwordController.text;
 
       RestaurantModel restaurant = RestaurantModel(
-          name: name,
+          restaurantName: name,
+          name: managerName,
           email: emailAddress,
           password: password,
           address: address,
-          phone: contact,
+          contact: contact,
           cuisine: 'Cuisine',
           foodType: 'Food Type',
           openingTime: openingTime,
           closingTime: closingTime,
           description: description);
 
-      try {
-        final response = await api.postMethod(restaurant.toJson());
-        Navigator.pushNamed(context, '/criteria');
-        return response.statusCode;
-      } catch (e) {
-        debugPrint(e.toString());
-        return 404;
-      }
+      // try {
+      //   final response = await api.postMethod(restaurant.toJson());
+      //   Navigator.pushNamed(context, '/criteria');
+      //   return response.statusCode;
+      // } catch (e) {
+      //   debugPrint(e.toString());
+      //   return 404;
+      // }
+
+      // Navigator.pushNamed(context, '/initial-menu');
+      Navigation(context: context).materialNavigation(
+        '/initial-menu',
+        () => InitialMenu(
+          restaurantModel: restaurant,
+        ),
+      );
     } else if (selectedVenueType == 'Tour Spot') {
       Navigator.pushNamed(context, '/tourspot-info', arguments: tourspot);
     }
