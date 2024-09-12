@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/otp_page.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
@@ -66,9 +68,17 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
       final response = await api.postMethod(updatedTourspot.toJson());
 
       if (response.statusCode == 201) {
-        Navigator.pushNamed(context, '/login');
+        // Navigator.pushNamed(context, '/login');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Registration Successfully Done')),
+        );
+
+        Navigation(context: context).materialNavigation(
+          '/otp-page',
+          () => OtpPage.setEmail(
+            email: tourspot.email,
+            nextPath: '/login',
+          ),
         );
       } else {
         // Handle error

@@ -77,8 +77,8 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
 
   Future<int?> navigateToCriteria() async {
     Tourspot tourspot = Tourspot(
-      name: _venueNameController.text,
-      manager_name: _managerNameController.text,
+      tourspot_name: _venueNameController.text,
+      name: _managerNameController.text,
       contact: _contactController.text,
       email: _emailAddressController.text,
       opening_time: _openingTimeController.text,

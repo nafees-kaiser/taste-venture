@@ -58,7 +58,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
             '/otp-page',
             () => OtpPage.setEmail(
                   email: restaurantModel?.email,
-                  nextPath: '/manager-home',
+                  nextPath: '/login',
                 ));
       }
     } catch (e) {
