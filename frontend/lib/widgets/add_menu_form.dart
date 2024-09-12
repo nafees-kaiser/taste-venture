@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/utils/form_validation.dart';
 import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:frontend/widgets/textbox.dart';
 import 'package:image_input/image_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddMenuForm extends StatefulWidget {
   final String endPoint;
@@ -49,12 +51,17 @@ class _AddMenuFormState extends State<AddMenuForm> {
         addMenuItems!(menuItem);
         Navigator.pop(context);
       } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        final email = pref.get('userEmail');
+
+        var data = menuItem.toMap();
+        data['email'] = email;
         try {
-          final response = await api.postMethod(menuItem.toJson());
+          final response = await api.postMethod(jsonEncode(data));
           if (response.statusCode == 201 || response.statusCode == 200) {
             successToast("Menu added successfully");
             // Navigator.pushNamed(context, '/initial-menu');
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           } else {
             errorToast("Error ${response.statusCode}: please try again");
           }

@@ -44,7 +44,7 @@ class _ManagerMenuBottomNavigationState
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.list_alt,
+              Icons.restaurant_menu,
               size: 30,
               color: _selectedIndex == 1 ? PRIMARY_COLOR : Colors.grey,
             ),

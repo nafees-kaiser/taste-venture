@@ -42,10 +42,11 @@ def edit_menu(request):
     return Response("Updated successfully", status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-def view_menu(request, restaurant_id):
+@api_view(['POST'])
+def view_menu(request):
     try:
-        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        res_manager = AppUser.objects.get(email=request.data['email'])
+        restaurant = Restaurant.objects.get(user=res_manager)
         menu_item_list = MenuItem.objects.filter(restaurant=restaurant)
         menu_item_list_serializer = MenuItemSerializer(menu_item_list, many=True)
         return Response(menu_item_list_serializer.data, status=status.HTTP_200_OK)
