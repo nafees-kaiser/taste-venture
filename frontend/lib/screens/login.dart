@@ -78,6 +78,7 @@ class _LoginState extends State<Login> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('userEmail', email);
           await prefs.setString('userToken', token);
+          await prefs.setString('userType', userType);
 
           Fluttertoast.showToast(
             msg: "Login Successful",
