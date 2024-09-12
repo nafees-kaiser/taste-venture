@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/reset_password.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 
 class OtpPage extends StatefulWidget {
   String? email;
@@ -73,10 +74,12 @@ class _OTPPageState extends State<OtpPage> {
                     //   SnackBar(content: Text('OTP is verified')),
                     // );
                     final (body, status) = await verifyOtp();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(body)),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text(body)),
+                    // );
+                    
                     if (status == 200) {
+                      successToast(body);
                       if (widget.nextPath == '/reset-pass') {
                         Navigator.push(
                           context,
@@ -90,16 +93,18 @@ class _OTPPageState extends State<OtpPage> {
                         Navigator.pushNamed(context, widget.nextPath);
                       }
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(body)),
-                      );
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(content: Text(body)),
+                      // );
+                      errorToast(body);
                     }
 
                     // Navigator.pushNamed(context, '/reset-pass');
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please enter the OTP')),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text('Please enter the OTP')),
+                    // );
+                    errorToast("Please enter the otp");
                   }
                 },
                 child: Text('Submit'),

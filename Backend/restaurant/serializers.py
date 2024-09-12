@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from rest_framework.pagination import PageNumberPagination
+
+from common.models import AppUser
 from common.serializers import AppUserSerializer
 from common.utils import add_user, represent_user, create_common_user
 from usersapp.serializers import UserSerializer
@@ -9,11 +11,17 @@ from .models import *
 from usersapp.models import Favorite
 
 
-
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
         fields = '__all__'
+
+    def to_internal_value(self, data):
+        email = data.pop('email')
+        res_manager = AppUser.objects.get(email=email)
+        rest = Restaurant.objects.get(user=res_manager)
+        data['restaurant'] = rest.id
+        return super().to_internal_value(data)
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -50,7 +58,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 class ShowRestaurantSerializer(serializers.ModelSerializer):
     #is_favorite = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Restaurant
 
@@ -67,13 +75,12 @@ class ShowRestaurantSerializer(serializers.ModelSerializer):
             'description',
             'rating',
             #'is_favorite'
-            ]
+        ]
         #exclude = ['password', 'menu_item']
-    
+
     # def get_is_favorite(self, obj):
     #     user = self.context['request'].user
     #     return Favorite.objects.filter(user=user, restaurant=obj).exists()
-    
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -86,6 +93,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, allow_null=True)
+
     class Meta:
         model = Reservation
         fields = '__all__'

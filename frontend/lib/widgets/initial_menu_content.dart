@@ -7,6 +7,7 @@ import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/menu_group_by_category.dart';
 import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/menu_card.dart';
@@ -55,12 +56,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
       final response = await api.postMethod(data);
 
       if (response.statusCode == 201) {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(
-        //         content:
-        //             Text('${response.statusCode}')),
-        //   );
-
+        successToast("Restaurant added successfully");
         Navigation(context: context).materialNavigation(
             '/otp-page',
             () => OtpPage.setEmail(
@@ -70,6 +66,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
       }
     } catch (e) {
       debugPrint(e.toString());
+      errorToast("Something went wrong");
     }
   }
 

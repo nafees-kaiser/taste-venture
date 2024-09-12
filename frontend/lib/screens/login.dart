@@ -1,9 +1,9 @@
 ﻿import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/models/loggedin.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Future<String?> getToken() async {
@@ -80,15 +80,7 @@ class _LoginState extends State<Login> {
           await prefs.setString('userToken', token);
           await prefs.setString('userType', userType);
 
-          Fluttertoast.showToast(
-            msg: "Login Successful",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+          successToast("Login Successfull");
 
           if(userType == "customer"){
             Navigator.pushNamed(context, '/customer-homepage');
@@ -113,15 +105,7 @@ class _LoginState extends State<Login> {
         }
       } catch (e) {
         print('Error: ${e.toString()}');
-        Fluttertoast.showToast(
-          msg: "Error occurred. Please try again later.}",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 2,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        errorToast("Error occurred. Please try again later");
       }
     }
   }
