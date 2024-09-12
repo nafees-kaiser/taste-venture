@@ -85,6 +85,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, allow_null=True)
     class Meta:
         model = Reservation
         fields = '__all__'

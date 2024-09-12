@@ -16,4 +16,5 @@ urlpatterns = [
     path('get-top-restaurant', views.get_top_restaurants),
     path('accept-reservation', views.accept_reservation),
     path('reject-reservation', views.reject_reservation),
+    path('reservation', views.get_reservation_details, name='get_reservation_details'),
 ]

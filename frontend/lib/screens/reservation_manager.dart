@@ -1,5 +1,9 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReservationManager extends StatefulWidget {
   const ReservationManager({super.key});
@@ -11,6 +15,32 @@ class ReservationManager extends StatefulWidget {
 class _ReservationManagerState extends State<ReservationManager> {
   // variables
   TextEditingController messageController = TextEditingController();
+
+  List<dynamic>? reservations;
+
+  Future<void> getReservations() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final email = prefs.get('userEmail');
+    try {
+      var response = await ApiSettings(endPoint: '/restaurant/reservation')
+          .postMethod(jsonEncode({"email": email}));
+
+      if (response.statusCode == 200) {
+        setState(() {
+          reservations = jsonDecode(response.body);
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getReservations();
+  }
 
   // methods
   Text infoText(String heading, String text) {
@@ -78,7 +108,7 @@ class _ReservationManagerState extends State<ReservationManager> {
     );
   }
 
-  Container ReservationCard() {
+  Container ReservationCard(data) {
     return Container(
       width: 340,
       height: 260,
@@ -97,12 +127,12 @@ class _ReservationManagerState extends State<ReservationManager> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               titleText("Customer Information:"),
-              infoText("Name", "Rafsan"),
-              infoText("Mobile", "01545734368"),
+              infoText("Name", data["user"]["name"]),
+              infoText("Mobile", data["user"]["contact"]),
               titleText("Reservation Information:"),
-              infoText("Date", "12 JAN, 2024"),
-              infoText("Time", "10 AM - 12 PM"),
-              infoText("Reserve", "2 person"),
+              infoText("Date", data["date"]),
+              infoText("Time", data["start_time"] + ' - ' + data["end_time"]),
+              infoText("Reserve", data["number_of_people"].toString()),
 
               // Button
               Row(
@@ -127,17 +157,25 @@ class _ReservationManagerState extends State<ReservationManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Reservation Manager"),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [for (int i = 0; i < 3; i++) ReservationCard()],
+      appBar: AppBar(
+        title: const Text("Reservation Manager"),
+      ),
+      body: (reservations == null || reservations!.isEmpty)
+          ? Center(
+              child: Text(
+                "No reservations",
+                style: TextStyle(color: SECONDARY_BACKGROUND),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [...reservations!.map((r) => ReservationCard(r))],
+                ),
+              ),
             ),
-          ),
-        ));
+    );
   }
 }

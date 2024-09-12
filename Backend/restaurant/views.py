@@ -252,13 +252,14 @@ def view_restaurant(request):
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET'])
-def get_reservation_details(request, restaurant_id):
-    # res_manager = AppUser.objects.get(email=request.data['email'])
-    # res = Restaurant.objects.get(user=res_manager)
+@api_view(['POST'])
+def get_reservation_details(request):
+
     try:
-        res = Restaurant.objects.get(id=restaurant_id)
-        reservations = Reservation.objects.filter(restaurant=res)
+        res_manager = AppUser.objects.get(email=request.data['email'])
+        res = Restaurant.objects.get(user=res_manager)
+        # res = Restaurant.objects.get(id=restaurant_id)
+        reservations = Reservation.objects.filter(restaurant=res, status='pending')
 
         reservation_serializer = ReservationSerializer(reservations, many=True)
         if reservation_serializer:
