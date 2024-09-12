@@ -62,13 +62,13 @@ class _RestaurantState extends State<Restaurant> {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
         List<dynamic> restaurantsData = data["results"];
-        print(data);
+        // print(data);
         setState(() {
           restaurants = restaurantsData
               .map((item) => item as Map<String, dynamic>)
               .toList();
           numberOfPages = (data["count"] / data["page_size"]).ceil();
-          print(numberOfPages);
+          // print(numberOfPages);
         });
       } else {
         // Handle the error
