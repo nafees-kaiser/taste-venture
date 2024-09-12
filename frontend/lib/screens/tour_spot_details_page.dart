@@ -76,7 +76,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data['name'] ?? '',
+                        data['tourspot_name'] ?? '',
                         style: theme.textTheme.headlineMedium,
                       ),
                       SizedBox(height: 3),

@@ -228,7 +228,7 @@ class _TourSpotState extends State<TourSpot> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          tourSpots[i]['name'],
+                                          tourSpots[i]['tourspot_name'],
                                           style: GoogleFonts.getFont(
                                             'Inter',
                                             fontWeight: FontWeight.w400,

@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -245,10 +247,13 @@ class _RestaurantState extends State<Restaurant> {
                 children: [
                   for (int i = 0; i < restaurants.length; i++)
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        '/restaurant/information',
-                        arguments: restaurants[i],
+                      // onTap: () => Navigator.pushNamed(
+                      //   context,
+                      //   '/restaurant/information',
+                      //   arguments: restaurants[i],
+                      // ),
+                      onTap: ()=>Navigation(context: context).materialNavigation('/restaurant-info',
+                        ()=>RestaurantInfo.withRestaurant(restaurant: restaurants[i])
                       ),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),
