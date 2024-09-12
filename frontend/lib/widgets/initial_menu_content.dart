@@ -7,8 +7,10 @@ import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/menu_group_by_category.dart';
 import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/menu_card.dart';
+import 'package:frontend/widgets/menu_content.dart';
 
 class InitialMenuContent extends StatefulWidget {
   final RestaurantModel? restaurantModel;
@@ -21,12 +23,15 @@ class InitialMenuContent extends StatefulWidget {
 class _InitialMenuContentState extends State<InitialMenuContent> {
   List<String>? menuItemsEg = ['pizza'];
   List<MenuItem> menuItems = [];
+  var updatedMenuItems = {};
   late RestaurantModel? restaurantModel;
   ApiSettings api = ApiSettings(endPoint: '/restaurant/add-restaurant');
 
   void addMenuItems(MenuItem menuItem) {
     setState(() {
       menuItems.add(menuItem);
+      updatedMenuItems =
+        menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
     });
   }
 
@@ -35,6 +40,8 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
     // TODO: implement initState
     super.initState();
     restaurantModel = widget.restaurantModel;
+    updatedMenuItems =
+        menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
   }
 
   void addRestaurant() async {
@@ -83,25 +90,31 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      Text(
-                        'Main dish',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Divider(
-                        color: PRIMARY_COLOR,
-                        indent: 125,
-                        endIndent: 125,
-                        thickness: 3,
-                      ),
-                      SizedBox(height: 13),
-                      ...menuItems.map(
-                        (m) => Column(
-                          children: [
-                            SizedBox(height: 10),
-                            MenuCard2(
-                              menuItem: m,
-                            ),
-                          ],
+                      // Text(
+                      //   'Main dish',
+                      //   style: Theme.of(context).textTheme.headlineSmall,
+                      // ),
+                      // Divider(
+                      //   color: PRIMARY_COLOR,
+                      //   indent: 125,
+                      //   endIndent: 125,
+                      //   thickness: 3,
+                      // ),
+                      // SizedBox(height: 13),
+                      // ...menuItems.map(
+                      //   (m) => Column(
+                      //     children: [
+                      //       SizedBox(height: 10),
+                      //       MenuCard2(
+                      //         menuItem: m,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      ...updatedMenuItems.keys.map(
+                        (m) => MenuContent(
+                          data: updatedMenuItems[m],
+                          title: m,
                         ),
                       ),
                       // MenuCard2()

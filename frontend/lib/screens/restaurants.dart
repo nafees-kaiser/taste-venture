@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -62,13 +64,13 @@ class _RestaurantState extends State<Restaurant> {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
         List<dynamic> restaurantsData = data["results"];
-        print(data);
+        // print(data);
         setState(() {
           restaurants = restaurantsData
               .map((item) => item as Map<String, dynamic>)
               .toList();
           numberOfPages = (data["count"] / data["page_size"]).ceil();
-          print(numberOfPages);
+          // print(numberOfPages);
         });
       } else {
         // Handle the error
@@ -245,10 +247,13 @@ class _RestaurantState extends State<Restaurant> {
                 children: [
                   for (int i = 0; i < restaurants.length; i++)
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        '/restaurant/information',
-                        arguments: restaurants[i],
+                      // onTap: () => Navigator.pushNamed(
+                      //   context,
+                      //   '/restaurant/information',
+                      //   arguments: restaurants[i],
+                      // ),
+                      onTap: ()=>Navigation(context: context).materialNavigation('/restaurant-info',
+                        ()=>RestaurantInfo.withRestaurant(restaurant: restaurants[i])
                       ),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),

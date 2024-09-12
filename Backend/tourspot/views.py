@@ -31,8 +31,9 @@ def add_manager(request):
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
-    tourspot_list = list(tourspots.values())
-    return Response(tourspot_list, status=status.HTTP_200_OK)
+    tourspot_serializer = TourspotSerializer(tourspots, many=True)
+    # tourspot_list = list(tourspots.values())
+    return Response(tourspot_serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def view_tourspot_detail(request, id):

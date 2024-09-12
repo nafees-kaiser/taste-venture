@@ -57,7 +57,7 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.restaurants[widget.i]['name'],
+                  widget.restaurants[widget.i]['restaurant_name'],
                   style: GoogleFonts.getFont(
                     'Inter',
                     fontWeight: FontWeight.w400,

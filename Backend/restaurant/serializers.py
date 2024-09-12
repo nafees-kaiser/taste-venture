@@ -36,7 +36,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
         restaurant = Restaurant.objects.create(user=app_user, **validated_data)
         for menu_item in menu_item_list:
             MenuItem.objects.create(restaurant=restaurant, **menu_item)
-            return restaurant
+        return restaurant
 
         # return MenuItem.objects.create(**validated_data)
 
