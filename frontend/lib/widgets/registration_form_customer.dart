@@ -74,7 +74,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
             MaterialPageRoute(
               builder: (context) => OtpPage.setEmail(
                 email: email,
-                nextPath: '/preference',
+                nextPath: '/login',
               ),
             ),
           );

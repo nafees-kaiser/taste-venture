@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/menu_item.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
@@ -83,7 +84,8 @@ class MenuCard extends StatelessWidget {
 }
 
 class MenuCard2 extends StatelessWidget {
-  const MenuCard2({super.key});
+  final MenuItem menuItem;
+  const MenuCard2({super.key, required this.menuItem});
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +113,12 @@ class MenuCard2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Nigiri Sushi',
+                Text(menuItem.name,
                     style: Theme.of(context).textTheme.headlineSmall),
                 SizedBox(height: 3),
                 Expanded(
                   child: Text(
-                    'Fresh slices of fish or seafood atop vinegared rice.',
+                    menuItem.description,
                     style: Theme.of(context).textTheme.bodyMedium,
                     overflow: TextOverflow.visible,
                     softWrap: true,
@@ -124,7 +126,7 @@ class MenuCard2 extends StatelessWidget {
                 ),
                 // SizedBox(height: 7),
                 Text(
-                  '340 Taka',
+                  menuItem.price+" Taka",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
