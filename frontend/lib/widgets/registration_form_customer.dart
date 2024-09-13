@@ -3,6 +3,7 @@ import 'package:frontend/models/customer.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/form_validation.dart';
 import 'package:frontend/widgets/custom_dropdown_menu.dart';
 // import 'package:frontend/utils/date_picker.dart';
@@ -42,7 +43,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
   ApiSettings api = ApiSettings(endPoint: 'users/register');
 
   Future<void> _register(BuildContext context) async {
-    final String fullName = controller[0].text;
+    final String name = controller[0].text;
     final String contact = controller[1].text;
     final String email = controller[2].text;
     final String dob = controller[3].text;
@@ -52,7 +53,7 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     final String married = controller[8].text;
 
     Customer customer = Customer(
-      full_name: fullName,
+      name: name,
       contact: contact,
       email: email,
       dob: dob,
@@ -66,30 +67,27 @@ class RegistrationFormCustomerState extends State<RegistrationFormCustomer> {
     if (_formKey.currentState!.validate()) {
       try {
         final response = await api.postMethod(customer.toJson());
-        // print(response.body);
-        Customer new_customer = Customer.fromJson(response.body);
-        // print(new_customer.email);
+        // Customer newCustomer = Customer.fromJson(response.body);
+        // print(newCustomer);
         if (response.statusCode == 201) {
+          successToast("Regitered successfully!");
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => OtpPage.setEmail(
-                email: new_customer.email,
-                nextPath: '/preference',
+                email: email,
+                nextPath: '/login',
               ),
             ),
           );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content:
-                    Text('Error ${response.statusCode}: registration failed')),
-          );
+          errorToast('Error ${response.statusCode}: registration failed');
+          // print(response);
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        debugPrint(e.toString());
+        errorToast("Something went wrong");
+        // print(e.toString());
       }
     }
   }

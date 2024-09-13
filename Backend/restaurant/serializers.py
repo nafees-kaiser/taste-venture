@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from rest_framework.pagination import PageNumberPagination
 
+from common.models import AppUser
+from common.serializers import AppUserSerializer
+from common.utils import add_user, represent_user, create_common_user
 from usersapp.serializers import UserSerializer
-from .models import MenuItem, Review
-from .models import Restaurant
-from .models import Reservation
-from usersapp.models import Favorite
 
+from .models import *
+
+from usersapp.models import Favorite
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -14,28 +16,52 @@ class MenuItemSerializer(serializers.ModelSerializer):
         model = MenuItem
         fields = '__all__'
 
+    def to_internal_value(self, data):
+        email = data.pop('email')
+        res_manager = AppUser.objects.get(email=email)
+        rest = Restaurant.objects.get(user=res_manager)
+        data['restaurant'] = rest.id
+        return super().to_internal_value(data)
+
 
 class RestaurantSerializer(serializers.ModelSerializer):
     menu_item = MenuItemSerializer(many=True)
+    user = AppUserSerializer()
 
     class Meta:
         model = Restaurant
         fields = '__all__'
+        extra_kwargs = {'rating': {'read_only': True}}
+
+    def to_internal_value(self, data):
+        new_data = add_user(data, 'res_manager')
+        return super().to_internal_value(new_data)
 
     def create(self, validated_data):
+        user = validated_data.pop('user')
+        app_user = create_common_user(user)
         menu_item_list = validated_data.pop('menu_item')
-        restaurant = Restaurant.objects.create(**validated_data)
+        restaurant = Restaurant.objects.create(user=app_user, **validated_data)
         for menu_item in menu_item_list:
             MenuItem.objects.create(restaurant=restaurant, **menu_item)
-            return restaurant
+        return restaurant
 
-        #return MenuItem.objects.create(**validated_data)
+        # return MenuItem.objects.create(**validated_data)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        user_representation = represent_user(instance.user)
+        representation.update(user_representation)
+        representation.pop('user')
+        return representation
+
 
 class ShowRestaurantSerializer(serializers.ModelSerializer):
     #is_favorite = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Restaurant
+
         fields = [
             'id',
             'name',
@@ -49,13 +75,12 @@ class ShowRestaurantSerializer(serializers.ModelSerializer):
             'description',
             'rating',
             #'is_favorite'
-            ]
+        ]
         #exclude = ['password', 'menu_item']
-    
+
     # def get_is_favorite(self, obj):
     #     user = self.context['request'].user
     #     return Favorite.objects.filter(user=user, restaurant=obj).exists()
-    
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -67,6 +92,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, allow_null=True)
+
     class Meta:
         model = Reservation
         fields = '__all__'

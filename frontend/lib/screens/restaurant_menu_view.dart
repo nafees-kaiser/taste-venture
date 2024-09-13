@@ -1,39 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/constant.dart';
-import 'package:frontend/widgets/menu_card.dart';
+import 'package:frontend/widgets/menu_content.dart';
 
 class RestaurantMenuView extends StatelessWidget {
+  final Map<String, List<Map<String, dynamic>>> data;
+  // Map<String, List<Map<String, dynamic>>> menu = menuGroupByCategory(data["menu_item"]);
+
+  RestaurantMenuView({super.key, required this.data});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              'Main dish',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            Divider(
-              color: PRIMARY_COLOR,
-              indent: 125,
-              endIndent: 125,
-              thickness: 3,
-            ),
-            SizedBox(height: 13),
-            MenuCard2(),
-            SizedBox(height: 10),
-            MenuCard2(),
-            SizedBox(height: 10),
-            MenuCard2(),
-            SizedBox(height: 10),
-            MenuCard2(),
-            SizedBox(height: 10),
-            MenuCard2(),
-            // SizedBox(height: 5),
-          ],
-        ),
+        child: data == null
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: data.keys
+                    .map((k) => MenuContent(
+                          data: data[k],
+                          title: k,
+                        )).toList(),
+              ),
       ),
     );
   }
 }
+

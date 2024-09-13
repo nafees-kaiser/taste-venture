@@ -3,6 +3,10 @@ import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
 class RestaurantDetail extends StatelessWidget {
+  final data;
+
+  const RestaurantDetail({super.key, required this.data});
+  
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -39,14 +43,16 @@ class RestaurantDetail extends StatelessWidget {
           //       image: AssetImage('assets/yum-cha-district-banani.jpg')),
           // ),
           SizedBox(height: 13),
-          RestaurantHeading(theme: theme),
+          RestaurantHeading(theme: theme, data:data),
           SizedBox(height: 13),
-          RestaurantTimeAndDistance(theme: theme),
+          RestaurantTimeAndDistance(theme: theme, data: data),
           SizedBox(height: 13),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-                'Welcome to Grand Restaurant, the ultimate destination for culinary adventurers and food enthusiasts! Nestled in the heart of the city, our restaurant offers an extraordinary dining experience that seamlessly blends the rich flavors of Italy with the exquisite tastes of Japan.'),
+                // 'Welcome to Grand Restaurant, the ultimate destination for culinary adventurers and food enthusiasts! Nestled in the heart of the city, our restaurant offers an extraordinary dining experience that seamlessly blends the rich flavors of Italy with the exquisite tastes of Japan.'
+                data['description']
+                ),
           ),
           SizedBox(height: 16),
           // DescAndButton(theme: theme),
@@ -91,9 +97,11 @@ class DescAndButton extends StatelessWidget {
 }
 
 class RestaurantTimeAndDistance extends StatelessWidget {
+  final data;
   const RestaurantTimeAndDistance({
     super.key,
     required this.theme,
+    required this.data,
   });
 
   final ThemeData theme;
@@ -114,20 +122,21 @@ class RestaurantTimeAndDistance extends StatelessWidget {
               color: SECONDARY_BACKGROUND,
             ),
             text: Text(
-              '10:00 AM - 08:00 PM',
+              // '10:00 AM - 08:00 PM',
+              data['opening_time']+' - '+data['closing_time'],
               style: theme.textTheme.headlineSmall,
             ),
           ),
           // const VerticalDivider(color: Colors.black, width: 25,),
-          IconAndBelowText(
-            theme: theme,
-            icon: Icon(
-              Icons.location_on,
-              size: 40,
-              color: SECONDARY_BACKGROUND,
-            ),
-            text: Text('1.5 km', style: theme.textTheme.headlineSmall),
-          )
+          // IconAndBelowText(
+          //   theme: theme,
+          //   icon: Icon(
+          //     Icons.location_on,
+          //     size: 40,
+          //     color: SECONDARY_BACKGROUND,
+          //   ),
+          //   text: Text('1.5 km', style: theme.textTheme.headlineSmall),
+          // )
         ],
       ),
     );
@@ -135,9 +144,11 @@ class RestaurantTimeAndDistance extends StatelessWidget {
 }
 
 class RestaurantHeading extends StatelessWidget {
+  final data;
   const RestaurantHeading({
     super.key,
     required this.theme,
+    required this.data,
   });
 
   final ThemeData theme;
@@ -154,9 +165,9 @@ class RestaurantHeading extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Yumcha District',
+                  Text(data['restaurant_name'],
                       style: theme.textTheme.headlineMedium),
-                  Text('Banani, Dhaka'),
+                  Text(data['address']),
                 ],
               ),
               // SizedBox(),
@@ -171,7 +182,7 @@ class RestaurantHeading extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Text('4.7', style: TextStyle(color: Colors.white)),
+                    Text(data['rating'].toString(), style: TextStyle(color: Colors.white)),
                     Icon(
                       Icons.star_border_rounded,
                       color: Colors.white,

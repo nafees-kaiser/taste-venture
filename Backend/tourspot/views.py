@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 
+from common.models import OTPAuthentication
+from common.utils import send_otp
 from tourspot.models import Tourspot, Booking
 from tourspot.serializers import TourspotSerializer, BookingSerializer
 from usersapp.models import Users
@@ -16,41 +18,46 @@ from usersapp.models import Users
 def add_manager(request):
     serializer = TourspotSerializer(data=request.data)
     if serializer.is_valid():
-        password = serializer.validated_data.get('password')
-        hashed_password = make_password(password)
+    #     password = serializer.validated_data.get('password')
+    #     hashed_password = make_password(password)
 
-        serializer.save(password=hashed_password)
+        tour = serializer.save()
+        email = serializer.validated_data.get('user').get('email')
+        otp = send_otp(email)
+        OTPAuthentication.objects.create(app_user=tour.user, otp=otp)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
-    tourspot_list = list(tourspots.values())
-    return Response(tourspot_list, status=status.HTTP_200_OK)
+    tourspot_serializer = TourspotSerializer(tourspots, many=True)
+    # tourspot_list = list(tourspots.values())
+    return Response(tourspot_serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def view_tourspot_detail(request, id):
     try:
         tourspot = Tourspot.objects.get(pk=id)
-        tourspot_data = {
-            'id': tourspot.id,
-            'name': tourspot.name,
-            'manager_name': tourspot.manager_name,
-            'contact': tourspot.contact,
-            'email': tourspot.email,
-            'opening_time': tourspot.opening_time,
-            'closing_time': tourspot.closing_time,
-            'description': tourspot.description,
-            'address': tourspot.address,
-            'password': tourspot.password,
-            'entry_fee': tourspot.entry_fee,
-            'wifi': tourspot.wifi,
-            'parking': tourspot.parking,
-            'food': tourspot.food,
-            'pool': tourspot.pool,
-            'other_services': tourspot.other_services,
-        }
+        # tourspot_data = {
+        #     'id': tourspot.id,
+        #     'name': tourspot.name,
+        #     'manager_name': tourspot.manager_name,
+        #     'contact': tourspot.contact,
+        #     'email': tourspot.email,
+        #     'opening_time': tourspot.opening_time,
+        #     'closing_time': tourspot.closing_time,
+        #     'description': tourspot.description,
+        #     'address': tourspot.address,
+        #     'password': tourspot.password,
+        #     'entry_fee': tourspot.entry_fee,
+        #     'wifi': tourspot.wifi,
+        #     'parking': tourspot.parking,
+        #     'food': tourspot.food,
+        #     'pool': tourspot.pool,
+        #     'other_services': tourspot.other_services,
+        # }
+        tourspot_data = TourspotSerializer(tourspot).data
         return Response(tourspot_data, status=status.HTTP_200_OK)
     except Tourspot.DoesNotExist:
         return Response({'error': 'Tourspot not found'}, status=status.HTTP_404_NOT_FOUND)

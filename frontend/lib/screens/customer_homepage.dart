@@ -91,15 +91,15 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
           FutureBuilder<bool>(
             future: emailPresent,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              /*if (false /*snapshot.connectionState == ConnectionState.waiting*/) {
                 return Container(); // Can display a loader here if needed
-              } else if (snapshot.hasData && snapshot.data == true) {
+              } else if (true /*snapshot.hasData && snapshot.data == true*/) {*/
                 return IconButton(
                   onPressed: () =>
                       Navigator.pushNamed(context, '/notification'),
                   icon: const Icon(Icons.notifications),
                 );
-              } else {
+              /*} else {
                 return Container(
                   height: 40,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -117,7 +117,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     ),
                   ),
                 );
-              }
+              }*/
             },
           ),
         ],

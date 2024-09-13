@@ -1,15 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/models/menu_item.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/form_validation.dart';
 import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:frontend/widgets/textbox.dart';
-
 import 'package:image_input/image_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddMenuForm extends StatefulWidget {
+  final String endPoint;
+  final Function? addMenuItems;
+  final bool isAddRestaurant;
   const AddMenuForm({
     super.key,
+    required this.endPoint,
+    required this.addMenuItems,
+    required this.isAddRestaurant,
   });
 
   @override
@@ -18,7 +29,9 @@ class AddMenuForm extends StatefulWidget {
 
 class _AddMenuFormState extends State<AddMenuForm> {
   final _formKey = GlobalKey<FormState>();
-  ApiSettings api = ApiSettings(endPoint: 'restaurant/add-menu');
+  late ApiSettings api;
+  late Function? addMenuItems;
+  late bool isAddRestaurant;
 
   void _addMenu(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
@@ -34,23 +47,35 @@ class _AddMenuFormState extends State<AddMenuForm> {
         category: controller[1].text,
       );
 
-      try {
-        final response = await api.postMethod(menuItem.toJson());
-        if (response.statusCode == 201 || response.statusCode == 200) {
-          // Navigator.pushNamed(context, '/initial-menu');
-          Navigator.pop(context);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error ${response.statusCode}: Failed to add menu')),
-          );
+      if (isAddRestaurant) {
+        addMenuItems!(menuItem);
+        Navigator.pop(context);
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        final email = pref.get('userEmail');
+
+        var data = menuItem.toMap();
+        data['email'] = email;
+        try {
+          final response = await api.postMethod(jsonEncode(data));
+          if (response.statusCode == 201 || response.statusCode == 200) {
+            successToast("Menu added successfully");
+            // Navigator.pushNamed(context, '/initial-menu');
+            Navigator.pop(context, true);
+          } else {
+            errorToast("Error ${response.statusCode}: please try again");
+          }
+        } catch (e) {
+          debugPrint(e.toString());
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(e.toString())),
+          // );
+          errorToast("Something went wrong. Please try again");
         }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
       }
     }
   }
+
 
   List<XFile> itemImage = [];
   bool isButtonEnabled = false;
@@ -61,6 +86,9 @@ class _AddMenuFormState extends State<AddMenuForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    addMenuItems = widget.addMenuItems;
+    isAddRestaurant = widget.isAddRestaurant;
+    api = ApiSettings(endPoint: widget.endPoint);
     for (final i in controller) {
       i.addListener(_enableOrDesableButton);
     }
@@ -217,9 +245,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
             ),
           ),
           ElevatedButton(
-            onPressed: isButtonEnabled
-                ? () => _addMenu(context)
-                : null,
+            onPressed: isButtonEnabled ? () => _addMenu(context) : null,
             child: Text('Add'),
           ),
         ],

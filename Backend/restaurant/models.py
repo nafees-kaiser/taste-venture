@@ -1,15 +1,14 @@
 from django.db import models
 from usersapp.models import Users
+from django.conf import settings
 
 
 # Create your models here.
 
 class Restaurant(models.Model):
-    name = models.CharField(max_length=70)
-    email = models.EmailField(max_length=70)
-    password = models.CharField(max_length=200)
-    address = models.CharField(max_length=70)
-    phone = models.CharField(max_length=20)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+
+    restaurant_name = models.CharField(max_length=200, null=True, blank=True)
     cuisine = models.CharField(max_length=70)
     food_type = models.CharField(max_length=70)
     opening_time = models.CharField(max_length=70)
@@ -17,9 +16,11 @@ class Restaurant(models.Model):
     description = models.TextField()
     rating = models.FloatField(default=0)
     # menuList = models.ForeignKey(MenuItem)
+
+    REQUIRED_FIELDS = []
     
     def __str__(self):
-        return f'{self.id} -> {self.name}'
+        return f'{self.id} -> {self.restaurant_name}'
     
 
 class MenuItem(models.Model):
@@ -32,7 +33,7 @@ class MenuItem(models.Model):
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     # image = models.ImageField(upload_to='images/')
-    restaurant = models.ForeignKey(Restaurant , on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
 
     def __str__(self):
         return f'{self.id} -> {self.name}'

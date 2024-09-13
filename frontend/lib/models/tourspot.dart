@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class Tourspot {
   String name;
-  String manager_name;
+  String tourspot_name;
   String contact;
   String email;
   String opening_time;
@@ -22,7 +22,7 @@ class Tourspot {
 
   Tourspot({
     required this.name,
-    required this.manager_name,
+    required this.tourspot_name,
     required this.contact,
     required this.email,
     required this.opening_time,
@@ -40,7 +40,7 @@ class Tourspot {
 
   Tourspot copyWith({
     String? name,
-    String? manager_name,
+    String? tourspot_name,
     String? contact,
     String? email,
     String? opening_time,
@@ -57,7 +57,7 @@ class Tourspot {
   }) {
     return Tourspot(
       name: name ?? this.name,
-      manager_name: manager_name ?? this.manager_name,
+      tourspot_name: tourspot_name ?? this.tourspot_name,
       contact: contact ?? this.contact,
       email: email ?? this.email,
       opening_time: opening_time ?? this.opening_time,
@@ -77,7 +77,7 @@ class Tourspot {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'manager_name': manager_name,
+      'tourspot_name': tourspot_name,
       'contact': contact,
       'email': email,
       'opening_time': opening_time,
@@ -97,7 +97,7 @@ class Tourspot {
   factory Tourspot.fromMap(Map<String, dynamic> map) {
     return Tourspot(
       name: map['name'] as String,
-      manager_name: map['manager_name'] as String,
+      tourspot_name: map['tourspot_name'] as String,
       contact: map['contact'] as String,
       email: map['email'] as String,
       opening_time: map['opening_time'] as String,
@@ -121,28 +121,29 @@ class Tourspot {
 
   @override
   String toString() {
-    return 'Tourspot(name: $name, manager_name: $manager_name, contact: $contact, email: $email, opening_time: $opening_time, closing_time: $closing_time, description: $description, address: $address, password: $password, entry_fee: $entry_fee, wifi: $wifi, parking: $parking, food: $food, pool: $pool, other_services: $other_services)';
+    return 'Tourspot(name: $name, tourspot_name: $tourspot_name, contact: $contact, email: $email, opening_time: $opening_time, closing_time: $closing_time, description: $description, address: $address, password: $password, entry_fee: $entry_fee, wifi: $wifi, parking: $parking, food: $food, pool: $pool, other_services: $other_services)';
   }
 
   @override
   bool operator ==(covariant Tourspot other) {
     if (identical(this, other)) return true;
-
-    return other.name == name &&
-        other.manager_name == manager_name &&
-        other.contact == contact &&
-        other.email == email &&
-        other.opening_time == opening_time &&
-        other.closing_time == closing_time &&
-        other.description == description &&
-        other.address == address &&
-        other.password == password &&
-        other.entry_fee == entry_fee &&
-        other.wifi == wifi &&
-        other.parking == parking &&
-        other.food == food &&
-        other.pool == pool &&
-        other.other_services == other_services;
+  
+    return 
+      other.name == name &&
+      other.tourspot_name == tourspot_name &&
+      other.contact == contact &&
+      other.email == email &&
+      other.opening_time == opening_time &&
+      other.closing_time == closing_time &&
+      other.description == description &&
+      other.address == address &&
+      other.password == password &&
+      other.entry_fee == entry_fee &&
+      other.wifi == wifi &&
+      other.parking == parking &&
+      other.food == food &&
+      other.pool == pool &&
+      other.other_services == other_services;
   }
 
   // @override
@@ -163,4 +164,23 @@ class Tourspot {
   //       pool.hashCode ^
   //       other_services.hashCode;
   // }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+      tourspot_name.hashCode ^
+      contact.hashCode ^
+      email.hashCode ^
+      opening_time.hashCode ^
+      closing_time.hashCode ^
+      description.hashCode ^
+      address.hashCode ^
+      password.hashCode ^
+      entry_fee.hashCode ^
+      wifi.hashCode ^
+      parking.hashCode ^
+      food.hashCode ^
+      pool.hashCode ^
+      other_services.hashCode;
+  }
 }

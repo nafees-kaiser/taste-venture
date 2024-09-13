@@ -1,9 +1,9 @@
 ﻿import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/models/loggedin.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Future<String?> getToken() async {
@@ -69,26 +69,26 @@ class _LoginState extends State<Login> {
         if (response.statusCode == 200) {
           // Login successful
           var jsonResponse = jsonDecode(response.body);
-          var user = jsonResponse['user'];
+          var user = jsonResponse['user'] as Map<String, dynamic>;
           var token = jsonResponse['tokens']['access'];
-          print(token);
+          String userType = user['user_type'] as String;
+          // print(token);
 
           // Store login info using shared_preferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('userEmail', email);
           await prefs.setString('userToken', token);
+          await prefs.setString('userType', userType);
 
-          Fluttertoast.showToast(
-            msg: "Login Successful",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+          successToast("Login Successfull");
 
-          Navigator.pushNamed(context, '/customer-homepage');
+          if(userType == "customer"){
+            Navigator.pushNamed(context, '/customer-homepage');
+          } else{
+            Navigator.pushNamed(context, '/manager-home');
+          }
+
+          
         } else if (response.statusCode == 400) {
           // Invalid credentials
           setState(() {
@@ -104,16 +104,8 @@ class _LoginState extends State<Login> {
           throw Exception('Failed to login: ${response.statusCode}');
         }
       } catch (e) {
-        print('Error: $e');
-        Fluttertoast.showToast(
-          msg: "Error occurred. Please try again later.",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 2,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        print('Error: ${e.toString()}');
+        errorToast("Error occurred. Please try again later");
       }
     }
   }

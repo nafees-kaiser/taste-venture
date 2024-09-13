@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class Customer {
-  String full_name;
+  String name;
   String contact;
   String email;
   String dob;
@@ -12,7 +12,7 @@ class Customer {
   String password;
 
   Customer({
-    required this.full_name,
+    required this.name,
     required this.contact,
     required this.email,
     required this.dob,
@@ -23,7 +23,7 @@ class Customer {
   });
 
   Customer copyWith({
-    String? fullName,
+    String? name,
     String? contact,
     String? email,
     String? dob,
@@ -33,7 +33,7 @@ class Customer {
     String? password,
   }) {
     return Customer(
-      full_name: fullName ?? this.full_name,
+      name: name ?? this.name,
       contact: contact ?? this.contact,
       email: email ?? this.email,
       dob: dob ?? this.dob,
@@ -46,7 +46,7 @@ class Customer {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'full_name': full_name,
+      'name': name,
       'contact': contact,
       'email': email,
       'dob': dob,
@@ -59,7 +59,7 @@ class Customer {
 
   factory Customer.fromMap(Map<String, dynamic> map) {
     return Customer(
-      full_name: map['full_name'] as String,
+      name: map['name'] as String,
       contact: map['contact'] as String,
       email: map['email'] as String,
       dob: map['dob'] as String,
@@ -77,14 +77,14 @@ class Customer {
 
   @override
   String toString() {
-    return 'Customer(fullName: $full_name, contact: $contact, email: $email, dob: $dob, address: $address, gender: $gender, married: $married, password: $password)';
+    return 'Customer(name: $name, contact: $contact, email: $email, dob: $dob, address: $address, gender: $gender, married: $married, password: $password)';
   }
 
   @override
   bool operator ==(covariant Customer other) {
     if (identical(this, other)) return true;
 
-    return other.full_name == full_name &&
+    return other.name == name &&
         other.contact == contact &&
         other.email == email &&
         other.dob == dob &&
@@ -96,7 +96,7 @@ class Customer {
 
   @override
   int get hashCode {
-    return full_name.hashCode ^
+    return name.hashCode ^
         contact.hashCode ^
         email.hashCode ^
         dob.hashCode ^
