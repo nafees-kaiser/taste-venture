@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.hashers import make_password
+from django.db.models import Avg, Count, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -11,7 +12,8 @@ from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
 from ml_models.model import get_dayTourSpot_sentiment
 from tourspot.models import Tourspot, Booking, Review
-from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer
+from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer, \
+    DayTourSpotAndAvgRating
 from usersapp.models import Users
 from datetime import date
 
@@ -150,3 +152,46 @@ def add_dayTour_review(request):
 
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_dayTour_reviews(request, tourSpot_id):
+    ratings = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+    reviews = Review.objects.filter(tourSpot_id=tourSpot_id)
+    for review in reviews:
+        ratings[str(review.rating)] += 1
+
+    aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
+    average_rating = aggregate_data['average_rating']
+    total_reviews = aggregate_data['total_reviews']
+
+    serializer = TourSpotReviewSerializer(reviews, many=True)
+    response = {
+        "ratings": ratings,
+        "reviews": serializer.data,
+        "avg_rating": average_rating,
+        "total_reviews": total_reviews
+    }
+    return Response(response, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def get_top_dayTourSpot(request):
+    review = Review.objects.all()
+    dayTourSpot_ratings = review.values('tourSpot').annotate(avg_rating=Avg('rating'))
+    top_dayTourSpot = dayTourSpot_ratings.order_by('-avg_rating')[:3]
+    top_dayTourSpot_ids = [r['tourSpot'] for r in top_dayTourSpot]
+
+    dayTourSpots = Tourspot.objects.filter(id__in=top_dayTourSpot_ids).annotate(
+        average_rating=Subquery(
+            Review.objects.filter(tourSpot=OuterRef('pk')).values('tourSpot').annotate(
+                avg_rating=Avg('rating')
+            ).values('avg_rating')
+        )
+    ).order_by('-average_rating')
+
+    serializer = DayTourSpotAndAvgRating(dayTourSpots, many=True)
+    if serializer.data:
+        return Response(serializer.data, status.HTTP_200_OK)
+    else:
+        return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
