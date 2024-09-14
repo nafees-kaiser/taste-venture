@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
@@ -10,6 +12,7 @@ from common.utils import send_otp
 from tourspot.models import Tourspot, Booking
 from tourspot.serializers import TourspotSerializer, BookingSerializer
 from usersapp.models import Users
+from datetime import date
 
 
 # Create your views here.
@@ -18,8 +21,8 @@ from usersapp.models import Users
 def add_manager(request):
     serializer = TourspotSerializer(data=request.data)
     if serializer.is_valid():
-    #     password = serializer.validated_data.get('password')
-    #     hashed_password = make_password(password)
+        #     password = serializer.validated_data.get('password')
+        #     hashed_password = make_password(password)
 
         tour = serializer.save()
         email = serializer.validated_data.get('user').get('email')
@@ -28,12 +31,14 @@ def add_manager(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
     tourspot_serializer = TourspotSerializer(tourspots, many=True)
     # tourspot_list = list(tourspots.values())
     return Response(tourspot_serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def view_tourspot_detail(request, id):
@@ -69,13 +74,13 @@ def add_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'], number_of_people=request.data['number_of_people'], tourspot=tourspot, status="pending")
+        booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'],
+                                         number_of_people=request.data['number_of_people'], tourspot=tourspot,
+                                         status="pending")
         serializer = BookingSerializer(booking)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
         return Response("Error occured during booking", status=status.HTTP_400_BAD_REQUEST)
-
-
 
     serializer = BookingSerializer(data=request.data)
     if serializer.is_valid():
@@ -98,6 +103,7 @@ def accept_booking(request):
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 @csrf_exempt
 def reject_booking(request):
@@ -111,3 +117,13 @@ def reject_booking(request):
         return Response("Tourspot Booking Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def view_booking(request, user_id):
+    if request.method == 'GET':
+        today = date.today()
+        bookings = Booking.objects.filter(user_id=user_id, date__gt=today, status__in=["pending", "accepted"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)

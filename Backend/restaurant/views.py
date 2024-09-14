@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db.models import Avg, Count, Max, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
@@ -7,6 +9,8 @@ from rest_framework.response import Response
 from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
 from ml_models.model import get_restaurant_sentiment
+from tourspot.models import Booking
+from tourspot.serializers import BookingSerializer
 from usersapp.models import Users
 from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
@@ -205,6 +209,7 @@ def accept_reservation(request):
                                             start_time=request.data['start_time'],
                                             status="pending")
 
+
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -225,6 +230,7 @@ def reject_reservation(request):
                                             date=request.data['date'],
                                             start_time=request.data['start_time'],
                                             status="pending")
+
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -239,9 +245,9 @@ def view_restaurant(request):
         restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-
         # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
         restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+
         response_data = {
             "count": restaurant_list.count(),
             "page_size": StandardResultsSetPagination.page_size,
@@ -252,6 +258,22 @@ def view_restaurant(request):
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+
+@api_view(['GET'])
+def visiting_history(request, user_id):
+    try:
+        today = date.today()
+        reservations = Reservation.objects.filter(user_id=user_id, status="accepted", date__lt=today)
+        bookings = Booking.objects.filter(user_id=user_id, date__lt=today, status="accepted")
+        reservationSerializer = ReservationSerializer(reservations, many=True)
+        bookingSerializer = BookingSerializer(bookings, many=True)
+        response = {
+            "restaurant": reservationSerializer.data,
+            "tour-spot": bookingSerializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
+    except Users.DoesNotExist:
+        return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def get_reservation_details(request):
