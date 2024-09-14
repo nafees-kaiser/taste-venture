@@ -37,3 +37,14 @@ class Booking(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['user', 'tourspot', 'date'], name='unique_tourspot_booking')
         ]
+
+
+class Review(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='dayTour_user')
+    rating = models.IntegerField()
+    review = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    tourSpot = models.ForeignKey(Tourspot, related_name='dayTour_reviews', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.id} -> {self.review}'

@@ -10,4 +10,5 @@ urlpatterns = [
     path('accept-booking', views.accept_booking),
     path('reject-booking', views.reject_booking),
     path('view-booking/<int:user_id>', views.view_booking, name='view_booking'),
+    path('add-daytour-review', views.add_dayTour_review, name='add-dayTour-review')
 ]

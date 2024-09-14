@@ -204,11 +204,10 @@ def accept_reservation(request):
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
 
         reservation = Reservation.objects.get(user=user,
-                                            restaurant=restaurant,
-                                            date=request.data['date'],
-                                            start_time=request.data['start_time'],
-                                            status="pending")
-
+                                              restaurant=restaurant,
+                                              date=request.data['date'],
+                                              start_time=request.data['start_time'],
+                                              status="pending")
 
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
@@ -226,10 +225,10 @@ def reject_reservation(request):
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
 
         reservation = Reservation.objects.get(user=user,
-                                            restaurant=restaurant,
-                                            date=request.data['date'],
-                                            start_time=request.data['start_time'],
-                                            status="pending")
+                                              restaurant=restaurant,
+                                              date=request.data['date'],
+                                              start_time=request.data['start_time'],
+                                              status="pending")
 
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
@@ -274,10 +273,12 @@ def visiting_history(request, user_id):
         return Response(response, status=status.HTTP_200_OK)
     except Users.DoesNotExist:
         return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['POST'])
 def get_reservation_details(request):
-
     try:
         res_manager = AppUser.objects.get(email=request.data['email'])
         res = Restaurant.objects.get(user=res_manager)
