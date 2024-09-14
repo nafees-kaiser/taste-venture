@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
 from ml_models.model import get_restaurant_sentiment
+from tourspot.models import Booking
+from tourspot.serializers import BookingSerializer
 from usersapp.models import Users
 from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
@@ -261,9 +263,15 @@ def view_restaurant(request):
 def visiting_history(request, user_id):
     try:
         today = date.today()
-        reservation = Reservation.objects.filter(user_id=user_id, status="accepted", date__lt=today)
-        serializer = ReservationSerializer(reservation, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        reservations = Reservation.objects.filter(user_id=user_id, status="accepted", date__lt=today)
+        bookings = Booking.objects.filter(user_id=user_id, date__lt=today, status="accepted")
+        reservationSerializer = ReservationSerializer(reservations, many=True)
+        bookingSerializer = BookingSerializer(bookings, many=True)
+        response = {
+            "restaurant": reservationSerializer.data,
+            "tour-spot": bookingSerializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
     except Users.DoesNotExist:
         return Response({"error": "user not found"}, status=status.HTTP_404_NOT_FOUND)
 
