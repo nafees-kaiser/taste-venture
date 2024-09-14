@@ -7,10 +7,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 
-from common.models import OTPAuthentication
+from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
-from tourspot.models import Tourspot, Booking
-from tourspot.serializers import TourspotSerializer, BookingSerializer
+from ml_models.model import get_dayTourSpot_sentiment
+from tourspot.models import Tourspot, Booking, Review
+from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer
 from usersapp.models import Users
 from datetime import date
 
@@ -127,3 +128,25 @@ def view_booking(request, user_id):
         booking_serializer = BookingSerializer(bookings, many=True)
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_dayTour_review(request):
+    if request.method == 'POST':
+        review = request.data['review']
+        email = request.data['email']
+        rating = request.data['rating']
+        dayTourSpot_id = request.data['dayTourSpot_id']
+        prediction = get_dayTourSpot_sentiment(review)
+        if prediction:
+            user = AppUser.objects.get(email=email)
+            customer = Users.objects.get(user=user)
+            dayTour = Tourspot.objects.get(pk=dayTourSpot_id)
+            review = Review.objects.create(user=customer, tourSpot=dayTour, rating=rating, review=review)
+            serializer = TourSpotReviewSerializer(review)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Fake review", status=status.HTTP_200_OK)
+
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
