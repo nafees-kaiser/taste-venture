@@ -40,3 +40,14 @@ class TourSpotReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+
+
+class DayTourSpotAndAvgRating(serializers.ModelSerializer):
+    average_rating = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Tourspot
+        fields = ['id', 'tourspot_name', 'average_rating']
+
+    def get_average_rating(self, obj):
+        return format(obj.average_rating, '.2f')
