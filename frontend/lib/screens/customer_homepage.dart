@@ -19,8 +19,6 @@ class CustomerHomepage extends StatefulWidget {
 class _CustomerHomepageState extends State<CustomerHomepage> {
   late Future<List<RestaurantAndRatings>> topRestaurants;
   late Future<bool> emailPresent;
-  ApiSettings top_restaurant_api =
-      ApiSettings(endPoint: 'restaurant/get-top-restaurant');
 
   @override
   void initState() {
@@ -36,6 +34,8 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
   }
 
   Future<List<RestaurantAndRatings>> fetchTopRestaurants() async {
+    ApiSettings top_restaurant_api =
+        ApiSettings(endPoint: 'restaurant/get-top-restaurant');
     final response = await top_restaurant_api.getMethod();
 
     if (response.statusCode == 200) {
@@ -45,6 +45,19 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
           .toList();
     } else {
       throw Exception('Failed to load top restaurants');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getData(String url) async {
+    ApiSettings api = ApiSettings(endPoint: url);
+    final response = await api.getMethod();
+
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> jsonResponse = List<Map<String, dynamic>>.from(
+          json.decode(response.body) as List<dynamic>);
+      return jsonResponse;
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 
@@ -94,11 +107,10 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
               /*if (false /*snapshot.connectionState == ConnectionState.waiting*/) {
                 return Container(); // Can display a loader here if needed
               } else if (true /*snapshot.hasData && snapshot.data == true*/) {*/
-                return IconButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, '/notification'),
-                  icon: const Icon(Icons.notifications),
-                );
+              return IconButton(
+                onPressed: () => Navigator.pushNamed(context, '/notification'),
+                icon: const Icon(Icons.notifications),
+              );
               /*} else {
                 return Container(
                   height: 40,
@@ -324,17 +336,13 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                       } else {
                         return Row(
                           children: snapshot.data!.map((restaurant) {
-                            return GestureDetector(
-                              child: TopResCard(
-                                restaurantImage: "assets/pizza.jpg",
-                                restaurantName: restaurant.name,
-                                restaurantAddress: restaurant.address,
-                                restaurantRating: restaurant.averageRating,
-                              ),
-                              onTap: () {
-                                Navigator.pushNamed(context,
-                                    '/restaurant/information'); //restaurant_id = restaurant.id
-                              },
+                            print(restaurant);
+                            return TopResCard(
+                              id: 1,
+                              restaurantImage: "assets/pizza.jpg",
+                              restaurantName: restaurant.restaurant_name,
+                              restaurantAddress: restaurant.address,
+                              restaurantRating: restaurant.averageRating,
                             );
                           }).toList(),
                         );
@@ -391,18 +399,32 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                 ),
                 // Top tour spot Cards
                 SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        for (int i = 0; i < 5; i++)
-                          TopTourCard(
-                            tourImage: "assets/tourVenue.png",
-                            tourName: "Mirpur Picnic spot",
-                            tourAddress: "14/A Mirpur-1, Dhaka-1211",
-                            tourURL: '/tourspot-detail',
-                          )
-                      ],
-                    )),
+                  scrollDirection: Axis.vertical,
+                  child: FutureBuilder<List<Map<String, dynamic>>>(
+                    future: getData('tourspot/get-top-daytour'),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No data available');
+                      } else {
+                        return Column(
+                          children: snapshot.data!.map((data) {
+                            return TopTourCard(
+                              tourImage:
+                                  data['image'] ?? "assets/tourVenue.png",
+                              tourName: data['tourspot_name'],
+                              tourAddress: data['address'],
+                              id: data['id'],
+                            );
+                          }).toList(),
+                        );
+                      }
+                    },
+                  ),
+                ),
               ],
             ),
           ),
