@@ -13,45 +13,10 @@ class ManagerMenuBottomNavigation extends StatefulWidget {
 
 class _ManagerMenuBottomNavigationState
     extends State<ManagerMenuBottomNavigation> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _selectedIndex == 0
-          ? const ManagerVenueInformation()
-          : const ManagerMenuInformations(),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.grey[100],
-        height: 70,
-        indicatorColor: Colors.grey[100],
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: _onItemTapped,
-        destinations: [
-          NavigationDestination(
-            icon: Icon(
-              Icons.home,
-              size: 30,
-              color: _selectedIndex == 0 ? PRIMARY_COLOR : Colors.grey,
-            ),
-            label: "Restaurant",
-          ),
-          NavigationDestination(
-            icon: Icon(
-              Icons.restaurant_menu,
-              size: 30,
-              color: _selectedIndex == 1 ? PRIMARY_COLOR : Colors.grey,
-            ),
-            label: "Menu",
-          ),
-        ],
-      ),
+      body: ManagerVenueInformation(),
     );
   }
 }
