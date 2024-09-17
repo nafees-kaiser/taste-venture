@@ -38,7 +38,6 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
       print(response.statusCode);
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData);
         return responseData;
       }
       return {};
