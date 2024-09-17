@@ -119,15 +119,21 @@ def add_restaurant_review(request):
         restaurant_id = request.data['restaurant_id']
         prediction = get_restaurant_sentiment(review)
         if prediction:
-            user = AppUser.objects.get(email=email)
-            customer = Users.objects.get(user=user)
-            restaurant = Restaurant.objects.get(pk=restaurant_id)
-            review = Review.objects.create(user=customer, restaurant=restaurant, review=review, rating=rating)
-            serializer = ReviewSerializer(review)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                user = AppUser.objects.get(email=email)
+                customer = Users.objects.get(user=user)
+                restaurant = Restaurant.objects.get(pk=restaurant_id)
+                review = Review.objects.create(user=customer, restaurant=restaurant, review=review, rating=rating)
+                serializer = ReviewSerializer(review)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except Users.DoesNotExist:
+                return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
+            except Restaurant.DoesNotExist:
+                return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+            except Exception as e:
+                return Response(str(e))
         else:
             return Response("Fake review", status=status.HTTP_200_OK)
-
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -140,7 +146,7 @@ def get_restaurant_reviews(request, restaurant_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating']
+    average_rating = aggregate_data['average_rating'] or 0
     total_reviews = aggregate_data['total_reviews']
 
     serializer = ReviewSerializer(reviews, many=True)
@@ -176,24 +182,26 @@ def add_reservation(request):
 
 @api_view(["GET"])
 def get_top_restaurants(request):
-    review = Review.objects.all()
-    restaurant_ratings = review.values('restaurant').annotate(avg_rating=Avg('rating'))
-    top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
-    top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
+    try:
+        review = Review.objects.all()
+        restaurant_ratings = review.values('restaurant').annotate(avg_rating=Avg('rating'))
+        top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
+        top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
 
-    restaurants = Restaurant.objects.filter(id__in=top_restaurant_ids).annotate(
-        average_rating=Subquery(
-            Review.objects.filter(restaurant=OuterRef('pk')).values('restaurant').annotate(
-                avg_rating=Avg('rating')
-            ).values('avg_rating')
-        )
-    ).order_by('-average_rating')
+        restaurants = Restaurant.objects.filter(id__in=top_restaurant_ids).annotate(
+            average_rating=Subquery(
+                Review.objects.filter(restaurant=OuterRef('pk')).values('restaurant').annotate(
+                    avg_rating=Avg('rating')
+                ).values('avg_rating')
+            )
+        ).order_by('-average_rating')
 
-    serializer = RestaurantAndAvgRating(restaurants, many=True)
-    if serializer.data:
+        serializer = RestaurantAndAvgRating(restaurants, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
-    else:
-        return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
+    except Restaurant.DoesNotExist:
+        return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e))
 
 
 @api_view(['POST'])

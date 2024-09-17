@@ -102,13 +102,17 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class RestaurantAndAvgRating(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
+    address = serializers.SerializerMethodField()
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'address', 'average_rating']
+        fields = ['id', 'restaurant_name', 'address', 'average_rating']
 
     def get_average_rating(self, obj):
         return format(obj.average_rating, '.2f')
+
+    def get_address(self, obj):
+        return obj.user.address if obj.user and hasattr(obj.user, 'address') else None
 
 
 class StandardResultsSetPagination(PageNumberPagination):
