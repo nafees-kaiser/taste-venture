@@ -2,40 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:frontend/widgets/profile_information_card.dart';
 
 class PersonalInformation extends StatelessWidget {
-  const PersonalInformation({super.key});
+  final Map<String, dynamic>? userData;
+  const PersonalInformation({this.userData, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Profileinfocard(
           name: "Email",
-          text: "Shahabuddin@Akhon.com",
+          text: userData?['email'] ?? "Unknown",
           icon: Icons.email,
         ),
         Profileinfocard(
           name: "Name",
-          text: "Shahabuddin Akhon",
+          text: userData?['name'] ?? "Unknown",
           icon: Icons.person,
         ),
         Profileinfocard(
-          name: "Mobile",
-          text: "+8801982711168",
+          name: "Contact",
+          text: userData?['contact'] ?? "Unknown",
           icon: Icons.call,
         ),
         Profileinfocard(
           name: "Date of Birth",
-          text: "12/02/2001",
+          text: userData?['dob'] ?? "Unknown",
           icon: Icons.calendar_month,
         ),
         Profileinfocard(
           name: "Gender",
-          text: "Male",
+          text: userData?['gender'] ?? "Unknown",
           icon: Icons.wc,
         ),
         Profileinfocard(
           name: "Address",
-          text: "Jatrabari,Dhaka-1236",
+          text: userData?['address'] ?? "Unknown",
           icon: Icons.home,
         ),
       ],

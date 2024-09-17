@@ -74,22 +74,23 @@ def get_user_details(request, user_id):
 @csrf_exempt
 @api_view(['POST'])
 def update_user_details(request):
-    tag = request.data.get('tag')
-    info = request.data.get('info')
-    user = AppUser.objects.get(email=request.data.get('email'))
-    customer = Users.objects.get(user=user)
+    try:
+        tag = request.data.get('tag')
+        info = request.data.get('info')
+        user = AppUser.objects.get(email=request.data.get('email'))
+        customer = Users.objects.get(user=user)
 
-    if hasattr(user, tag):
-        setattr(user, tag, info)
-        user.save()
-    else:
-        setattr(customer, tag, info)
-        customer.save()
+        if hasattr(user, tag):
+            setattr(user, tag, info)
+            user.save()
+        else:
+            setattr(customer, tag, info)
+            customer.save()
 
-    serializer = UserSerializer(customer)
-    if serializer.data:
+        serializer = UserSerializer(customer)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
