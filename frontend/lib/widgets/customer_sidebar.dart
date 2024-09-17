@@ -1,8 +1,31 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomerSidebar extends StatelessWidget {
+class CustomerSidebar extends StatefulWidget {
   const CustomerSidebar({super.key});
+
+  @override
+  State<CustomerSidebar> createState() => _CustomerSidebarState();
+}
+
+class _CustomerSidebarState extends State<CustomerSidebar> {
+  late Future<String?> email;
+  ApiSettings get_user_api = ApiSettings(endPoint: 'user/get-user');
+
+  @override
+  void initState() {
+    super.initState();
+    email = getInfo();
+  }
+
+  Future<String?> getInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('userEmail');
+    return email;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,27 +34,33 @@ class CustomerSidebar extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: const Text(
-              "Shahabuddin",
-              style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-            accountEmail: const Text(
-              "shavoddin54@gmail.com",
-              style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-            currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.asset('assets/profile.png'),
-              ),
-            ),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
+          FutureBuilder<String?>(
+            future: email,
+            builder: (context, snapshot) {
+              String email = snapshot.data ?? 'Email not found';
+              return UserAccountsDrawerHeader(
+                accountName: const Text(
+                  "Shahabuddin",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                accountEmail: Text(
+                  email,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  child: ClipOval(
+                    child: Image.asset('assets/profile.png'),
+                  ),
+                ),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.account_circle),

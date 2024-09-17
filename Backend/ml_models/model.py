@@ -50,3 +50,18 @@ def text_to_embedding(text, model, embedding_dim=300):
         return np.mean(embeddings, axis=0)
     else:
         return np.zeros(embedding_dim)
+
+
+def get_dayTourSpot_sentiment(review):
+    fasttext_model = fasttext.load_model(r'..\Machine_Learning\food_review\cc.bn.300.bin')
+
+    # Load the model
+    with open(r'..\Machine_Learning\food_review\Restaurant_review_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+
+    text = preprocess(review)
+    text_embedding = text_to_embedding(text, fasttext_model)
+    prediction = model.predict([text_embedding])
+    print(prediction)
+
+    return prediction

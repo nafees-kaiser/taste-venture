@@ -1,15 +1,21 @@
+import datetime
+
 from django.contrib.auth.hashers import make_password
+from django.db.models import Avg, Count, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 
-from common.models import OTPAuthentication
+from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
-from tourspot.models import Tourspot, Booking
-from tourspot.serializers import TourspotSerializer, BookingSerializer
+from ml_models.model import get_dayTourSpot_sentiment
+from tourspot.models import Tourspot, Booking, Review
+from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer, \
+    DayTourSpotAndAvgRating
 from usersapp.models import Users
+from datetime import date
 
 
 # Create your views here.
@@ -18,8 +24,8 @@ from usersapp.models import Users
 def add_manager(request):
     serializer = TourspotSerializer(data=request.data)
     if serializer.is_valid():
-    #     password = serializer.validated_data.get('password')
-    #     hashed_password = make_password(password)
+        #     password = serializer.validated_data.get('password')
+        #     hashed_password = make_password(password)
 
         tour = serializer.save()
         email = serializer.validated_data.get('user').get('email')
@@ -28,12 +34,14 @@ def add_manager(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
     tourspot_serializer = TourspotSerializer(tourspots, many=True)
     # tourspot_list = list(tourspots.values())
     return Response(tourspot_serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def view_tourspot_detail(request, id):
@@ -69,13 +77,13 @@ def add_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'], number_of_people=request.data['number_of_people'], tourspot=tourspot, status="pending")
+        booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'],
+                                         number_of_people=request.data['number_of_people'], tourspot=tourspot,
+                                         status="pending")
         serializer = BookingSerializer(booking)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
         return Response("Error occured during booking", status=status.HTTP_400_BAD_REQUEST)
-
-
 
     serializer = BookingSerializer(data=request.data)
     if serializer.is_valid():
@@ -98,6 +106,7 @@ def accept_booking(request):
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 @csrf_exempt
 def reject_booking(request):
@@ -111,3 +120,78 @@ def reject_booking(request):
         return Response("Tourspot Booking Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def view_booking(request, user_id):
+    if request.method == 'GET':
+        today = date.today()
+        bookings = Booking.objects.filter(user_id=user_id, date__gt=today, status__in=["pending", "accepted"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_dayTour_review(request):
+    if request.method == 'POST':
+        review = request.data['review']
+        email = request.data['email']
+        rating = request.data['rating']
+        dayTourSpot_id = request.data['dayTourSpot_id']
+        prediction = get_dayTourSpot_sentiment(review)
+        if prediction:
+            user = AppUser.objects.get(email=email)
+            customer = Users.objects.get(user=user)
+            dayTour = Tourspot.objects.get(pk=dayTourSpot_id)
+            review = Review.objects.create(user=customer, tourSpot=dayTour, rating=rating, review=review)
+            serializer = TourSpotReviewSerializer(review)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Fake review", status=status.HTTP_200_OK)
+
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_dayTour_reviews(request, tourSpot_id):
+    ratings = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+    reviews = Review.objects.filter(tourSpot_id=tourSpot_id)
+    for review in reviews:
+        ratings[str(review.rating)] += 1
+
+    aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
+    average_rating = aggregate_data['average_rating']
+    total_reviews = aggregate_data['total_reviews']
+
+    serializer = TourSpotReviewSerializer(reviews, many=True)
+    response = {
+        "ratings": ratings,
+        "reviews": serializer.data,
+        "avg_rating": average_rating,
+        "total_reviews": total_reviews
+    }
+    return Response(response, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def get_top_dayTourSpot(request):
+    review = Review.objects.all()
+    dayTourSpot_ratings = review.values('tourSpot').annotate(avg_rating=Avg('rating'))
+    top_dayTourSpot = dayTourSpot_ratings.order_by('-avg_rating')[:3]
+    top_dayTourSpot_ids = [r['tourSpot'] for r in top_dayTourSpot]
+
+    dayTourSpots = Tourspot.objects.filter(id__in=top_dayTourSpot_ids).annotate(
+        average_rating=Subquery(
+            Review.objects.filter(tourSpot=OuterRef('pk')).values('tourSpot').annotate(
+                avg_rating=Avg('rating')
+            ).values('avg_rating')
+        )
+    ).order_by('-average_rating')
+
+    serializer = DayTourSpotAndAvgRating(dayTourSpots, many=True)
+    if serializer.data:
+        return Response(serializer.data, status.HTTP_200_OK)
+    else:
+        return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
