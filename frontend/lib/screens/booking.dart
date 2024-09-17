@@ -85,6 +85,7 @@ class _BookingState extends State<Booking> {
       );
 
       try {
+        print(bookspot.toJson());
         final response = await api.postMethod(bookspot.toJson());
 
         if (response.statusCode == 201) {
