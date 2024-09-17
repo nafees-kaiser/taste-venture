@@ -64,6 +64,9 @@ class _BookingManagerState extends State<BookingManager> {
                 ),
                 // send button
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: SECONDARY_COLOR,
+                        foregroundColor: Colors.white),
                     onPressed: () =>
                         Navigator.pushNamed(context, '/reservation-list'),
                     child: const SizedBox(
@@ -78,7 +81,7 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  Container ReservationCard() {
+  Container BookingCard() {
     return Container(
       width: 340,
       height: 260,
@@ -99,7 +102,7 @@ class _BookingManagerState extends State<BookingManager> {
               titleText("Customer Information:"),
               infoText("Name", "Rafsan"),
               infoText("Mobile", "01545734368"),
-              titleText("Reservation Information:"),
+              titleText("Booking Information:"),
               infoText("Date", "12 JAN, 2024"),
               infoText("Reserve for", "2 person"),
               infoText("Subtotal", "1400"),
@@ -109,10 +112,16 @@ class _BookingManagerState extends State<BookingManager> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: SECONDARY_COLOR,
+                          foregroundColor: Colors.white),
                       onPressed: () => sendMessage(false),
                       child: const Text("Reject")),
                   const SizedBox(width: 12),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: SECONDARY_COLOR,
+                          foregroundColor: Colors.white),
                       onPressed: () => sendMessage(true),
                       child: const Text("Accept")),
                 ],
@@ -135,7 +144,7 @@ class _BookingManagerState extends State<BookingManager> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [for (int i = 0; i < 3; i++) ReservationCard()],
+              children: [for (int i = 0; i < 3; i++) BookingCard()],
             ),
           ),
         ));
