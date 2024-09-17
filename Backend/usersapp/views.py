@@ -60,8 +60,7 @@ def login(request):
 def get_user_details(request, user_id):
     try:
         customer = AppUser.objects.get(id=user_id)
-        user = Users.objects.get(user=customer)
-        serializer = UserSerializer(user)
+        serializer = AppUserSerializer(customer)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except AppUser.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
