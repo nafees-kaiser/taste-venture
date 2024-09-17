@@ -17,10 +17,11 @@ class MenuItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_internal_value(self, data):
-        email = data.pop('email')
-        res_manager = AppUser.objects.get(email=email)
-        rest = Restaurant.objects.get(user=res_manager)
-        data['restaurant'] = rest.id
+        if 'email' in data:
+            email = data.pop('email')
+            res_manager = AppUser.objects.get(email=email)
+            rest = Restaurant.objects.get(user=res_manager)
+            data['restaurant'] = rest.id
         return super().to_internal_value(data)
 
 
