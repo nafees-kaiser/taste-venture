@@ -56,15 +56,19 @@ def login(request):
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['POST'])
-def get_user_details(request):
-    email = request.data.get('email')
-    customer = AppUser.objects.get(email=email)
-    user = Users.objects.get(user=customer)
-    serializer = UserSerializer(user)
-    if serializer.data:
+@api_view(['GET'])
+def get_user_details(request, user_id):
+    try:
+        customer = AppUser.objects.get(id=user_id)
+        user = Users.objects.get(user=customer)
+        serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except AppUser.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 
 @csrf_exempt
