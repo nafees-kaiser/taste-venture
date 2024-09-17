@@ -1,14 +1,16 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/constant.dart';
 
 class TopTourCard extends StatefulWidget {
-  String tourImage, tourName, tourAddress, tourURL;
+  String tourImage, tourName, tourAddress;
+  int id;
   TopTourCard({
     super.key,
     required this.tourImage,
     required this.tourName,
     required this.tourAddress,
-    required this.tourURL,
+    required this.id,
   });
 
   @override
@@ -104,8 +106,14 @@ class _TopTourCardState extends State<TopTourCard> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/tourspot-detail'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TourSpotDetailsPage(
+                          id: widget.id,
+                        ),
+                      ),
+                    ),
                     child: const Text(
                       "View",
                       style: TextStyle(fontSize: 16, color: Colors.white),
