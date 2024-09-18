@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from common.serializers import AppUserSerializer
 from common.utils import *
+from usersapp.serializers import UserSerializer
 from .models import Tourspot, Booking, Review
 
 
@@ -37,6 +38,8 @@ class BookingSerializer(serializers.ModelSerializer):
 
 
 class TourSpotReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Review
         fields = '__all__'
