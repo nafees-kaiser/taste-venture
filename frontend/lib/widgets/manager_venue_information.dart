@@ -1,14 +1,23 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
-import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
-import 'package:frontend/widgets/information_card_without_icon.dart';
+import 'package:frontend/widgets/information_card.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
+import 'package:http/http.dart' as http;
+import 'package:frontend/utils/api_settings.dart';
 
+// Function to fetch tour spot details
 Future<Map<String, dynamic>> fetchTourSpotDetails(int id) async {
   ApiSettings api = ApiSettings(endPoint: 'tourspot/view-list/$id');
   final response = await api.getMethod();
   return json.decode(response.body);
+}
+
+// Function to post updated tour spot details
+Future<http.Response> postUpdateTourSpot(
+    int id, Map<String, dynamic> data) async {
+  ApiSettings api = ApiSettings(endPoint: 'tourspot/edit-tourspot/$id');
+  return api.postMethod(json.encode(data));
 }
 
 class ManagerVenueInformation extends StatefulWidget {
@@ -22,6 +31,7 @@ class ManagerVenueInformation extends StatefulWidget {
 class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
   late Future<Map<String, dynamic>> venueDetailsFuture;
   late int spotId;
+  late Map<String, dynamic> updatedData;
 
   @override
   void initState() {
@@ -31,18 +41,38 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
 
   Future<Map<String, dynamic>> _getSpotIdAndFetchDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    spotId = prefs.getInt('spotId') ?? 0; // Default to 0 if spotId not found
+    spotId = prefs.getInt('spotId') ?? 0;
     return fetchTourSpotDetails(spotId);
+  }
+
+  void _saveChanges(String key, String newValue) {
+    setState(() {
+      updatedData[key] = newValue;
+    });
+    _updateTourSpot();
+  }
+
+  Future<void> _updateTourSpot() async {
+    final response = await postUpdateTourSpot(spotId, updatedData);
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Updated successfully')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error updating data')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Venue information"),
+        title: const Text("Venue Information"),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: venueDetailsFuture, // Fetching venue details
+        future: venueDetailsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -52,7 +82,6 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
             return const Center(child: Text('No data found.'));
           }
 
-          // Extracting data from the snapshot
           final data = snapshot.data!;
           final venueName = data['tourspot_name'] ?? 'N/A';
           final managerName = data['name'] ?? 'N/A';
@@ -69,6 +98,19 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
           final indoorPoolAvailable = data['pool'] == true ? 'Yes' : 'No';
           final otherServices = data['other_services'] ?? 'N/A';
 
+          updatedData = {
+            'tourspot_name': venueName,
+            'opening_time': openTime,
+            'closing_time': closeTime,
+            'description': description,
+            'entry_fee': entranceFee,
+            'wifi': wifiAvailable,
+            'parking': parkingAvailable,
+            'food': foodAvailable,
+            'pool': indoorPoolAvailable,
+            'other_services': otherServices,
+          };
+
           return SingleChildScrollView(
             child: Container(
               padding: Theme.of(context).largemainPadding,
@@ -76,29 +118,37 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Venue Name",
                     text: venueName,
+                    onTextSaved: (newText) =>
+                        _saveChanges('tourspot_name', newText),
                   ),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Manager Name",
                     text: managerName,
+                    onTextSaved: (newText) => _saveChanges('name', newText),
                   ),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Official Email",
                     text: email,
+                    onTextSaved: (newText) => _saveChanges('email', newText),
                   ),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Address",
                     text: address,
+                    onTextSaved: (newText) => _saveChanges('address', newText),
                   ),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Phone Number",
                     text: phoneNumber,
+                    onTextSaved: (newText) => _saveChanges('contact', newText),
                   ),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Entrance Fee",
                     text: entranceFee,
+                    onTextSaved: (newText) =>
+                        _saveChanges('entry_fee', newText),
                   ),
                   const SizedBox(height: 10),
                   const Text(
@@ -117,9 +167,11 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Description",
                     text: description,
+                    onTextSaved: (newText) =>
+                        _saveChanges('description', newText),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -139,9 +191,11 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  InformationCardWithoutIcon(
+                  InformationCard(
                     heading: "Other Services",
                     text: otherServices,
+                    onTextSaved: (newText) =>
+                        _saveChanges('other_services', newText),
                   ),
                 ],
               ),
@@ -197,15 +251,7 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
             Icons.edit,
             size: 20.0,
             color: Colors.black,
-          )
-          // const Text(
-          //   "Edit",
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.w900,
-          //     fontSize: 10,
-          //     letterSpacing: 1,
-          //   ),
-          // ),
+          ),
         ],
       ),
     );
@@ -257,15 +303,7 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
             Icons.edit,
             size: 20.0,
             color: Colors.black,
-          )
-          // const Text(
-          //   "Edit",
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.w900,
-          //     fontSize: 12,
-          //     letterSpacing: 1,
-          //   ),
-          // ),
+          ),
         ],
       ),
     );
