@@ -103,12 +103,12 @@ class _BookingManagerState extends State<BookingManager> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               titleText("Customer Information:"),
-              infoText("Name", bookings[i]["name"]),
-              infoText("Mobile", bookings[i]["contact"]),
+              infoText("Name", bookings[i]["user"]["name"].toString()),
+              infoText("Mobile", bookings[i]["user"]["contact"].toString()),
               titleText("Booking Information:"),
-              infoText("Date", bookings[i]["date"]),
-              infoText("Reserve for", bookings[i]["number_of_people"]),
-              infoText("Subtotal", bookings[i]["subtotal"]),
+              infoText("Date", bookings[i]["date"].toString()),
+              infoText("Reserve for", bookings[i]["number_of_people"].toString()),
+              infoText("Subtotal", bookings[i]["subtotal"].toString()),
 
               // Button
               Row(
@@ -136,7 +136,19 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  ApiSettings viewAPI = ApiSettings(endPoint: 'tourspot/view-pending-booking');
+  String tourspotId = "1";
+  late ApiSettings viewAPI;
+
+  late Future<void> _bookingFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    viewAPI = ApiSettings(
+        endPoint: 'tourspot/view-pending-booking/${tourspotId}');
+    _bookingFuture = getBooking();
+  }
+
   ApiSettings rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
   ApiSettings acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
 
@@ -151,8 +163,8 @@ class _BookingManagerState extends State<BookingManager> {
         setState(() {
           bookings =
               bookingsData.map((item) => item as Map<String, dynamic>).toList();
-          ;
         });
+        // print(bookings[1]['user']);
       } else {
         // Handle the error
         throw Exception('Failed to load Bookings');
@@ -165,17 +177,31 @@ class _BookingManagerState extends State<BookingManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Booking Management"),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [for (int i = 0; i < 3; i++) BookingCard(i: i)],
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title: const Text("Booking Management"),
+      ),
+      body: FutureBuilder(
+        future: _bookingFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (int i = 0; i < bookings.length; i++) BookingCard(i: i)
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
