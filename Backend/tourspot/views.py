@@ -131,7 +131,15 @@ def view_booking(request, user_id):
 def view_pending_booking(request, tourspot_id):
     if request.method == 'GET':
         today = date.today()
-        bookings = Booking.objects.filter(tourspot_id=tourspot_id, date__gt=today, status__in=["pending"])
+        bookings = Booking.objects.filter(tourspot_id=tourspot_id, date__gte=today, status__in=["pending"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def view_booking_manager(request, tourspot_id):
+    if request.method == 'GET':
+        bookings = Booking.objects.filter(tourspot_id=tourspot_id, status__in=["accepted"])
         booking_serializer = BookingSerializer(bookings, many=True)
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
