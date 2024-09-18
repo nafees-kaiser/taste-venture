@@ -10,6 +10,7 @@ from common.models import OTPAuthentication
 from common.utils import send_otp
 
 from restaurant.models import Restaurant
+from tourspot.models import Tourspot
 
 
 @api_view(['POST'])
@@ -36,19 +37,34 @@ def login(request):
         customer = AppUser.objects.get(email=email)
         # user = Users.objects.get(user=customer)
         # print(type(user))
+        # print(customer)
         if customer is not None and check_password(password, customer.password):
             # serializer = UserSerializer(customer)
             serializer = AppUserSerializer(customer)
+            manager_id = serializer.data.get('id')
 
             refresh = RefreshToken.for_user(customer)
             token = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
             }
+
+            spot_id = None
+            if serializer.data.get('user_type') == 'tour_manager':
+                tourspot = Tourspot.objects.get(user_id=manager_id)
+                spot_id = tourspot.id
+                print(spot_id)
+
+            elif serializer.data.get('user_type') == 'res_manager':
+                restaurant = Restaurant.objects.get(user_id=manager_id)
+                spot_id = restaurant.id
+
             response_data = {
                 'user': serializer.data,
                 'tokens': token,
+                'spot_id': spot_id,
             }
+
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
