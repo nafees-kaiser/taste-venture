@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from common.serializers import AppUserSerializer
 from common.utils import *
+from usersapp.serializers import UserSerializer
 from .models import Tourspot, Booking, Review
 
 
@@ -31,12 +32,16 @@ class TourspotSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, allow_null=True)
+    tourspot = TourspotSerializer(read_only=True, allow_null=True)
     class Meta:
         model = Booking
         fields = '__all__'
 
 
 class TourSpotReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Review
         fields = '__all__'
@@ -44,10 +49,14 @@ class TourSpotReviewSerializer(serializers.ModelSerializer):
 
 class DayTourSpotAndAvgRating(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
+    address = serializers.SerializerMethodField()
 
     class Meta:
         model = Tourspot
-        fields = ['id', 'tourspot_name', 'average_rating']
+        fields = ['id', 'tourspot_name', 'address', 'average_rating']
 
     def get_average_rating(self, obj):
         return format(obj.average_rating, '.2f')
+
+    def get_address(self, obj):
+        return obj.user.address if obj.user and hasattr(obj.user, 'address') else None

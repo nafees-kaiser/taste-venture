@@ -1,6 +1,9 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:intl/intl.dart';
+import 'package:frontend/models/reservation.dart';
+import 'package:flutter/services.dart';
 
 class CustomerReservation extends StatefulWidget {
   const CustomerReservation({super.key});
@@ -10,10 +13,36 @@ class CustomerReservation extends StatefulWidget {
 }
 
 class _CustomerReservationState extends State<CustomerReservation> {
+  // API integration
+  ApiSettings api = ApiSettings(endPoint: 'users/login');
+  Future<void> addReservation() async {
+    Reservation reservation = Reservation(
+      userId: 1000,
+      restaurantId: 7,
+      date: dateController.text,
+      startTime: _selectedTime, // TODO: Convert to time format
+      endTime: _selectedTime, // TODO: Convert to time format
+      reservationType: 1,
+      numberOfPeople: int.parse(numberOfPeopleController.text),
+    );
+
+    try {
+      final response = await api.postMethod(
+        reservation.toJson(),
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   // variables
   TextEditingController dateController = TextEditingController();
+  TextEditingController durationController = TextEditingController();
+  TextEditingController numberOfPeopleController = TextEditingController();
   String? _selectedOption = "Select option";
   String? _selectedTime = "Select time";
+  bool _showCustomTextBox = false;
+
   final List<String> _timeOptions = [
     '9:00 AM',
     '10:00 AM',
@@ -106,6 +135,20 @@ class _CustomerReservationState extends State<CustomerReservation> {
               },
             ),
 
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: titleText("Duration:"),
+            ),
+            TextField(
+              controller: durationController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'How long do you wish to stay?',
+              ),
+            ),
+
             // Reserve checkbox
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -118,6 +161,7 @@ class _CustomerReservationState extends State<CustomerReservation> {
                 onChanged: (String? value) {
                   setState(() {
                     _selectedOption = value;
+                    _showCustomTextBox = false;
                   });
                 },
               ),
@@ -138,6 +182,7 @@ class _CustomerReservationState extends State<CustomerReservation> {
                   onChanged: (String? value) {
                     setState(() {
                       _selectedOption = value;
+                      _showCustomTextBox = true;
                     });
                   },
                 ),
@@ -150,6 +195,20 @@ class _CustomerReservationState extends State<CustomerReservation> {
                 ),
               ],
             ),
+
+            if (_showCustomTextBox)
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: TextField(
+                  controller: numberOfPeopleController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the number of people',
+                  ),
+                ),
+              ),
 
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 20.0),

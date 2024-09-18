@@ -34,7 +34,10 @@ import 'package:frontend/screens/booking.dart';
 import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/screens/tour_spot_view.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/widgets/manager_menu_informations.dart';
 import 'dart:io';
+
+import 'package:frontend/widgets/manager_venue_information.dart';
 
 Future<String> getWifiIPv4Address() async {
   try {
@@ -76,15 +79,26 @@ Future<void> main() async {
       '/customer-homepage': (context) => const CustomerHomepage(),
       '/add-review': (context) => const AddReview(),
       '/profile': (context) => const Profile(),
-      '/edit-information': (context) => const ManagerMenuBottomNavigation(),
+      '/manager/tour-spot/venue-information': (context) =>
+          const ManagerVenueInformation(),
       '/registration/customer': (context) => const RegistrationCustomer(),
       '/login': (context) => Login(),
       '/restaurant/information': (context) => RestaurantInfo(),
+      '/manager/restaurant/menu-information': (context) =>
+          ManagerMenuInformations(),
       '/favorite': (context) => Favorite(),
       '/add-restaurant': (context) => RegistrationVenueManager(),
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
-      '/review': (context) => Reviews(),
+      '/review': (context) {
+        final args = ModalRoute.of(context)!.settings.arguments as List;
+        final int id = args[0] as int;
+        final bool is_restaurant = args[1] as bool;
+        return Reviews(
+          id: id,
+          is_restaurant: is_restaurant,
+        );
+      },
       '/preference': (context) => CustomerPreferencePage(),
       '/booking': (context) => Booking(fee: '0', tourspotId: 1),
       '/restaurant-view': (context) => Restaurant(),

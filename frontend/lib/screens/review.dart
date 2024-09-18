@@ -1,11 +1,23 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, use_key_in_widget_constructors, depend_on_referenced_packages
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Reviews extends StatelessWidget {
+class Reviews extends StatefulWidget {
+  final int id;
+  final bool is_restaurant;
+  const Reviews({required this.id, required this.is_restaurant, super.key});
+  @override
+  State<Reviews> createState() => _ReviewsState();
+}
+
+class _ReviewsState extends State<Reviews> {
   final List<Map<String, dynamic>> reviews = [
     {
       'user': 'Shahabuddin Akhon',
@@ -38,46 +50,39 @@ class Reviews extends StatelessWidget {
     // Add more reviews as needed
   ];
 
+  Future<Map<String, dynamic>> getData() async {
+    String url;
+    if (widget.is_restaurant) {
+      url = 'restaurant/get-restaurant-reviews';
+    } else {
+      url = 'tourspot/get-daytour-review';
+    }
+    ApiSettings api = ApiSettings(endPoint: '$url/${widget.id}');
+    try {
+      final response = await api.getMethod();
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        // print(responseData);
+        return responseData;
+      }
+      return {};
+    } catch (e) {
+      return {};
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Reviews & Ratings"),
-      // ),
+      appBar: !widget.is_restaurant
+          ? AppBar(
+              title: const Text("Reviews & Ratings"),
+            )
+          : null,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(
-            //   // color: Color(0xFFFF4778),
-            //   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       // Padding(
-            //       // padding: const EdgeInsets.only(left: 3.0),
-            //       SvgPicture.asset(
-            //         'assets/vectors/vector_3_x2.svg',
-            //         width: 20,
-            //         height: 20,
-            //       ),
-            //       // ),
-            //       SizedBox(width: 12),
-            //       Expanded(
-            //         child: Text(
-            //           'Ratings and Reviews',
-            //           textAlign: TextAlign.center,
-            //           style: GoogleFonts.getFont('Inter',
-            //               fontWeight: FontWeight.w500,
-            //               fontSize: 25,
-            //               letterSpacing: -0.2,
-            //               color: Colors.black),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            SizedBox(height: 18),
             Padding(
               padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
               child: Text(
@@ -91,84 +96,125 @@ class Reviews extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(8, 0, 9, 19),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFFF8F8F8),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(8.6, 12, 8, 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              buildRatingRow(5, 0.9),
-                              buildRatingRow(4, 0.7),
-                              buildRatingRow(3, 0.5),
-                              buildRatingRow(2, 0.2),
-                              buildRatingRow(1, 0.1),
-                            ],
-                          ),
-                        ),
+            FutureBuilder<Map<String, dynamic>>(
+              future: getData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("Error loading data"));
+                } else if (snapshot.hasData) {
+                  // Extract data from snapshot
+                  final data = snapshot.data!;
+                  final averageRating = data['avg_rating'];
+                  final totalReviews = data['total_reviews'];
+                  final rating = data['ratings'];
+                  int totalReviewsnumber =
+                      rating.values.reduce((a, b) => a + b);
+                  double normalizeRating(int count, int total) {
+                    return total == 0 ? 0 : count / total;
+                  }
+
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(8, 0, 9, 19),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8F8F8),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: Text(
-                              '4.0',
-                              style: GoogleFonts.getFont(
-                                'Inter',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 40,
-                                letterSpacing: -0.4,
-                                color: Color(0xFF333333),
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(8.6, 12, 8, 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    buildRatingRow(
+                                        5,
+                                        normalizeRating(rating['5'] ?? 0,
+                                            totalReviewsnumber)),
+                                    buildRatingRow(
+                                        4,
+                                        normalizeRating(rating['4'] ?? 0,
+                                            totalReviewsnumber)),
+                                    buildRatingRow(
+                                        3,
+                                        normalizeRating(rating['3'] ?? 0,
+                                            totalReviewsnumber)),
+                                    buildRatingRow(
+                                        2,
+                                        normalizeRating(rating['2'] ?? 0,
+                                            totalReviewsnumber)),
+                                    buildRatingRow(
+                                        1,
+                                        normalizeRating(rating['1'] ?? 0,
+                                            totalReviewsnumber)),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(5, (index) {
-                                return Icon(
-                                  Icons.star,
-                                  color: index < 4
-                                      ? Color.fromARGB(255, 161, 159, 47)
-                                      : Color(0xFFC4C4C4),
-                                  size: 16,
-                                );
-                              }),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                  child: Text(
+                                    averageRating?.toStringAsFixed(1) ?? '0',
+                                    style: GoogleFonts.getFont(
+                                      'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 40,
+                                      letterSpacing: -0.4,
+                                      color: Color(0xFF333333),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(5, (index) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: index <
+                                                (averageRating?.round() ?? 0)
+                                            ? Color.fromARGB(255, 161, 159, 47)
+                                            : Color(0xFFC4C4C4),
+                                        size: 16,
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                Text(
+                                  '${totalReviews ?? '0'} Reviews',
+                                  style: GoogleFonts.getFont(
+                                    'Inter',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    letterSpacing: -0.1,
+                                    color: Color(0xFF333333),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(
-                            '52 Reviews',
-                            style: GoogleFonts.getFont(
-                              'Inter',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              letterSpacing: -0.1,
-                              color: Color(0xFF333333),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                  );
+                }
+                return Container();
+              },
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
@@ -183,81 +229,92 @@ class Reviews extends StatelessWidget {
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: reviews.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: PRIMARY_COLOR),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/vectors/vector_34_x2.svg',
-                            width: 16,
-                            height: 16,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            reviews[index]['user'],
-                            style: GoogleFonts.getFont(
-                              'Inter',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Color(0xFF000000),
+            FutureBuilder<Map<String, dynamic>>(
+              future: getData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error fetching data'));
+                } else if (snapshot.hasData) {
+                  final data = snapshot.data!;
+                  final reviews = data['reviews'];
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: reviews.length,
+                    itemBuilder: (context, index) {
+                      final review = reviews[index];
+                      return Container(
+                        margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.person, size: 16),
+                                SizedBox(width: 8),
+                                Text(
+                                  review['user']['name'],
+                                  style: GoogleFonts.getFont(
+                                    'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Color(0xFF000000),
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  review['date'].toString().split('T')[0],
+                                  style: GoogleFonts.getFont(
+                                    'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    color: Color(0xFF000000),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Spacer(),
-                          Text(
-                            reviews[index]['date'],
-                            style: GoogleFonts.getFont(
-                              'Inter',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              color: Color(0xFF000000),
+                            SizedBox(height: 8),
+                            Row(
+                              children: List.generate(5, (starIndex) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Icon(
+                                    starIndex < review['rating']
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: Color.fromARGB(255, 161, 159, 47),
+                                    size: 16,
+                                  ),
+                                );
+                              }),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: List.generate(
-                          reviews[index]['ratingStars'].length,
-                          (starIndex) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: SvgPicture.asset(
-                                'assets/vectors/star_${reviews[index]['ratingStars'][starIndex]}_x2.svg',
-                                width: 16,
-                                height: 16,
+                            SizedBox(height: 8),
+                            Text(
+                              review['review'],
+                              textAlign: TextAlign.justify,
+                              style: GoogleFonts.getFont(
+                                'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                height: 1.4,
+                                color: Color(0xFF000000),
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        reviews[index]['reviewText'],
-                        textAlign: TextAlign.justify,
-                        style: GoogleFonts.getFont(
-                          'Inter',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          height: 1.4,
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                      );
+                    },
+                  );
+                }
+                return Center(child: Text('No reviews found'));
               },
             ),
           ],

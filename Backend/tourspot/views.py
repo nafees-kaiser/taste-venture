@@ -75,7 +75,7 @@ def view_tourspot_detail(request, id):
 @csrf_exempt
 def add_booking(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
+        user = Users.objects.get(user_id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
         booking = Booking.objects.create(user=user, date=request.data['date'], subtotal=request.data['subtotal'],
                                          number_of_people=request.data['number_of_people'], tourspot=tourspot,
@@ -83,7 +83,7 @@ def add_booking(request):
         serializer = BookingSerializer(booking)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
-        return Response("Error occured during booking", status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     serializer = BookingSerializer(data=request.data)
     if serializer.is_valid():
@@ -96,9 +96,7 @@ def add_booking(request):
 @csrf_exempt
 def accept_booking(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
-        tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(id=request.data['booking_id'])
         setattr(booking, 'status', "accepted")
         setattr(booking, 'message', request.data['message'])
         booking.save()
@@ -111,9 +109,7 @@ def accept_booking(request):
 @csrf_exempt
 def reject_booking(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
-        tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(id=request.data['booking_id'])
         setattr(booking, 'status', "rejected")
         setattr(booking, 'message', request.data['message'])
         booking.save()
@@ -131,6 +127,22 @@ def view_booking(request, user_id):
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def view_pending_booking(request, tourspot_id):
+    if request.method == 'GET':
+        today = date.today()
+        bookings = Booking.objects.filter(tourspot_id=tourspot_id, date__gte=today, status__in=["pending"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def view_booking_manager(request, tourspot_id):
+    if request.method == 'GET':
+        bookings = Booking.objects.filter(tourspot_id=tourspot_id, status__in=["accepted"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def add_dayTour_review(request):
