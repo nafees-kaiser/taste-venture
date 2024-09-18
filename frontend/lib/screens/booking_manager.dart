@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 
 class BookingManager extends StatefulWidget {
@@ -11,6 +13,7 @@ class BookingManager extends StatefulWidget {
 class _BookingManagerState extends State<BookingManager> {
   // variables
   TextEditingController messageController = TextEditingController();
+  List<Map<String, dynamic>> bookings = [];
 
   // methods
   Text infoText(String heading, String text) {
@@ -81,7 +84,7 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  Container BookingCard() {
+  Container BookingCard({required int i}) {
     return Container(
       width: 340,
       height: 260,
@@ -100,12 +103,12 @@ class _BookingManagerState extends State<BookingManager> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               titleText("Customer Information:"),
-              infoText("Name", "Rafsan"),
-              infoText("Mobile", "01545734368"),
+              infoText("Name", bookings[i]["name"]),
+              infoText("Mobile", bookings[i]["contact"]),
               titleText("Booking Information:"),
-              infoText("Date", "12 JAN, 2024"),
-              infoText("Reserve for", "2 person"),
-              infoText("Subtotal", "1400"),
+              infoText("Date", bookings[i]["date"]),
+              infoText("Reserve for", bookings[i]["number_of_people"]),
+              infoText("Subtotal", bookings[i]["subtotal"]),
 
               // Button
               Row(
@@ -133,6 +136,32 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
+  ApiSettings viewAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
+  ApiSettings rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
+  ApiSettings acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
+
+  Future<void> getBooking() async {
+    final response = await viewAPI.getMethod();
+    try {
+      if (response.statusCode == 200) {
+        //List<dynamic> data = jsonDecode(response.body);
+        dynamic data = jsonDecode(response.body);
+        List<dynamic> bookingsData = data;
+        // print(data);
+        setState(() {
+          bookings =
+              bookingsData.map((item) => item as Map<String, dynamic>).toList();
+          ;
+        });
+      } else {
+        // Handle the error
+        throw Exception('Failed to load Bookings');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +173,7 @@ class _BookingManagerState extends State<BookingManager> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [for (int i = 0; i < 3; i++) BookingCard()],
+              children: [for (int i = 0; i < 3; i++) BookingCard(i: i)],
             ),
           ),
         ));
