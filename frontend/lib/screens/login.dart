@@ -79,10 +79,11 @@ class _LoginState extends State<Login> {
           await prefs.setString('userEmail', email);
           await prefs.setString('userToken', token);
           await prefs.setString('userType', userType);
+          await prefs.setString('userId', user['id'].toString());
 
           successToast("Login Successfull");
 
-          if(userType == "customer"){
+          if (userType == "customer") {
             Navigator.pushNamed(context, '/customer-homepage');
           } else {
             Navigator.pushNamed(
@@ -91,8 +92,6 @@ class _LoginState extends State<Login> {
               arguments: {'userType': userType}
             );
           }
-
-          
         } else if (response.statusCode == 400) {
           // Invalid credentials
           setState(() {

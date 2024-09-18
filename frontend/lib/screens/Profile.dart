@@ -1,8 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frontend/models/customer_response.dart';
-import 'package:frontend/models/user_email.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/additional_information.dart';
@@ -19,29 +18,42 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int clickedItem = 1;
-  late Future<Customer_response?> user;
-  ApiSettings get_user_api = ApiSettings(endPoint: 'users/get-user');
+  Map<String, dynamic>? userData;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    user = getUserInfo();
+    getData('users/get-user');
+    startAutoRefresh();
   }
 
-  Future<Customer_response?> getUserInfo() async {
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void startAutoRefresh() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      getData('users/get-user');
+    });
+  }
+
+  Future<void> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('userEmail');
-    if (email == null) {
-      return null;
-    }
-    UserEmail data = UserEmail(email: email);
-    final response = await get_user_api.postMethod(data.toJson());
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      print(jsonResponse);
-      return Customer_response.fromJson(jsonResponse);
-    } else {
-      return null;
+    String? userId = prefs.getString('userId');
+    ApiSettings api = ApiSettings(endPoint: '$url/$userId');
+    try {
+      final response = await api.getMethod();
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        setState(() {
+          userData = responseData;
+        });
+      }
+    } catch (e) {
+      print("Error fetching data: $e");
     }
   }
 
@@ -50,9 +62,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(217, 255, 199, 173),
       appBar: AppBar(
-        title: const Text(
-          "Profile Information",
-        ),
+        title: const Text("Profile Information"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -78,8 +88,8 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     children: [
                       const SizedBox(height: 80), // Add some space at the top
-                      const Text(
-                        "Shahabuddin Akhon",
+                      Text(
+                        userData?['name'] ?? "Unknown Name",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w600,
@@ -87,81 +97,83 @@ class _ProfileState extends State<Profile> {
                           height: 2,
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    clickedItem = 1;
-                                  });
-                                },
-                                child: Text(
-                                  "Personal \nInformation",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: clickedItem == 1
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 50,
-                                color: Colors.black,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    clickedItem = 2;
-                                  });
-                                },
-                                child: Text(
-                                  "Additional \nInformation",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: clickedItem == 2
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 50,
-                                color: Colors.black,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    clickedItem = 3;
-                                  });
-                                },
-                                child: Text(
-                                  "Preference",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: clickedItem == 3
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      // Container(
+                      //   width: double.infinity,
+                      //   height: 50,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         GestureDetector(
+                      //           onTap: () {
+                      //             setState(() {
+                      //               clickedItem = 1;
+                      //             });
+                      //           },
+                      //           child: Text(
+                      //             "Personal \nInformation",
+                      //             style: TextStyle(
+                      //               fontSize: 14,
+                      //               fontWeight: clickedItem == 1
+                      //                   ? FontWeight.bold
+                      //                   : FontWeight.normal,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           width: 1,
+                      //           height: 50,
+                      //           color: Colors.black,
+                      //         ),
+                      //         GestureDetector(
+                      //           onTap: () {
+                      //             setState(() {
+                      //               clickedItem = 2;
+                      //             });
+                      //           },
+                      //           child: Text(
+                      //             "Additional \nInformation",
+                      //             style: TextStyle(
+                      //               fontSize: 14,
+                      //               fontWeight: clickedItem == 2
+                      //                   ? FontWeight.bold
+                      //                   : FontWeight.normal,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           width: 1,
+                      //           height: 50,
+                      //           color: Colors.black,
+                      //         ),
+                      //         GestureDetector(
+                      //           onTap: () {
+                      //             setState(() {
+                      //               clickedItem = 3;
+                      //             });
+                      //           },
+                      //           child: Text(
+                      //             "Preference",
+                      //             style: TextStyle(
+                      //               fontSize: 14,
+                      //               fontWeight: clickedItem == 3
+                      //                   ? FontWeight.bold
+                      //                   : FontWeight.normal,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
                       if (clickedItem == 1)
-                        const PersonalInformation()
+                        PersonalInformation(
+                          userData: userData,
+                        )
                       else if (clickedItem == 2)
                         const AdditionalInformation()
                       else if (clickedItem == 3)
@@ -186,12 +198,11 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(5.0),
                       child: ClipOval(
                         child: Image.asset(
-                          "assets/profile.png",
-                          fit: BoxFit
-                              .cover, // Ensure the image covers the container
+                          userData?['image'] ?? "assets/profile.png",
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
