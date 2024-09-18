@@ -89,7 +89,15 @@ Future<void> main() async {
       '/add-restaurant': (context) => RegistrationVenueManager(),
       '/criteria': (context) => ManagerCriteria(),
       '/criteria1': (context) => ManagerCriteria1(),
-      '/review': (context) => Reviews(),
+      '/review': (context) {
+        final args = ModalRoute.of(context)!.settings.arguments as List;
+        final int id = args[0] as int;
+        final bool is_restaurant = args[1] as bool;
+        return Reviews(
+          id: id,
+          is_restaurant: is_restaurant,
+        );
+      },
       '/preference': (context) => CustomerPreferencePage(),
       '/booking': (context) => Booking(fee: '0', tourspotId: 1),
       '/restaurant-view': (context) => Restaurant(),

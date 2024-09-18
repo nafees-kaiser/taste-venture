@@ -35,10 +35,8 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
     ApiSettings api = ApiSettings(endPoint: '$url/$userId');
     try {
       final response = await api.getMethod();
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData);
         return responseData;
       }
       return {};

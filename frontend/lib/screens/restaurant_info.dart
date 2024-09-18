@@ -27,14 +27,17 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
     super.initState();
     // setState(() {
     // print(widget.restaurant?["menu_item"] is List<dynamic>);
-    menu = menuGroupByCategory(List<Map<String, dynamic>>.from(widget.restaurant?["menu_item"]));
+    menu = menuGroupByCategory(
+        List<Map<String, dynamic>>.from(widget.restaurant?["menu_item"]));
     // });
-
 
     _pages = <Widget>[
       RestaurantDetail(data: widget.restaurant!),
       RestaurantMenuView(data: menu),
-      Reviews(),
+      Reviews(
+        id: widget.restaurant?['id'],
+        is_restaurant: true,
+      ),
     ];
 
     setState(() {
@@ -56,9 +59,9 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
         title: const Text("Restaurant Information"),
       ),
       // body: SingleChildScrollView(child: RestaurantDetail()),
-      body: isInitialized ?      
-      _pages.elementAt(page) : 
-      const Center(child: CircularProgressIndicator()),
+      body: isInitialized
+          ? _pages.elementAt(page)
+          : const Center(child: CircularProgressIndicator()),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
