@@ -32,6 +32,8 @@ class TourspotSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, allow_null=True)
+    tourspot = TourspotSerializer(read_only=True, allow_null=True)
     class Meta:
         model = Booking
         fields = '__all__'

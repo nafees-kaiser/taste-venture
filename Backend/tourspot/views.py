@@ -98,7 +98,10 @@ def accept_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(user=user,
+                                    tourspot=tourspot,
+                                    date=request.data['date'],
+                                    status="pending")
         setattr(booking, 'status', "accepted")
         setattr(booking, 'message', request.data['message'])
         booking.save()
@@ -113,7 +116,10 @@ def reject_booking(request):
     try:
         user = Users.objects.get(id=request.data['user_id'])
         tourspot = Tourspot.objects.get(id=request.data['tourspot_id'])
-        booking = Booking.objects.get(user=user, tourspot=tourspot, date=request.data['date'])
+        booking = Booking.objects.get(user=user,
+                                    tourspot=tourspot,
+                                    date=request.data['date'],
+                                    status="pending")
         setattr(booking, 'status', "rejected")
         setattr(booking, 'message', request.data['message'])
         booking.save()
@@ -131,6 +137,14 @@ def view_booking(request, user_id):
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def view_pending_booking(request, tourspot_id):
+    if request.method == 'GET':
+        today = date.today()
+        bookings = Booking.objects.filter(tourspot_id=tourspot_id, date__gt=today, status__in=["pending"])
+        booking_serializer = BookingSerializer(bookings, many=True)
+        return Response(booking_serializer.data, status=status.HTTP_200_OK)
+    return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def add_dayTour_review(request):

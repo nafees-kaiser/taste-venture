@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/bar_chart_component.dart';
+import 'package:frontend/widgets/manager_sidebar_tourspot.dart';
 import 'package:frontend/widgets/pie_chart_component.dart';
 import 'package:frontend/widgets/manager_service_information.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
@@ -13,8 +14,14 @@ class ManagerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final userType = args['userType'] as String;
+
     return Scaffold(
-      drawer: const ManagerSidebar(),
+      drawer: (userType == "res_manager")
+          ? const ManagerSidebar()
+          : const ManagerSidebarTourspot(),
       appBar: AppBar(
         title: Container(
           width: double.infinity,
@@ -53,10 +60,12 @@ class ManagerHome extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: Theme.of(context).largeHorizontalAndVerticalPadding,
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Wrap(
+              Text('Welcome, $userType!'),
+              const SizedBox(height: 20),
+              const Wrap(
                 spacing: 16,
                 runSpacing: 16,
                 children: [
@@ -86,48 +95,48 @@ class ManagerHome extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 "Customer analysis",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              AspectRatio(
+              const AspectRatio(
                 aspectRatio: 1.6,
                 child: BarChartComponent(),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 "Food analysis",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              PieChartComponent(),
-              SizedBox(height: 10),
-              Text(
+              const PieChartComponent(),
+              const SizedBox(height: 10),
+              const Text(
                 "Top Customers",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              TopCustomer(),
-              SizedBox(height: 10),
-              Text(
+              const TopCustomer(),
+              const SizedBox(height: 10),
+              const Text(
                 "Recent Reviews",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              ReviewOverview(),
-              UserIndivisualReview(),
-              UserIndivisualReview(),
-              UserIndivisualReview(),
+              const ReviewOverview(),
+              const UserIndivisualReview(),
+              const UserIndivisualReview(),
+              const UserIndivisualReview(),
             ],
           ),
         ),

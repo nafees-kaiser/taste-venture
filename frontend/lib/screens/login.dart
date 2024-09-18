@@ -86,7 +86,11 @@ class _LoginState extends State<Login> {
           if (userType == "customer") {
             Navigator.pushNamed(context, '/customer-homepage');
           } else {
-            Navigator.pushNamed(context, '/manager-home');
+            Navigator.pushNamed(
+              context, 
+              '/manager-home',
+              arguments: {'userType': userType}
+            );
           }
         } else if (response.statusCode == 400) {
           // Invalid credentials
