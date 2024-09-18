@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/booking.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingManager extends StatefulWidget {
   const BookingManager({super.key});
@@ -140,7 +141,6 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  String tourspotId = "1";
   late ApiSettings viewAPI, acceptAPI, rejectAPI;
 
   late Future<void> _bookingFuture;
@@ -148,8 +148,14 @@ class _BookingManagerState extends State<BookingManager> {
   @override
   void initState() {
     super.initState();
+    _bookingFuture = _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tourspotId = prefs.getInt('spotId').toString();
     viewAPI =
-        ApiSettings(endPoint: 'tourspot/view-pending-booking/${tourspotId}');
+        ApiSettings(endPoint: 'tourspot/view-pending-booking/$tourspotId');
     rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
     acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
     _bookingFuture = getBooking();
