@@ -73,7 +73,7 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                       ),
                       currentAccountPicture: CircleAvatar(
                         child: ClipOval(
-                          child: Image.asset('assets/profile.png'),
+                          child: Image.asset('assets/avatar.jpg'),
                         ),
                       ),
                       decoration: const BoxDecoration(
@@ -101,7 +101,8 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                         leading: const Icon(Icons.info),
                         title: const Text("Restaurant Information"),
                         onTap: () {
-                          Navigator.pushNamed(context, '/manager-profile');
+                          Navigator.pushNamed(context,
+                              '/manager/restaurant/restaurant-information');
                         },
                       ),
                     if (snapshot.data!['user_type'] == 'res_manager')
@@ -113,15 +114,25 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                               context, '/manager/restaurant/menu-information');
                         },
                       ),
-                    ListTile(
-                      leading: const Icon(Icons.book_online),
-                      title: const Text("Reservations"),
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, '/restaurant/reservation-list');
-                        // print('reservations tapped'),
-                      },
-                    ),
+                    if (snapshot.data!['user_type'] == 'res_manager')
+                      ListTile(
+                        leading: const Icon(Icons.book_online),
+                        title: const Text("Reservations"),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, '/restaurant/reservation-manager');
+                          // print('reservations tapped'),
+                        },
+                      )
+                    else
+                      ListTile(
+                        leading: const Icon(Icons.book_online),
+                        title: const Text("Booking"),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, '/tourspot/booking-list');
+                        },
+                      ),
                   ],
                 );
               } else {
