@@ -32,19 +32,20 @@ class ManagerSidebarTourspot extends StatelessWidget {
               color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.account_box),
-            title: const Text("Account settings"),
-            onTap: () {
-              // Navigator.pushNamed(context, '/profile');
-              Navigator.pushNamed(context, '/manager-profile');
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.account_box),
+          //   title: const Text("Account settings"),
+          //   onTap: () {
+          //     // Navigator.pushNamed(context, '/profile');
+          //     Navigator.pushNamed(context, '/manager-profile');
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text("Edit Information"),
             onTap: () {
-              Navigator.pushNamed(context, '/edit-information');
+              Navigator.pushNamed(
+                  context, '/manager/tour-spot/venue-information');
             },
           ),
           ListTile(

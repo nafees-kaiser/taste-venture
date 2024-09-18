@@ -85,11 +85,11 @@ def add_booking(request):
     except:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    serializer = BookingSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # serializer = BookingSerializer(data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -207,3 +207,23 @@ def get_top_dayTourSpot(request):
         return Response(serializer.data, status.HTTP_200_OK)
     else:
         return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def edit_tourspot(request, tourspot_id):
+    # print(request.data)
+    update_request_fields = request.data
+    try:
+        tourspot = Tourspot.objects.get(pk=tourspot_id)
+    except Tourspot.DoesNotExist:
+        return Response("Tourspot does not exist", status=status.HTTP_404_NOT_FOUND)
+
+    for key, value in update_request_fields.items():
+        if hasattr(tourspot, key):
+            setattr(tourspot, key, value)
+        else:
+            setattr(tourspot.user, key, value)
+
+        # restaurant
+    tourspot.user.save()
+    tourspot.save()
+    return Response("Updated successfully", status=status.HTTP_200_OK)
