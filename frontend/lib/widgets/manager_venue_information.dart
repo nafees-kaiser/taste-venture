@@ -55,6 +55,9 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
   Future<void> _updateTourSpot() async {
     final response = await postUpdateTourSpot(spotId, updatedData);
     if (response.statusCode == 200) {
+      setState(() {
+        venueDetailsFuture = _getSpotIdAndFetchDetails();
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Updated successfully')),
       );
@@ -207,105 +210,157 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
   }
 
   Widget _buildTimeCard(BuildContext context, String label, String time) {
-    return Container(
-      width: 170,
-      margin: Theme.of(context).subSectionDividerPadding,
-      padding: Theme.of(context).insideCardPadding,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(2, 3),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+    return GestureDetector(
+      onTap: () async {
+        String? newTime = await _showTextInputDialog(context, label, time);
+        if (newTime != null && newTime.isNotEmpty) {
+          _saveChanges(
+              label == "From" ? 'opening_time' : 'closing_time', newTime);
+        }
+      },
+      child: Container(
+        width: 170,
+        margin: Theme.of(context).subSectionDividerPadding,
+        padding: Theme.of(context).insideCardPadding,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(2, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-              Text(
-                time,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1,
+                Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Icon(
-            Icons.edit,
-            size: 20.0,
-            color: Colors.black,
-          ),
-        ],
+              ],
+            ),
+            const Icon(
+              Icons.edit,
+              size: 20.0,
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildFeatureCard(
       BuildContext context, String feature, String available) {
-    return Container(
-      width: 170,
-      margin: Theme.of(context).subSectionDividerPadding,
-      padding: Theme.of(context).insideCardPadding,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(2, 3),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                feature,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+    return GestureDetector(
+      onTap: () async {
+        String? newStatus =
+            await _showTextInputDialog(context, feature, available);
+        if (newStatus != null && newStatus.isNotEmpty) {
+          bool isAvailable = newStatus.toLowerCase() == 'yes';
+          _saveChanges(feature.toLowerCase(), isAvailable ? 'Yes' : 'No');
+          // _saveChanges(feature.toLowerCase(), newStatus == 'Yes');
+        }
+      },
+      child: Container(
+        width: 170,
+        margin: Theme.of(context).subSectionDividerPadding,
+        padding: Theme.of(context).insideCardPadding,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(2, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  feature,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-              Text(
-                available,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1,
+                Text(
+                  available,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Icon(
-            Icons.edit,
-            size: 20.0,
-            color: Colors.black,
-          ),
-        ],
+              ],
+            ),
+            const Icon(
+              Icons.edit,
+              size: 20.0,
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Future<String?> _showTextInputDialog(
+      BuildContext context, String title, String initialValue) {
+    TextEditingController controller =
+        TextEditingController(text: initialValue);
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit $title'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Enter new $title'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(controller.text);
+              },
+              child: const Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

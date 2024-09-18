@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
 class InformationCard extends StatefulWidget {
-  final String heading, text;
-  final Function(String) onTextSaved;
+  final String heading;
+  final String text;
+  final void Function(String newText)? onTextSaved;
 
   InformationCard({
     super.key,
     required this.heading,
     required this.text,
-    required this.onTextSaved,
+    this.onTextSaved,
   });
 
   @override
@@ -77,6 +78,9 @@ class _InformationCardState extends State<InformationCard> {
                             vertical: 5,
                           ),
                         ),
+                        onSubmitted: (newValue) {
+                          _handleSave();
+                        },
                       ),
                     )
                   : Text(
@@ -91,22 +95,31 @@ class _InformationCardState extends State<InformationCard> {
           ),
           GestureDetector(
             onTap: () {
-              setState(() {
-                if (isEditing) {
-                  // Save the edited text
-                  widget.onTextSaved(_controller.text);
-                }
-                isEditing = !isEditing;
-              });
+              if (isEditing) {
+                _handleSave();
+              } else {
+                setState(() {
+                  isEditing = !isEditing;
+                });
+              }
             },
             child: Icon(
               isEditing ? Icons.done : Icons.edit,
               size: 24.0,
               color: Colors.black,
             ),
-          )
+          ),
         ],
       ),
     );
+  }
+
+  void _handleSave() {
+    if (widget.onTextSaved != null) {
+      widget.onTextSaved!(_controller.text);
+    }
+    setState(() {
+      isEditing = !isEditing;
+    });
   }
 }
