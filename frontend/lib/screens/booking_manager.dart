@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/booking.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 
@@ -36,7 +37,7 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  sendMessage(bool isAccepted) {
+  sendMessage(int i, bool isAccepted) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -65,13 +66,15 @@ class _BookingManagerState extends State<BookingManager> {
                           fontWeight: FontWeight.w300,
                           color: Color.fromRGBO(149, 149, 149, 1))),
                 ),
-                // send button
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: SECONDARY_COLOR,
                         foregroundColor: Colors.white),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/reservation-list'),
+                    onPressed: () {
+                      postBooking(i, isAccepted, messageController.text);
+                      Navigator.of(context)
+                          .pop(); // This line closes the dialog
+                    },
                     child: const SizedBox(
                         height: 25,
                         width: 60,
@@ -107,7 +110,8 @@ class _BookingManagerState extends State<BookingManager> {
               infoText("Mobile", bookings[i]["user"]["contact"].toString()),
               titleText("Booking Information:"),
               infoText("Date", bookings[i]["date"].toString()),
-              infoText("Reserve for", bookings[i]["number_of_people"].toString()),
+              infoText(
+                  "Reserve for", bookings[i]["number_of_people"].toString()),
               infoText("Subtotal", bookings[i]["subtotal"].toString()),
 
               // Button
@@ -118,14 +122,14 @@ class _BookingManagerState extends State<BookingManager> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: SECONDARY_COLOR,
                           foregroundColor: Colors.white),
-                      onPressed: () => sendMessage(false),
+                      onPressed: () => sendMessage(i, false),
                       child: const Text("Reject")),
                   const SizedBox(width: 12),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: SECONDARY_COLOR,
                           foregroundColor: Colors.white),
-                      onPressed: () => sendMessage(true),
+                      onPressed: () => sendMessage(i, true),
                       child: const Text("Accept")),
                 ],
               )
@@ -137,20 +141,19 @@ class _BookingManagerState extends State<BookingManager> {
   }
 
   String tourspotId = "1";
-  late ApiSettings viewAPI;
+  late ApiSettings viewAPI, acceptAPI, rejectAPI;
 
   late Future<void> _bookingFuture;
 
   @override
   void initState() {
     super.initState();
-    viewAPI = ApiSettings(
-        endPoint: 'tourspot/view-pending-booking/${tourspotId}');
+    viewAPI =
+        ApiSettings(endPoint: 'tourspot/view-pending-booking/${tourspotId}');
+    rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
+    acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
     _bookingFuture = getBooking();
   }
-
-  ApiSettings rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
-  ApiSettings acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
 
   Future<void> getBooking() async {
     final response = await viewAPI.getMethod();
@@ -168,6 +171,32 @@ class _BookingManagerState extends State<BookingManager> {
       } else {
         // Handle the error
         throw Exception('Failed to load Bookings');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> postBooking(int i, bool accept, String message) async {
+    final response = await (accept ? acceptAPI : rejectAPI).postMethod(
+        jsonEncode(
+            {"booking_id": bookings[i]["id"].toString(), "message": message}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(accept
+                  ? 'Booking accepted successfully'
+                  : 'Booking rejected successfully')),
+        );
+        // Refresh the page
+        setState(() {
+          _bookingFuture = getBooking();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Booking processing failed')),
+        );
       }
     } catch (e) {
       throw Exception(e);
