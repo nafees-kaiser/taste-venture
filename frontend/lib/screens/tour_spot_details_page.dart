@@ -112,7 +112,8 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, '/review');
+                              Navigator.pushNamed(context, '/review',
+                                  arguments: [data['id'] ?? 1, false]);
                             },
                             child: Text(
                               'See all reviews',
