@@ -136,7 +136,7 @@ class _BookingManagerState extends State<BookingManager> {
     );
   }
 
-  ApiSettings viewAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
+  ApiSettings viewAPI = ApiSettings(endPoint: 'tourspot/view-pending-booking');
   ApiSettings rejectAPI = ApiSettings(endPoint: 'tourspot/reject-booking');
   ApiSettings acceptAPI = ApiSettings(endPoint: 'tourspot/accept-booking');
 
