@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/widgets/visiting_history_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,15 +10,17 @@ class VisitingHistoryPage extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
     ApiSettings api = ApiSettings(endPoint: 'restaurant/visiting-history/1');
+
     try {
       final response = await api.getMethod();
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
+        print(responseData);
         return responseData;
       }
-      return {};
+      return {'restaurant': [], 'tour-spot': []};
     } catch (e) {
-      return {};
+      return {'restaurant': [], 'tour-spot': []};
     }
   }
 
@@ -35,37 +37,87 @@ class VisitingHistoryPage extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!['tour-spot'].isEmpty) {
+          } else if (!snapshot.hasData ||
+              (snapshot.data!['restaurant'].isEmpty &&
+                  snapshot.data!['tour-spot'].isEmpty)) {
             return Center(child: Text('No visiting history available.'));
           }
 
+          final List<dynamic> restaurants = snapshot.data!['restaurant'];
           final List<dynamic> tourSpots = snapshot.data!['tour-spot'];
 
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-            child: ListView.builder(
-              itemCount: tourSpots.length,
-              itemBuilder: (context, index) {
-                final tourSpot = tourSpots[index];
-                final date = DateTime.parse(tourSpot['date']);
-                return GestureDetector(
-                  child: VisitingHistoryCard(
-                    spotImage: 'assets/NorthEnd_second.jpg', // Modify as needed
-                    spotName:
-                        'Tour Spot {tourSpot[tourspot]}', // Modify as needed
-                    spotLocation:
-                        'Location {tourSpot[tourspot]}', // Modify as needed
-                    visitingDate: date,
-                    id: tourSpot['id'],
-                    is_restautant: false,
+            child: ListView(
+              children: [
+                if (restaurants.isNotEmpty) ...[
+                  Text(
+                    'Visited Restaurants',
+                    // style: Theme.of(context).textTheme.headline6,
                   ),
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    '/restaurant/information',
-                    arguments: {'id': tourSpot['id']}, // Pass data as needed
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: restaurants.length,
+                    itemBuilder: (context, index) {
+                      final restaurant = restaurants[index];
+                      final date = DateTime.parse(restaurant['date']);
+                      return GestureDetector(
+                        child: VisitingHistoryCard(
+                          spotImage: 'assets/NorthEnd_second.jpg',
+                          spotName:
+                              '${restaurant['restaurant']['restaurant_name']}',
+                          spotLocation:
+                              '${restaurant['restaurant']['address']}',
+                          visitingDate: date,
+                          id: restaurant['restaurant']['id'],
+                          is_restautant: true,
+                        ),
+                        // onTap: () => Navigator.pushNamed(
+                        //   context,
+                        //   '/restaurant/information',
+                        //   arguments: {'id': restaurant['id']},
+                        // ),
+                      );
+                    },
                   ),
-                );
-              },
+                ],
+                if (tourSpots.isNotEmpty) ...[
+                  Text(
+                    'Visited Tour Spots',
+                    // style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: tourSpots.length,
+                    itemBuilder: (context, index) {
+                      final tourSpot = tourSpots[index];
+                      final date = DateTime.parse(tourSpot['date']);
+                      return GestureDetector(
+                        child: VisitingHistoryCard(
+                          spotImage: 'assets/NorthEnd_second.jpg',
+                          spotName: '${tourSpot['tourspot']['tourspot_name']}',
+                          spotLocation: '${tourSpot['tourspot']['address']}',
+                          visitingDate: date,
+                          id: tourSpot['tourspot']['id'],
+                          is_restautant: false,
+                        ),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TourSpotDetailsPage(
+                              id: tourSpot['tourspot']['id'],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ],
             ),
           );
         },
