@@ -56,7 +56,7 @@ class _BookingState extends State<Booking> {
 
   Future<void> check() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('userToken');
+    String? token = prefs.getString('token');
     if (_dateController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please Select a Date')),
@@ -65,7 +65,7 @@ class _BookingState extends State<Booking> {
     }
 
     if (token != null) {
-      // print(token);
+      print(token);
       // print(_tourspotId);
       final jwt = JWT.decode(token);
       final userId = jwt.payload['user_id'];
