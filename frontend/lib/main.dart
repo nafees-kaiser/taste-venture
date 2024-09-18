@@ -76,7 +76,16 @@ Future<void> main() async {
       '/manager-home': (context) => const ManagerHome(),
       // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
-      '/add-review': (context) => const AddReview(),
+      '/add-review': (context) {
+        final args = ModalRoute.of(context)!.settings.arguments as List;
+        final int id = args[0] as int;
+        final bool is_restaurant = args[1] as bool;
+
+        return AddReview(
+          id: id,
+          isRestaurant: is_restaurant,
+        );
+      },
       '/profile': (context) => const Profile(),
       '/manager/tour-spot/venue-information': (context) =>
           const ManagerVenueInformation(),
