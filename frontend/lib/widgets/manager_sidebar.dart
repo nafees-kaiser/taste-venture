@@ -89,7 +89,7 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                     //     Navigator.pushNamed(context, '/manager-profile');
                     //   },
                     // ),
-                    if (snapshot.data!['user_type'] != 'tour_manager')
+                    if (snapshot.data!['user_type'] == 'tour_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
                         title: const Text("Venue Information"),
