@@ -7,9 +7,17 @@ class VisitingHistoryCard extends StatelessWidget {
   final String spotName;
   final String spotLocation;
   final DateTime visitingDate;
+  final int id;
+  final bool is_restautant;
 
   const VisitingHistoryCard({
-    super.key, required this.spotImage, required this.spotName, required this.spotLocation, required this.visitingDate,
+    super.key,
+    required this.id,
+    required this.is_restautant,
+    required this.spotImage,
+    required this.spotName,
+    required this.spotLocation,
+    required this.visitingDate,
   });
 
   @override
@@ -31,7 +39,7 @@ class VisitingHistoryCard extends StatelessWidget {
                 color: SECONDARY_BACKGROUND,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child:Image(image: AssetImage(spotImage)),
+              child: Image(image: AssetImage(spotImage)),
             ),
             SizedBox(width: 13),
             Expanded(
@@ -86,7 +94,10 @@ class VisitingHistoryCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              onPressed: () => Navigator.pushNamed(context, '/add-review'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/add-review',
+                    arguments: [id, is_restautant]);
+              },
               child: Text('Add review'),
             ),
           ],

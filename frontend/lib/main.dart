@@ -12,6 +12,7 @@ import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/manager_profile.dart';
+import 'package:frontend/screens/manager_restaurant_information.dart';
 import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
@@ -76,10 +77,21 @@ Future<void> main() async {
       '/manager-home': (context) => const ManagerHome(),
       // '/': (context) => const ManagerHome(),
       '/customer-homepage': (context) => const CustomerHomepage(),
-      '/add-review': (context) => const AddReview(),
+      '/add-review': (context) {
+        final args = ModalRoute.of(context)!.settings.arguments as List;
+        final int id = args[0] as int;
+        final bool is_restaurant = args[1] as bool;
+
+        return AddReview(
+          id: id,
+          isRestaurant: is_restaurant,
+        );
+      },
       '/profile': (context) => const Profile(),
       '/manager/tour-spot/venue-information': (context) =>
           const ManagerVenueInformation(),
+      '/manager/restaurant/restaurant-information': (context) =>
+          const ManagerRestaurantInformation(),
       '/registration/customer': (context) => const RegistrationCustomer(),
       '/login': (context) => Login(),
       '/restaurant/information': (context) => RestaurantInfo(),
