@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 
 from common.models import OTPAuthentication, AppUser
+from common.serializers import AppUserSerializer
 from common.utils import send_otp
 from ml_models.model import get_dayTourSpot_sentiment
 from tourspot.models import Tourspot, Booking, Review
@@ -196,8 +197,12 @@ def get_dayTour_reviews(request, tourSpot_id):
 def get_top_dayTourSpot(request):
     review = Review.objects.all()
     dayTourSpot_ratings = review.values('tourSpot').annotate(avg_rating=Avg('rating'))
-    top_dayTourSpot = dayTourSpot_ratings.order_by('-avg_rating')[:3]
-    top_dayTourSpot_ids = [r['tourSpot'] for r in top_dayTourSpot]
+
+    if dayTourSpot_ratings.exists():
+        top_dayTourSpot = dayTourSpot_ratings.order_by('-avg_rating')[:3]
+        top_dayTourSpot_ids = [r['tourSpot'] for r in top_dayTourSpot]
+    else:
+        top_dayTourSpot_ids = Tourspot.objects.values_list('id', flat=True)[:3]
 
     dayTourSpots = Tourspot.objects.filter(id__in=top_dayTourSpot_ids).annotate(
         average_rating=Subquery(
@@ -284,13 +289,6 @@ def tourSpot_selling_info(request, tourSpot_id):
             date__lte=today
         )
 
-        start_of_last_week = today - datetime.timedelta(days=6)  # 7 days including today
-        last_week_bookings = Booking.objects.filter(
-            tourspot_id=tourSpot_id,
-            date__gte=start_of_last_week,
-            date__lte=today
-        )
-
         last_week_dates = [(today - datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
         daywise_customer_count = {date: 0 for date in last_week_dates}
         for booking in last_week_bookings:
@@ -313,3 +311,21 @@ def tourSpot_selling_info(request, tourSpot_id):
         return Response("Booking does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_top_customers(request, tourSpot_id):
+    try:
+        bookings = Booking.objects.filter(tourspot_id=tourSpot_id)
+        for user in bookings.values('user'):
+            customer = AppUser.objects.get(id=user['user'])
+            customerSerializer = AppUserSerializer(customer)
+            print(customerSerializer.data['name'])
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    except Booking.DoesNotExist:
+        return Response("Booking does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+

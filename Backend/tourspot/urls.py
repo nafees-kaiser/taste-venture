@@ -16,4 +16,5 @@ urlpatterns = [
     path('view-pending-booking/<int:tourspot_id>', views.view_pending_booking, name='view_pending_booking'),
     path('view-booking-manager/<int:tourspot_id>', views.view_booking_manager, name='view_booking_manager'),
     path('get-tourspot-selling-details/<int:tourSpot_id>', views.tourSpot_selling_info, name='tourSpot_selling_info'),
+    path('get-top-customers/<int:tourSpot_id>', views.get_top_customers, name='get_top_customers'),
 ]
