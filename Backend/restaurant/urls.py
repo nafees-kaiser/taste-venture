@@ -13,9 +13,10 @@ urlpatterns = [
     path('edit-restaurant/<int:restaurant_id>/', views.edit_restaurant, name='edit_restaurant'),
     path('get-restaurant-reviews/<int:restaurant_id>', views.get_restaurant_reviews),
     path('add-reservation', views.add_reservation),
-    path('get-top-restaurant', views.get_top_restaurants),
+    path('view-pending-reservation/<int:restaurant_id>', views.view_pending_reservation),
     path('accept-reservation', views.accept_reservation),
     path('reject-reservation', views.reject_reservation),
     path('visiting-history/<int:user_id>', views.visiting_history, name='visiting_history'),
     path('get-restaurant-reservation', views.get_reservation_details, name='get_reservation_details'),
+    path('get-top-restaurant', views.get_top_restaurants),
 ]
