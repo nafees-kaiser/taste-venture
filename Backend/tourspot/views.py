@@ -1,7 +1,9 @@
 import datetime
+from collections import defaultdict
 
 from django.contrib.auth.hashers import make_password
 from django.db.models import Avg, Count, Subquery, OuterRef
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -127,6 +129,7 @@ def view_booking(request, user_id):
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def view_pending_booking(request, tourspot_id):
     if request.method == 'GET':
@@ -136,6 +139,7 @@ def view_pending_booking(request, tourspot_id):
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def view_booking_manager(request, tourspot_id):
     if request.method == 'GET':
@@ -143,6 +147,7 @@ def view_booking_manager(request, tourspot_id):
         booking_serializer = BookingSerializer(bookings, many=True)
         return Response(booking_serializer.data, status=status.HTTP_200_OK)
     return Response(BookingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def add_dayTour_review(request):
@@ -208,6 +213,7 @@ def get_top_dayTourSpot(request):
     else:
         return Response("Error in backend", status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def edit_tourspot(request, tourspot_id):
     # print(request.data)
@@ -227,3 +233,83 @@ def edit_tourspot(request, tourspot_id):
     tourspot.user.save()
     tourspot.save()
     return Response("Updated successfully", status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def tourSpot_selling_info(request, tourSpot_id):
+    try:
+        today = timezone.now()
+        first_day_of_current_month = today.replace(day=1)
+        first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
+
+        current_month_bookings = Booking.objects.filter(
+            tourspot_id=tourSpot_id,
+            date__gte=first_day_of_current_month
+        )
+
+        previous_month_bookings = Booking.objects.filter(
+            tourspot_id=tourSpot_id,
+            date__gte=first_day_of_previous_month,
+            date__lte=last_day_of_previous_month
+        )
+
+        total_customers_current = set(booking.user.id for booking in current_month_bookings)
+        total_orders_current = current_month_bookings.count()
+        total_revenue_current = sum(booking.subtotal for booking in current_month_bookings)
+
+        total_customers_previous = set(booking.user.id for booking in previous_month_bookings)
+        total_orders_previous = previous_month_bookings.count()
+        total_revenue_previous = sum(booking.subtotal for booking in previous_month_bookings)
+
+        def calculate_percentage_change(current, previous):
+            if previous == 0:
+                return 100 if current > 0 else 0
+            return ((current - previous) / previous) * 100
+
+        customer_change_percentage = calculate_percentage_change(
+            len(total_customers_current), len(total_customers_previous)
+        )
+        order_change_percentage = calculate_percentage_change(
+            total_orders_current, total_orders_previous
+        )
+        revenue_change_percentage = calculate_percentage_change(
+            total_revenue_current, total_revenue_previous
+        )
+
+        start_of_last_week = today - datetime.timedelta(days=6)
+        last_week_bookings = Booking.objects.filter(
+            tourspot_id=tourSpot_id,
+            date__gte=start_of_last_week,
+            date__lte=today
+        )
+
+        start_of_last_week = today - datetime.timedelta(days=6)  # 7 days including today
+        last_week_bookings = Booking.objects.filter(
+            tourspot_id=tourSpot_id,
+            date__gte=start_of_last_week,
+            date__lte=today
+        )
+
+        last_week_dates = [(today - datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
+        daywise_customer_count = {date: 0 for date in last_week_dates}
+        for booking in last_week_bookings:
+            day = booking.date.strftime('%Y-%m-%d')
+            daywise_customer_count[day] += 1
+
+        response_data = {
+            'total_customers': len(total_customers_current),
+            'total_orders': total_orders_current,
+            'total_revenue': total_revenue_current,
+            'customer_change_percentage': customer_change_percentage,
+            'order_change_percentage': order_change_percentage,
+            'revenue_change_percentage': revenue_change_percentage,
+            'daywise_customer_count': daywise_customer_count
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    except Booking.DoesNotExist:
+        return Response("Booking does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
