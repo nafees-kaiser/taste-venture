@@ -82,13 +82,13 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.account_circle),
-                      title: const Text("Account settings"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/manager-profile');
-                      },
-                    ),
+                    // ListTile(
+                    //   leading: const Icon(Icons.account_circle),
+                    //   title: const Text("Account settings"),
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, '/manager-profile');
+                    //   },
+                    // ),
                     if (snapshot.data!['user_type'] != 'tour_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
@@ -98,7 +98,7 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                               context, '/manager/tour-spot/venue-information');
                         },
                       ),
-                    if (snapshot.data!['user_type'] != 'res_manager')
+                    if (snapshot.data!['user_type'] == 'res_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
                         title: const Text("Restaurant Information"),
@@ -106,7 +106,7 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                           Navigator.pushNamed(context, '/manager-profile');
                         },
                       ),
-                    if (snapshot.data!['user_type'] != 'res_manager')
+                    if (snapshot.data!['user_type'] == 'res_manager')
                       ListTile(
                         leading: const Icon(Icons.food_bank),
                         title: const Text("Menu Information"),

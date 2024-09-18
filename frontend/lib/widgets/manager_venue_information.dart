@@ -27,6 +27,10 @@ class ManagerVenueInformation extends StatelessWidget {
                 text: "Grand Tour venue",
               ),
               InformationCardWithoutIcon(
+                heading: "Manager Name",
+                text: "Tahsina Rahman",
+              ),
+              InformationCardWithoutIcon(
                 heading: "Official Email",
                 text: "grand.tour420@gmail.com",
               ),
@@ -39,8 +43,8 @@ class ManagerVenueInformation extends StatelessWidget {
                 text: "01982711168",
               ),
               InformationCardWithoutIcon(
-                heading: "Tags",
-                text: "Natural, Lake, Forest.",
+                heading: "Entrance Fee",
+                text: "200 tk",
               ),
               const SizedBox(
                 height: 10,
@@ -168,6 +172,233 @@ class ManagerVenueInformation extends StatelessWidget {
               InformationCardWithoutIcon(
                 heading: "Description",
                 text: "A tempting snacks",
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Free WiFi",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "Yes",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Parking",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "No",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Food",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "Yes",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    margin: Theme.of(context).subSectionDividerPadding,
+                    padding: Theme.of(context).insideCardPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Indoor Pool",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "No",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              InformationCardWithoutIcon(
+                heading: "Other Services",
+                text: "Gaming Zone, Cleaning Service",
               ),
             ],
           ),
