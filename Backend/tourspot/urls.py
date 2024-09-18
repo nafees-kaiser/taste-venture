@@ -14,5 +14,7 @@ urlpatterns = [
     path('get-daytour-review/<int:tourSpot_id>', views.get_dayTour_reviews, name='get-daytour-review'),
     path('get-top-daytour', views.get_top_dayTourSpot, name='get-top-daytourspot'),
     path('view-pending-booking/<int:tourspot_id>', views.view_pending_booking, name='view_pending_booking'),
-    path('view-booking-manager/<int:tourspot_id>', views.view_booking_manager, name='view_booking_manager')
+    path('view-booking-manager/<int:tourspot_id>', views.view_booking_manager, name='view_booking_manager'),
+    path('get-tourspot-selling-details/<int:tourSpot_id>', views.tourSpot_selling_info, name='tourSpot_selling_info'),
+    path('get-top-customers/<int:tourSpot_id>', views.get_top_customers, name='get_top_customers'),
 ]
