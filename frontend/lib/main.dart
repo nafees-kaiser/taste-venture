@@ -6,6 +6,7 @@ import 'package:frontend/screens/booking_manager.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
 import 'package:frontend/screens/customer_reservation.dart';
+import 'package:frontend/screens/edit_menu_page.dart';
 import 'package:frontend/screens/favorite.dart';
 import 'package:frontend/screens/forget_password.dart';
 import 'package:frontend/screens/initial_menu.dart';
@@ -102,6 +103,7 @@ Future<void> main() async {
       '/customer/reservation': (context) => CustomerReservation(),
       '/manager-profile': (context) => ManagerProfile(),
       '/tourspot/booking-list': (context) => BookingManager(),
+      '/edit-menu': (context) => EditMenuPage(),
     },
   ));
 }
