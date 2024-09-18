@@ -12,6 +12,7 @@ import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/manager_home.dart';
 import 'package:frontend/screens/manager_profile.dart';
+import 'package:frontend/screens/manager_restaurant_information.dart';
 import 'package:frontend/screens/notification_page.dart';
 import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/screens/profile.dart';
@@ -89,6 +90,8 @@ Future<void> main() async {
       '/profile': (context) => const Profile(),
       '/manager/tour-spot/venue-information': (context) =>
           const ManagerVenueInformation(),
+      '/manager/restaurant/restaurant-information': (context) =>
+          const ManagerRestaurantInformation(),
       '/registration/customer': (context) => const RegistrationCustomer(),
       '/login': (context) => Login(),
       '/restaurant/information': (context) => RestaurantInfo(),

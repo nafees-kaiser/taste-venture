@@ -19,9 +19,7 @@ class ManagerHome extends StatelessWidget {
     final userType = args['userType'] as String;
 
     return Scaffold(
-      drawer: (userType == "res_manager")
-          ? const ManagerSidebar()
-          : const ManagerSidebarTourspot(),
+      drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: Container(
           width: double.infinity,
