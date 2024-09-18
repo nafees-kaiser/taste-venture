@@ -185,8 +185,11 @@ def get_top_restaurants(request):
     try:
         review = Review.objects.all()
         restaurant_ratings = review.values('restaurant').annotate(avg_rating=Avg('rating'))
-        top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
-        top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
+        if restaurant_ratings.exists():
+            top_restaurants = restaurant_ratings.order_by('-avg_rating')[:3]
+            top_restaurant_ids = [r['restaurant'] for r in top_restaurants]
+        else:
+            top_restaurant_ids = Restaurant.objects.values_list('id', flat=True)[:3]
 
         restaurants = Restaurant.objects.filter(id__in=top_restaurant_ids).annotate(
             average_rating=Subquery(

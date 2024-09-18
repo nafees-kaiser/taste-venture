@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
           // print(jsonResponse);
           var user = jsonResponse['user'] as Map<String, dynamic>;
           var token = jsonResponse['tokens']['access'];
-          int spotId = jsonResponse['spot_id'] as int;
+          var spotId = jsonResponse['spot_id'];
           String userType = user['user_type'] as String;
           // print(token);
           // print(spotId);
@@ -82,7 +82,9 @@ class _LoginState extends State<Login> {
           await prefs.setString('userEmail', email);
           await prefs.setString('userToken', token);
           await prefs.setString('userType', userType);
-          await prefs.setInt('spotId', spotId);
+          if (spotId != null) {
+            await prefs.setInt('spotId', spotId as int);
+          }
           await prefs.setString('userId', user['id'].toString());
 
           successToast("Login Successfull");
