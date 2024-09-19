@@ -200,7 +200,7 @@ def get_top_restaurants(request):
         ).order_by('-average_rating')
 
         serializer = RestaurantAndAvgRating(restaurants, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
