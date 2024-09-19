@@ -15,6 +15,8 @@ class TourspotSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_internal_value(self, data):
+        if isinstance(data, QueryDict):
+            data = data.dict()
         new_data = add_user(data, 'tour_manager')
         return super().to_internal_value(new_data)
 
@@ -54,10 +56,11 @@ class DayTourSpotAndAvgRating(serializers.ModelSerializer):
 
     class Meta:
         model = Tourspot
-        fields = ['id', 'tourspot_name', 'address', 'average_rating']
+        fields = ['id', 'tourspot_name', 'address', 'average_rating', 'image']
 
     def get_average_rating(self, obj):
-        return format(obj.average_rating, '.2f')
+        average_rating = obj.average_rating if obj.average_rating is not None else 0.00
+        return format(average_rating, '.2f')
 
     def get_address(self, obj):
         return obj.user.address if obj.user and hasattr(obj.user, 'address') else None

@@ -3,6 +3,7 @@ import 'package:frontend/screens/otp_page.dart';
 import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_input/image_input.dart';
 import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
 import '../models/tourspot.dart';
@@ -16,6 +17,7 @@ class AddTourspotAdditionalInfo extends StatefulWidget {
 
 class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
   late Tourspot tourspot;
+  late XFile? image;
 
   String selectedType1 = 'Yes';
   String selectedType2 = 'Yes';
@@ -47,9 +49,10 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final arguments = ModalRoute.of(context)!.settings.arguments as Tourspot?;
+    final arguments = ModalRoute.of(context)!.settings.arguments as List?;
     if (arguments != null) {
-      tourspot = arguments;
+      tourspot = arguments[0] as Tourspot;
+      image = arguments[1] as XFile?;
     }
   }
 
@@ -66,8 +69,9 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
     );
 
     try {
-      final response = await api.postMethod(updatedTourspot.toJson());
-      print(updatedTourspot.toJson());
+      // final response = await api.postMethod(updatedTourspot.toJson());
+      final response = await api.postMultiPartForm(
+          data: updatedTourspot.toMap(), image: image);
 
       if (response.statusCode == 201) {
         // Navigator.pushNamed(context, '/login');

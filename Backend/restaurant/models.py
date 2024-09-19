@@ -1,4 +1,6 @@
 from django.db import models
+from rest_framework.fields import ImageField
+
 from usersapp.models import Users
 from django.conf import settings
 
@@ -15,6 +17,7 @@ class Restaurant(models.Model):
     closing_time = models.CharField(max_length=70)
     description = models.TextField()
     rating = models.FloatField(default=0)
+    image = models.ImageField(upload_to='images/restaurant/', null=True, default=None)
     # menuList = models.ForeignKey(MenuItem)
 
     REQUIRED_FIELDS = []
@@ -32,7 +35,7 @@ class MenuItem(models.Model):
     category = models.CharField(max_length=80)
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
-    # image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/restaurant/menu/', null=True, default=None)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
 
     def __str__(self):

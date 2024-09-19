@@ -3,7 +3,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from common.models import AppUser
 from common.serializers import AppUserSerializer
-from common.utils import add_user, represent_user, create_common_user
+from common.utils import *
 from usersapp.serializers import UserSerializer
 
 from .models import *
@@ -19,6 +19,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         if 'email' in data:
             email = data.pop('email')
+            email = email[0]
             res_manager = AppUser.objects.get(email=email)
             rest = Restaurant.objects.get(user=res_manager)
             data['restaurant'] = rest.id
@@ -35,6 +36,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
         extra_kwargs = {'rating': {'read_only': True}}
 
     def to_internal_value(self, data):
+        if isinstance(data, QueryDict):
+            data = convert_query_dict_to_dict(data)
         new_data = add_user(data, 'res_manager')
         return super().to_internal_value(new_data)
 
@@ -106,10 +109,11 @@ class RestaurantAndAvgRating(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'restaurant_name', 'address', 'average_rating']
+        fields = ['id', 'restaurant_name', 'address', 'average_rating', 'image']
 
     def get_average_rating(self, obj):
-        return format(obj.average_rating, '.2f')
+        average_rating = obj.average_rating if obj.average_rating is not None else 0.00
+        return format(average_rating, '.2f')
 
     def get_address(self, obj):
         return obj.user.address if obj.user and hasattr(obj.user, 'address') else None

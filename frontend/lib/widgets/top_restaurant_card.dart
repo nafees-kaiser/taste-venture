@@ -61,18 +61,39 @@ class _TopResCardState extends State<TopResCard> {
             ),
             //color: BACKGROUND,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      widget.restaurantImage,
-                      width: double.infinity,
-                      height: 120,
-                      fit: BoxFit.fitHeight,
-                    ),
+                    child: 
+                    widget.restaurantImage == null
+                    ? const Image(
+                        image: AssetImage('assets/image_filler.png'),
+                        fit: BoxFit.cover,
+                        height: 120,
+                      )
+                    : Image.network(
+                        ApiSettings(endPoint: widget.restaurantImage).getUri(),
+                        fit: BoxFit.cover,
+                        height: 120,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                          height: 120,
+                        ),
+                      ),                   
+                    
+                    
+                  
+                    // Image.asset(
+                    //   widget.restaurantImage,
+                    //   width: double.infinity,
+                    //   height: 120,
+                    //   fit: BoxFit.fitHeight,
+                    // ),
                   ),
                 ),
                 Padding(

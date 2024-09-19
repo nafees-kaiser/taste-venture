@@ -59,50 +59,55 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
       body: menuItems.isEmpty
           ? const Center(
               child: Text(
-                "No menus added",
+                "No menu added",
                 style: TextStyle(color: SECONDARY_BACKGROUND),
               ),
             )
-          : SingleChildScrollView(
-              child: Padding(
-                padding: Theme.of(context).largemainPadding,
-                child: Column(
-                  children: [
-                    ...menuItems.keys.map(
-                      (key) => Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: PRIMARY_COLOR,
-                                  width: 2.0,
+          : RefreshIndicator(
+            onRefresh: getMenuItems,
+            child: SingleChildScrollView(
+                child: Padding(
+                  padding: Theme.of(context).largemainPadding,
+                  child: Column(
+                    children: [
+                      ...menuItems.keys.map(
+                        (key) => Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: PRIMARY_COLOR,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                key,
+                                style: TextStyle(
+                                  fontSize: 20,
                                 ),
                               ),
                             ),
-                            child: Text(
-                              key,
-                              style: TextStyle(
-                                fontSize: 20,
+                            ...menuItems[key]!.map(
+                              (menu) => ManagerMenuCard(
+                                image: menu['image'],
+                                heading: menu['name'],
+                                description: menu['description'],
+                                price: menu['price'] + " Taka",
                               ),
                             ),
-                          ),
-                          ...menuItems[key]!.map(
-                            (menu) => ManagerMenuCard(
-                              image: "assets/pizza.jpg",
-                              heading: menu['name'],
-                              description: menu['description'],
-                              price: menu['price'] + " Taka",
-                            ),
-                          ),
-                        ],
+                            
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 50),
+                    ],
+                  ),
                 ),
               ),
-            ),
+          ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/add-menu');

@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:image_input/image_input.dart';
+
 class MenuItem {
   final String name;
   final String cuisine;
@@ -8,6 +10,7 @@ class MenuItem {
   final String ingredients;
   final String description;
   // final String image;
+  final XFile? image;
   final String price;
   final String size;
   final String category;
@@ -18,7 +21,7 @@ class MenuItem {
     required this.food_type,
     required this.ingredients,
     required this.description,
-    // required this.image,
+    this.image,
     required this.price,
     required this.size,
     required this.category,
@@ -30,7 +33,7 @@ class MenuItem {
     String? food_type,
     String? ingredients,
     String? description,
-    // String? image,
+    XFile? image,
     String? price,
     String? size,
     String? category,
@@ -41,7 +44,7 @@ class MenuItem {
       food_type: food_type ?? this.food_type,
       ingredients: ingredients ?? this.ingredients,
       description: description ?? this.description,
-      // image: image ?? this.image,
+      image: image ?? this.image,
       price: price ?? this.price,
       size: size ?? this.size,
       category: category ?? this.category,
@@ -55,10 +58,10 @@ class MenuItem {
       'food_type': food_type,
       'ingredients': ingredients,
       'description': description,
-      // 'image': image,
       'price': price,
       'size': size,
       'category': category,
+      'image': image
     };
   }
 
@@ -69,10 +72,10 @@ class MenuItem {
       food_type: map['food_type'] as String,
       ingredients: map['ingredients'] as String,
       description: map['description'] as String,
-      // image: map['image'] as String,
       price: map['price'] as String,
       size: map['size'] as String,
       category: map['category'] as String,
+      image: map['image'] as XFile?
     );
   }
 
@@ -82,7 +85,7 @@ class MenuItem {
 
   @override
   String toString() {
-    return 'MenuItem(name: $name, cuisine: $cuisine, food_type: $food_type, ingredients: $ingredients, description: $description,  price: $price, size: $size, category: $category)';
+    return 'MenuItem(name: $name, cuisine: $cuisine, food_type: $food_type, ingredients: $ingredients, description: $description, image: $image, price: $price, size: $size, category: $category)';
   }
 
   @override
@@ -95,7 +98,7 @@ class MenuItem {
       other.food_type == food_type &&
       other.ingredients == ingredients &&
       other.description == description &&
-      // other.image == image &&
+      other.image == image &&
       other.price == price &&
       other.size == size &&
       other.category == category;
@@ -108,7 +111,7 @@ class MenuItem {
       food_type.hashCode ^
       ingredients.hashCode ^
       description.hashCode ^
-      // image.hashCode ^
+      image.hashCode ^
       price.hashCode ^
       size.hashCode ^
       category.hashCode;

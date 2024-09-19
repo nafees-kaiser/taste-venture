@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/models/menu_item.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:image_input/image_input.dart';
 
 class MenuCard extends StatelessWidget {
   @override
@@ -9,9 +13,8 @@ class MenuCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: BORDER_COLOR),
-        borderRadius: BorderRadius.circular(7)
-      ),
+          border: Border.all(color: BORDER_COLOR),
+          borderRadius: BorderRadius.circular(7)),
       // width: 330,
       height: 150,
       padding: EdgeInsets.symmetric(horizontal: 19, vertical: 23),
@@ -28,9 +31,8 @@ class MenuCard extends StatelessWidget {
                   Container(
                     clipBehavior: Clip.antiAlias,
                     // padding: EdgeInsets.fromLTRB(0, 0, 5, 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7)
-                    ),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(7)),
                     child: const Image(image: AssetImage('assets/pizza.jpg')),
                   ),
                   Positioned(
@@ -83,15 +85,39 @@ class MenuCard extends StatelessWidget {
   }
 }
 
-class MenuCard2 extends StatelessWidget {
-  final MenuItem menuItem;
-  const MenuCard2({super.key, required this.menuItem});
+class MenuCard2 extends StatefulWidget {
+  // final MenuItem menuItem;
+  final Map<String, dynamic> menuItem;
+  var image;
+  MenuCard2({super.key, required this.menuItem, this.image});
+
+  @override
+  State<MenuCard2> createState() => _MenuCard2State();
+}
+
+class _MenuCard2State extends State<MenuCard2> {
+  var image;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.menuItem['image'] != null && widget.menuItem['image'] is String) {
+      setState(() {
+        // if (image is String) {
+        //   image = ApiSettings(endPoint: widget.image).getUri();
+        // }
+        image = ApiSettings(endPoint: widget.menuItem['image']).getUri();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      height: 130,
+      // height: ,
+      constraints: BoxConstraints(minHeight: 130),
       decoration: BoxDecoration(
           border: Border.all(color: BORDER_COLOR),
           borderRadius: BorderRadius.circular(7)),
@@ -103,9 +129,34 @@ class MenuCard2 extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             // padding: EdgeInsets.fromLTRB(0, 0, 5, 5),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(7)),
+            // constraints: BoxConstraints(),
             width: 80,
             height: 80,
-            child: const Image(image: AssetImage('assets/pizza.jpg')),
+            child: widget.menuItem['image'] == null
+                ? const Image(
+                    image: AssetImage('assets/image_filler.png'),
+                    fit: BoxFit.cover,
+                  )
+                : widget.menuItem['image'] is String
+                    ? Image.network(
+                       image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : 
+                    Image.file(
+                        File(widget.menuItem['image']!.path),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -113,25 +164,29 @@ class MenuCard2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(menuItem.name,
+                Text(widget.menuItem['name'],
                     style: Theme.of(context).textTheme.headlineSmall),
                 SizedBox(height: 3),
-                Expanded(
-                  child: Text(
-                    menuItem.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    overflow: TextOverflow.visible,
-                    softWrap: true,
-                  ),
-                ),
-                // SizedBox(height: 7),
+                // Flexible(
+                // child:
                 Text(
-                  menuItem.price+" Taka",
+                  widget.menuItem['description'],
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                ),
+                // ),
+                SizedBox(height: 7),
+                // Expanded(
+                // child:
+                Text(
+                  widget.menuItem['price'] + " Taka",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                // ),
               ],
             ),
           ),

@@ -78,19 +78,20 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
       appBar: AppBar(
         title: Container(
           width: double.infinity,
-          alignment: Alignment.center,
+          // alignment: Alignment.center,
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.pin_drop,
-                size: 18,
-              ),
-              SizedBox(
-                width: 10,
-              ),
+              // Icon(
+              //   Icons.pin_drop,
+              //   size: 18,
+              // ),
+              // SizedBox(
+              //   width: 10,
+              // ),
               Text(
-                "Jatrabari, Dhaka-1236",
+                // "Jatrabari, Dhaka-1236",
+                "TasteVenture",
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: 15,
@@ -100,39 +101,39 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          FutureBuilder<bool>(
-            future: emailPresent,
-            builder: (context, snapshot) {
-              /*if (false /*snapshot.connectionState == ConnectionState.waiting*/) {
-                return Container(); // Can display a loader here if needed
-              } else if (true /*snapshot.hasData && snapshot.data == true*/) {*/
-              return IconButton(
-                onPressed: () => Navigator.pushNamed(context, '/notification'),
-                icon: const Icon(Icons.notifications),
-              );
-              /*} else {
-                return Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: SECONDARY_COLOR,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () => Navigator.pushNamed(context, '/login'),
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                );
-              }*/
-            },
-          ),
-        ],
+        // actions: [
+        //   FutureBuilder<bool>(
+        //     future: emailPresent,
+        //     builder: (context, snapshot) {
+        //       /*if (false /*snapshot.connectionState == ConnectionState.waiting*/) {
+        //         return Container(); // Can display a loader here if needed
+        //       } else if (true /*snapshot.hasData && snapshot.data == true*/) {*/
+        //       return IconButton(
+        //         onPressed: () => Navigator.pushNamed(context, '/notification'),
+        //         icon: const Icon(Icons.notifications),
+        //       );
+        //       /*} else {
+        //         return Container(
+        //           height: 40,
+        //           padding: const EdgeInsets.symmetric(horizontal: 20),
+        //           child: ElevatedButton(
+        //             style: ElevatedButton.styleFrom(
+        //               backgroundColor: SECONDARY_COLOR,
+        //               shape: RoundedRectangleBorder(
+        //                 borderRadius: BorderRadius.circular(10),
+        //               ),
+        //             ),
+        //             onPressed: () => Navigator.pushNamed(context, '/login'),
+        //             child: const Text(
+        //               "Login",
+        //               style: TextStyle(fontSize: 16, color: Colors.white),
+        //             ),
+        //           ),
+        //         );
+        //       }*/
+        //     },
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -339,7 +340,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                             print(restaurant);
                             return TopResCard(
                               id: 1,
-                              restaurantImage: "assets/pizza.jpg",
+                              restaurantImage: restaurant.image ?? '',
                               restaurantName: restaurant.restaurant_name,
                               restaurantAddress: restaurant.address,
                               restaurantRating: restaurant.averageRating,

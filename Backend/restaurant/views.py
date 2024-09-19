@@ -163,7 +163,7 @@ def get_restaurant_reviews(request, restaurant_id):
 @csrf_exempt
 def add_reservation(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
+        user = Users.objects.get(user_id=request.data['user_id'])
         restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
         reservation = Reservation.objects.create(
             user=user,
@@ -177,7 +177,7 @@ def add_reservation(request):
         serializer = ReservationSerializer(reservation)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
-        return Response("Error occured during reservation", status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
@@ -200,7 +200,7 @@ def get_top_restaurants(request):
         ).order_by('-average_rating')
 
         serializer = RestaurantAndAvgRating(restaurants, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:

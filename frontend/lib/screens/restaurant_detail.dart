@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/customer_reservation.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
@@ -6,7 +8,7 @@ class RestaurantDetail extends StatelessWidget {
   final data;
 
   const RestaurantDetail({super.key, required this.data});
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -18,8 +20,21 @@ class RestaurantDetail extends StatelessWidget {
             children: [
               Container(
                 // height: 200,
-                child: const Image(
-                    image: AssetImage('assets/yum-cha-district-banani.jpg')),
+                constraints: BoxConstraints(minHeight: 200),
+                child: data['image'] == null
+                    ? const Image(
+                        image: AssetImage('assets/image_filler.png'),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        ApiSettings(endPoint: data['image']).getUri(),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
               ),
               Positioned(
                 bottom: 15,
@@ -27,8 +42,14 @@ class RestaurantDetail extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/customer/reservation'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerReservation(restaurantId: data['id']),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Reserve',
                       style: TextStyle(fontSize: theme.buttonTextSize),
@@ -43,7 +64,7 @@ class RestaurantDetail extends StatelessWidget {
           //       image: AssetImage('assets/yum-cha-district-banani.jpg')),
           // ),
           SizedBox(height: 13),
-          RestaurantHeading(theme: theme, data:data),
+          RestaurantHeading(theme: theme, data: data),
           SizedBox(height: 13),
           RestaurantTimeAndDistance(theme: theme, data: data),
           SizedBox(height: 13),
@@ -51,8 +72,7 @@ class RestaurantDetail extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
                 // 'Welcome to Grand Restaurant, the ultimate destination for culinary adventurers and food enthusiasts! Nestled in the heart of the city, our restaurant offers an extraordinary dining experience that seamlessly blends the rich flavors of Italy with the exquisite tastes of Japan.'
-                data['description']
-                ),
+                data['description']),
           ),
           SizedBox(height: 16),
           // DescAndButton(theme: theme),
@@ -123,7 +143,7 @@ class RestaurantTimeAndDistance extends StatelessWidget {
             ),
             text: Text(
               // '10:00 AM - 08:00 PM',
-              data['opening_time']+' - '+data['closing_time'],
+              data['opening_time'] + ' - ' + data['closing_time'],
               style: theme.textTheme.headlineSmall,
             ),
           ),
@@ -182,7 +202,8 @@ class RestaurantHeading extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Text(data['rating'].toString(), style: TextStyle(color: Colors.white)),
+                    Text(data['rating'].toString(),
+                        style: TextStyle(color: Colors.white)),
                     Icon(
                       Icons.star_border_rounded,
                       color: Colors.white,

@@ -6,11 +6,13 @@ import 'package:frontend/widgets/menu_card.dart';
 class MenuContent extends StatelessWidget {
   final data;
   final title;
+  var image;
 
-  const MenuContent({
+  MenuContent({
     super.key,
     required this.data,
     required this.title,
+    this.image
   });
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class MenuContent extends StatelessWidget {
         ...data.map(
           (d) => Column(
             children: [
-              MenuCard2(menuItem: d is MenuItem ? d : MenuItem.fromMap(d)),
+              MenuCard2(menuItem: d is MenuItem ? d.toMap() : d),
               SizedBox(height: 10),
             ],
           ),
