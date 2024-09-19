@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ViewRestaurantCard extends StatefulWidget {
@@ -23,6 +24,12 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
     });
   }
 
+  // @override
+  // bool operator ==(Object other) {
+  //   // TODO: implement ==
+  //   return super == other;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,11 +52,28 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            child: Image.asset(
-              'assets/image.jpeg',
-              fit: BoxFit.cover,
-              height: 120,
-            ),
+            child: 
+            widget.restaurants[widget.i]['image'] == null
+                    ? const Image(
+                        image: AssetImage('assets/image_filler.png'),
+                        fit: BoxFit.cover,
+                        height: 120,
+                      )
+                    : Image.network(
+                        ApiSettings(endPoint: widget.restaurants[widget.i]['image']).getUri(),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                          height: 120,
+                        ),
+                      ),
+            // Image.asset(
+            //   'assets/image.jpeg',
+            //   fit: BoxFit.cover,
+            //   height: 120,
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 8, 6.7, 8),

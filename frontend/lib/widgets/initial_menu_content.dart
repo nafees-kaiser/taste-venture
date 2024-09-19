@@ -12,27 +12,36 @@ import 'package:frontend/utils/menu_group_by_category.dart';
 import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/menu_card.dart';
 import 'package:frontend/widgets/menu_content.dart';
+import 'package:image_input/image_input.dart';
 
 class InitialMenuContent extends StatefulWidget {
   final RestaurantModel? restaurantModel;
-  InitialMenuContent({super.key, this.restaurantModel});
+  final XFile? itemImage;
+  InitialMenuContent({
+    super.key,
+    this.restaurantModel,
+    this.itemImage,
+  });
 
   @override
   _InitialMenuContentState createState() => _InitialMenuContentState();
 }
 
 class _InitialMenuContentState extends State<InitialMenuContent> {
-  List<String>? menuItemsEg = ['pizza'];
+  // List<String>? menuItemsEg = ['pizza'];
   List<MenuItem> menuItems = [];
   var updatedMenuItems = {};
+
   late RestaurantModel? restaurantModel;
+  late XFile? itemImage;
+
   ApiSettings api = ApiSettings(endPoint: '/restaurant/add-restaurant');
 
   void addMenuItems(MenuItem menuItem) {
     setState(() {
       menuItems.add(menuItem);
       updatedMenuItems =
-        menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
+          menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
     });
   }
 
@@ -40,20 +49,28 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    restaurantModel = widget.restaurantModel;
-    updatedMenuItems =
-        menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
+    setState(() {
+      itemImage = widget.itemImage;
+      restaurantModel = widget.restaurantModel;
+
+      updatedMenuItems =
+          menuGroupByCategory(menuItems.map((m) => m.toMap()).toList());
+    });
   }
 
   void addRestaurant() async {
     var restaurantData = restaurantModel?.toMap();
     restaurantData?['menu_item'] = menuItems.map((m) => m.toMap()).toList();
     // var menuItemsData = jsonEncode(menuItems);
-    var data = jsonEncode(restaurantData);
+    // var data = jsonEncode(restaurantData);
     // print(data);
 
     try {
-      final response = await api.postMethod(data);
+      // final response = await api.postMethod(data);
+      // final response =
+      //     await api.postMultiPartForm(data: restaurantData!, image: itemImage);
+
+      final response = await api.addRestaurant(data: restaurantData!, image: itemImage);
 
       if (response.statusCode == 201) {
         successToast("Restaurant added successfully");
@@ -63,6 +80,10 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
                   email: restaurantModel?.email,
                   nextPath: '/login',
                 ));
+      }
+      else{
+        debugPrint(response.body);
+        errorToast("Something went wrong try again");
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -138,7 +159,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
             ),
             SizedBox(width: 12),
             ElevatedButton(
-              onPressed: (menuItemsEg == null || menuItemsEg!.isEmpty)
+              onPressed: (menuItems == null || menuItems!.isEmpty)
                   ? null
                   : addRestaurant,
               child: Text('Done'),

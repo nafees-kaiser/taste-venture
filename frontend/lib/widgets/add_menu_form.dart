@@ -29,58 +29,16 @@ class AddMenuForm extends StatefulWidget {
 
 class _AddMenuFormState extends State<AddMenuForm> {
   final _formKey = GlobalKey<FormState>();
+
   late ApiSettings api;
   late Function? addMenuItems;
   late bool isAddRestaurant;
 
-  void _addMenu(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
-      MenuItem menuItem = MenuItem(
-        name: controller[0].text,
-        cuisine: "Bengali",
-        food_type: "Fast food",
-        ingredients: controller[2].text,
-        description: controller[5].text,
-        // image: image,
-        price: controller[4].text,
-        size: controller[3].text,
-        category: controller[1].text,
-      );
-
-      if (isAddRestaurant) {
-        addMenuItems!(menuItem);
-        Navigator.pop(context);
-      } else {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        final email = pref.get('userEmail');
-
-        var data = menuItem.toMap();
-        data['email'] = email;
-        try {
-          final response = await api.postMethod(jsonEncode(data));
-          if (response.statusCode == 201 || response.statusCode == 200) {
-            successToast("Menu added successfully");
-            // Navigator.pushNamed(context, '/initial-menu');
-            Navigator.pop(context, true);
-          } else {
-            errorToast("Error ${response.statusCode}: please try again");
-          }
-        } catch (e) {
-          debugPrint(e.toString());
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(content: Text(e.toString())),
-          // );
-          errorToast("Something went wrong. Please try again");
-        }
-      }
-    }
-  }
-
-
   List<XFile> itemImage = [];
   bool isButtonEnabled = false;
+
   final controller = List<TextEditingController>.generate(
-      6, (int index) => TextEditingController());
+      8, (int index) => TextEditingController());
 
   @override
   void initState() {
@@ -116,6 +74,54 @@ class _AddMenuFormState extends State<AddMenuForm> {
       }
     }
   }
+
+  void _addMenu(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      MenuItem menuItem = MenuItem(
+        name: controller[0].text,
+        cuisine: controller[6].text,
+        food_type: controller[7].text,
+        ingredients: controller[2].text,
+        description: controller[5].text,
+        price: controller[4].text,
+        size: controller[3].text,
+        category: controller[1].text,
+        image: itemImage[0],
+      );
+
+      if (isAddRestaurant) {
+        addMenuItems!(menuItem);
+        Navigator.pop(context);
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        final email = pref.get('userEmail');
+
+        var data = menuItem.toMap();
+        var image = data.remove('image');
+        data['email'] = email;
+        try {
+          // final response = await api.postMethod(jsonEncode(data));
+          final response = await api.postMultiPartForm(data: data, image: image);
+          if (response.statusCode == 201 || response.statusCode == 200) {
+            successToast("Menu added successfully");
+            // Navigator.pushNamed(context, '/initial-menu');
+            Navigator.pop(context, true);
+          } else {
+            errorToast("Error ${response.statusCode}: please try again");
+          }
+        } catch (e) {
+          debugPrint(e.toString());
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(e.toString())),
+          // );
+          errorToast("Something went wrong. Please try again");
+        }
+      }
+    }
+  }
+
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +163,24 @@ class _AddMenuFormState extends State<AddMenuForm> {
                     validator: (value) => FormValidation().generalValidation(
                         value, 'Please enter the ingredients'),
                     controller: controller[2],
+                  ),
+                  Textbox(
+                    label: 'Cuisine',
+                    decoration: InputDecoration(
+                      hintText: 'Write cusine type',
+                    ),
+                    validator: (value) => FormValidation().generalValidation(
+                        value, 'Please enter the cuisine type'),
+                    controller: controller[6],
+                  ),
+                  Textbox(
+                    label: 'Food type',
+                    decoration: InputDecoration(
+                      hintText: 'Write food type',
+                    ),
+                    validator: (value) => FormValidation().generalValidation(
+                        value, 'Please enter the food type'),
+                    controller: controller[7],
                   ),
                   Row(
                     children: [

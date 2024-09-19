@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 
 class TopTourCard extends StatefulWidget {
@@ -41,7 +42,23 @@ class _TopTourCardState extends State<TopTourCard> {
                   borderRadius: BorderRadius.circular(10),
 
                   // Image
-                  child: Image.asset(
+                  child: 
+                  // widget.tourImage == null
+                  //     ? const Image(
+                  //         image: AssetImage('assets/image_filler.png'),
+                  //         fit: BoxFit.cover,
+                  //       )
+                  //     : Image.network(
+                  //         ApiSettings(endPoint: widget.tourImage).getUri(),
+                  //         fit: BoxFit.cover,
+                  //         errorBuilder: (context, error, stackTrace) =>
+                  //             const Image(
+                  //           image: AssetImage('assets/image_filler.png'),
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //       ),
+
+                  Image.asset(
                     widget.tourImage,
                     width: 80,
                     height: 80,

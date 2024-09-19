@@ -3,7 +3,9 @@ import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/navigation.dart';
+import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_input/image_input.dart';
 import '../models/restaurant.dart';
 import '../utils/constant.dart';
 import '../widgets/custom_input_field.dart';
@@ -18,6 +20,7 @@ class RegistrationVenueManager extends StatefulWidget {
 class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
   ApiSettings api = ApiSettings(endPoint: 'restaurant/add-restaurant');
   String selectedVenueType = 'Restaurant';
+  List<XFile> itemImage = [];
 
   final Map<String, bool> fieldStatus = {
     'Venue Name': false,
@@ -132,10 +135,11 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
         '/initial-menu',
         () => InitialMenu(
           restaurantModel: restaurant,
+          itemImage: itemImage[0],
         ),
       );
     } else if (selectedVenueType == 'Tour Spot') {
-      Navigator.pushNamed(context, '/tourspot-info', arguments: tourspot);
+      Navigator.pushNamed(context, '/tourspot-info', arguments: [tourspot, itemImage[0]]);
     }
 
     // Navigator.pushNamed(
@@ -147,7 +151,7 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
 
   @override
   Widget build(BuildContext context) {
-    bool allFieldsFilled = fieldStatus.values.every((filled) => filled);
+    bool allFieldsFilled = fieldStatus.values.every((filled) => filled ) && itemImage.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
@@ -286,6 +290,32 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         obscureText: true,
                         onChanged: (_) => checkAllFieldsFilled(),
                         controller: _reTypePasswordController,
+                      ),
+                      SizedBox(height: 7),
+                      CustomImageInput(
+                        label: 'Picture',
+                        inputImage: itemImage,
+                        onImageSelected: (value) {
+                          setState(() {
+                            itemImage.add(value);
+                          });
+                          // for (final i in controller) {
+                          //   if (i.text.isEmpty) {
+                          //     setState(() {
+                          //       isButtonEnabled = false;
+                          //     });
+                          //     break;
+                          //   } else {
+                          //     setState(() {
+                          //       isButtonEnabled = true;
+                          //     });
+                          //   }
+                          // }
+                        },
+                        onImageRemoved: (image, index) => setState(() {
+                          itemImage.remove(image);
+                          // isButtonEnabled = false;
+                        }),
                       ),
                       SizedBox(height: 25),
                       Align(

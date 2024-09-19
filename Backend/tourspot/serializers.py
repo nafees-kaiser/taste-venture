@@ -14,6 +14,8 @@ class TourspotSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_internal_value(self, data):
+        if isinstance(data, QueryDict):
+            data = data.dict()
         new_data = add_user(data, 'tour_manager')
         return super().to_internal_value(new_data)
 
