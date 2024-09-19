@@ -16,7 +16,7 @@ const String baseUri = "http://10.103.133.210:8000/";
 
 // const String baseUri = "http://192.168.0.107:8000/";
 
-const String baseUri = "http://10.103.133.218:8000/";
+// const String baseUri = "http://10.103.133.218:8000/";
 
 class Constant {
   static String apiUri = '';
