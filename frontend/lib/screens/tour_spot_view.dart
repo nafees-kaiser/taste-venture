@@ -321,22 +321,22 @@ class _TourSpotState extends State<TourSpot> {
                                 ],
                               ),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                // child: tourSpots[i]['favorite']
-                                child: true
-                                    ? Icon(
-                                        Icons.favorite,
-                                        color: Colors.pink,
-                                      )
-                                    : Icon(
-                                        Icons.favorite_border,
-                                      ),
-                                onTap: () => toggleFavorite(i),
-                              ),
-                            ),
+                            // Positioned(
+                            //   bottom: 0,
+                            //   right: 0,
+                            //   child: GestureDetector(
+                            //     // child: tourSpots[i]['favorite']
+                            //     child: true
+                            //         ? Icon(
+                            //             Icons.favorite,
+                            //             color: Colors.pink,
+                            //           )
+                            //         : Icon(
+                            //             Icons.favorite_border,
+                            //           ),
+                            //     onTap: () => toggleFavorite(i),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
