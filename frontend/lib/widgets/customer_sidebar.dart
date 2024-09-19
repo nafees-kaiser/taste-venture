@@ -121,11 +121,11 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
               Navigator.pushNamed(context, '/favorite');
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.notifications),
-            title: const Text("Notifications"),
-            onTap: () => Navigator.pushNamed(context, '/notification'),
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.notifications),
+          //   title: const Text("Notifications"),
+          //   onTap: () => Navigator.pushNamed(context, '/notification'),
+          // ),
           FutureBuilder<Map<String, dynamic>>(
               future: getData('users/get-user'),
               builder: (context, snapshot) {

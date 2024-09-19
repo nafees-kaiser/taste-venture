@@ -67,7 +67,25 @@ class _TopResCardState extends State<TopResCard> {
                   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
+                    child: 
+                    // widget.restaurantImage == null
+                    // ? const Image(
+                    //     image: AssetImage('assets/image_filler.png'),
+                    //     fit: BoxFit.cover,
+                    //   )
+                    // : Image.network(
+                    //     ApiSettings(endPoint: widget.restaurantImage).getUri(),
+                    //     fit: BoxFit.cover,
+                    //     errorBuilder: (context, error, stackTrace) =>
+                    //         const Image(
+                    //       image: AssetImage('assets/image_filler.png'),
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),                   
+                    
+                    
+                  
+                    Image.asset(
                       widget.restaurantImage,
                       width: double.infinity,
                       height: 120,

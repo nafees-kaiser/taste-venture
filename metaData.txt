@@ -20,3 +20,7 @@ for adding database model:
 
 to run the backend server:
 py manage.py runserver 0.0.0.0:8000
+
+
+to get apk:
+flutter build apk --split-per-abi

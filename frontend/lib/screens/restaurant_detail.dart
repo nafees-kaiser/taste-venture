@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/customer_reservation.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
 
@@ -19,8 +20,21 @@ class RestaurantDetail extends StatelessWidget {
             children: [
               Container(
                 // height: 200,
-                child: const Image(
-                    image: AssetImage('assets/yum-cha-district-banani.jpg')),
+                constraints: BoxConstraints(minHeight: 200),
+                child: data['image'] == null
+                    ? const Image(
+                        image: AssetImage('assets/image_filler.png'),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        ApiSettings(endPoint: data['image']).getUri(),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
               ),
               Positioned(
                 bottom: 15,
