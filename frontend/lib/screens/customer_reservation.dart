@@ -4,34 +4,65 @@ import 'package:frontend/utils/constant.dart';
 import 'package:intl/intl.dart';
 import 'package:frontend/models/reservation.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerReservation extends StatefulWidget {
-  const CustomerReservation({super.key});
+  final int restaurantId;
+
+  const CustomerReservation({Key? key, required this.restaurantId})
+      : super(key: key);
 
   @override
   State<CustomerReservation> createState() => _CustomerReservationState();
 }
 
 class _CustomerReservationState extends State<CustomerReservation> {
-  // API integration
-  ApiSettings api = ApiSettings(endPoint: 'users/login');
+  ApiSettings api = ApiSettings(endPoint: 'restaurant/add-reservation');
   Future<void> addReservation() async {
-    Reservation reservation = Reservation(
-      userId: 1000,
-      restaurantId: 7,
-      date: dateController.text,
-      startTime: _selectedTime, // TODO: Convert to time format
-      endTime: _selectedTime, // TODO: Convert to time format
-      reservationType: 1,
-      numberOfPeople: int.parse(numberOfPeopleController.text),
-    );
+    TimeOfDay? startTimeOfDay;
+    for (var timeOption in _timeOptions) {
+      if (timeOption.keys.first == _selectedTime) {
+        startTimeOfDay = timeOption.values.first;
+        break;
+      }
+    }
 
-    try {
-      final response = await api.postMethod(
-        reservation.toJson(),
+    if (startTimeOfDay != null) {
+      final now = DateTime.now();
+      final startTime = DateTime(now.year, now.month, now.day,
+          startTimeOfDay.hour, startTimeOfDay.minute);
+
+      int duration =
+          int.parse(durationController.text); // Assuming user enters hours
+      final endTime = startTime.add(Duration(hours: duration));
+
+      String formattedStartTime = DateFormat('HH:mm:ss').format(startTime);
+      String formattedEndTime = DateFormat('HH:mm:ss').format(endTime);
+      String formattedDate = DateFormat('yyyy-MM-dd')
+          .format(DateFormat('dd/MM/yyyy').parse(dateController.text));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? restaurantId = widget.restaurantId;
+      int? userId = int.tryParse(prefs.getString('userId') ?? '');
+
+      Reservation reservation = Reservation(
+        userId: userId,
+        restaurantId: restaurantId,
+        date: formattedDate,
+        startTime: formattedStartTime, // Start time in the required format
+        endTime:
+            formattedEndTime, // Use the same time or calculate end time based on duration
+        reservationType: 1,
+        numberOfPeople: int.tryParse(numberOfPeopleController.text) ?? 0,
       );
-    } catch (e) {
-      print('Error: $e');
+      print(reservation.toJson());
+
+      try {
+        final response = await api.postMethod(
+          reservation.toJson(),
+        );
+      } catch (e) {
+        print('Error: $e');
+      }
     }
   }
 
@@ -43,20 +74,20 @@ class _CustomerReservationState extends State<CustomerReservation> {
   String? _selectedTime = "Select time";
   bool _showCustomTextBox = false;
 
-  final List<String> _timeOptions = [
-    '9:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '1:00 PM',
-    '2:00 PM'
+  final List<Map<String, TimeOfDay>> _timeOptions = [
+    {'9:00 AM': const TimeOfDay(hour: 9, minute: 0)},
+    {'10:00 AM': const TimeOfDay(hour: 10, minute: 0)},
+    {'11:00 AM': const TimeOfDay(hour: 11, minute: 0)},
+    {'12:00 PM': const TimeOfDay(hour: 12, minute: 0)},
+    {'1:00 PM': const TimeOfDay(hour: 13, minute: 0)},
+    {'2:00 PM': const TimeOfDay(hour: 14, minute: 0)}
   ];
-
   //methods
   @override
   void initState() {
     super.initState();
-    _selectedTime = _timeOptions.first; // Set the initial selected time
+    _selectedTime =
+        _timeOptions.first.keys.first; // Set the initial selected time
   }
 
   Text titleText(String text) {
@@ -122,10 +153,12 @@ class _CustomerReservationState extends State<CustomerReservation> {
             ),
             DropdownButtonFormField<String>(
               value: _selectedTime,
-              items: _timeOptions.map((String time) {
+              items: _timeOptions.map((time) {
+                String timeKey = time
+                    .keys.first; // Get the first (and only) key from the map
                 return DropdownMenuItem<String>(
-                  value: time,
-                  child: Text(time),
+                  value: timeKey,
+                  child: Text(timeKey),
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -145,7 +178,7 @@ class _CustomerReservationState extends State<CustomerReservation> {
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'How long do you wish to stay?',
+                hintText: 'How many hours do you wish to stay?',
               ),
             ),
 
@@ -216,7 +249,9 @@ class _CustomerReservationState extends State<CustomerReservation> {
                 height: 55,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addReservation();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
                   ),
