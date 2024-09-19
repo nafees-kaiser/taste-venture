@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.pagination import PageNumberPagination
 
 from common.serializers import AppUserSerializer
 from common.utils import *
@@ -63,3 +64,8 @@ class DayTourSpotAndAvgRating(serializers.ModelSerializer):
 
     def get_address(self, obj):
         return obj.user.address if obj.user and hasattr(obj.user, 'address') else None
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
