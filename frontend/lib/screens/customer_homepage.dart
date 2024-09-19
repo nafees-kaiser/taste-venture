@@ -340,7 +340,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                             print(restaurant);
                             return TopResCard(
                               id: 1,
-                              restaurantImage: "assets/pizza.jpg",
+                              restaurantImage: restaurant.image ?? '',
                               restaurantName: restaurant.restaurant_name,
                               restaurantAddress: restaurant.address,
                               restaurantRating: restaurant.averageRating,

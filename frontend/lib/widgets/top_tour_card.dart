@@ -42,101 +42,108 @@ class _TopTourCardState extends State<TopTourCard> {
                   borderRadius: BorderRadius.circular(10),
 
                   // Image
-                  child: 
-                  // widget.tourImage == null
-                  //     ? const Image(
-                  //         image: AssetImage('assets/image_filler.png'),
-                  //         fit: BoxFit.cover,
-                  //       )
-                  //     : Image.network(
-                  //         ApiSettings(endPoint: widget.tourImage).getUri(),
-                  //         fit: BoxFit.cover,
-                  //         errorBuilder: (context, error, stackTrace) =>
-                  //             const Image(
-                  //           image: AssetImage('assets/image_filler.png'),
-                  //           fit: BoxFit.cover,
-                  //         ),
-                  //       ),
+                  child: widget.tourImage == null
+                      ? const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                          width: 80,
+                          height: 80,
+                        )
+                      : Image.network(
+                          ApiSettings(endPoint: widget.tourImage).getUri(),
+                          fit: BoxFit.cover,
+                          width: 80,
+                          height: 80,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Image(
+                            image: AssetImage('assets/image_filler.png'),
+                            fit: BoxFit.cover,
+                            width: 80,
+                            height: 80,
+                          ),
+                        ),
 
-                  Image.asset(
-                    widget.tourImage,
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.fitHeight,
-                  ),
+                  // Image.asset(
+                  //   widget.tourImage,
+                  //   width: 80,
+                  //   height: 80,
+                  //   fit: BoxFit.fitHeight,
+                  // ),
                 ),
 
                 // Spot Details
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Spot Name
-                      SizedBox(
-                        width: 130,
-                        child: Text(
-                          widget.tourName,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-
-                      const Expanded(child: SizedBox()),
-
-                      // Spot address
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on,
-                              size: 13, color: Colors.black),
-                          SizedBox(
-                            width: 130,
-                            child: Text(
-                              widget.tourAddress,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400,
-                              ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Spot Name
+                        SizedBox(
+                          width: 130,
+                          child: Text(
+                            widget.tourName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+
+                        const Expanded(child: SizedBox()),
+
+                        // Spot address
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on,
+                                size: 13, color: Colors.black),
+                            SizedBox(
+                              width: 130,
+                              child: Text(
+                                widget.tourAddress,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  
                 ),
 
                 SizedBox(
-                  width: 75,
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: SECONDARY_COLOR,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TourSpotDetailsPage(
-                          id: widget.id,
+                    width: 75,
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: SECONDARY_COLOR,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                    ),
-                    child: const Text(
-                      "View",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TourSpotDetailsPage(
+                            id: widget.id,
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        "View",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
                     ),
                   ),
-                )
+                
               ],
             ),
           )),
