@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/customer_reservation.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
@@ -41,8 +42,14 @@ class RestaurantDetail extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/customer/reservation'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerReservation(restaurantId: data['id']),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Reserve',
                       style: TextStyle(fontSize: theme.buttonTextSize),

@@ -16,7 +16,7 @@ from common.utils import send_otp
 from ml_models.model import get_dayTourSpot_sentiment
 from tourspot.models import Tourspot, Booking, Review
 from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer, \
-    DayTourSpotAndAvgRating
+    DayTourSpotAndAvgRating, StandardResultsSetPagination
 from usersapp.models import Users
 from datetime import date
 
@@ -43,9 +43,17 @@ def add_manager(request):
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
-    tourspot_serializer = TourspotSerializer(tourspots, many=True)
+    paginator = StandardResultsSetPagination()
+    paginated_tourspots = paginator.paginate_queryset(tourspots, request)
+    tourspot_serializer = TourspotSerializer(paginated_tourspots, many=True)
     # tourspot_list = list(tourspots.values())
-    return Response(tourspot_serializer.data, status=status.HTTP_200_OK)
+
+    response_data = {
+        "count": tourspots.count(),
+        "page_size": StandardResultsSetPagination.page_size,
+        "results": tourspot_serializer.data
+    }
+    return Response(response_data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

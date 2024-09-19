@@ -52,23 +52,22 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            child: 
-            widget.restaurants[widget.i]['image'] == null
-                    ? const Image(
-                        image: AssetImage('assets/image_filler.png'),
-                        fit: BoxFit.cover,
-                        height: 120,
-                      )
-                    : Image.network(
-                        ApiSettings(endPoint: widget.restaurants[widget.i]['image']).getUri(),
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Image(
-                          image: AssetImage('assets/image_filler.png'),
-                          fit: BoxFit.cover,
-                          height: 120,
-                        ),
-                      ),
+            child: widget.restaurants[widget.i]['image'] == null
+                ? const Image(
+                    image: AssetImage('assets/image_filler.png'),
+                    fit: BoxFit.cover,
+                    height: 120,
+                  )
+                : Image.network(
+                    ApiSettings(endPoint: widget.restaurants[widget.i]['image'])
+                        .getUri(),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Image(
+                      image: AssetImage('assets/image_filler.png'),
+                      fit: BoxFit.cover,
+                      height: 120,
+                    ),
+                  ),
             // Image.asset(
             //   'assets/image.jpeg',
             //   fit: BoxFit.cover,
@@ -155,19 +154,19 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                     const Expanded(child: SizedBox()),
 
                     // Favorite
-                    GestureDetector(
-                      child: true //restaurants[i]['favorite']
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.pink,
-                              size: 30,
-                            )
-                          : Icon(
-                              Icons.favorite_border,
-                              size: 30,
-                            ),
-                      onTap: () => toggleFavorite(widget.i),
-                    )
+                    // GestureDetector(
+                    //   child: true //restaurants[i]['favorite']
+                    //       ? const Icon(
+                    //           Icons.favorite,
+                    //           color: Colors.pink,
+                    //           size: 30,
+                    //         )
+                    //       : Icon(
+                    //           Icons.favorite_border,
+                    //           size: 30,
+                    //         ),
+                    //   onTap: () => toggleFavorite(widget.i),
+                    // )
                   ],
                 ),
               ],

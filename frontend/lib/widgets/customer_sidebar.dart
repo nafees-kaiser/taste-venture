@@ -114,13 +114,13 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
               }
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text("Favorites"),
-            onTap: () {
-              Navigator.pushNamed(context, '/favorite');
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.favorite),
+          //   title: const Text("Favorites"),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '/favorite');
+          //   },
+          // ),
           // ListTile(
           //   leading: const Icon(Icons.notifications),
           //   title: const Text("Notifications"),

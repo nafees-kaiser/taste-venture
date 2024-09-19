@@ -109,7 +109,7 @@ class RestaurantAndAvgRating(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'restaurant_name', 'address', 'average_rating']
+        fields = ['id', 'restaurant_name', 'address', 'average_rating', 'image']
 
     def get_average_rating(self, obj):
         average_rating = obj.average_rating if obj.average_rating is not None else 0.00
