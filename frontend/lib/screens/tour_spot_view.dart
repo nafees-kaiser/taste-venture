@@ -29,7 +29,7 @@ class _TourSpotState extends State<TourSpot> {
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
-      print(data);
+      // print(data);
       setState(() {
         tourSpots = data.map((item) => item as Map<String, dynamic>).toList();
       });
@@ -213,12 +213,36 @@ class _TourSpotState extends State<TourSpot> {
                                       topLeft: Radius.circular(16),
                                       topRight: Radius.circular(16),
                                     ),
-                                    child: Image.asset(
-                                      'assets/image.jpeg',
-                                      // tourSpots[i]['imagePath'],
-                                      fit: BoxFit.cover,
-                                      height: 120,
-                                    ),
+                                    child: tourSpots[i]['image'] == null
+                                        ? const Image(
+                                            image: AssetImage(
+                                                'assets/image_filler.png'),
+                                            fit: BoxFit.cover,
+                                            height: 120,
+                                          )
+                                        : Image.network(
+                                            ApiSettings(
+                                                    endPoint: tourSpots[i]
+                                                        ['image'])
+                                                .getUri(),
+                                            fit: BoxFit.cover,
+                                            height: 120,
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    const Image(
+                                              image: AssetImage(
+                                                  'assets/image_filler.png'),
+                                              fit: BoxFit.cover,
+                                              height: 120,
+                                            ),
+                                          ),
+
+                                    // Image.asset(
+                                    //   'assets/image.jpeg',
+                                    //   // tourSpots[i]['imagePath'],
+                                    //   fit: BoxFit.cover,
+                                    //   height: 120,
+                                    // ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(

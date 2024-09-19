@@ -66,8 +66,21 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 157,
-                  child:
-                      const Image(image: AssetImage('assets/water_garden.png')),
+                  child: data['image'] == null
+                      ? const Image(
+                          image: AssetImage('assets/image_filler.png'),
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          ApiSettings(endPoint: data['image']).getUri(),
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Image(
+                            image: AssetImage('assets/image_filler.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                  // const Image(image: AssetImage('assets/water_garden.png')),
                 ),
                 SizedBox(height: 10),
                 Padding(
