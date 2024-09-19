@@ -31,7 +31,7 @@ class Reservation {
       'date': date,
       'start_time': startTime,
       'end_time': endTime,
-      'restaurant_type': reservationType,
+      'reservation_type': reservationType,
       'number_of_people': numberOfPeople,
       'message': message,
       'status': status
@@ -40,16 +40,15 @@ class Reservation {
 
   factory Reservation.fromMap(Map<String, dynamic> map) {
     return Reservation(
-      userId: map['user_id'] as int,
-      restaurantId: map['restaurant_id'] as int,
-      date: map['date'] as String,
-      startTime: map['start_time'] as String,
-      endTime: map['end_time'] as String,
-      reservationType: map['reservation_type'] as int,
-      numberOfPeople: map['number_of_people'] as int,
-      message: map['message'] as String,
-      status: map['status'] as String
-    );
+        userId: map['user_id'] as int,
+        restaurantId: map['restaurant_id'] as int,
+        date: map['date'] as String,
+        startTime: map['start_time'] as String,
+        endTime: map['end_time'] as String,
+        reservationType: map['reservation_type'] as int,
+        numberOfPeople: map['number_of_people'] as int,
+        message: map['message'] as String,
+        status: map['status'] as String);
   }
 
   String toJson() => json.encode(toMap());
