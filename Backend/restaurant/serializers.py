@@ -109,7 +109,8 @@ class RestaurantAndAvgRating(serializers.ModelSerializer):
         fields = ['id', 'restaurant_name', 'address', 'average_rating']
 
     def get_average_rating(self, obj):
-        return format(obj.average_rating, '.2f')
+        average_rating = obj.average_rating if obj.average_rating is not None else 0.00
+        return format(average_rating, '.2f')
 
     def get_address(self, obj):
         return obj.user.address if obj.user and hasattr(obj.user, 'address') else None
