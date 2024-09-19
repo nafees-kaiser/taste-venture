@@ -87,16 +87,17 @@ class _RestaurantState extends State<Restaurant> {
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.location_on,
-              color: Color.fromARGB(255, 2, 2, 2),
-            ),
-            SizedBox(width: 8),
+            // Icon(
+            //   Icons.location_on,
+            //   color: Color.fromARGB(255, 2, 2, 2),
+            // ),
+            // SizedBox(width: 8),
             Text(
-              'Mirpur 12, Dhaka',
+              // 'Mirpur 12, Dhaka',
+              'TasteVenture',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: 15,
@@ -107,12 +108,12 @@ class _RestaurantState extends State<Restaurant> {
           ],
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () => Navigator.pushNamed(context, '/notification'),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications),
+        //     onPressed: () => Navigator.pushNamed(context, '/notification'),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -159,34 +160,34 @@ class _RestaurantState extends State<Restaurant> {
                     Column(
                       children: [
                         SizedBox(height: 14),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    Restaurant(isPersonalizedView: true),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: PRIMARY_COLOR,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 55),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'See Personalized Suggestion',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             Restaurant(isPersonalizedView: true),
+                        //       ),
+                        //     );
+                        //   },
+                        //   style: ElevatedButton.styleFrom(
+                        //     backgroundColor: PRIMARY_COLOR,
+                        //     padding: EdgeInsets.symmetric(
+                        //         vertical: 8, horizontal: 55),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        //   child: Text(
+                        //     'See Personalized Suggestion',
+                        //     style: GoogleFonts.inter(
+                        //       fontWeight: FontWeight.w600,
+                        //       fontSize: 16,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(height: 20),
                       ],
                     ),
                   Container(

@@ -51,16 +51,17 @@ class _TourSpotState extends State<TourSpot> {
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.location_on,
-              color: Color.fromARGB(255, 2, 2, 2),
-            ),
-            SizedBox(width: 8),
+            // Icon(
+            //   Icons.location_on,
+            //   color: Color.fromARGB(255, 2, 2, 2),
+            // ),
+            // SizedBox(width: 8),
             Text(
-              'Mirpur 12, Dhaka',
+              // 'Mirpur 12, Dhaka',
+              "TasteVenture",
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: 15,
@@ -71,12 +72,12 @@ class _TourSpotState extends State<TourSpot> {
           ],
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () => Navigator.pushNamed(context, '/notification'),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications),
+        //     onPressed: () => Navigator.pushNamed(context, '/notification'),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
