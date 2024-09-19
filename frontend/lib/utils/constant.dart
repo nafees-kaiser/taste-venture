@@ -12,9 +12,9 @@ const Color RATING_FILL = Color(0xFFFFA432);
 
 // const String baseUri = "http://192.168.0.7:8000/";
 
-// const String baseUri = "http://192.168.0.106:8000/";
+const String baseUri = "http://10.103.133.210:8000/";
 
-const String baseUri = "http://192.168.0.107:8000/";
+// const String baseUri = "http://192.168.0.107:8000/";
 
 // const String baseUri = "http://10.0.2.2:8000/";
 

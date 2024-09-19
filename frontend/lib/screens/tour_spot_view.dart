@@ -5,8 +5,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
+import 'package:frontend/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class TourSpot extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class TourSpot extends StatefulWidget {
 }
 
 class _TourSpotState extends State<TourSpot> {
+  int numberOfPages = 10;
+  int currentPage = 1;
   List<Map<String, dynamic>> tourSpots = [];
 
   @override
@@ -22,17 +26,26 @@ class _TourSpotState extends State<TourSpot> {
     fetchTourSpots();
   }
 
-  ApiSettings api = ApiSettings(endPoint: 'tourspot/view-list');
-
   Future<void> fetchTourSpots() async {
+    ApiSettings api =
+        ApiSettings(endPoint: 'tourspot/view-list?page=$currentPage');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
-      print(data);
+      dynamic data = jsonDecode(response.body);
+      List<dynamic> tourspotsData = data["results"];
+      // print(data);
       setState(() {
-        tourSpots = data.map((item) => item as Map<String, dynamic>).toList();
+        tourSpots =
+            tourspotsData.map((item) => item as Map<String, dynamic>).toList();
+        numberOfPages = (data["count"] / data["page_size"]).ceil();
+        // print(numberOfPages);
       });
+      // List<dynamic> data = jsonDecode(response.body);
+      // print(data);
+      // setState(() {
+      //   tourSpots = data.map((item) => item as Map<String, dynamic>).toList();
+      // });
     } else {
       // Handle the error
       throw Exception('Failed to load tour spots');
@@ -306,6 +319,29 @@ class _TourSpotState extends State<TourSpot> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: NumberPaginator(
+                initialPage: 0,
+                numberPages: numberOfPages,
+                config: const NumberPaginatorUIConfig(
+                    buttonSelectedBackgroundColor: SECONDARY_COLOR,
+                    buttonUnselectedForegroundColor: TEXT),
+                onPageChange: (index) async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(child: CircularProgressIndicator());
+                      });
+
+                  setState(() {
+                    currentPage = index + 1;
+                  });
+                  fetchTourSpots();
+                  Navigator.of(context).pop();
+                },
+              ),
+            )
           ],
         ),
       ),

@@ -67,6 +67,7 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
 
     try {
       final response = await api.postMethod(updatedTourspot.toJson());
+      print(updatedTourspot.toJson());
 
       if (response.statusCode == 201) {
         // Navigator.pushNamed(context, '/login');
