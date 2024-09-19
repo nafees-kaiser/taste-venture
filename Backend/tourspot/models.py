@@ -17,6 +17,7 @@ class Tourspot(models.Model):
     food = models.CharField(max_length=50)
     pool = models.CharField(max_length=50)
     other_services = models.TextField()
+    image = models.ImageField(upload_to='images/tourspot/', null=True, default=None)
 
     REQUIRED_FIELDS = []
 

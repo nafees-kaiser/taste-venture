@@ -200,7 +200,7 @@ def get_top_restaurants(request):
         ).order_by('-average_rating')
 
         serializer = RestaurantAndAvgRating(restaurants, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
@@ -211,15 +211,7 @@ def get_top_restaurants(request):
 @csrf_exempt
 def accept_reservation(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
-        restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-
-        reservation = Reservation.objects.get(user=user,
-                                              restaurant=restaurant,
-                                              date=request.data['date'],
-                                              start_time=request.data['start_time'],
-                                              status="pending")
-
+        reservation = Reservation.objects.get(id=request.data['reservation_id'])
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -232,15 +224,7 @@ def accept_reservation(request):
 @csrf_exempt
 def reject_reservation(request):
     try:
-        user = Users.objects.get(id=request.data['user_id'])
-        restaurant = Restaurant.objects.get(id=request.data['restaurant_id'])
-
-        reservation = Reservation.objects.get(user=user,
-                                              restaurant=restaurant,
-                                              date=request.data['date'],
-                                              start_time=request.data['start_time'],
-                                              status="pending")
-
+        reservation = Reservation.objects.get(id=request.data['reservation_id'])
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
@@ -304,3 +288,13 @@ def get_reservation_details(request):
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Reservation.DoesNotExist:
         return Response("Reservation is empty", status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def view_pending_reservation(request, restaurant_id):
+    if request.method == 'GET':
+        today = date.today()
+        reservation = Reservation.objects.filter(restaurant_id=restaurant_id, date__gte=today, status__in=["pending"])
+        reservation_serializer = ReservationSerializer(reservation, many=True)
+        return Response(reservation_serializer.data, status=status.HTTP_200_OK)
+    return Response(ReservationSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
