@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:image_input/image_input.dart';
 
-class ManagerMenuCard extends StatelessWidget {
-  final String image;
+class ManagerMenuCard extends StatefulWidget {
+  final String? image;
   final String heading, description, price;
   const ManagerMenuCard(
       {super.key,
-      required this.image,
+      this.image,
       required this.heading,
       required this.description,
       required this.price});
+
+  @override
+  State<ManagerMenuCard> createState() => _ManagerMenuCardState();
+}
+
+class _ManagerMenuCardState extends State<ManagerMenuCard> {
+  String? imageUri;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.image != null && widget.image!.isNotEmpty) {
+      setState(() {
+        imageUri = ApiSettings(endPoint: widget.image!).getUri();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +55,21 @@ class ManagerMenuCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+                child: imageUri == null
+                    ? const Image(
+                        image: AssetImage('assets/image_filler.png'),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        imageUri!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Image(
+                            image: AssetImage('assets/image_filler.png'),
+                            fit: BoxFit.cover,
+                          ); // Handle error
+                        },
+                      ),
               ),
             ),
             const SizedBox(width: 10),
@@ -50,7 +81,7 @@ class ManagerMenuCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      heading,
+                      widget.heading,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -58,7 +89,7 @@ class ManagerMenuCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      description,
+                      widget.description,
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
@@ -69,7 +100,7 @@ class ManagerMenuCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          price,
+                          widget.price,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,

@@ -59,7 +59,7 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
       body: menuItems.isEmpty
           ? const Center(
               child: Text(
-                "No menus added",
+                "No menu added",
                 style: TextStyle(color: SECONDARY_BACKGROUND),
               ),
             )
@@ -90,15 +90,17 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
                           ),
                           ...menuItems[key]!.map(
                             (menu) => ManagerMenuCard(
-                              image: "assets/pizza.jpg",
+                              image: menu['image'],
                               heading: menu['name'],
                               description: menu['description'],
                               price: menu['price'] + " Taka",
                             ),
                           ),
+                          
                         ],
                       ),
                     ),
+                    SizedBox(height: 50),
                   ],
                 ),
               ),
