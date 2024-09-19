@@ -319,7 +319,7 @@ def tourSpot_selling_info(request, tourSpot_id):
 def get_top_customers(request, tourSpot_id):
     try:
         bookings = (Booking.objects.filter(tourspot_id=tourSpot_id).values('user_id').annotate(booking_count=Count('id'))
-                    .order_by('-booking_count'))
+                    .order_by('-booking_count'))[:5]
         print(bookings.values('user_id'))
         print(bookings)
         for user in bookings:

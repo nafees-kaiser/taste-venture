@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/bar_chart_component.dart';
 import 'package:frontend/widgets/manager_sidebar_tourspot.dart';
@@ -11,6 +14,19 @@ import 'package:frontend/widgets/user_indivisual_review.dart';
 
 class ManagerHome extends StatelessWidget {
   const ManagerHome({super.key});
+
+  Future<List<Map<String, dynamic>>> getData(String url) async {
+    ApiSettings api = ApiSettings(endPoint: url);
+    final response = await api.getMethod();
+
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> jsonResponse = List<Map<String, dynamic>>.from(
+          json.decode(response.body) as List<dynamic>);
+      return jsonResponse;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +77,7 @@ class ManagerHome extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Welcome, $userType!'),
+              // Text('Welcome, $userType!'),
               const SizedBox(height: 20),
               const Wrap(
                 spacing: 16,
@@ -122,7 +138,7 @@ class ManagerHome extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const TopCustomer(),
+              if (userType == 'tour_manager') const TopCustomer(),
               const SizedBox(height: 10),
               const Text(
                 "Recent Reviews",
