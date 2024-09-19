@@ -73,21 +73,21 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                       ),
                       currentAccountPicture: CircleAvatar(
                         child: ClipOval(
-                          child: Image.asset('assets/profile.png'),
+                          child: Image.asset('assets/avatar.jpg'),
                         ),
                       ),
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.account_circle),
-                      title: const Text("Account settings"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/manager-profile');
-                      },
-                    ),
-                    if (snapshot.data!['user_type'] != 'tour_manager')
+                    // ListTile(
+                    //   leading: const Icon(Icons.account_circle),
+                    //   title: const Text("Account settings"),
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, '/manager-profile');
+                    //   },
+                    // ),
+                    if (snapshot.data!['user_type'] == 'tour_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
                         title: const Text("Venue Information"),
@@ -96,15 +96,16 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                               context, '/manager/tour-spot/venue-information');
                         },
                       ),
-                    if (snapshot.data!['user_type'] != 'res_manager')
+                    if (snapshot.data!['user_type'] == 'res_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
                         title: const Text("Restaurant Information"),
                         onTap: () {
-                          Navigator.pushNamed(context, '/manager-profile');
+                          Navigator.pushNamed(context,
+                              '/manager/restaurant/restaurant-information');
                         },
                       ),
-                    if (snapshot.data!['user_type'] != 'res_manager')
+                    if (snapshot.data!['user_type'] == 'res_manager')
                       ListTile(
                         leading: const Icon(Icons.food_bank),
                         title: const Text("Menu Information"),
@@ -113,15 +114,25 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                               context, '/manager/restaurant/menu-information');
                         },
                       ),
-                    ListTile(
-                      leading: const Icon(Icons.book_online),
-                      title: const Text("Reservations"),
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, '/restaurant/reservation-list');
-                        // print('reservations tapped'),
-                      },
-                    ),
+                    if (snapshot.data!['user_type'] == 'res_manager')
+                      ListTile(
+                        leading: const Icon(Icons.book_online),
+                        title: const Text("Reservations"),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, '/restaurant/reservation-manager');
+                          // print('reservations tapped'),
+                        },
+                      )
+                    else
+                      ListTile(
+                        leading: const Icon(Icons.book_online),
+                        title: const Text("Booking"),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, '/tourspot/booking-list');
+                        },
+                      ),
                   ],
                 );
               } else {

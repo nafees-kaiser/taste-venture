@@ -69,16 +69,22 @@ class _LoginState extends State<Login> {
         if (response.statusCode == 200) {
           // Login successful
           var jsonResponse = jsonDecode(response.body);
+          // print(jsonResponse);
           var user = jsonResponse['user'] as Map<String, dynamic>;
           var token = jsonResponse['tokens']['access'];
+          var spotId = jsonResponse['spot_id'];
           String userType = user['user_type'] as String;
           // print(token);
+          // print(spotId);
 
           // Store login info using shared_preferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('userEmail', email);
           await prefs.setString('userToken', token);
           await prefs.setString('userType', userType);
+          if (spotId != null) {
+            await prefs.setInt('spotId', spotId as int);
+          }
           await prefs.setString('userId', user['id'].toString());
 
           successToast("Login Successfull");
@@ -86,11 +92,8 @@ class _LoginState extends State<Login> {
           if (userType == "customer") {
             Navigator.pushNamed(context, '/customer-homepage');
           } else {
-            Navigator.pushNamed(
-              context, 
-              '/manager-home',
-              arguments: {'userType': userType}
-            );
+            Navigator.pushNamed(context, '/manager-home',
+                arguments: {'userType': userType});
           }
         } else if (response.statusCode == 400) {
           // Invalid credentials
