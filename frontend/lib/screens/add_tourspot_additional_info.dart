@@ -53,7 +53,6 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
     if (arguments != null) {
       tourspot = arguments[0] as Tourspot;
       image = arguments[1] as XFile?;
-
     }
   }
 
@@ -71,7 +70,8 @@ class _AddTourspotAdditionalInfoState extends State<AddTourspotAdditionalInfo> {
 
     try {
       // final response = await api.postMethod(updatedTourspot.toJson());
-      final response = await api.postMultiPartForm(data: updatedTourspot.toMap(), image: image);
+      final response = await api.postMultiPartForm(
+          data: updatedTourspot.toMap(), image: image);
 
       if (response.statusCode == 201) {
         // Navigator.pushNamed(context, '/login');
