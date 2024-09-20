@@ -329,9 +329,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     future: topRestaurants,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return Center(child: const CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
+                        return Text('Unable to fetch data');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Text('No data available');
                       } else {
@@ -405,9 +405,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     future: getData('tourspot/get-top-daytour'),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return Center(child: const CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
+                        return Text('Unable to fetch data');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Text('No data available');
                       } else {

@@ -17,7 +17,6 @@ urlpatterns = [
     path('accept-reservation', views.accept_reservation),
     path('reject-reservation', views.reject_reservation),
     path('visiting-history/<int:user_id>', views.visiting_history, name='visiting_history'),
-    path('get-restaurant-reservation', views.get_reservation_details, name='get_reservation_details'),
     path('get-top-restaurant', views.get_top_restaurants),
     path('reservation', views.get_reservation_details),
 ]

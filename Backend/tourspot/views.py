@@ -20,6 +20,8 @@ from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpot
 from usersapp.models import Users
 from datetime import date
 
+from usersapp.serializers import UserSerializer
+
 
 # Create your views here.
 @api_view(['POST'])
@@ -324,13 +326,13 @@ def tourSpot_selling_info(request, tourSpot_id):
 @api_view(['GET'])
 def get_top_customers(request, tourSpot_id):
     try:
-        bookings = Booking.objects.filter(tourspot_id=tourSpot_id)
-        for user in bookings.values('user'):
-            customer = AppUser.objects.get(id=user['user'])
-            customerSerializer = AppUserSerializer(customer)
-            print(customerSerializer.data['name'])
-        serializer = BookingSerializer(bookings, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        bookings = (Booking.objects.filter(tourspot_id=tourSpot_id).values('user_id').annotate(booking_count=Count('id'))
+                    .order_by('-booking_count'))[:5]
+        for user in bookings:
+            customer = Users.objects.get(id=user['user_id'])
+            customerSerializer = UserSerializer(customer)
+            user['customer_name'] = customerSerializer.data['name']
+        return Response(bookings, status=status.HTTP_200_OK)
 
     except Booking.DoesNotExist:
         return Response("Booking does not exist", status=status.HTTP_404_NOT_FOUND)

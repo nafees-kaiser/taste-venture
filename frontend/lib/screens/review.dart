@@ -18,38 +18,6 @@ class Reviews extends StatefulWidget {
 }
 
 class _ReviewsState extends State<Reviews> {
-  final List<Map<String, dynamic>> reviews = [
-    {
-      'user': 'Shahabuddin Akhon',
-      'date': '05/11/2024',
-      'ratingStars': [5, 5, 5, 5, 5],
-      'reviewText':
-          'I recently had the pleasure of dining at Fusion Delights, and it was an unforgettable experience from start to finish. The restaurant seamlessly blends Italian and Japanese cuisines, creating a unique and delightful menu.',
-    },
-    {
-      'user': 'John Doe',
-      'date': '06/15/2024',
-      'ratingStars': [5, 5, 5, 5, 5], // Assuming all 5 stars
-      'reviewText':
-          'Absolutely loved the food at Fusion Delights! The flavors were amazing and the service was exceptional. Highly recommend!',
-    },
-    {
-      'user': 'John Doe',
-      'date': '06/15/2024',
-      'ratingStars': [5, 5, 5, 5, 5], // Assuming all 5 stars
-      'reviewText':
-          'Absolutely loved the food at Fusion Delights! The flavors were amazing and the service was exceptional. Highly recommend!',
-    },
-    {
-      'user': 'John Doe',
-      'date': '06/15/2024',
-      'ratingStars': [5, 5, 5, 5, 5], // Assuming all 5 stars
-      'reviewText':
-          'Absolutely loved the food at Fusion Delights! The flavors were amazing and the service was exceptional. Highly recommend!',
-    },
-    // Add more reviews as needed
-  ];
-
   Future<Map<String, dynamic>> getData() async {
     String url;
     if (widget.is_restaurant) {

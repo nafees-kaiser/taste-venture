@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UserIndivisualReview extends StatefulWidget {
-  const UserIndivisualReview({super.key});
+  final String userName, reviewText, date;
+  final int rating;
+  const UserIndivisualReview(
+      {required this.userName,
+      required this.reviewText,
+      required this.rating,
+      required this.date,
+      super.key});
 
   @override
   State<UserIndivisualReview> createState() => _UserIndivisualReviewState();
@@ -45,18 +53,18 @@ class _UserIndivisualReviewState extends State<UserIndivisualReview> {
                     padding: const EdgeInsets.all(5.0),
                     child: ClipOval(
                       child: Image.asset(
-                        "assets/profile.png",
+                        "assets/avatar.jpg",
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 20),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Shahabuddin akhon",
+                      widget.userName,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -65,36 +73,47 @@ class _UserIndivisualReviewState extends State<UserIndivisualReview> {
                     ),
                     Row(
                       children: [
-                        RatingStars(
-                          axis: Axis.horizontal,
-                          value: 4,
-                          starCount: 5,
-                          starSize: 20,
-                          maxValue: 5,
-                          starSpacing: 2,
-                          maxValueVisibility: false,
-                          valueLabelVisibility: false,
-                          starOffColor: Color(0xffe7e8ea),
-                          starColor: Color.fromARGB(255, 209, 193, 51),
-                          angle: 12,
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(5, (index) {
+                              return Icon(
+                                Icons.star,
+                                color: index < (widget.rating?.round() ?? 0)
+                                    ? Color.fromARGB(255, 161, 159, 47)
+                                    : Color(0xFFC4C4C4),
+                                size: 16,
+                              );
+                            }),
+                          ),
                         ),
                         SizedBox(
                           width: 20,
                         ),
-                        Text("2 min ago"),
+                        Text(
+                          widget.date.toString().split('T')[0],
+                          style: GoogleFonts.getFont(
+                            'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: Color(0xFF000000),
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 )
               ],
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 3.0,
                 vertical: 10,
               ),
               child: Text(
-                "La Bella Italia has always been one of my favorite spots, but this recent visit truly solidified its place in my heart. I decided to try their Margherita Pizza, a classic staple that can often be a litmus test for the quality of an Italian restaurant.",
+                widget.reviewText,
                 textAlign: TextAlign.justify,
               ),
             ),
