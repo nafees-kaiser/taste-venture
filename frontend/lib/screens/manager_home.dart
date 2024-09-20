@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/review.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/bar_chart_component.dart';
@@ -12,16 +13,25 @@ import 'package:frontend/widgets/review_overview.dart';
 import 'package:frontend/widgets/top_customer.dart';
 import 'package:frontend/widgets/user_indivisual_review.dart';
 
-class ManagerHome extends StatelessWidget {
+class ManagerHome extends StatefulWidget {
   const ManagerHome({super.key});
 
-  Future<List<Map<String, dynamic>>> getData(String url) async {
-    ApiSettings api = ApiSettings(endPoint: url);
+  @override
+  State<ManagerHome> createState() => _ManagerHomeState();
+}
+
+class _ManagerHomeState extends State<ManagerHome> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<Map<String, dynamic>> getData(String url) async {
+    ApiSettings api = ApiSettings(endPoint: '${url}/1');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
-      List<Map<String, dynamic>> jsonResponse = List<Map<String, dynamic>>.from(
-          json.decode(response.body) as List<dynamic>);
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
@@ -131,26 +141,69 @@ class ManagerHome extends StatelessWidget {
               ),
               const PieChartComponent(),
               const SizedBox(height: 10),
-              const Text(
-                "Top Customers",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (userType == 'tour_manager') ...[
+                    const Text(
+                      "Top Customers",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const TopCustomer(),
+                  ],
+                ],
               ),
-              if (userType == 'tour_manager') const TopCustomer(),
-              const SizedBox(height: 10),
-              const Text(
-                "Recent Reviews",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+
+              FutureBuilder(
+                future: getData(userType == 'tour_manager'
+                    ? 'tourspot/get-daytour-review'
+                    : 'restaurant/get-restaurant-reviews'),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    // Handle error scenario
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    final data = snapshot.data;
+                    final ratings = data?['ratings'];
+                    final avgRating = data?['avg_rating'];
+                    final totalReviews = data?['total_reviews'];
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          "Recent Reviews",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        ReviewOverview(
+                          ratings: ratings,
+                          avgRating: avgRating,
+                          totalReviews: totalReviews,
+                        ),
+                        for (var review in data?['reviews'])
+                          UserIndivisualReview(
+                            userName: review['user']['name'],
+                            reviewText: review['review'],
+                            rating: review['rating'],
+                            date: review['date'],
+                          ),
+                      ],
+                    );
+                  } else {
+                    return Center(child: Text('No data available'));
+                  }
+                },
               ),
-              const ReviewOverview(),
-              const UserIndivisualReview(),
-              const UserIndivisualReview(),
-              const UserIndivisualReview(),
             ],
           ),
         ),

@@ -328,13 +328,10 @@ def get_top_customers(request, tourSpot_id):
     try:
         bookings = (Booking.objects.filter(tourspot_id=tourSpot_id).values('user_id').annotate(booking_count=Count('id'))
                     .order_by('-booking_count'))[:5]
-        print(bookings.values('user_id'))
-        print(bookings)
         for user in bookings:
             customer = Users.objects.get(id=user['user_id'])
             customerSerializer = UserSerializer(customer)
             user['customer_name'] = customerSerializer.data['name']
-            print(customerSerializer.data['name'])
         return Response(bookings, status=status.HTTP_200_OK)
 
     except Booking.DoesNotExist:
