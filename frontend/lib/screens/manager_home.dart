@@ -30,7 +30,7 @@ class _ManagerHomeState extends State<ManagerHome> {
   Future<Map<String, dynamic>> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: '${url}/${"1"}');
+    ApiSettings api = ApiSettings(endPoint: '${url}/${userId}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
@@ -95,7 +95,7 @@ class _ManagerHomeState extends State<ManagerHome> {
               FutureBuilder(
                 future: getData(userType == 'tour_manager'
                     ? 'tourspot/get-tourspot-selling-details'
-                    : 'tourspot/get-tourspot-selling-details'),
+                    : 'restaurant/get-restaurant-selling-details'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());

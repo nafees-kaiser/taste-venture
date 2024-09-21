@@ -347,6 +347,19 @@ def restaurant_selling_info(request, restaurant_id):
 
         total_product = Restaurant.objects.filter(id=restaurant_id).values('menu_item').count()
 
+        cuisine_counts = defaultdict(int)
+        menu_items = Restaurant.objects.get(id=restaurant_id)
+        restaurant = RestaurantSerializer(menu_items).data
+        for item in restaurant['menu_item']:
+            cuisine_counts[item['cuisine']] += 1
+
+        cuisine_percentages = {
+            cuisine: {
+                'count': count,
+                'percentage': (count / total_product * 100) if total_product > 0 else 0
+            } for cuisine, count in cuisine_counts.items()
+        }
+
         def calculate_percentage_change(current, previous):
             if previous == 0:
                 return 100 if current > 0 else 0
@@ -382,12 +395,17 @@ def restaurant_selling_info(request, restaurant_id):
             'order_change_percentage': order_change_percentage,
             'revenue_change_percentage': 0,
             'product_change_percentage': 100,
-            'daywise_customer_count': daywise_customer_count
+            'daywise_customer_count': daywise_customer_count,
+            'product_overview': cuisine_percentages
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
 
     except Reservation.DoesNotExist:
         return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Restaurant.DoesNotExist:
+        return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
