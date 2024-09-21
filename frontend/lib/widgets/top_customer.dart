@@ -11,11 +11,11 @@ class TopCustomer extends StatelessWidget {
 
   Future<List<Map<String, dynamic>>> getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
+    int? spotId = prefs.getInt('spotId');
     String url = userType == 'tour_manager'
         ? 'tourspot/get-top-customers'
         : 'restaurant/get-top-customers';
-    ApiSettings api = ApiSettings(endPoint: '${url}/${userId}');
+    ApiSettings api = ApiSettings(endPoint: '${url}/${spotId}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
@@ -37,9 +37,7 @@ class TopCustomer extends StatelessWidget {
         child: FutureBuilder<List<Map<String, dynamic>>>(
           future: getData(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
+            if (snapshot.hasError) {
               return const Text('Unable to fetch data');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Text('No order yet');

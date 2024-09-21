@@ -348,10 +348,11 @@ def restaurant_selling_info(request, restaurant_id):
         total_product = Restaurant.objects.filter(id=restaurant_id).values('menu_item').count()
 
         cuisine_counts = defaultdict(int)
-        menu_items = Restaurant.objects.get(id=restaurant_id)
-        restaurant = RestaurantSerializer(menu_items).data
-        for item in restaurant['menu_item']:
-            cuisine_counts[item['cuisine']] += 1
+        menu_items = Restaurant.objects.filter(id=restaurant_id)
+        if menu_items.exists():
+            restaurant = RestaurantSerializer(menu_items, many=True).data[0]
+            for item in restaurant.get('menu_item', []):
+                cuisine_counts[item['cuisine']] += 1
 
         cuisine_percentages = {
             cuisine: {

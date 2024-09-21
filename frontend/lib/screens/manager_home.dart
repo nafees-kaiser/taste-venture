@@ -29,8 +29,8 @@ class _ManagerHomeState extends State<ManagerHome> {
 
   Future<Map<String, dynamic>> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: '${url}/${userId}');
+    int? spotId = prefs.getInt('spotId');
+    ApiSettings api = ApiSettings(endPoint: '${url}/${spotId}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
@@ -97,9 +97,7 @@ class _ManagerHomeState extends State<ManagerHome> {
                     ? 'tourspot/get-tourspot-selling-details'
                     : 'restaurant/get-restaurant-selling-details'),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
+                  if (snapshot.hasError) {
                     // Handle error scenario
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.hasData) {
@@ -161,7 +159,15 @@ class _ManagerHomeState extends State<ManagerHome> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const PieChartComponent(),
+                          if (data['product_overview'].isNotEmpty)
+                            PieChartComponent(
+                              data: data['product_overview'],
+                            )
+                          else
+                            const Text(
+                              "No product data available.",
+                              style: TextStyle(fontSize: 16),
+                            ),
                         ]
                       ],
                     );
