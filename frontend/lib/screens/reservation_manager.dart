@@ -16,6 +16,8 @@ class _ReservationManagerState extends State<ReservationManager> {
   // variables
   TextEditingController messageController = TextEditingController();
 
+  late ApiSettings acceptAPI, rejectAPI;
+
   List<dynamic>? reservations;
 
   Future<void> getReservations() async {
@@ -35,11 +37,45 @@ class _ReservationManagerState extends State<ReservationManager> {
     }
   }
 
+  Future<void> postReservation(int id, bool accept, String message) async {
+    final response = await (accept ? acceptAPI : rejectAPI).postMethod(
+        jsonEncode({"reservation_id": id.toString(), "message": message}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(accept
+                  ? 'Reservation accepted successfully'
+                  : 'Reservation rejected successfully')),
+        );
+        // Refresh the page
+        setState(() {
+          _reservationFuture = getReservations();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Reservation processing failed')),
+        );
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  late Future<void> _reservationFuture;
+  Future<void> _initializeData() async {
+    rejectAPI = ApiSettings(endPoint: 'restaurant/reject-reservation');
+    acceptAPI = ApiSettings(endPoint: 'restaurant/accept-reservation');
+    _reservationFuture = getReservations();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getReservations();
+    rejectAPI = ApiSettings(endPoint: 'restaurant/reject-reservation');
+    acceptAPI = ApiSettings(endPoint: 'restaurant/accept-reservation');
+    _reservationFuture = _initializeData();
   }
 
   // methods
@@ -63,7 +99,7 @@ class _ReservationManagerState extends State<ReservationManager> {
     );
   }
 
-  sendMessage(bool isAccepted) {
+  sendMessage(bool isAccepted, int id) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -95,7 +131,7 @@ class _ReservationManagerState extends State<ReservationManager> {
                 // send button
                 ElevatedButton(
                     onPressed: () =>
-                        Navigator.pushNamed(context, '/reservation-list'),
+                        postReservation(id, isAccepted, messageController.text),
                     child: const SizedBox(
                         height: 25,
                         width: 60,
@@ -139,11 +175,11 @@ class _ReservationManagerState extends State<ReservationManager> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                      onPressed: () => sendMessage(false),
+                      onPressed: () => sendMessage(false, data['id']),
                       child: const Text("Reject")),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                      onPressed: () => sendMessage(true),
+                      onPressed: () => sendMessage(true, data['id']),
                       child: const Text("Accept")),
                 ],
               )
@@ -161,7 +197,7 @@ class _ReservationManagerState extends State<ReservationManager> {
         title: const Text("Reservation Manager"),
       ),
       body: (reservations == null || reservations!.isEmpty)
-          ? Center(
+          ? const Center(
               child: Text(
                 "No reservations",
                 style: TextStyle(color: SECONDARY_BACKGROUND),
