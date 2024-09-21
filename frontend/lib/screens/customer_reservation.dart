@@ -55,11 +55,21 @@ class _CustomerReservationState extends State<CustomerReservation> {
         numberOfPeople: int.tryParse(numberOfPeopleController.text) ?? 0,
       );
       print(reservation.toJson());
-
+      final response = await api.postMethod(
+        reservation.toJson(),
+      );
       try {
-        final response = await api.postMethod(
-          reservation.toJson(),
-        );
+        if (response.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Reservation added successfully')),
+          );
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to add reservation')),
+          );
+          Navigator.pop(context);
+        }
       } catch (e) {
         print('Error: $e');
       }

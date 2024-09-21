@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from common.utils import send_otp
+from django.http import JsonResponse
+import socket
 
 
 @api_view(['POST'])
@@ -61,3 +63,14 @@ def verify_email(request):
         return Response("Email verified", status=status.HTTP_200_OK)
     except AppUser.DoesNotExist:
         return Response("Email is not registered. Please try again", status=status.HTTP_404_NOT_FOUND)
+    
+    
+def get_server_ip():
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(hostname) 
+    return ip_address
+
+@api_view(['GET'])
+def get_server_ip_address(request):
+    server_ip = get_server_ip()
+    return JsonResponse({'server_ip': server_ip})
