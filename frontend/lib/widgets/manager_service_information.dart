@@ -15,7 +15,6 @@ class ManagerServiceInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width / 2 - 30,
-      height: 175,
       padding: Theme.of(context).insideCardPadding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),

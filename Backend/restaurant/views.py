@@ -146,7 +146,7 @@ def get_restaurant_reviews(request, restaurant_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating'] or 0
+    average_rating = aggregate_data['average_rating'] if aggregate_data['average_rating'] is not None else 0.0
     total_reviews = aggregate_data['total_reviews']
 
     serializer = ReviewSerializer(reviews, many=True)
@@ -298,3 +298,20 @@ def view_pending_reservation(request, restaurant_id):
         reservation_serializer = ReservationSerializer(reservation, many=True)
         return Response(reservation_serializer.data, status=status.HTTP_200_OK)
     return Response(ReservationSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_top_customers(request, restaurant_id):
+    try:
+        reservations = (Reservation.objects.filter(restaurant_id=restaurant_id).values('user_id').annotate(reservation_count=Count('id'))
+                    .order_by('-reservation_count'))[:5]
+        for user in reservations:
+            customer = Users.objects.get(id=user['user_id'])
+            customerSerializer = UserSerializer(customer)
+            user['customer_name'] = customerSerializer.data['name']
+        return Response(reservations, status=status.HTTP_200_OK)
+
+    except Reservation.DoesNotExist:
+        return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

@@ -190,7 +190,7 @@ def get_dayTour_reviews(request, tourSpot_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating']
+    average_rating = aggregate_data['average_rating'] if aggregate_data['average_rating'] is not None else 0.0
     total_reviews = aggregate_data['total_reviews']
 
     serializer = TourSpotReviewSerializer(reviews, many=True)
@@ -299,19 +299,22 @@ def tourSpot_selling_info(request, tourSpot_id):
             date__lte=today
         )
 
-        last_week_dates = [(today - datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
-        daywise_customer_count = {date: 0 for date in last_week_dates}
+        last_week_dates = [(today - datetime.timedelta(days=i)) for i in range(7)]
+        daywise_customer_count = {date.strftime('%a'): 0 for date in last_week_dates}
+
         for booking in last_week_bookings:
-            day = booking.date.strftime('%Y-%m-%d')
+            day = booking.date.strftime('%a')
             daywise_customer_count[day] += 1
 
         response_data = {
             'total_customers': len(total_customers_current),
             'total_orders': total_orders_current,
             'total_revenue': total_revenue_current,
+            'total_product': 0,
             'customer_change_percentage': customer_change_percentage,
             'order_change_percentage': order_change_percentage,
             'revenue_change_percentage': revenue_change_percentage,
+            'product_change_percentage': 0,
             'daywise_customer_count': daywise_customer_count
         }
 
