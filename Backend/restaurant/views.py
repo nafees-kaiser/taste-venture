@@ -1,4 +1,6 @@
 from datetime import date
+import datetime
+from django.utils import timezone
 
 from django.db.models import Avg, Count, Max, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
@@ -303,13 +305,87 @@ def view_pending_reservation(request, restaurant_id):
 @api_view(['GET'])
 def get_top_customers(request, restaurant_id):
     try:
-        reservations = (Reservation.objects.filter(restaurant_id=restaurant_id).values('user_id').annotate(reservation_count=Count('id'))
-                    .order_by('-reservation_count'))[:5]
+        reservations = (Reservation.objects.filter(restaurant_id=restaurant_id).values('user_id').annotate(
+            reservation_count=Count('id'))
+                        .order_by('-reservation_count'))[:5]
         for user in reservations:
             customer = Users.objects.get(id=user['user_id'])
             customerSerializer = UserSerializer(customer)
             user['customer_name'] = customerSerializer.data['name']
         return Response(reservations, status=status.HTTP_200_OK)
+
+    except Reservation.DoesNotExist:
+        return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def restaurant_selling_info(request, restaurant_id):
+    try:
+        today = timezone.now()
+        first_day_of_current_month = today.replace(day=1)
+        first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
+
+        current_month_reservations = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=first_day_of_current_month
+        )
+
+        previous_month_reservations = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=first_day_of_previous_month,
+            date__lte=last_day_of_previous_month
+        )
+
+        total_customers_current = set(reservation.user.id for reservation in current_month_reservations)
+        total_orders_current = current_month_reservations.count()
+
+        total_customers_previous = set(reservation.user.id for reservation in previous_month_reservations)
+        total_orders_previous = previous_month_reservations.count()
+
+        total_product = Restaurant.objects.filter(id=restaurant_id).values('menu_item').count()
+
+        def calculate_percentage_change(current, previous):
+            if previous == 0:
+                return 100 if current > 0 else 0
+            return ((current - previous) / previous) * 100
+
+        customer_change_percentage = calculate_percentage_change(
+            len(total_customers_current), len(total_customers_previous)
+        )
+        order_change_percentage = calculate_percentage_change(
+            total_orders_current, total_orders_previous
+        )
+
+        start_of_last_week = today - datetime.timedelta(days=6)
+        last_week_reservation = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=start_of_last_week,
+            date__lte=today
+        )
+
+        last_week_dates = [(today - datetime.timedelta(days=i)) for i in range(7)]
+        daywise_customer_count = {date.strftime('%a'): 0 for date in last_week_dates}
+
+        for reservation in last_week_reservation:
+            day = reservation.date.strftime('%a')
+            daywise_customer_count[day] += 1
+
+        response_data = {
+            'total_customers': len(total_customers_current),
+            'total_orders': total_orders_current,
+            'total_revenue': 0,
+            'total_product': total_product,
+            'customer_change_percentage': customer_change_percentage,
+            'order_change_percentage': order_change_percentage,
+            'revenue_change_percentage': 0,
+            'product_change_percentage': 100,
+            'daywise_customer_count': daywise_customer_count
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
 
     except Reservation.DoesNotExist:
         return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
