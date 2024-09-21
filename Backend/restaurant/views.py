@@ -146,7 +146,7 @@ def get_restaurant_reviews(request, restaurant_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating'] if aggregate_data['average_rating'] is not None else 0.0
+    average_rating = round(aggregate_data['average_rating'] or 0.0, 2)
     total_reviews = aggregate_data['total_reviews']
 
     serializer = ReviewSerializer(reviews, many=True)

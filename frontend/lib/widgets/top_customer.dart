@@ -3,18 +3,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TopCustomer extends StatelessWidget {
-  const TopCustomer({super.key});
+  final String userType;
+  const TopCustomer({required this.userType, super.key});
 
   Future<List<Map<String, dynamic>>> getData() async {
-    String url = 'tourspot/get-top-customers/1';
-    ApiSettings api = ApiSettings(endPoint: url);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+    String url = userType == 'tour_manager'
+        ? 'tourspot/get-top-customers'
+        : 'restaurant/get-top-customers';
+    ApiSettings api = ApiSettings(endPoint: '${url}/${userId}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
       List<Map<String, dynamic>> jsonResponse = List<Map<String, dynamic>>.from(
           json.decode(response.body) as List<dynamic>);
+      print(jsonResponse);
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
@@ -35,7 +42,7 @@ class TopCustomer extends StatelessWidget {
             } else if (snapshot.hasError) {
               return const Text('Unable to fetch data');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Text('No data available');
+              return const Text('No order yet');
             } else {
               return DataTable(
                 border: TableBorder.all(width: 1),
@@ -56,7 +63,10 @@ class TopCustomer extends StatelessWidget {
                 rows: snapshot.data!.map((data) {
                   return DataRow(cells: [
                     DataCell(Text(data['customer_name'] ?? '')),
-                    DataCell(Text(data['booking_count'].toString())),
+                    DataCell(Text(data[userType == 'tour_manager'
+                            ? 'booking_count'
+                            : 'reservation_count']
+                        .toString())),
                   ]);
                 }).toList(),
               );

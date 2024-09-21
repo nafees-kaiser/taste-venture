@@ -30,12 +30,11 @@ class _ManagerHomeState extends State<ManagerHome> {
   Future<Map<String, dynamic>> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: '${url}/${userId}');
+    ApiSettings api = ApiSettings(endPoint: '${url}/${"1"}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
@@ -96,7 +95,7 @@ class _ManagerHomeState extends State<ManagerHome> {
               FutureBuilder(
                 future: getData(userType == 'tour_manager'
                     ? 'tourspot/get-tourspot-selling-details'
-                    : 'restaurant/get-restaurant-reviews'),
+                    : 'tourspot/get-tourspot-selling-details'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -134,7 +133,7 @@ class _ManagerHomeState extends State<ManagerHome> {
                         ManagerServiceInformation(
                           icon: Icons.payments,
                           percent:
-                              "${data!['revenue_change_percentage'].toString()}%",
+                              "${data['revenue_change_percentage'].toString()}%",
                           header: "Total Revenue",
                           number: data['total_revenue'].toString(),
                         ),
@@ -173,20 +172,15 @@ class _ManagerHomeState extends State<ManagerHome> {
               ),
               const SizedBox(height: 10),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (userType == 'tour_manager') ...[
-                    const Text(
-                      "Top Customers",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const TopCustomer(),
-                  ],
-                ],
+              const Text(
+                "Top Customers",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TopCustomer(
+                userType: userType,
               ),
 
               FutureBuilder(
