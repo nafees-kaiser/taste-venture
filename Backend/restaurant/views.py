@@ -278,7 +278,7 @@ def get_reservation_details(request):
         res_manager = AppUser.objects.get(email=request.data['email'])
         res = Restaurant.objects.get(user=res_manager)
         # res = Restaurant.objects.get(id=restaurant_id)
-        reservations = Reservation.objects.filter(restaurant=res, status='pending')
+        reservations = Reservation.objects.filter(restaurant=res, date__gte=date.today(), status='pending')
 
         reservation_serializer = ReservationSerializer(reservations, many=True)
         if reservation_serializer:
