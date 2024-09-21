@@ -12,6 +12,7 @@ import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:frontend/widgets/review_overview.dart';
 import 'package:frontend/widgets/top_customer.dart';
 import 'package:frontend/widgets/user_indivisual_review.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerHome extends StatefulWidget {
   const ManagerHome({super.key});
@@ -27,7 +28,9 @@ class _ManagerHomeState extends State<ManagerHome> {
   }
 
   Future<Map<String, dynamic>> getData(String url) async {
-    ApiSettings api = ApiSettings(endPoint: '${url}/1');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? spotId = prefs.getInt('spotId');
+    ApiSettings api = ApiSettings(endPoint: '${url}/${spotId}');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
@@ -89,73 +92,101 @@ class _ManagerHomeState extends State<ManagerHome> {
             children: [
               // Text('Welcome, $userType!'),
               const SizedBox(height: 20),
-              const Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: [
-                  ManagerServiceInformation(
-                    icon: Icons.people,
-                    percent: "23%",
-                    header: "Total Customers",
-                    number: "1289",
-                  ),
-                  ManagerServiceInformation(
-                    icon: Icons.list_alt,
-                    percent: "10%",
-                    header: "Total Orders",
-                    number: "450",
-                  ),
-                  ManagerServiceInformation(
-                    icon: Icons.widgets,
-                    percent: "-13%",
-                    header: "Total Products",
-                    number: "52",
-                  ),
-                  ManagerServiceInformation(
-                    icon: Icons.payments,
-                    percent: "32%",
-                    header: "Total Revenue",
-                    number: "120000",
-                  ),
-                ],
+              FutureBuilder(
+                future: getData(userType == 'tour_manager'
+                    ? 'tourspot/get-tourspot-selling-details'
+                    : 'restaurant/get-restaurant-selling-details'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    // Handle error scenario
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    final data = snapshot.data;
+
+                    return Wrap(
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: [
+                        ManagerServiceInformation(
+                          icon: Icons.people,
+                          percent:
+                              "${data!['customer_change_percentage'].toString()}%",
+                          header: "Total Customers",
+                          number: data['total_customers'].toString(),
+                        ),
+                        ManagerServiceInformation(
+                          icon: Icons.list_alt,
+                          percent:
+                              "${data['order_change_percentage'].toString()}%",
+                          header: "Total Orders",
+                          number: data['total_orders'].toString(),
+                        ),
+                        ManagerServiceInformation(
+                          icon: Icons.widgets,
+                          percent:
+                              "${data['product_change_percentage'].toString()}%",
+                          header: "Total Products",
+                          number: data['total_product'].toString(),
+                        ),
+                        ManagerServiceInformation(
+                          icon: Icons.payments,
+                          percent:
+                              "${data['revenue_change_percentage'].toString()}%",
+                          header: "Total Revenue",
+                          number: data['total_revenue'].toString(),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          "Customer analysis",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 50),
+                        AspectRatio(
+                          aspectRatio: 1.6,
+                          child: BarChartComponent(
+                            data: data['daywise_customer_count'],
+                          ),
+                        ),
+                        if (userType == 'res_manager') ...[
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Food analysis",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          if (data['product_overview'].isNotEmpty)
+                            PieChartComponent(
+                              data: data['product_overview'],
+                            )
+                          else
+                            const Text(
+                              "No product data available.",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                        ]
+                      ],
+                    );
+                  } else {
+                    return Center(child: Text('No data available'));
+                  }
+                },
               ),
-              const SizedBox(height: 20),
-              const Text(
-                "Customer analysis",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const AspectRatio(
-                aspectRatio: 1.6,
-                child: BarChartComponent(),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Food analysis",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const PieChartComponent(),
               const SizedBox(height: 10),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (userType == 'tour_manager') ...[
-                    const Text(
-                      "Top Customers",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const TopCustomer(),
-                  ],
-                ],
+              const Text(
+                "Top Customers",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TopCustomer(
+                userType: userType,
               ),
 
               FutureBuilder(

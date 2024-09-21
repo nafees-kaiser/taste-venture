@@ -19,4 +19,6 @@ urlpatterns = [
     path('visiting-history/<int:user_id>', views.visiting_history, name='visiting_history'),
     path('get-top-restaurant', views.get_top_restaurants),
     path('reservation', views.get_reservation_details),
+    path('get-top-customers/<int:restaurant_id>', views.get_top_customers),
+    path('get-restaurant-selling-details/<int:restaurant_id>', views.restaurant_selling_info),
 ]
