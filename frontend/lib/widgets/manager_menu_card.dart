@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/edit_menu_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:image_input/image_input.dart';
 
 class ManagerMenuCard extends StatefulWidget {
+  final int? id;
   final String? image;
   final String heading, description, price;
   const ManagerMenuCard(
       {super.key,
       this.image,
+      this.id,
       required this.heading,
       required this.description,
       required this.price});
@@ -26,7 +30,9 @@ class _ManagerMenuCardState extends State<ManagerMenuCard> {
     super.initState();
     if (widget.image != null && widget.image!.isNotEmpty) {
       setState(() {
-        imageUri = ApiSettings(endPoint: widget.image!).getUri();
+        String img = widget.image!;
+        img = img.substring(1);
+        imageUri = ApiSettings(endPoint: img).getUri();
       });
     }
   }
@@ -108,7 +114,15 @@ class _ManagerMenuCardState extends State<ManagerMenuCard> {
                         ),
                         const Spacer(),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            var navigation = Navigation(context: context);
+                            navigation.materialNavigation(
+                              '/edit-menu',
+                              () => EditMenuPage(
+                                id: widget.id,
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.edit),
                         ),
                       ],

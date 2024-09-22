@@ -42,10 +42,10 @@ class _ProfileinfocardState extends State<Profileinfocard> {
         "email": userEmail
       };
       final response = await api.postMethod(json.encode(data));
-      print(response.statusCode);
+      // print(response.statusCode);
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData);
+        // print(responseData);
         return responseData;
       }
       return {};

@@ -33,16 +33,24 @@ def add_menu(request):
 
 @api_view(['POST'])
 @csrf_exempt
-def edit_menu(request):
+def edit_menu(request, id):
     # print(request.data)
     update_request_fields = request.data
+    # image = request.FILES['image']
+
     try:
-        menu_item = MenuItem.objects.get(pk=update_request_fields['id'])
+        menu_item = MenuItem.objects.get(pk=id)
     except MenuItem.DoesNotExist:
         return Response("Menu item does not exist", status=status.HTTP_404_NOT_FOUND)
+        # if isinstance(update_request_fields, QueryDict):
+        #     image = update_request_fields['image']
+        #     if image is not None:
+        #         setattr(menu_item, 'image', image)
 
+        # else:
     for key, value in update_request_fields.items():
         setattr(menu_item, key, value)
+
         # menu_item
     menu_item.save()
     return Response("Updated successfully", status=status.HTTP_200_OK)
@@ -58,6 +66,16 @@ def view_menu(request):
         return Response(menu_item_list_serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(menu_item_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def view_individual_menu(request, menu_id):
+    try:
+        menu = MenuItem.objects.get(pk=menu_id)
+        menu = MenuItemSerializer(menu)
+        return Response(menu.data, status=status.HTTP_200_OK)
+    except MenuItem.DoesNotExist:
+        return Response(menu.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -408,5 +426,3 @@ def restaurant_selling_info(request, restaurant_id):
         return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-
-
