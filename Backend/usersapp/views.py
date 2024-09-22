@@ -72,11 +72,12 @@ def login(request):
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET'])
-def get_user_details(request, user_id):
+@api_view(['POST'])
+def get_user_details(request):
     try:
-        customer = AppUser.objects.get(id=user_id)
-        serializer = AppUserSerializer(customer)
+        customer = AppUser.objects.get(email=request.data['email'])
+        user = Users.objects.get(user=customer)
+        serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except AppUser.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
@@ -141,3 +142,17 @@ def remove_from_favorite(request):
         return Response('Restaurant removed from Favorite', status=status.HTTP_200_OK)
     except favorite.DoesNotExist:
         return Response(favorite.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def get_manager_info(request):
+    try:
+        customer = AppUser.objects.get(email=request.data['email'])
+        serializer = AppUserSerializer(customer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except AppUser.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

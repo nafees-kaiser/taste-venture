@@ -14,27 +14,20 @@ class CustomerSidebar extends StatefulWidget {
 }
 
 class _CustomerSidebarState extends State<CustomerSidebar> {
-  late Future<String?> email;
-  ApiSettings get_user_api = ApiSettings(endPoint: 'user/get-user');
-
   @override
   void initState() {
     super.initState();
-    email = getInfo();
-  }
-
-  Future<String?> getInfo() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('userEmail');
-    return email;
   }
 
   Future<Map<String, dynamic>> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: '$url/$userId');
+    String? email = prefs.getString('userEmail');
+    ApiSettings api = ApiSettings(endPoint: '$url');
+    Map<String, dynamic> data = {
+      "email": email,
+    };
     try {
-      final response = await api.getMethod();
+      final response = await api.postMethod(json.encode(data));
       print(response.statusCode);
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
