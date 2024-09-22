@@ -7,6 +7,7 @@ class PersonalInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(userData);
     return Column(
       children: [
         Profileinfocard(

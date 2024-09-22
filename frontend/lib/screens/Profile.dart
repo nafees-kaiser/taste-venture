@@ -42,10 +42,13 @@ class _ProfileState extends State<Profile> {
 
   Future<void> getData(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: '$url/$userId');
+    String? userEmail = prefs.getString('userEmail');
+    ApiSettings api = ApiSettings(endPoint: '$url');
+    Map<String, dynamic> data = {
+      "email": userEmail,
+    };
     try {
-      final response = await api.getMethod();
+      final response = await api.postMethod(json.encode(data));
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         setState(() {
