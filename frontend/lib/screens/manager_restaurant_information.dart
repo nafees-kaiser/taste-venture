@@ -1,9 +1,53 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/information_card_without_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ManagerRestaurantInformation extends StatelessWidget {
+class ManagerRestaurantInformation extends StatefulWidget {
   const ManagerRestaurantInformation({super.key});
+
+  @override
+  State<ManagerRestaurantInformation> createState() =>
+      _ManagerRestaurantInformationState();
+}
+
+class _ManagerRestaurantInformationState
+    extends State<ManagerRestaurantInformation> {
+  late ApiSettings getAPI, postAPI;
+
+  late Future<void> _bookingFuture;
+  dynamic restaurantInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    _bookingFuture = _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String restaurantID = prefs.getInt('spotId').toString();
+    getAPI = ApiSettings(endPoint: 'restaurant/$restaurantID');
+    postAPI = ApiSettings(endPoint: 'edit-restaurant/$restaurantID');
+    _bookingFuture = getInfo();
+  }
+
+  Future<void> getInfo() async {
+    final response = await getAPI.getMethod();
+    try {
+      if (response.statusCode == 200) {
+        restaurantInfo = jsonDecode(response.body);
+        print(restaurantInfo);
+      } else {
+        // Handle the error
+        throw Exception('Failed to load Restaurant Information');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +68,23 @@ class ManagerRestaurantInformation extends StatelessWidget {
               ),
               InformationCardWithoutIcon(
                 heading: "Restaurant Name",
-                text: "Grand Tour venue",
+                text: restaurantInfo['restaurant_name'],
               ),
               InformationCardWithoutIcon(
                 heading: "Manager Name",
-                text: "Tahsina Rahman",
+                text: restaurantInfo['name'],
               ),
               InformationCardWithoutIcon(
                 heading: "Official Email",
-                text: "grand.tour420@gmail.com",
+                text: restaurantInfo['email'],
               ),
               InformationCardWithoutIcon(
                 heading: "Address",
-                text: "6/41/2, jartrabari, Dhaka-1236",
+                text: restaurantInfo['address'],
               ),
               InformationCardWithoutIcon(
                 heading: "Phone Number",
-                text: "01982711168",
+                text: restaurantInfo['contact'],
               ),
               InformationCardWithoutIcon(
                 heading: "Entrance Fee",
@@ -171,7 +215,7 @@ class ManagerRestaurantInformation extends StatelessWidget {
               ),
               InformationCardWithoutIcon(
                 heading: "Description",
-                text: "A tempting snacks",
+                text: restaurantInfo['description'],
               ),
               const SizedBox(
                 height: 10,
