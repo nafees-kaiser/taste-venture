@@ -49,7 +49,11 @@ class TourSpotDetailsPageContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final otherServices = data['other_services'] ?? '';
+    final tourspotData = data['tourspot'] ?? {};
+    final otherServices = tourspotData['other_services'] ?? '';
+
+    final averageRating = data['avg_rating'] ?? 0.0;
+    final totalReviews = data['total_reviews'] ?? 0;
 
     List<String> servicesList = otherServices is String
         ? otherServices.split(',').map((e) => e.trim()).toList()
@@ -66,13 +70,13 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 157,
-                  child: data['image'] == null
+                  child: tourspotData['image'] == null
                       ? const Image(
                           image: AssetImage('assets/image_filler.png'),
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          ApiSettings(endPoint: data['image']).getUri(),
+                          ApiSettings(endPoint: tourspotData['image']).getUri(),
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               const Image(
@@ -89,7 +93,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data['tourspot_name'] ?? '',
+                        tourspotData['tourspot_name'] ?? '',
                         style: theme.textTheme.headlineMedium,
                       ),
                       SizedBox(height: 3),
@@ -100,7 +104,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                             color: SECONDARY_BACKGROUND,
                           ),
                           Text(
-                            data['address'] ?? '',
+                            tourspotData['address'] ?? '',
                             style: TextStyle(
                               color: SECONDARY_BACKGROUND,
                             ),
@@ -113,10 +117,28 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              RatingStar(),
+                              // RatingStar(),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(5, (index) {
+                                    return Icon(
+                                      Icons.star,
+                                      color: index <
+                                              (averageRating?.round() ?? 0)
+                                          ? Color.fromARGB(255, 161, 159, 47)
+                                          : Color(0xFFC4C4C4),
+                                      size: 16,
+                                    );
+                                  }),
+                                ),
+                              ),
                               SizedBox(width: 3),
                               Text(
-                                '384 reviews',
+                                '$totalReviews reviews',
                                 style: TextStyle(
                                   color: SECONDARY_BACKGROUND,
                                 ),
@@ -126,7 +148,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, '/review',
-                                  arguments: [data['id'] ?? 1, false]);
+                                  arguments: [tourspotData['id'] ?? 1, false]);
                             },
                             child: Text(
                               'See all reviews',
@@ -155,16 +177,18 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Check-in time: ${data['opening_time']}'),
-                              Text('Check-out time: ${data['closing_time']}'),
+                              Text(
+                                  'Check-in time: ${tourspotData['opening_time']}'),
+                              Text(
+                                  'Check-out time: ${tourspotData['closing_time']}'),
                             ],
                           ),
-                          Column(
-                            children: [
-                              Icon(Icons.location_on_outlined),
-                              Text('1.5 km'),
-                            ],
-                          ),
+                          // Column(
+                          //   children: [
+                          //     Icon(Icons.location_on_outlined),
+                          //     Text('1.5 km'),
+                          //   ],
+                          // ),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -173,7 +197,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                         style: theme.textTheme.headlineSmall,
                       ),
                       SizedBox(height: 5),
-                      ResortDetailsGrid(data: data),
+                      ResortDetailsGrid(tourspotData: tourspotData),
                       SizedBox(height: 20),
                       Text(
                         'Other services',
@@ -224,8 +248,8 @@ class TourSpotDetailsPageContents extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => Booking(
-                  fee: data['entry_fee'],
-                  tourspotId: data['id'],
+                  fee: tourspotData['entry_fee'],
+                  tourspotId: tourspotData['id'],
                 ),
               ),
             ),
@@ -242,9 +266,9 @@ class TourSpotDetailsPageContents extends StatelessWidget {
 }
 
 class ResortDetailsGrid extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final Map<String, dynamic> tourspotData;
 
-  ResortDetailsGrid({required this.data});
+  ResortDetailsGrid({required this.tourspotData});
 
   @override
   Widget build(BuildContext context) {
@@ -253,16 +277,19 @@ class ResortDetailsGrid extends StatelessWidget {
         Row(
           children: [
             ResortDetailsCard(
-              icon: data['wifi'] == 'Yes'
+              icon: tourspotData['wifi'] == 'Yes'
                   ? Icons.wifi
                   : Icons.signal_wifi_connected_no_internet_4_rounded,
-              text: data['wifi'] == 'Yes' ? 'Free WiFi' : 'No WiFi',
+              text: tourspotData['wifi'] == 'Yes' ? 'Free WiFi' : 'No WiFi',
             ),
             SizedBox(width: 48),
             ResortDetailsCard(
-              icon:
-                  data['food'] == 'Yes' ? Icons.coffee : Icons.no_food_outlined,
-              text: data['food'] == 'Yes' ? 'Free breakfast' : 'No breakfast',
+              icon: tourspotData['food'] == 'Yes'
+                  ? Icons.coffee
+                  : Icons.no_food_outlined,
+              text: tourspotData['food'] == 'Yes'
+                  ? 'Free breakfast'
+                  : 'No breakfast',
             ),
           ],
         ),
@@ -270,15 +297,19 @@ class ResortDetailsGrid extends StatelessWidget {
         Row(
           children: [
             ResortDetailsCard(
-              icon: data['parking'] == 'Yes'
+              icon: tourspotData['parking'] == 'Yes'
                   ? Icons.local_parking
                   : Icons.car_crash,
-              text: data['parking'] == 'Yes' ? 'Free parking' : 'No parking',
+              text: tourspotData['parking'] == 'Yes'
+                  ? 'Free parking'
+                  : 'No parking',
             ),
             SizedBox(width: 30),
             ResortDetailsCard(
-              icon: data['pool'] == 'Yes' ? Icons.pool : Icons.clear_outlined,
-              text: data['pool'] == 'Yes' ? 'Indoor pool' : 'No pool',
+              icon: tourspotData['pool'] == 'Yes'
+                  ? Icons.pool
+                  : Icons.clear_outlined,
+              text: tourspotData['pool'] == 'Yes' ? 'Indoor pool' : 'No pool',
             ),
           ],
         ),

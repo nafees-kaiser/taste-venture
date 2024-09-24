@@ -78,8 +78,26 @@ def view_tourspot_detail(request, id):
         #     'pool': tourspot.pool,
         #     'other_services': tourspot.other_services,
         # }
+        ratings = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+        reviews = Review.objects.filter(tourSpot_id=id)
+        for review in reviews:
+            ratings[str(review.rating)] += 1
+
+        aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
+        average_rating = round(aggregate_data['average_rating'] or 0.0, 2)
+        total_reviews = aggregate_data['total_reviews']
+
+        serializer = TourSpotReviewSerializer(reviews, many=True)
         tourspot_data = TourspotSerializer(tourspot).data
-        return Response(tourspot_data, status=status.HTTP_200_OK)
+        response = {
+            "ratings": ratings,
+            "reviews": serializer.data,
+            "avg_rating": average_rating,
+            "total_reviews": total_reviews,
+            "tourspot": tourspot_data
+        }
+
+        return Response(response, status=status.HTTP_200_OK)
     except Tourspot.DoesNotExist:
         return Response({'error': 'Tourspot not found'}, status=status.HTTP_404_NOT_FOUND)
 
