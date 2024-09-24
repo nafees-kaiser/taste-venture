@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
 
 class BarChartComponent extends StatelessWidget {
-  const BarChartComponent();
+  final Map<String, dynamic> data;
+
+  const BarChartComponent({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,9 @@ class BarChartComponent extends StatelessWidget {
             BarChartRodData rod,
             int rodIndex,
           ) {
+            final days = data.keys.toList().reversed.toList();
             return BarTooltipItem(
-              rod.toY.round().toString(),
+              data[days[groupIndex]].toString(),
               const TextStyle(
                 color: PRIMARY_COLOR,
                 fontWeight: FontWeight.bold,
@@ -49,33 +52,10 @@ class BarChartComponent extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = 'Mon';
-        break;
-      case 1:
-        text = 'Tue';
-        break;
-      case 2:
-        text = 'Wed';
-        break;
-      case 3:
-        text = 'Thu';
-        break;
-      case 4:
-        text = 'Fri';
-        break;
-      case 5:
-        text = 'Sat';
-        break;
-      case 6:
-        text = 'Sun';
-        break;
-      default:
-        text = '';
-        break;
-    }
+
+    final days = data.keys.toList().reversed.toList();
+    String text = days[value.toInt()];
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 4,
@@ -113,76 +93,40 @@ class BarChartComponent extends StatelessWidget {
         end: Alignment.topCenter,
       );
 
-  List<BarChartGroupData> get barGroups => [
+  List<BarChartGroupData> get barGroups {
+    List<BarChartGroupData> groups = [];
+    final days = data.keys.toList().reversed.toList();
+
+    final maxValue = data.values.isNotEmpty
+        ? data.values.reduce((a, b) => a > b ? a : b)
+        : 0;
+    final minValue = data.values.isNotEmpty
+        ? data.values.reduce((a, b) => a < b ? a : b)
+        : 0;
+
+    for (int i = 0; i < days.length; i++) {
+      double rawValue = (data[days[i]] ?? 0).toDouble();
+      double normalizedValue = maxValue == minValue
+          ? 0
+          : (rawValue - minValue) / (maxValue - minValue) * 20;
+
+      groups.add(
         BarChartGroupData(
-          x: 0,
+          x: i,
           barRods: [
             BarChartRodData(
-              toY: 8,
+              toY: normalizedValue,
               gradient: _barsGradient,
+              rodStackItems: [
+                BarChartRodStackItem(0, normalizedValue, Colors.transparent),
+              ],
             )
           ],
           showingTooltipIndicators: [0],
         ),
-        BarChartGroupData(
-          x: 1,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 2,
-          barRods: [
-            BarChartRodData(
-              toY: 14,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 3,
-          barRods: [
-            BarChartRodData(
-              toY: 15,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 4,
-          barRods: [
-            BarChartRodData(
-              toY: 13,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 5,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 6,
-          barRods: [
-            BarChartRodData(
-              toY: 16,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-      ];
+      );
+    }
+
+    return groups;
+  }
 }

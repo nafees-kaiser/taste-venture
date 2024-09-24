@@ -1,4 +1,6 @@
 from datetime import date
+import datetime
+from django.utils import timezone
 
 from django.db.models import Avg, Count, Max, Subquery, OuterRef
 from django.views.decorators.csrf import csrf_exempt
@@ -31,16 +33,24 @@ def add_menu(request):
 
 @api_view(['POST'])
 @csrf_exempt
-def edit_menu(request):
+def edit_menu(request, id):
     # print(request.data)
     update_request_fields = request.data
+    # image = request.FILES['image']
+
     try:
-        menu_item = MenuItem.objects.get(pk=update_request_fields['id'])
+        menu_item = MenuItem.objects.get(pk=id)
     except MenuItem.DoesNotExist:
         return Response("Menu item does not exist", status=status.HTTP_404_NOT_FOUND)
+        # if isinstance(update_request_fields, QueryDict):
+        #     image = update_request_fields['image']
+        #     if image is not None:
+        #         setattr(menu_item, 'image', image)
 
+        # else:
     for key, value in update_request_fields.items():
         setattr(menu_item, key, value)
+
         # menu_item
     menu_item.save()
     return Response("Updated successfully", status=status.HTTP_200_OK)
@@ -56,6 +66,16 @@ def view_menu(request):
         return Response(menu_item_list_serializer.data, status=status.HTTP_200_OK)
     except Restaurant.DoesNotExist:
         return Response(menu_item_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def view_individual_menu(request, menu_id):
+    try:
+        menu = MenuItem.objects.get(pk=menu_id)
+        menu = MenuItemSerializer(menu)
+        return Response(menu.data, status=status.HTTP_200_OK)
+    except MenuItem.DoesNotExist:
+        return Response(menu.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -146,7 +166,7 @@ def get_restaurant_reviews(request, restaurant_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating'] or 0
+    average_rating = round(aggregate_data['average_rating'] or 0.0, 2)
     total_reviews = aggregate_data['total_reviews']
 
     serializer = ReviewSerializer(reviews, many=True)
@@ -278,7 +298,7 @@ def get_reservation_details(request):
         res_manager = AppUser.objects.get(email=request.data['email'])
         res = Restaurant.objects.get(user=res_manager)
         # res = Restaurant.objects.get(id=restaurant_id)
-        reservations = Reservation.objects.filter(restaurant=res, status='pending')
+        reservations = Reservation.objects.filter(restaurant=res, date__gte=date.today(), status='pending')
 
         reservation_serializer = ReservationSerializer(reservations, many=True)
         if reservation_serializer:
@@ -298,3 +318,111 @@ def view_pending_reservation(request, restaurant_id):
         reservation_serializer = ReservationSerializer(reservation, many=True)
         return Response(reservation_serializer.data, status=status.HTTP_200_OK)
     return Response(ReservationSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_top_customers(request, restaurant_id):
+    try:
+        reservations = (Reservation.objects.filter(restaurant_id=restaurant_id).values('user_id').annotate(
+            reservation_count=Count('id'))
+                        .order_by('-reservation_count'))[:5]
+        for user in reservations:
+            customer = Users.objects.get(id=user['user_id'])
+            customerSerializer = UserSerializer(customer)
+            user['customer_name'] = customerSerializer.data['name']
+        return Response(reservations, status=status.HTTP_200_OK)
+
+    except Reservation.DoesNotExist:
+        return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def restaurant_selling_info(request, restaurant_id):
+    try:
+        today = timezone.now()
+        first_day_of_current_month = today.replace(day=1)
+        first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
+
+        current_month_reservations = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=first_day_of_current_month
+        )
+
+        previous_month_reservations = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=first_day_of_previous_month,
+            date__lte=last_day_of_previous_month
+        )
+
+        total_customers_current = set(reservation.user.id for reservation in current_month_reservations)
+        total_orders_current = current_month_reservations.count()
+
+        total_customers_previous = set(reservation.user.id for reservation in previous_month_reservations)
+        total_orders_previous = previous_month_reservations.count()
+
+        total_product = Restaurant.objects.filter(id=restaurant_id).values('menu_item').count()
+
+        cuisine_counts = defaultdict(int)
+        menu_items = Restaurant.objects.filter(id=restaurant_id)
+        if menu_items.exists():
+            restaurant = RestaurantSerializer(menu_items, many=True).data[0]
+            for item in restaurant.get('menu_item', []):
+                cuisine_counts[item['cuisine']] += 1
+
+        cuisine_percentages = {
+            cuisine: {
+                'count': count,
+                'percentage': (count / total_product * 100) if total_product > 0 else 0
+            } for cuisine, count in cuisine_counts.items()
+        }
+
+        def calculate_percentage_change(current, previous):
+            if previous == 0:
+                return 100 if current > 0 else 0
+            return ((current - previous) / previous) * 100
+
+        customer_change_percentage = calculate_percentage_change(
+            len(total_customers_current), len(total_customers_previous)
+        )
+        order_change_percentage = calculate_percentage_change(
+            total_orders_current, total_orders_previous
+        )
+
+        start_of_last_week = today - datetime.timedelta(days=6)
+        last_week_reservation = Reservation.objects.filter(
+            restaurant_id=restaurant_id,
+            date__gte=start_of_last_week,
+            date__lte=today
+        )
+
+        last_week_dates = [(today - datetime.timedelta(days=i)) for i in range(7)]
+        daywise_customer_count = {date.strftime('%a'): 0 for date in last_week_dates}
+
+        for reservation in last_week_reservation:
+            day = reservation.date.strftime('%a')
+            daywise_customer_count[day] += 1
+
+        response_data = {
+            'total_customers': len(total_customers_current),
+            'total_orders': total_orders_current,
+            'total_revenue': 0,
+            'total_product': total_product,
+            'customer_change_percentage': customer_change_percentage,
+            'order_change_percentage': order_change_percentage,
+            'revenue_change_percentage': 0,
+            'product_change_percentage': 100,
+            'daywise_customer_count': daywise_customer_count,
+            'product_overview': cuisine_percentages
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    except Reservation.DoesNotExist:
+        return Response("Reservation does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Restaurant.DoesNotExist:
+        return Response("Restaurant does not exist", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

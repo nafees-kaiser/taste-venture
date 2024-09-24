@@ -3,8 +3,27 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/rating_progress_bar.dart';
 
-class ReviewOverview extends StatelessWidget {
-  const ReviewOverview({super.key});
+class ReviewOverview extends StatefulWidget {
+  final Map<String, dynamic> ratings;
+  final double avgRating;
+  final int totalReviews;
+
+  const ReviewOverview({
+    required this.ratings,
+    required this.avgRating,
+    required this.totalReviews,
+    super.key,
+  });
+
+  @override
+  State<ReviewOverview> createState() => _ReviewOverviewState();
+}
+
+class _ReviewOverviewState extends State<ReviewOverview> {
+  double _calculateProgress(int star) {
+    if (widget.totalReviews == 0) return 0.0;
+    return widget.ratings[star.toString()]! / widget.totalReviews;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,34 +34,19 @@ class ReviewOverview extends StatelessWidget {
       ),
       padding: Theme.of(context).subSectionDividerPadding,
       alignment: Alignment.center,
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             flex: 2,
             child: Column(
-              children: [
-                RatingProgressBar(
-                  rate: "5",
-                  progress: 0.8,
-                ),
-                RatingProgressBar(
-                  rate: "4",
-                  progress: 0.41,
-                ),
-                RatingProgressBar(
-                  rate: "3",
-                  progress: 0.53,
-                ),
-                RatingProgressBar(
-                  rate: "2",
-                  progress: 0.2,
-                ),
-                RatingProgressBar(
-                  rate: "1",
-                  progress: 0.2,
-                ),
-              ],
+              children: List.generate(5, (index) {
+                int star = 5 - index;
+                return RatingProgressBar(
+                  rate: star.toString(),
+                  progress: _calculateProgress(star),
+                );
+              }),
             ),
           ),
           Expanded(
@@ -51,30 +55,30 @@ class ReviewOverview extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "4.5",
+                  widget.avgRating.toString(),
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                RatingStars(
-                  axis: Axis.horizontal,
-                  value: 4,
-                  starCount: 5,
-                  starSize: 20,
-                  maxValue: 5,
-                  starSpacing: 2,
-                  maxValueVisibility: false,
-                  valueLabelVisibility: false,
-                  starOffColor: Color(0xffe7e8ea),
-                  starColor: Color.fromARGB(255, 209, 193, 51),
-                  angle: 12,
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(5, (index) {
+                      return Icon(
+                        Icons.star,
+                        color: index < (widget.avgRating.round())
+                            ? Color.fromARGB(255, 161, 159, 47)
+                            : Color(0xFFC4C4C4),
+                        size: 16,
+                      );
+                    }),
+                  ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Text(
-                  "12 Reviews",
+                  "${widget.totalReviews} Reviews",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,

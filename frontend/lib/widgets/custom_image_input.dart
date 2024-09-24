@@ -21,7 +21,7 @@ class CustomImageInput extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: 5),
         ImageInput(

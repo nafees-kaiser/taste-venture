@@ -32,7 +32,7 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final email = prefs.getString('userEmail');
     try {
-      var response = await ApiSettings(endPoint: '/restaurant/view-menu')
+      var response = await ApiSettings(endPoint: 'restaurant/view-menu')
           .postMethod(jsonEncode({"email": email}));
 
       if (response.statusCode == 200) {
@@ -92,6 +92,7 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
                             ),
                             ...menuItems[key]!.map(
                               (menu) => ManagerMenuCard(
+                                id: menu['id'],
                                 image: menu['image'],
                                 heading: menu['name'],
                                 description: menu['description'],

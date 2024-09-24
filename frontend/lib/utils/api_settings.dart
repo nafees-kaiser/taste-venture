@@ -139,6 +139,34 @@ class ApiSettings {
     }
   }
 
+  Future<http.Response> addPicture(XFile? image) async{
+    
+    var req = http.MultipartRequest('POST', Uri.parse(uri));
+
+    // if(id != null){
+    //   req.fields['id'] = id.toString();
+    // }
+
+    if (image != null) {
+      var stream = http.ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = http.MultipartFile(
+        'image',
+        stream,
+        length,
+        filename: image.path.split("/").last,
+      );
+      req.files.add(multipartFile);
+    }
+
+    try {
+      var streamedResponse = await req.send();
+      return await http.Response.fromStream(streamedResponse);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  } 
+
   String getUri() {
     return uri;
   }

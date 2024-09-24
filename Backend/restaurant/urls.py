@@ -4,7 +4,7 @@ from restaurant import views
 
 urlpatterns = [
     path('add-menu', views.add_menu),
-    path('edit-menu', views.edit_menu),
+    path('edit-menu/<int:id>', views.edit_menu),
     path('view-menu', views.view_menu, name='view_menu'),
     path('add-restaurant', views.add_restaurant),
     path('view-restaurant', views.view_restaurant),
@@ -17,7 +17,9 @@ urlpatterns = [
     path('accept-reservation', views.accept_reservation),
     path('reject-reservation', views.reject_reservation),
     path('visiting-history/<int:user_id>', views.visiting_history, name='visiting_history'),
-    path('get-restaurant-reservation', views.get_reservation_details, name='get_reservation_details'),
     path('get-top-restaurant', views.get_top_restaurants),
     path('reservation', views.get_reservation_details),
+    path('get-top-customers/<int:restaurant_id>', views.get_top_customers),
+    path('get-restaurant-selling-details/<int:restaurant_id>', views.restaurant_selling_info),
+    path('view-menu/<int:menu_id>', views.view_individual_menu)
 ]

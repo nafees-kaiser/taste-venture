@@ -20,6 +20,8 @@ from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpot
 from usersapp.models import Users
 from datetime import date
 
+from usersapp.serializers import UserSerializer
+
 
 # Create your views here.
 @api_view(['POST'])
@@ -188,7 +190,7 @@ def get_dayTour_reviews(request, tourSpot_id):
         ratings[str(review.rating)] += 1
 
     aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
-    average_rating = aggregate_data['average_rating']
+    average_rating = round(aggregate_data['average_rating'] or 0.0, 2)
     total_reviews = aggregate_data['total_reviews']
 
     serializer = TourSpotReviewSerializer(reviews, many=True)
@@ -297,19 +299,22 @@ def tourSpot_selling_info(request, tourSpot_id):
             date__lte=today
         )
 
-        last_week_dates = [(today - datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
-        daywise_customer_count = {date: 0 for date in last_week_dates}
+        last_week_dates = [(today - datetime.timedelta(days=i)) for i in range(7)]
+        daywise_customer_count = {date.strftime('%a'): 0 for date in last_week_dates}
+
         for booking in last_week_bookings:
-            day = booking.date.strftime('%Y-%m-%d')
+            day = booking.date.strftime('%a')
             daywise_customer_count[day] += 1
 
         response_data = {
             'total_customers': len(total_customers_current),
             'total_orders': total_orders_current,
             'total_revenue': total_revenue_current,
+            'total_product': 0,
             'customer_change_percentage': customer_change_percentage,
             'order_change_percentage': order_change_percentage,
             'revenue_change_percentage': revenue_change_percentage,
+            'product_change_percentage': 0,
             'daywise_customer_count': daywise_customer_count
         }
 
@@ -324,13 +329,13 @@ def tourSpot_selling_info(request, tourSpot_id):
 @api_view(['GET'])
 def get_top_customers(request, tourSpot_id):
     try:
-        bookings = Booking.objects.filter(tourspot_id=tourSpot_id)
-        for user in bookings.values('user'):
-            customer = AppUser.objects.get(id=user['user'])
-            customerSerializer = AppUserSerializer(customer)
-            print(customerSerializer.data['name'])
-        serializer = BookingSerializer(bookings, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        bookings = (Booking.objects.filter(tourspot_id=tourSpot_id).values('user_id').annotate(booking_count=Count('id'))
+                    .order_by('-booking_count'))[:5]
+        for user in bookings:
+            customer = Users.objects.get(id=user['user_id'])
+            customerSerializer = UserSerializer(customer)
+            user['customer_name'] = customerSerializer.data['name']
+        return Response(bookings, status=status.HTTP_200_OK)
 
     except Booking.DoesNotExist:
         return Response("Booking does not exist", status=status.HTTP_404_NOT_FOUND)

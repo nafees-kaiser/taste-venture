@@ -3,8 +3,14 @@ import 'package:frontend/utils/custom_theme.dart';
 
 class InformationCardWithoutIcon extends StatefulWidget {
   String heading, text;
+  Function? action;
+  String? editKey;
   InformationCardWithoutIcon(
-      {super.key, required this.heading, required this.text});
+      {super.key,
+      required this.heading,
+      required this.text,
+      this.action,
+      this.editKey});
 
   @override
   _InformationCardWithoutIconState createState() =>
@@ -49,41 +55,43 @@ class _InformationCardWithoutIconState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.heading,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.heading,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-              isEditing
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 8.0),
-                      width: 240,
-                      child: TextField(
-                        controller: _controller,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter text',
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
+                isEditing
+                    ? Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        width: 240,
+                        child: TextField(
+                          controller: _controller,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter text',
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
                           ),
                         ),
+                      )
+                    : Text(
+                        widget.text,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1,
+                        ),
                       ),
-                    )
-                  : Text(
-                      widget.text,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 1,
-                      ),
-                    ),
-            ],
+              ],
+            ),
           ),
           GestureDetector(
             onTap: () {
@@ -94,6 +102,12 @@ class _InformationCardWithoutIconState
                 }
                 isEditing = !isEditing;
               });
+              if (!isEditing &&
+                  widget.editKey != null &&
+                  widget.action != null &&
+                  widget.editKey!.isNotEmpty) {
+                widget.action!(widget.editKey!, _controller.text);
+              }
             },
             child: Text(
               isEditing ? "Save" : "Edit",
