@@ -5,6 +5,7 @@ class InformationCardWithoutIcon extends StatefulWidget {
   String heading, text;
   Function? action;
   String? editKey;
+  
   InformationCardWithoutIcon(
       {super.key,
       required this.heading,
@@ -109,13 +110,9 @@ class _InformationCardWithoutIconState
                 widget.action!(widget.editKey!, _controller.text);
               }
             },
-            child: Text(
-              isEditing ? "Save" : "Edit",
-              style: const TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 15,
-                letterSpacing: 1,
-              ),
+            child: Icon(
+              isEditing ? Icons.save_alt : Icons.edit_rounded,
+              color: Colors.black,
             ),
           )
         ],

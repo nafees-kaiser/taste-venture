@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
-import 'package:frontend/widgets/information_card_without_icon.dart';
+import 'package:frontend/widgets/information_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerRestaurantInformation extends StatefulWidget {
@@ -28,7 +28,8 @@ class _ManagerRestaurantInformationState
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String restaurantID = prefs.getInt('spotId').toString();
     getAPI = ApiSettings(endPoint: 'restaurant/$restaurantID');
-    postAPI = ApiSettings(endPoint: 'edit-restaurant/$restaurantID');
+    postAPI =
+        ApiSettings(endPoint: 'restaurant/edit-restaurant/$restaurantID/');
     return getInfo();
   }
 
@@ -41,6 +42,27 @@ class _ManagerRestaurantInformationState
         return restaurantInfo;
       } else {
         throw Exception('Failed to load Restaurant Information');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  void _saveChanges(String key, String newValue) async {
+    final response = await postAPI.postMethod(jsonEncode({key: newValue}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Updated successfully')),
+        );
+        // Refresh the page
+        setState(() {
+          _bookingFuture = _initializeData();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error updating data')),
+        );
       }
     } catch (e) {
       throw Exception(e);
@@ -73,30 +95,42 @@ class _ManagerRestaurantInformationState
                     const SizedBox(
                       height: 10,
                     ),
-                    InformationCardWithoutIcon(
-                      heading: "Restaurant Name",
-                      text: restaurantInfo['restaurant_name'],
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Manager Name",
-                      text: restaurantInfo['name'],
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Official Email",
-                      text: restaurantInfo['email'],
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Address",
-                      text: restaurantInfo['address'],
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Phone Number",
-                      text: restaurantInfo['contact'],
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Entrance Fee",
-                      text: "200 tk",
-                    ),
+                    InformationCard(
+                        heading: "Restaurant Name",
+                        text: restaurantInfo['restaurant_name'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('restaurant_name', newValue);
+                        }),
+                    InformationCard(
+                        heading: "Manager Name",
+                        text: restaurantInfo['name'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('name', newValue);
+                        }),
+                    InformationCard(
+                        heading: "Official Email",
+                        text: restaurantInfo['email'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('email', newValue);
+                        }),
+                    InformationCard(
+                        heading: "Address",
+                        text: restaurantInfo['address'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('address', newValue);
+                        }),
+                    InformationCard(
+                        heading: "Phone Number",
+                        text: restaurantInfo['contact'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('contact', newValue);
+                        }),
+                    InformationCard(
+                        heading: "Cuisine",
+                        text: restaurantInfo['cuisine'],
+                        onTextSaved: (newValue) {
+                          _saveChanges('cuisine', newValue);
+                        }),
                     const SizedBox(
                       height: 10,
                     ),
@@ -220,235 +254,17 @@ class _ManagerRestaurantInformationState
                     const SizedBox(
                       height: 10,
                     ),
-                    InformationCardWithoutIcon(
+                    InformationCard(
                       heading: "Description",
                       text: restaurantInfo['description'],
+                      onTextSaved: (newText) =>
+                          restaurantInfo['description'] = newText,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Free WiFi",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Yes",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Parking",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "No",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Food",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Yes",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Indoor Pool",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "No",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    InformationCardWithoutIcon(
-                      heading: "Other Services",
+                    InformationCard(
+                      heading: "Image",
                       text: "Gaming Zone, Cleaning Service",
                     ),
                   ],
