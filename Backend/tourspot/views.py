@@ -39,10 +39,42 @@ def add_manager(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @api_view(['GET'])
+# def view_tourspot_list(request):
+#     tourspots = (
+#         Tourspot.objects
+#         .annotate(
+#             total_reviews=Count('dayTour_reviews'),
+#             average_rating=Avg('dayTour_reviews__rating')
+#         )
+#         .order_by('id')
+#     )
+#
+#     paginator = StandardResultsSetPagination()
+#     paginated_tourspots = paginator.paginate_queryset(tourspots, request)
+#
+#     tourspot_serializer = TourspotSerializer(paginated_tourspots, many=True)
+#
+#     response_data = {
+#         "count": tourspots.count(),
+#         "page_size": paginator.page_size,
+#         "results": [
+#             {
+#                 **tourspot_data,
+#                 'total_reviews': tourspot.total_reviews,
+#                 'average_rating': round(tourspot.average_rating or 0.0, 2),
+#             }
+#             for tourspot_data, tourspot in zip(tourspot_serializer.data, paginated_tourspots)
+#         ]
+#     }
+#
+#     return paginator.get_paginated_response(response_data)
+
 
 @api_view(['GET'])
 def view_tourspot_list(request):
     tourspots = Tourspot.objects.all()
+
     paginator = StandardResultsSetPagination()
     paginated_tourspots = paginator.paginate_queryset(tourspots, request)
     tourspot_serializer = TourspotSerializer(paginated_tourspots, many=True)
@@ -54,6 +86,11 @@ def view_tourspot_list(request):
         "results": tourspot_serializer.data
     }
     return Response(response_data, status=status.HTTP_200_OK)
+
+
+from django.db.models import Avg, Count
+from rest_framework.response import Response
+from rest_framework import status
 
 
 @api_view(['GET'])
@@ -78,20 +115,15 @@ def view_tourspot_detail(request, id):
         #     'pool': tourspot.pool,
         #     'other_services': tourspot.other_services,
         # }
-        ratings = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+
         reviews = Review.objects.filter(tourSpot_id=id)
-        for review in reviews:
-            ratings[str(review.rating)] += 1
 
         aggregate_data = reviews.aggregate(average_rating=Avg('rating'), total_reviews=Count('id'))
         average_rating = round(aggregate_data['average_rating'] or 0.0, 2)
         total_reviews = aggregate_data['total_reviews']
 
-        serializer = TourSpotReviewSerializer(reviews, many=True)
         tourspot_data = TourspotSerializer(tourspot).data
         response = {
-            "ratings": ratings,
-            "reviews": serializer.data,
             "avg_rating": average_rating,
             "total_reviews": total_reviews,
             "tourspot": tourspot_data

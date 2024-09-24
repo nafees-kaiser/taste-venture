@@ -342,19 +342,19 @@ class ResortDetailsCard extends StatelessWidget {
   }
 }
 
-class RatingStar extends StatelessWidget {
-  const RatingStar({super.key});
+// class RatingStar extends StatelessWidget {
+//   const RatingStar({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: List<Icon>.generate(
-        5,
-        (int index) => Icon(
-          Icons.star_rate_rounded,
-          color: RATING_FILL,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: List<Icon>.generate(
+//         5,
+//         (int index) => Icon(
+//           Icons.star_rate_rounded,
+//           color: RATING_FILL,
+//         ),
+//       ),
+//     );
+//   }
+// }
