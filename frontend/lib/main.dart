@@ -126,7 +126,8 @@ Future<void> main() async {
       '/tourspot-detail': (context) => TourSpotDetailsPage(id: 1),
       '/tourspot-info': (context) => AddTourspotAdditionalInfo(),
       '/restaurant/reservation-list': (context) => ReservationList(),
-      '/customer/reservation': (context) => const CustomerReservation(restaurantId: 0),
+      '/customer/reservation': (context) =>
+          const CustomerReservation(restaurantId: 0),
       '/manager-profile': (context) => ManagerProfile(),
       '/tourspot/booking-list': (context) => BookingManager(),
       '/edit-menu': (context) => EditMenuPage(),
