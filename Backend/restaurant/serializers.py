@@ -37,11 +37,9 @@ class RestaurantSerializer(serializers.ModelSerializer):
         extra_kwargs = {'rating': {'read_only': True}}
 
     def get_favorite(self, obj):
-        request = self.context.get('request')
-        if request and request.user.is_authenticated:
-            user = Users.objects.get(user_id=request.user.id)
-            return Favorite.objects.filter(user=request.user, restaurant=obj).exists()
-        return False
+        id = self.context.get('user_id')
+        user = Users.objects.get(user_id=id)
+        return Favorite.objects.filter(user=user, restaurant=obj).exists()
 
     def to_internal_value(self, data):
         if isinstance(data, QueryDict):

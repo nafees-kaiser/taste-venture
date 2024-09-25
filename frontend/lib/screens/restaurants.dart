@@ -29,22 +29,17 @@ class _RestaurantState extends State<Restaurant> {
   void initState() {
     super.initState();
     fetchRestaurants();
-    SharedPreferences.getInstance().then((prefs) {
-      setState(() {
-        userId = prefs.getInt('userId') ?? 0;
-        // print(userId);
-      });
-    });
   }
 
   List<Map<String, dynamic>> restaurants = [];
 
   Future<void> fetchRestaurants() async {
-    ApiSettings api = ApiSettings(
-        endPoint: 'restaurant/view-restaurant/$userId?page=$currentPage');
-    final response = await api.getMethod();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.get('userId');
     try {
+      ApiSettings api = ApiSettings(
+          endPoint: 'restaurant/view-restaurant/$userId?page=$currentPage');
+      final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
