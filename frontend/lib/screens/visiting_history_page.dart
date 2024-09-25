@@ -11,7 +11,8 @@ class VisitingHistoryPage extends StatelessWidget {
   Future<Map<String, dynamic>> getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
-    ApiSettings api = ApiSettings(endPoint: 'restaurant/visiting-history/1');
+    ApiSettings api =
+        ApiSettings(endPoint: 'restaurant/visiting-history/$userId');
 
     try {
       final response = await api.getMethod();
