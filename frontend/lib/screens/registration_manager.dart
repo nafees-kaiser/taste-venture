@@ -139,7 +139,8 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
         ),
       );
     } else if (selectedVenueType == 'Tour Spot') {
-      Navigator.pushNamed(context, '/tourspot-info', arguments: [tourspot, itemImage[0]]);
+      Navigator.pushNamed(context, '/tourspot-info',
+          arguments: [tourspot, itemImage[0]]);
     }
 
     // Navigator.pushNamed(
@@ -151,7 +152,8 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
 
   @override
   Widget build(BuildContext context) {
-    bool allFieldsFilled = fieldStatus.values.every((filled) => filled ) && itemImage.isNotEmpty;
+    bool allFieldsFilled =
+        fieldStatus.values.every((filled) => filled) && itemImage.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
