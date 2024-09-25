@@ -2,7 +2,7 @@ import datetime
 from collections import defaultdict
 
 from django.contrib.auth.hashers import make_password
-from django.db.models import Avg, Count, Subquery, OuterRef
+from django.db.models import Avg, Count, Subquery, OuterRef, Q
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
@@ -39,22 +39,86 @@ def add_manager(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @api_view(['GET'])
+# def view_tourspot_list(request):
+#     tourspots = (
+#         Tourspot.objects
+#         .annotate(
+#             total_reviews=Count('dayTour_reviews'),
+#             average_rating=Avg('dayTour_reviews__rating')
+#         )
+#         .order_by('id')
+#     )
+#
+#     paginator = StandardResultsSetPagination()
+#     paginated_tourspots = paginator.paginate_queryset(tourspots, request)
+#
+#     tourspot_serializer = TourspotSerializer(paginated_tourspots, many=True)
+#
+#     response_data = {
+#         "count": tourspots.count(),
+#         "page_size": paginator.page_size,
+#         "results": [
+#             {
+#                 **tourspot_data,
+#                 'total_reviews': tourspot.total_reviews,
+#                 'average_rating': round(tourspot.average_rating or 0.0, 2),
+#             }
+#             for tourspot_data, tourspot in zip(tourspot_serializer.data, paginated_tourspots)
+#         ]
+#     }
+#
+#     return paginator.get_paginated_response(response_data)
+
 @api_view(['GET'])
 def view_tourspot_list(request):
-    tourspots = (
-        Tourspot.objects
-        .annotate(
-            total_reviews=Count('dayTour_reviews'),
-            average_rating=Avg('dayTour_reviews__rating')
-        )
-        .order_by('id')
+    # Extract query parameters for filtering
+    search_query = request.GET.get('search', '')
+    # cuisine_filter = request.GET.getlist('cuisine')  # Multiple values
+    price_min = request.GET.get('price_min')
+    price_max = request.GET.get('price_max')
+    sort_by = request.GET.get('sort_by', 'id')  # Default sort by ID
+    sort_order = request.GET.get('sort_order', 'asc')  # Default sort order
+
+    # Build the base queryset
+    tourspots = Tourspot.objects.annotate(
+        total_reviews=Count('dayTour_reviews'),
+        average_rating=Avg('dayTour_reviews__rating')
     )
 
+    # Filtering based on search query
+    if search_query:
+        tourspots = tourspots.filter(
+            Q(tourspot_name__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+
+    # Filtering based on cuisine
+    # if cuisine_filter:
+    #     tourspots = tourspots.filter(
+    #         Q(Rcuisine__in=cuisine_filter)
+    #     )
+
+    # Filtering based on price range
+    if price_min is not None:
+        tourspots = tourspots.filter(entry_fee__gte=price_min)
+    if price_max is not None:
+        tourspots = tourspots.filter(entry_fee__lte=price_max)
+
+    # Sorting
+    if sort_order == 'desc':
+        sort_by = f'-{sort_by}'  # Reverse the sort order if 'desc'
+
+    tourspots = tourspots.order_by(sort_by)
+
+    # Pagination
     paginator = StandardResultsSetPagination()
     paginated_tourspots = paginator.paginate_queryset(tourspots, request)
 
+    # Serialize the paginated data
     tourspot_serializer = TourspotSerializer(paginated_tourspots, many=True)
 
+    # Prepare response data
     response_data = {
         "count": tourspots.count(),
         "page_size": paginator.page_size,
