@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:frontend/utils/flutter_toast.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,9 +72,10 @@ class _AddReviewState extends State<AddReview> {
     });
 
     if (response.statusCode == 201 || response.statusCode == 200) {
+      successToast("Review added successfully");
       Navigator.pushNamed(context, '/customer-homepage');
     } else {
-      print(response.statusCode);
+      Navigator.pushNamed(context, '/customer-homepage');
       // Optionally handle other statuses or errors
     }
   }

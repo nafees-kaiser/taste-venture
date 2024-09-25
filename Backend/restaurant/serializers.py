@@ -103,6 +103,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, allow_null=True)
+    restaurant = RestaurantSerializer(read_only=True, allow_null=True)
 
     class Meta:
         model = Reservation

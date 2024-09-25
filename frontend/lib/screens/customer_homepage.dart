@@ -339,7 +339,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           children: snapshot.data!.map((restaurant) {
                             print(restaurant);
                             return TopResCard(
-                              id: 1,
+                              id: restaurant.id,
                               restaurantImage: restaurant.image ?? '',
                               restaurantName: restaurant.restaurant_name,
                               restaurantAddress: restaurant.address,
