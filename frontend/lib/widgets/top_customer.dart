@@ -21,7 +21,6 @@ class TopCustomer extends StatelessWidget {
     if (response.statusCode == 200) {
       List<Map<String, dynamic>> jsonResponse = List<Map<String, dynamic>>.from(
           json.decode(response.body) as List<dynamic>);
-      print(jsonResponse);
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
