@@ -11,19 +11,6 @@ class TopResCard extends StatefulWidget {
   int id;
   String restaurantRating;
 
-  // Future<Map<String, dynamic>> getInfo(String url) async {
-  //   ApiSettings api = ApiSettings(endPoint: url);
-  //   final response = await api.getMethod();
-
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> jsonResponse = json.decode(response.body);
-  //     print(jsonResponse);
-  //     return jsonResponse;
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
-
   TopResCard(
       {super.key,
       required this.id,
@@ -37,12 +24,41 @@ class TopResCard extends StatefulWidget {
 }
 
 class _TopResCardState extends State<TopResCard> {
+  Future<Map<String, dynamic>?> getInfo() async {
+    ApiSettings api = ApiSettings(endPoint: 'restaurant/${widget.id}');
+    final response = await api.getMethod();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      print(jsonResponse);
+      return jsonResponse;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigation(context: context).materialNavigation(
-      //     '/restaurant-info',
-      //     () => RestaurantInfo.withRestaurant(restaurant: getInfo(''))),
+      onTap: () async {
+        try {
+          final restaurantInfo = await getInfo();
+          if (restaurantInfo != null) {
+            Navigation(context: context).materialNavigation(
+              '/restaurant-info',
+              () => RestaurantInfo.withRestaurant(restaurant: restaurantInfo),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('No restaurant information available')),
+            );
+          }
+        } catch (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error fetching restaurant information')),
+          );
+        }
+      },
       child: Container(
           width: 150,
           height: 220,
@@ -67,27 +83,25 @@ class _TopResCardState extends State<TopResCard> {
                   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: 
-                    widget.restaurantImage == null
-                    ? const Image(
-                        image: AssetImage('assets/image_filler.png'),
-                        fit: BoxFit.cover,
-                        height: 120,
-                      )
-                    : Image.network(
-                        ApiSettings(endPoint: widget.restaurantImage).getUri(),
-                        fit: BoxFit.cover,
-                        height: 120,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Image(
-                          image: AssetImage('assets/image_filler.png'),
-                          fit: BoxFit.cover,
-                          height: 120,
-                        ),
-                      ),                   
-                    
-                    
-                  
+                    child: widget.restaurantImage == null
+                        ? const Image(
+                            image: AssetImage('assets/image_filler.png'),
+                            fit: BoxFit.cover,
+                            height: 120,
+                          )
+                        : Image.network(
+                            ApiSettings(endPoint: widget.restaurantImage)
+                                .getUri(),
+                            fit: BoxFit.cover,
+                            height: 120,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Image(
+                              image: AssetImage('assets/image_filler.png'),
+                              fit: BoxFit.cover,
+                              height: 120,
+                            ),
+                          ),
+
                     // Image.asset(
                     //   widget.restaurantImage,
                     //   width: double.infinity,
