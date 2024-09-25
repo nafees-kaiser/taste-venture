@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/visiting_history_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +17,6 @@ class VisitingHistoryPage extends StatelessWidget {
       final response = await api.getMethod();
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData);
         return responseData;
       }
       return {'restaurant': [], 'tour-spot': []};
@@ -64,22 +65,22 @@ class VisitingHistoryPage extends StatelessWidget {
                       final restaurant = restaurants[index];
                       final date = DateTime.parse(restaurant['date']);
                       return GestureDetector(
-                        child: VisitingHistoryCard(
-                          spotImage: 'assets/NorthEnd_second.jpg',
-                          spotName:
-                              '${restaurant['restaurant']['restaurant_name']}',
-                          spotLocation:
-                              '${restaurant['restaurant']['address']}',
-                          visitingDate: date,
-                          id: restaurant['restaurant']['id'],
-                          is_restautant: true,
-                        ),
-                        // onTap: () => Navigator.pushNamed(
-                        //   context,
-                        //   '/restaurant/information',
-                        //   arguments: {'id': restaurant['id']},
-                        // ),
-                      );
+                          child: VisitingHistoryCard(
+                            spotImage: restaurant['restaurant']['image'] ??
+                                'assets/NorthEnd_second.jpg',
+                            spotName:
+                                "${restaurant['restaurant']['restaurant_name']}",
+                            spotLocation:
+                                '${restaurant['restaurant']['address']}',
+                            visitingDate: date,
+                            id: restaurant['restaurant']['id'],
+                            is_restautant: true,
+                          ),
+                          onTap: () => Navigation(context: context)
+                              .materialNavigation(
+                                  '/restaurant-info',
+                                  () => RestaurantInfo.withRestaurant(
+                                      restaurant: restaurant['restaurant'])));
                     },
                   ),
                 ],
@@ -98,7 +99,8 @@ class VisitingHistoryPage extends StatelessWidget {
                       final date = DateTime.parse(tourSpot['date']);
                       return GestureDetector(
                         child: VisitingHistoryCard(
-                          spotImage: 'assets/NorthEnd_second.jpg',
+                          spotImage: tourSpot['tourspot']['image'] ??
+                              'assets/NorthEnd_second.jpg',
                           spotName: '${tourSpot['tourspot']['tourspot_name']}',
                           spotLocation: '${tourSpot['tourspot']['address']}',
                           visitingDate: date,
