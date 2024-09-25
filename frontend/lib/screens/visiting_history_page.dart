@@ -66,22 +66,24 @@ class VisitingHistoryPage extends StatelessWidget {
                       final restaurant = restaurants[index];
                       final date = DateTime.parse(restaurant['date']);
                       return GestureDetector(
-                          child: VisitingHistoryCard(
-                            spotImage: restaurant['restaurant']['image'] ??
-                                'assets/NorthEnd_second.jpg',
-                            spotName:
-                                "${restaurant['restaurant']['restaurant_name']}",
-                            spotLocation:
-                                '${restaurant['restaurant']['address']}',
-                            visitingDate: date,
-                            id: restaurant['restaurant']['id'],
-                            is_restautant: true,
-                          ),
-                          onTap: () => Navigation(context: context)
-                              .materialNavigation(
-                                  '/restaurant-info',
-                                  () => RestaurantInfo.withRestaurant(
-                                      restaurant: restaurant['restaurant'])));
+                        child: VisitingHistoryCard(
+                          spotImage: restaurant['restaurant']['image'] ??
+                              'assets/NorthEnd_second.jpg',
+                          spotName:
+                              "${restaurant['restaurant']['restaurant_name']}",
+                          spotLocation:
+                              '${restaurant['restaurant']['address']}',
+                          visitingDate: date,
+                          id: restaurant['restaurant']['id'],
+                          is_restautant: true,
+                        ),
+                        onTap: () =>
+                            Navigation(context: context).materialNavigation(
+                          '/restaurant-info',
+                          () => RestaurantInfo.withRestaurant(
+                              restaurant: restaurant['restaurant']),
+                        ),
+                      );
                     },
                   ),
                 ],
