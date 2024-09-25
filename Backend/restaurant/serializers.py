@@ -39,6 +39,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
     def get_favorite(self, obj):
         request = self.context.get('request')
         if request and request.user.is_authenticated:
+            user = Users.objects.get(user_id=request.user.id)
             return Favorite.objects.filter(user=request.user, restaurant=obj).exists()
         return False
 
