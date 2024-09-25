@@ -69,6 +69,107 @@ class _ManagerRestaurantInformationState
     }
   }
 
+  Future<String?> _showTextInputDialog(
+      BuildContext context, String title, String initialValue) {
+    TextEditingController controller =
+        TextEditingController(text: initialValue);
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit $title'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Enter new $title'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(controller.text);
+              },
+              child: const Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTimeCard(BuildContext context, String label, String time) {
+    return GestureDetector(
+      onTap: () async {
+        // Parse the time string to TimeOfDay
+        final parsedTime = TimeOfDay(
+          hour: int.parse(time.split(':')[0]),
+          minute: int.parse(time.split(':')[1].split(' ')[0]),
+        );
+
+        TimeOfDay? newTimeOfDay = await showTimePicker(
+            context: context,
+            initialTime: parsedTime,
+            initialEntryMode: TimePickerEntryMode.inputOnly);
+        if (newTimeOfDay != null && newTimeOfDay.toString().isNotEmpty) {
+          _saveChanges(label == "From" ? 'opening_time' : 'closing_time',
+              "${newTimeOfDay.hour}:${newTimeOfDay.minute.toString().padLeft(2, '0')} ${newTimeOfDay.period.name}");
+        }
+      },
+      child: Container(
+        width: 170,
+        margin: Theme.of(context).subSectionDividerPadding,
+        padding: Theme.of(context).insideCardPadding,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(2, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.edit,
+              size: 20.0,
+              color: Colors.black,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,108 +248,10 @@ class _ManagerRestaurantInformationState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "From",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "10:23 AM",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 170,
-                          margin: Theme.of(context).subSectionDividerPadding,
-                          padding: Theme.of(context).insideCardPadding,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "To",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                  Text(
-                                    "11:00 PM",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Text(
-                                "Edit",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        _buildTimeCard(
+                            context, "From", restaurantInfo['opening_time']),
+                        _buildTimeCard(
+                            context, "To", restaurantInfo['closing_time']),
                       ],
                     ),
                     const SizedBox(
