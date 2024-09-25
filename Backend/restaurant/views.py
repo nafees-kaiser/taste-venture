@@ -144,6 +144,11 @@ def add_restaurant_review(request):
                 customer = Users.objects.get(user=user)
                 restaurant = Restaurant.objects.get(pk=restaurant_id)
                 review = Review.objects.create(user=customer, restaurant=restaurant, review=review, rating=rating)
+
+                avg_rating = Review.objects.filter(restaurant=restaurant).aggregate(Avg('rating'))['rating__avg']
+                restaurant.rating = round(avg_rating, 2)
+                restaurant.save()
+
                 serializer = ReviewSerializer(review)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             except Users.DoesNotExist:

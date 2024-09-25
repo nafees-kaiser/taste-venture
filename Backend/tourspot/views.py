@@ -223,6 +223,11 @@ def add_dayTour_review(request):
             customer = Users.objects.get(user=user)
             dayTour = Tourspot.objects.get(pk=dayTourSpot_id)
             review = Review.objects.create(user=customer, tourSpot=dayTour, rating=rating, review=review)
+
+            avg_rating = Review.objects.filter(tourSpot=dayTour).aggregate(Avg('rating'))['rating__avg']
+            dayTour.rating = round(avg_rating, 2)
+            dayTour.save()
+
             serializer = TourSpotReviewSerializer(review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
