@@ -2,14 +2,14 @@
 import 'package:frontend/utils/constant.dart';
 
 class FavCard extends StatelessWidget {
-  String image, foodName, storeName;
+  String image, foodName, address;
   double rating;
 
   FavCard(
       {super.key,
       required this.image,
       required this.foodName,
-      required this.storeName,
+      required this.address,
       required this.rating});
 
   @override
@@ -33,7 +33,7 @@ class FavCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
                 image,
-                width: 328,
+                width: double.infinity,
                 height: 150,
                 fit: BoxFit.fitWidth,
               ),
@@ -48,7 +48,7 @@ class FavCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-              child: Text(storeName,
+              child: Text(address,
                   style: const TextStyle(
                     fontSize: 16,
                   )),
