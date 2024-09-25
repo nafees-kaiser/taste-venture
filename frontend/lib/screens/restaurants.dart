@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/utils/api_settings.dart';
@@ -24,6 +25,7 @@ class _RestaurantState extends State<Restaurant> {
   int numberOfPages = 10;
   int currentPage = 1;
   int userId = 0;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -38,7 +40,8 @@ class _RestaurantState extends State<Restaurant> {
     final userId = prefs.get('userId');
     try {
       ApiSettings api = ApiSettings(
-          endPoint: 'restaurant/view-restaurant/$userId?page=$currentPage');
+          endPoint:
+              'restaurant/view-restaurant/$userId?page=${(searchController.text.isNotEmpty) ? currentPage : 1}&search=${searchController.text}');
       final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
@@ -52,12 +55,18 @@ class _RestaurantState extends State<Restaurant> {
           numberOfPages = (data["count"] / data["page_size"]).ceil();
           // print(numberOfPages);
         });
+      } else if (response.statusCode == 404) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('No restaurants found'),
+          ),
+        );
       } else {
         // Handle the error
         throw Exception('Failed to load Restaurants');
       }
     } catch (e) {
-      throw Exception(e);
+      throw Exception('Failed to load Restaurants');
     }
   }
 
@@ -109,6 +118,13 @@ class _RestaurantState extends State<Restaurant> {
                       width: 350,
                       height: 50,
                       child: SearchBar(
+                        controller: searchController,
+                        onSubmitted: (value) {
+                          setState(() {
+                            currentPage = 1;
+                            fetchRestaurants();
+                          });
+                        },
                         elevation: const WidgetStatePropertyAll(1),
                         backgroundColor:
                             WidgetStatePropertyAll(Colors.grey[300]),
@@ -118,11 +134,14 @@ class _RestaurantState extends State<Restaurant> {
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         )),
-                        leading: const Padding(
+                        leading: Padding(
                           padding: EdgeInsets.all(3.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.grey,
+                          child: GestureDetector(
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                            onTap: () => fetchRestaurants(),
                           ),
                         ),
                       ),

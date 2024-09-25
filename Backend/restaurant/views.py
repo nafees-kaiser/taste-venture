@@ -18,7 +18,7 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
-
+from django.db.models import Q
 
 # Create your views here.
 @api_view(['POST'])
@@ -261,10 +261,14 @@ def reject_reservation(request):
 @api_view(['GET'])
 def view_restaurant(request, user_id):
     try:
-        restaurant_list = Restaurant.objects.filter()
+        search_query = request.GET.get('search', '')
+        restaurant_list = Restaurant.objects.filter(
+            Q(restaurant_name__icontains=search_query) |
+            Q(cuisine__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-        # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
         restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True, context={'user_id': user_id})
 
         response_data = {
@@ -272,8 +276,10 @@ def view_restaurant(request, user_id):
             "page_size": StandardResultsSetPagination.page_size,
             "results": restaurant_list_serializer.data
         }
-
-        return Response(response_data, status=status.HTTP_200_OK)
+        if restaurant_list.count() > 0:
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
