@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/initial_menu.dart';
 import 'package:frontend/screens/restaurants.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,6 +63,13 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _reTypePasswordController =
       TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _openingTimeController.text = '9:00 am';
+    _closingTimeController.text = '10:00 pm';
+  }
 
   @override
   void dispose() {
@@ -139,7 +147,8 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
         ),
       );
     } else if (selectedVenueType == 'Tour Spot') {
-      Navigator.pushNamed(context, '/tourspot-info', arguments: [tourspot, itemImage[0]]);
+      Navigator.pushNamed(context, '/tourspot-info',
+          arguments: [tourspot, itemImage[0]]);
     }
 
     // Navigator.pushNamed(
@@ -149,9 +158,81 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
     // );
   }
 
+  Widget _buildTimeCard(BuildContext context, String label, String time,
+      TextEditingController controller) {
+    return GestureDetector(
+      onTap: () async {
+        // Parse the time string to TimeOfDay
+        final parsedTime = TimeOfDay(
+          hour: int.parse(time.split(':')[0]),
+          minute: int.parse(time.split(':')[1].split(' ')[0]),
+        );
+
+        TimeOfDay? newTimeOfDay = await showTimePicker(
+            context: context,
+            initialTime: parsedTime,
+            initialEntryMode: TimePickerEntryMode.inputOnly);
+        if (newTimeOfDay != null && newTimeOfDay.toString().isNotEmpty) {
+          setState(() {
+            controller.text = newTimeOfDay.format(context);
+          });
+        }
+      },
+      child: Container(
+        width: 170,
+        margin: Theme.of(context).subSectionDividerPadding,
+        padding: Theme.of(context).insideCardPadding,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(2, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.edit,
+              size: 20.0,
+              color: Colors.black,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool allFieldsFilled = fieldStatus.values.every((filled) => filled ) && itemImage.isNotEmpty;
+    bool allFieldsFilled =
+        fieldStatus.values.every((filled) => filled) && itemImage.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
@@ -245,13 +326,42 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: CustomInputField(
-                              label: 'Opening time',
-                              hintText: 'eg hh:mm:ss AM',
-                              onChanged: (_) => checkAllFieldsFilled(),
-                              controller: _openingTimeController,
-                            ),
-                          ),
+                              child:
+                                  // GestureDetector(
+                                  //   onTap: () async {
+                                  //     // Parse the time string to TimeOfDay
+                                  //     String time = "9:00 am";
+                                  //     final parsedTime = TimeOfDay(
+                                  //       hour: int.parse(time.split(':')[0]),
+                                  //       minute:
+                                  //           int.parse(time.split(':')[1].split(' ')[0]),
+                                  //     );
+
+                                  //     TimeOfDay? newTimeOfDay = await showTimePicker(
+                                  //         context: context,
+                                  //         initialTime: parsedTime,
+                                  //         initialEntryMode:
+                                  //             TimePickerEntryMode.inputOnly);
+                                  //     if (newTimeOfDay != null) {
+                                  //       setState(() {
+                                  //         _openingTimeController.text =
+                                  //             newTimeOfDay.format(context);
+                                  //       });
+                                  //     }
+                                  //   },
+                                  // )
+
+                                  //     CustomInputField(
+                                  //   label: 'Opening time',
+                                  //   hintText: 'eg hh:mm:ss AM',
+                                  //   onChanged: (_) => checkAllFieldsFilled(),
+                                  //   controller: _openingTimeController,
+                                  // ),
+                                  _buildTimeCard(
+                                      context,
+                                      "Opening time",
+                                      _openingTimeController.text,
+                                      _openingTimeController)),
                           SizedBox(width: 16),
                           Expanded(
                             child: CustomInputField(

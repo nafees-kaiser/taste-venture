@@ -154,19 +154,19 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                     const Expanded(child: SizedBox()),
 
                     // Favorite
-                    // GestureDetector(
-                    //   child: true //restaurants[i]['favorite']
-                    //       ? const Icon(
-                    //           Icons.favorite,
-                    //           color: Colors.pink,
-                    //           size: 30,
-                    //         )
-                    //       : Icon(
-                    //           Icons.favorite_border,
-                    //           size: 30,
-                    //         ),
-                    //   onTap: () => toggleFavorite(widget.i),
-                    // )
+                    GestureDetector(
+                      child: true //restaurants[i]['favorite']
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.pink,
+                              size: 30,
+                            )
+                          : Icon(
+                              Icons.favorite_border,
+                              size: 30,
+                            ),
+                      onTap: () => toggleFavorite(widget.i),
+                    )
                   ],
                 ),
               ],
