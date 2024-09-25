@@ -29,8 +29,8 @@ class _ReviewsState extends State<Reviews> {
     try {
       final response = await api.getMethod();
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        // print(responseData);
+        Map<String, dynamic> responseData =
+            json.decode(utf8.decode(response.bodyBytes));
         return responseData;
       }
       return {};

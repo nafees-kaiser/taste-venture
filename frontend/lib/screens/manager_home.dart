@@ -34,7 +34,8 @@ class _ManagerHomeState extends State<ManagerHome> {
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      Map<String, dynamic> jsonResponse =
+          json.decode(utf8.decode(response.bodyBytes));
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
@@ -90,7 +91,12 @@ class _ManagerHomeState extends State<ManagerHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text('Welcome, $userType!'),
+              Text(
+                'Welcome to the ${userType == 'tour_manager' ? 'Tour Spot' : 'Restaurant'}!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 20),
               FutureBuilder(
                 future: getData(userType == 'tour_manager'
@@ -177,7 +183,6 @@ class _ManagerHomeState extends State<ManagerHome> {
                 },
               ),
               const SizedBox(height: 10),
-
               const Text(
                 "Top Customers",
                 style: TextStyle(
@@ -188,7 +193,6 @@ class _ManagerHomeState extends State<ManagerHome> {
               TopCustomer(
                 userType: userType,
               ),
-
               FutureBuilder(
                 future: getData(userType == 'tour_manager'
                     ? 'tourspot/get-daytour-review'
