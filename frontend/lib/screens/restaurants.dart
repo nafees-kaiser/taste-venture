@@ -9,6 +9,7 @@ import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Restaurant extends StatefulWidget {
   final bool isPersonalizedView;
@@ -22,6 +23,7 @@ class Restaurant extends StatefulWidget {
 class _RestaurantState extends State<Restaurant> {
   int numberOfPages = 10;
   int currentPage = 1;
+  int userId = 0;
 
   @override
   void initState() {
@@ -29,37 +31,15 @@ class _RestaurantState extends State<Restaurant> {
     fetchRestaurants();
   }
 
-  List<Map<String, dynamic>> restaurants = [
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Chefs Table',
-    //   'address': 'Gulshan 2, Dhaka',
-    //   'rating': 4,
-    //   'favorite': true,
-    // },
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Another Restaurant',
-    //   'address': 'Location XYZ',
-    //   'rating': 4.5,
-    //   'favorite': true,
-    // },
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Another Restaurant',
-    //   'address: 'Location XYZ',
-    //   'rating': 4.5,
-    //   'favorite': false,
-    // },
-    // // Add more tour spot data as needed
-  ];
+  List<Map<String, dynamic>> restaurants = [];
 
   Future<void> fetchRestaurants() async {
-    ApiSettings api =
-        ApiSettings(endPoint: 'restaurant/view-restaurant?page=$currentPage');
-    final response = await api.getMethod();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.get('userId');
     try {
+      ApiSettings api = ApiSettings(
+          endPoint: 'restaurant/view-restaurant/$userId?page=$currentPage');
+      final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
@@ -253,9 +233,11 @@ class _RestaurantState extends State<Restaurant> {
                       //   '/restaurant/information',
                       //   arguments: restaurants[i],
                       // ),
-                      onTap: ()=>Navigation(context: context).materialNavigation('/restaurant-info',
-                        ()=>RestaurantInfo.withRestaurant(restaurant: restaurants[i])
-                      ),
+                      onTap: () => Navigation(context: context)
+                          .materialNavigation(
+                              '/restaurant-info',
+                              () => RestaurantInfo.withRestaurant(
+                                  restaurant: restaurants[i])),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),
                         child: Stack(

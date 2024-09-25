@@ -259,13 +259,13 @@ def reject_reservation(request):
 
 
 @api_view(['GET'])
-def view_restaurant(request):
+def view_restaurant(request, user_id):
     try:
         restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
         # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
-        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True, context={'user_id': user_id})
 
         response_data = {
             "count": restaurant_list.count(),

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from common.serializers import AppUserSerializer
+from restaurant.models import Restaurant
 from .models import *
 from common.models import AppUser
 from common.utils import *
@@ -32,6 +33,9 @@ class UserSerializer(serializers.ModelSerializer):
     
     
 class FavoriteSerializer(serializers.ModelSerializer):
+    restaurant = serializers.PrimaryKeyRelatedField(queryset=Restaurant.objects.all())
     class Meta:
         model = Favorite
         fields = '__all__'
+        
+        
