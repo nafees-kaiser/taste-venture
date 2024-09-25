@@ -33,12 +33,12 @@ class _TourSpotState extends State<TourSpot> {
 
     if (response.statusCode == 200) {
       dynamic data = jsonDecode(response.body);
-      List<dynamic> tourspotsData = data["results"];
-      // print(data);
+      List<dynamic> tourspotsData = data["results"]["results"];
+      print(data);
       setState(() {
         tourSpots =
             tourspotsData.map((item) => item as Map<String, dynamic>).toList();
-        numberOfPages = (data["count"] / data["page_size"]).ceil();
+        numberOfPages = (data["count"] / data["results"]["page_size"]).ceil();
         // print(numberOfPages);
       });
       // List<dynamic> data = jsonDecode(response.body);
@@ -300,13 +300,40 @@ class _TourSpotState extends State<TourSpot> {
                                         SizedBox(height: 5.1),
                                         Row(
                                           children: [
+                                            Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  8, 8, 8, 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children:
+                                                    List.generate(5, (index) {
+                                                  return Icon(
+                                                    Icons.star,
+                                                    color: index <
+                                                            (tourSpots[i][
+                                                                        'average_rating']
+                                                                    ?.round() ??
+                                                                0)
+                                                        ? Color.fromARGB(
+                                                            255, 161, 159, 47)
+                                                        : Color(0xFFC4C4C4),
+                                                    size: 16,
+                                                  );
+                                                }),
+                                              ),
+                                            ),
+
                                             // for (int j = 0;j < tourSpots[i]['rating'];j++)
-                                            for (int j = 0; j < 5; j++)
-                                              SvgPicture.asset(
-                                                  'assets/vectors/star_5_x2.svg'),
+                                            // for (int j = 0; j < 5; j++)
+                                            // SvgPicture.asset(
+                                            //     'assets/vectors/star_5_x2.svg'),
                                             SizedBox(width: 4.5),
                                             Text(
-                                              '(${tourSpots[i]['rating']})',
+                                              '(${tourSpots[i]['average_rating']})',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 10,
