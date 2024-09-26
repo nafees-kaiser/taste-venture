@@ -136,9 +136,9 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
           final indoorPoolAvailable = data['pool'] == true ? 'Yes' : 'No';
           final otherServices = data['other_services'] ?? 'N/A';
 
-          if(data['image']!=null && data['image'].isNotEmpty){
-            _storeImage(data['image']);
-          }
+          // if(data['image']!=null && data['image'].isNotEmpty){
+          //   _storeImage(data['image']);
+          // }
 
           updatedData = {
             'tourspot_name': venueName,
