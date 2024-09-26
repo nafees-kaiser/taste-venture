@@ -8,6 +8,7 @@ import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/utils/flutter_toast.dart';
 import 'package:frontend/utils/menu_group_by_category.dart';
 import 'package:frontend/widgets/manager_menu_card.dart';
+import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerMenuInformations extends StatefulWidget {
@@ -51,6 +52,7 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: const Text(
           "Menu information",
@@ -64,8 +66,8 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
               ),
             )
           : RefreshIndicator(
-            onRefresh: getMenuItems,
-            child: SingleChildScrollView(
+              onRefresh: getMenuItems,
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: Theme.of(context).largemainPadding,
                   child: Column(
@@ -74,7 +76,8 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
                         (key) => Column(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
@@ -99,7 +102,6 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
                                 price: menu['price'] + " Taka",
                               ),
                             ),
-                            
                           ],
                         ),
                       ),
@@ -108,7 +110,7 @@ class _ManagerMenuInformationsState extends State<ManagerMenuInformations> {
                   ),
                 ),
               ),
-          ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/add-menu');

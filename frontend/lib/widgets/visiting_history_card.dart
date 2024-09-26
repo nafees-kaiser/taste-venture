@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:intl/intl.dart';
 
-class VisitingHistoryCard extends StatelessWidget {
+class VisitingHistoryCard extends StatefulWidget {
   final String spotImage;
   final String spotName;
   final String spotLocation;
@@ -20,6 +20,11 @@ class VisitingHistoryCard extends StatelessWidget {
     required this.visitingDate,
   });
 
+  @override
+  State<VisitingHistoryCard> createState() => _VisitingHistoryCardState();
+}
+
+class _VisitingHistoryCardState extends State<VisitingHistoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,7 +44,7 @@ class VisitingHistoryCard extends StatelessWidget {
                 color: SECONDARY_BACKGROUND,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Image(image: AssetImage(spotImage)),
+              child: Image(image: AssetImage(widget.spotImage)),
             ),
             SizedBox(width: 13),
             Expanded(
@@ -48,7 +53,7 @@ class VisitingHistoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    spotName,
+                    widget.spotName,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 7),
@@ -64,7 +69,7 @@ class VisitingHistoryCard extends StatelessWidget {
                       // SizedBox(width: 2),
                       Expanded(
                         child: Text(
-                          spotLocation,
+                          widget.spotLocation,
                           style: TextStyle(
                             color: SECONDARY_BACKGROUND,
                             fontSize: 12,
@@ -76,7 +81,7 @@ class VisitingHistoryCard extends StatelessWidget {
                   ),
                   SizedBox(height: 2),
                   Text(
-                    'Visited on ${DateFormat('dd MMM, yyyy').format(visitingDate)}',
+                    'Visited on ${DateFormat('dd MMM, yyyy').format(widget.visitingDate)}',
                     style: TextStyle(
                       color: SECONDARY_BACKGROUND,
                       fontSize: 12,
@@ -96,7 +101,7 @@ class VisitingHistoryCard extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/add-review',
-                    arguments: [id, is_restautant]);
+                    arguments: [widget.id, widget.is_restautant]);
               },
               child: Text('Add review'),
             ),

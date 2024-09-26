@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
           // Store login info using shared_preferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('userEmail', email);
-          await prefs.setString('userToken', token);
+          await prefs.setString('token', token);
           await prefs.setString('userType', userType);
           if (spotId != null) {
             await prefs.setInt('spotId', spotId as int);

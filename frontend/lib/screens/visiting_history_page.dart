@@ -4,6 +4,7 @@ import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/navigation.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/visiting_history_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,7 @@ class VisitingHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       appBar: AppBar(
         title: const Text("Visiting History"),
       ),
