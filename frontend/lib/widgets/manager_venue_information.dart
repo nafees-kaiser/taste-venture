@@ -1,8 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/build_image_file.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:frontend/utils/flutter_toast.dart';
+import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:frontend/widgets/information_card.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
+import 'package:image_input/image_input.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:http/http.dart' as http;
 import 'package:frontend/utils/api_settings.dart';
@@ -33,11 +38,18 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
   late Future<Map<String, dynamic>> venueDetailsFuture;
   late int spotId;
   late Map<String, dynamic> updatedData;
+  List<XFile> image = [];
 
   @override
   void initState() {
     super.initState();
     venueDetailsFuture = _getSpotIdAndFetchDetails();
+    
+  }
+
+  void _storeImage(String url) async{
+    File img = await fetchAndStoreImage(url);
+    image.add(XFile(img.path));
   }
 
   Future<Map<String, dynamic>> _getSpotIdAndFetchDetails() async {
@@ -69,6 +81,27 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
     }
   }
 
+  Future<void> editImage() async {
+    // SharedPreferences pref = await SharedPreferences.getInstance();
+    // int id = pref.getInt('spotId')
+    try {
+      final res = await ApiSettings(endPoint: 'tourspot/edit-tourspot/$spotId' ).addPicture(image[0]);
+      if (res.statusCode == 201 || res.statusCode == 200) {
+        successToast("Image edited successfully");
+        // Navigator.pop(context);
+        setState(() {
+          
+        });
+      } else {
+        errorToast(
+            "Error: ${res.statusCode}: Something went wrong! please try again");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorToast("Something went wrong! please try again");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +120,7 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
             return const Center(child: Text('No data found.'));
           }
 
-          final data = snapshot.data!;
+          final data = snapshot.data!['tourspot'];
           final venueName = data['tourspot_name'] ?? 'N/A';
           final managerName = data['name'] ?? 'N/A';
           final email = data['email'] ?? 'N/A';
@@ -102,6 +135,10 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
           final foodAvailable = data['food'] == true ? 'Yes' : 'No';
           final indoorPoolAvailable = data['pool'] == true ? 'Yes' : 'No';
           final otherServices = data['other_services'] ?? 'N/A';
+
+          if(data['image']!=null && data['image'].isNotEmpty){
+            _storeImage(data['image']);
+          }
 
           updatedData = {
             'tourspot_name': venueName,
@@ -202,6 +239,33 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
                     onTextSaved: (newText) =>
                         _saveChanges('other_services', newText),
                   ),
+                  SizedBox(height: 10),
+                    Row(
+                      children: [
+                        CustomImageInput(
+                          label: 'Change picture',
+                          inputImage: image,
+                          onImageSelected: (value) {
+                            setState(() {
+                              image.add(value);
+                            });
+                          },
+                          onImageRemoved: (img, index) => setState(() {
+                            image.remove(img);
+                          }),
+                        ),
+                        SizedBox(height: 10),
+                        // if (image.isNotEmpty) ...[
+                          ElevatedButton(
+                            onPressed: image.isNotEmpty ?() {
+                              editImage();
+                            } : null,
+                            child: Text('Update'),
+                          )
+                        ],
+                      // ],
+                    ),
+                    SizedBox(height: 15)
                 ],
               ),
             ),

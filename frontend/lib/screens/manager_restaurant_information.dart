@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
+import 'package:frontend/utils/flutter_toast.dart';
+import 'package:frontend/widgets/custom_image_input.dart';
 import 'package:frontend/widgets/information_card.dart';
 import 'package:frontend/widgets/manager_sidebar.dart';
+import 'package:image_input/image_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerRestaurantInformation extends StatefulWidget {
@@ -18,6 +21,8 @@ class _ManagerRestaurantInformationState
   late ApiSettings getAPI, postAPI;
 
   late Future<Map<String, dynamic>> _bookingFuture;
+
+  List<XFile> image = [];
 
   @override
   void initState() {
@@ -49,23 +54,45 @@ class _ManagerRestaurantInformationState
     }
   }
 
+  Future<void> editImage() async {
+    try {
+      final res = await postAPI.addPicture(image[0]);
+      if (res.statusCode == 201 || res.statusCode == 200) {
+        successToast("Image edited successfully");
+        // Navigator.pop(context);
+        setState(() {
+          
+        });
+      } else {
+        errorToast(
+            "Error: ${res.statusCode}: Something went wrong! please try again");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorToast("Something went wrong! please try again");
+    }
+  }
+
   void _saveChanges(String key, String newValue) async {
     final response = await postAPI.postMethod(jsonEncode({key: newValue}));
     try {
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Updated successfully')),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text('Updated successfully')),
+        // );
+        successToast("Information updated successfully");
         // Refresh the page
         setState(() {
           _bookingFuture = _initializeData();
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error updating data')),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text('Error updating data')),
+        // );
+        errorToast("Error updating data");
       }
     } catch (e) {
+      errorToast("Something went wrong! Try again later");
       throw Exception(e);
     }
   }
@@ -268,10 +295,37 @@ class _ManagerRestaurantInformationState
                     const SizedBox(
                       height: 10,
                     ),
-                    InformationCard(
-                      heading: "Image",
-                      text: "Gaming Zone, Cleaning Service",
+                    // InformationCard(
+                    //   heading: "Image",
+                    //   text: "Gaming Zone, Cleaning Service",
+                    // ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        CustomImageInput(
+                          label: 'Change picture',
+                          inputImage: image,
+                          onImageSelected: (value) {
+                            setState(() {
+                              image.add(value);
+                            });
+                          },
+                          onImageRemoved: (img, index) => setState(() {
+                            image.remove(img);
+                          }),
+                        ),
+                        SizedBox(height: 10),
+                        if (image.isNotEmpty) ...[
+                          ElevatedButton(
+                            onPressed: () {
+                              editImage();
+                            },
+                            child: Text('Update'),
+                          )
+                        ],
+                      ],
                     ),
+                    SizedBox(height: 15),
                   ],
                 ),
               ),

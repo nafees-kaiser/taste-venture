@@ -33,7 +33,9 @@ class _EditMenuFormState extends State<EditMenuForm> {
     var editData = {'id': data!['id'], key: value};
 
     try {
-      final res = await ApiSettings(endPoint: 'restaurant/edit-menu/${data!['id']}').postMethod(json.encode(editData));
+      final res =
+          await ApiSettings(endPoint: 'restaurant/edit-menu/${data!['id']}')
+              .postMethod(json.encode(editData));
       if (res.statusCode == 201 || res.statusCode == 200) {
         successToast("Menu edited successfully");
         Navigator.pop(context);
@@ -49,13 +51,13 @@ class _EditMenuFormState extends State<EditMenuForm> {
 
   Future<void> editImage() async {
     try {
-      final res = await ApiSettings(endPoint: 'restaurant/edit-menu/${data!['id']}').addPicture(image[0]);
+      final res =
+          await ApiSettings(endPoint: 'restaurant/edit-menu/${data!['id']}')
+              .addPicture(image[0]);
       if (res.statusCode == 201 || res.statusCode == 200) {
         successToast("Image edited successfully");
         Navigator.pop(context);
-        
-      }
-      else{
+      } else {
         errorToast(
             "Error: ${res.statusCode}: Something went wrong! please try again");
       }
@@ -123,30 +125,31 @@ class _EditMenuFormState extends State<EditMenuForm> {
           action: editData,
         ),
         SizedBox(height: 10),
-        Row(children: [
-          CustomImageInput(
-          label: 'Change picture',
-          inputImage: image,
-          onImageSelected: (value) {
-            setState(() {
-              image.add(value);
-            });
-          },
-          onImageRemoved: (img, index) => setState(() {
-            image.remove(img);
-          }),
+        Row(
+          children: [
+            CustomImageInput(
+              label: 'Change picture',
+              inputImage: image,
+              onImageSelected: (value) {
+                setState(() {
+                  image.add(value);
+                });
+              },
+              onImageRemoved: (img, index) => setState(() {
+                image.remove(img);
+              }),
+            ),
+            SizedBox(height: 10),
+            if (image.isNotEmpty) ...[
+              ElevatedButton(
+                onPressed: () {
+                  editImage();
+                },
+                child: Text('Update'),
+              )
+            ],
+          ],
         ),
-        SizedBox(height: 10),
-        if (image.isNotEmpty) ...[
-          ElevatedButton(
-            onPressed: () {
-              editImage();
-            },
-            child: Text('Update'),
-          )
-        ]
-        ],),
-        
       ],
     );
   }
