@@ -7,6 +7,7 @@ urlpatterns = [
     path('edit-menu/<int:id>', views.edit_menu),
     path('view-menu', views.view_menu, name='view_menu'),
     path('add-restaurant', views.add_restaurant),
+    path('view-restaurant/<int:user_id>/', views.view_restaurant),
     path('view-restaurant', views.view_restaurant),
     path('view-recommended-restaurant', views.view_recommended_restaurant),
     path('add-restaurant-review', views.add_restaurant_review),

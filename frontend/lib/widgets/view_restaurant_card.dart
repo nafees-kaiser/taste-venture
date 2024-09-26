@@ -1,7 +1,10 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewRestaurantCard extends StatefulWidget {
   const ViewRestaurantCard({
@@ -22,6 +25,31 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
     setState(() {
       widget.restaurants[i]['favorite'] = !widget.restaurants[i]['favorite'];
     });
+    ApiSettings addApi = ApiSettings(endPoint: '/users/add-to-favorite');
+    ApiSettings removeApi =
+        ApiSettings(endPoint: '/users/remove-from-favorite');
+    if (widget.restaurants[i]['favorite']) {
+      postFavorite(i, addApi);
+    } else {
+      postFavorite(i, removeApi);
+    }
+  }
+
+  Future<void> postFavorite(int i, ApiSettings api) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.get('userId');
+    final response = await api.postMethod(jsonEncode(
+        {"user_id": userId, "restaurant_id": widget.restaurants[i]['id']}));
+    print(widget.restaurants[i]['restaurant_id']);
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(widget.restaurants[i]['favorite']
+              ? 'Restaurant added to favorites'
+              : 'Restaurant removed from favorites'),
+        ),
+      );
+    }
   }
 
   // @override
@@ -154,19 +182,19 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                     const Expanded(child: SizedBox()),
 
                     // Favorite
-                    // GestureDetector(
-                    //   child: true //restaurants[i]['favorite']
-                    //       ? const Icon(
-                    //           Icons.favorite,
-                    //           color: Colors.pink,
-                    //           size: 30,
-                    //         )
-                    //       : Icon(
-                    //           Icons.favorite_border,
-                    //           size: 30,
-                    //         ),
-                    //   onTap: () => toggleFavorite(widget.i),
-                    // )
+                    GestureDetector(
+                      child: widget.restaurants[widget.i]['favorite']
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.pink,
+                              size: 30,
+                            )
+                          : Icon(
+                              Icons.favorite_border,
+                              size: 30,
+                            ),
+                      onTap: () => toggleFavorite(widget.i),
+                    )
                   ],
                 ),
               ],

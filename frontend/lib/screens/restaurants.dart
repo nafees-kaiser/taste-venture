@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screens/restaurant_info.dart';
 import 'package:frontend/utils/api_settings.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Restaurant extends StatefulWidget {
   final bool isPersonalizedView;
@@ -22,6 +24,8 @@ class Restaurant extends StatefulWidget {
 class _RestaurantState extends State<Restaurant> {
   int numberOfPages = 10;
   int currentPage = 1;
+  int userId = 0;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -29,37 +33,16 @@ class _RestaurantState extends State<Restaurant> {
     fetchRestaurants();
   }
 
-  List<Map<String, dynamic>> restaurants = [
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Chefs Table',
-    //   'address': 'Gulshan 2, Dhaka',
-    //   'rating': 4,
-    //   'favorite': true,
-    // },
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Another Restaurant',
-    //   'address': 'Location XYZ',
-    //   'rating': 4.5,
-    //   'favorite': true,
-    // },
-    // {
-    //   'imagePath': 'assets/image.jpeg',
-    //   'name': 'Another Restaurant',
-    //   'address: 'Location XYZ',
-    //   'rating': 4.5,
-    //   'favorite': false,
-    // },
-    // // Add more tour spot data as needed
-  ];
+  List<Map<String, dynamic>> restaurants = [];
 
   Future<void> fetchRestaurants() async {
-    ApiSettings api =
-        ApiSettings(endPoint: 'restaurant/view-restaurant?page=$currentPage');
-    final response = await api.getMethod();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.get('userId');
     try {
+      ApiSettings api = ApiSettings(
+          endPoint:
+              'restaurant/view-restaurant/$userId?page=${(searchController.text.isNotEmpty) ? currentPage : 1}&search=${searchController.text}');
+      final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
@@ -72,12 +55,18 @@ class _RestaurantState extends State<Restaurant> {
           numberOfPages = (data["count"] / data["page_size"]).ceil();
           // print(numberOfPages);
         });
+      } else if (response.statusCode == 404) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('No restaurants found'),
+          ),
+        );
       } else {
         // Handle the error
         throw Exception('Failed to load Restaurants');
       }
     } catch (e) {
-      throw Exception(e);
+      throw Exception('Failed to load Restaurants');
     }
   }
 
@@ -129,6 +118,13 @@ class _RestaurantState extends State<Restaurant> {
                       width: 350,
                       height: 50,
                       child: SearchBar(
+                        controller: searchController,
+                        onSubmitted: (value) {
+                          setState(() {
+                            currentPage = 1;
+                            fetchRestaurants();
+                          });
+                        },
                         elevation: const WidgetStatePropertyAll(1),
                         backgroundColor:
                             WidgetStatePropertyAll(Colors.grey[300]),
@@ -138,11 +134,14 @@ class _RestaurantState extends State<Restaurant> {
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         )),
-                        leading: const Padding(
+                        leading: Padding(
                           padding: EdgeInsets.all(3.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.grey,
+                          child: GestureDetector(
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                            onTap: () => fetchRestaurants(),
                           ),
                         ),
                       ),
@@ -253,9 +252,11 @@ class _RestaurantState extends State<Restaurant> {
                       //   '/restaurant/information',
                       //   arguments: restaurants[i],
                       // ),
-                      onTap: ()=>Navigation(context: context).materialNavigation('/restaurant-info',
-                        ()=>RestaurantInfo.withRestaurant(restaurant: restaurants[i])
-                      ),
+                      onTap: () => Navigation(context: context)
+                          .materialNavigation(
+                              '/restaurant-info',
+                              () => RestaurantInfo.withRestaurant(
+                                  restaurant: restaurants[i])),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),
                         child: Stack(
