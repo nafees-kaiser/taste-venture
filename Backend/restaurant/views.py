@@ -282,14 +282,19 @@ def reject_reservation(request):
 def view_restaurant(request, user_id):
     try:
         search_query = request.GET.get('search', '')
+        order_by_query = request.GET.get('order-by', 'rating')
+        order_type_query = request.GET.get('order-type', 'desc')
+        if order_type_query == 'desc':
+            order_by_query = '-' + order_by_query
+        
         restaurant_list = Restaurant.objects.filter(
             Q(restaurant_name__icontains=search_query) |
             Q(cuisine__icontains=search_query) |
             Q(description__icontains=search_query)
-        )
+        ).order_by(order_by_query)
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True, context={'user_id': user_id})
+        restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True, context={'user_id': user_id})
 
         response_data = {
             "count": restaurant_list.count(),
