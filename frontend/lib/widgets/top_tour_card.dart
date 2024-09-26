@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/api_settings.dart';
+import 'package:frontend/utils/build_image_file.dart';
 import 'package:frontend/utils/constant.dart';
 
 class TopTourCard extends StatefulWidget {
@@ -50,7 +51,7 @@ class _TopTourCardState extends State<TopTourCard> {
                           height: 80,
                         )
                       : Image.network(
-                          ApiSettings(endPoint: widget.tourImage).getUri(),
+                          ApiSettings(endPoint: urlModify(widget.tourImage)).getUri(),
                           fit: BoxFit.cover,
                           width: 80,
                           height: 80,

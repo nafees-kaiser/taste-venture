@@ -90,7 +90,8 @@ class ApiSettings {
     }
   }
 
-  Future<http.Response> addRestaurant({required Map<String, dynamic> data, XFile? image}) async {
+  Future<http.Response> addRestaurant(
+      {required Map<String, dynamic> data, XFile? image}) async {
     var req = http.MultipartRequest('POST', Uri.parse(uri));
     List<Map<String, dynamic>> menu = data.remove('menu_item');
     data.forEach((key, value) {
@@ -109,12 +110,12 @@ class ApiSettings {
       req.files.add(multipartFile);
     }
 
-    
     List<XFile?> images = [];
     images = menu.map((m) => m.remove('image') as XFile).toList();
 
     for (int i = 0; i < menu.length; i++) {
-      menu[i].forEach((key, value) => req.fields['menu_item[$i][$key]'] = value);
+      menu[i]
+          .forEach((key, value) => req.fields['menu_item[$i][$key]'] = value);
     }
 
     for (int i = 0; i < images.length; i++) {
@@ -139,9 +140,14 @@ class ApiSettings {
     }
   }
 
-  Future<http.Response> addPicture(XFile? image) async{
-    
-    var req = http.MultipartRequest('POST', Uri.parse(uri));
+  Future<http.Response> addPicture(XFile? image, [String end = '']) async {
+    var req;
+
+    if (end != '') {
+      req = http.MultipartRequest('POST', Uri.parse(baseUrl + end));
+    } else {
+      req = http.MultipartRequest('POST', Uri.parse(uri));
+    }
 
     // if(id != null){
     //   req.fields['id'] = id.toString();
@@ -165,7 +171,7 @@ class ApiSettings {
     } catch (e) {
       throw Exception(e.toString());
     }
-  } 
+  }
 
   String getUri() {
     return uri;

@@ -30,7 +30,7 @@ class _TopResCardState extends State<TopResCard> {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
+      // print(jsonResponse);
       return jsonResponse;
     } else {
       throw Exception('Failed to load data');
@@ -90,7 +90,7 @@ class _TopResCardState extends State<TopResCard> {
                             height: 120,
                           )
                         : Image.network(
-                            ApiSettings(endPoint: widget.restaurantImage)
+                            ApiSettings(endPoint: widget.restaurantImage.substring(1))
                                 .getUri(),
                             fit: BoxFit.cover,
                             height: 120,

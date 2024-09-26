@@ -35,7 +35,7 @@ class _InitialMenuContentState extends State<InitialMenuContent> {
   late RestaurantModel? restaurantModel;
   late XFile? itemImage;
 
-  ApiSettings api = ApiSettings(endPoint: '/restaurant/add-restaurant');
+  ApiSettings api = ApiSettings(endPoint: 'restaurant/add-restaurant');
 
   void addMenuItems(MenuItem menuItem) {
     setState(() {

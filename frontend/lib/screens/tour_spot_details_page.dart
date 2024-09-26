@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/booking.dart';
+import 'package:frontend/utils/build_image_file.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'dart:convert';
@@ -76,7 +77,7 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          ApiSettings(endPoint: tourspotData['image']).getUri(),
+                          ApiSettings(endPoint: urlModify(tourspotData['image'])).getUri(),
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               const Image(

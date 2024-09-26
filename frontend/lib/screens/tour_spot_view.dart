@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
+import 'package:frontend/utils/build_image_file.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -238,8 +239,8 @@ class _TourSpotState extends State<TourSpot> {
                                           )
                                         : Image.network(
                                             ApiSettings(
-                                                    endPoint: tourSpots[i]
-                                                        ['image'])
+                                                    endPoint: urlModify(tourSpots[i]
+                                                        ['image']))
                                                 .getUri(),
                                             fit: BoxFit.cover,
                                             height: 120,
