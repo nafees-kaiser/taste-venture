@@ -26,6 +26,8 @@ class _RestaurantState extends State<Restaurant> {
   int currentPage = 1;
   int userId = 0;
   TextEditingController searchController = TextEditingController();
+  String orderBy = 'rating';
+  String orderType = 'desc';
 
   @override
   void initState() {
@@ -41,7 +43,7 @@ class _RestaurantState extends State<Restaurant> {
     try {
       ApiSettings api = ApiSettings(
           endPoint:
-              'restaurant/view-restaurant/$userId?page=${(searchController.text.isNotEmpty) ? currentPage : 1}&search=${searchController.text}');
+              'restaurant/view-restaurant/$userId?page=${(searchController.text.isNotEmpty) ? currentPage : 1}&search=${searchController.text}&order-by=$orderBy&order-type=$orderType');
       final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
@@ -204,7 +206,7 @@ class _RestaurantState extends State<Restaurant> {
                               child: SvgPicture.asset(
                                   'assets/vectors/vector_31_x2.svg'),
                             ),
-                            SizedBox(width: 11),
+                            SizedBox(width: 5),
                             Text(
                               'Filters',
                               style: GoogleFonts.inter(
@@ -215,24 +217,105 @@ class _RestaurantState extends State<Restaurant> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 14,
-                              height: 18,
-                              child: SvgPicture.asset(
-                                  'assets/vectors/vector_8_x2.svg'),
-                            ),
-                            SizedBox(width: 11),
-                            Text(
-                              'Sort by',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                                color: Color(0xFF222222),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('Sort by',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
+                                      ListTile(
+                                        title: Text('Rating'),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.arrow_upward),
+                                              onPressed: () {
+                                                setState(() {
+                                                  orderBy = 'rating';
+                                                  orderType = 'asc';
+                                                });
+                                                fetchRestaurants();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.arrow_downward),
+                                              onPressed: () {
+                                                setState(() {
+                                                  orderBy = 'rating';
+                                                  orderType = 'desc';
+                                                });
+                                                fetchRestaurants();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: Text('Restaurant Name'),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.arrow_upward),
+                                              onPressed: () {
+                                                setState(() {
+                                                  orderBy = 'restaurant_name';
+                                                  orderType = 'asc';
+                                                });
+                                                fetchRestaurants();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.arrow_downward),
+                                              onPressed: () {
+                                                setState(() {
+                                                  orderBy = 'restaurant_name';
+                                                  orderType = 'desc';
+                                                });
+                                                fetchRestaurants();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 14,
+                                height: 18,
+                                child: SvgPicture.asset(
+                                    'assets/vectors/vector_8_x2.svg'),
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 5),
+                              Text(
+                                'Sort by',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 11,
+                                  color: Color(0xFF222222),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
