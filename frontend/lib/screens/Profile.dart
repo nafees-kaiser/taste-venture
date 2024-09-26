@@ -206,7 +206,7 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.all(5.0),
                       child: ClipOval(
                         child: Image.asset(
-                          userData?['image'] ?? "assets/profile.png",
+                          userData?['image'] ?? "assets/avatar.jpg",
                           fit: BoxFit.cover,
                         ),
                       ),

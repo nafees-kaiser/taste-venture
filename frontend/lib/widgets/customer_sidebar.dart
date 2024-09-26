@@ -67,7 +67,7 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
                       ),
                       currentAccountPicture: CircleAvatar(
                         child: ClipOval(
-                          child: Image.asset('assets/profile.png'),
+                          child: Image.asset('assets/avatar.jpg'),
                         ),
                       ),
                       decoration: const BoxDecoration(
