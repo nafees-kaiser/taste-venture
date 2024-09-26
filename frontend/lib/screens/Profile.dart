@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/additional_information.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:frontend/widgets/personal_information.dart';
 import 'package:frontend/widgets/profile_perference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,6 +64,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       backgroundColor: const Color.fromARGB(217, 255, 199, 173),
       appBar: AppBar(
         title: const Text("Profile Information"),

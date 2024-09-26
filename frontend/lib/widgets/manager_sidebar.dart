@@ -80,6 +80,12 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                     //     Navigator.pushNamed(context, '/manager-profile');
                     //   },
                     // ),
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text("Home"),
+                      onTap: () => Navigator.pushNamed(context, '/manager-home',
+                          arguments: {'userType': snapshot.data!['user_type']}),
+                    ),
                     if (snapshot.data!['user_type'] == 'tour_manager')
                       ListTile(
                         leading: const Icon(Icons.info),
@@ -140,6 +146,12 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text("Home"),
+                      onTap: () => Navigator.pushNamed(context, '/manager-home',
+                          arguments: 'tour_manager'),
                     ),
                   ],
                 );

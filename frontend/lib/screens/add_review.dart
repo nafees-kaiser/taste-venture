@@ -33,7 +33,8 @@ class _AddReviewState extends State<AddReview> {
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
-      return json.decode(response.body) as Map<String, dynamic>;
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      return responseData;
     } else {
       throw Exception('Failed to load data');
     }
@@ -99,6 +100,7 @@ class _AddReviewState extends State<AddReview> {
                 return Center(child: Text('No data available'));
               } else {
                 final data = snapshot.data!;
+                print(data);
                 return SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -113,7 +115,9 @@ class _AddReviewState extends State<AddReview> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data['tourspot_name'] ?? 'Unknown',
+                                    widget.isRestaurant
+                                        ? data['restaurant_name']
+                                        : data['tourspot']['tourspot_name'],
                                     style: TextStyle(
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
@@ -124,7 +128,9 @@ class _AddReviewState extends State<AddReview> {
                                       const Icon(Icons.location_on),
                                       const SizedBox(width: 10),
                                       Text(
-                                        data['address'] ?? 'Unknown location',
+                                        widget.isRestaurant
+                                            ? data['address']
+                                            : data['tourspot']['address'],
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.grey[700],
@@ -142,8 +148,9 @@ class _AddReviewState extends State<AddReview> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                    'assets/NorthEnd.jpg'), // Update with dynamic image if needed
+                                child: data['image'] != null
+                                    ? Image.network(data['image'])
+                                    : Image.asset('assets/restaurant.png'),
                               ),
                             ),
                             Container(
@@ -171,7 +178,9 @@ class _AddReviewState extends State<AddReview> {
                                         ],
                                       ),
                                       Text(
-                                        "${data['opening_time']} - ${data['closing_time']}",
+                                        widget.isRestaurant
+                                            ? "${data['opening_time']} - ${data['closing_time']}"
+                                            : "${data['tourspot']['opening_time']} - ${data['tourspot']['closing_time']}",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,

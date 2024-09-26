@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screens/tour_spot_details_page.dart';
 import 'package:frontend/utils/constant.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -61,6 +62,7 @@ class _TourSpotState extends State<TourSpot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
         title: Row(

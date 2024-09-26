@@ -10,6 +10,7 @@ import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Restaurant extends StatefulWidget {
@@ -73,6 +74,7 @@ class _RestaurantState extends State<Restaurant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
         title: Row(

@@ -92,7 +92,7 @@ class _ManagerHomeState extends State<ManagerHome> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome to the ${userType == 'tour_manager' ? 'Tour Spot' : 'Restaurant'}!',
+                'Welcome to the ${userType == 'tour_manager' ? 'Tour Spot Dashboard' : 'Restaurant Dashboard'}!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
