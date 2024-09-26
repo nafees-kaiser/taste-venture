@@ -65,3 +65,14 @@ def get_dayTourSpot_sentiment(review):
     print(prediction)
 
     return prediction
+
+def get_restaurant_recommendation(user_id):
+
+    # Load the model
+    with open(r'..\Machine_Learning\restaurant_recommendation\recommendation_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+
+    recommendation = model.recommend(user_id)
+    print(recommendation)
+
+    return recommendation

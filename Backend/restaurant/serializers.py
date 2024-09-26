@@ -29,11 +29,17 @@ class MenuItemSerializer(serializers.ModelSerializer):
 class RestaurantSerializer(serializers.ModelSerializer):
     menu_item = MenuItemSerializer(many=True)
     user = AppUserSerializer()
+    favorite = serializers.SerializerMethodField()
 
     class Meta:
         model = Restaurant
         fields = '__all__'
         extra_kwargs = {'rating': {'read_only': True}}
+
+    def get_favorite(self, obj):
+        id = self.context.get('user_id')
+        user = Users.objects.get(user_id=id)
+        return Favorite.objects.filter(user=user, restaurant=obj).exists()
 
     def to_internal_value(self, data):
         if isinstance(data, QueryDict):
@@ -57,8 +63,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
         user_representation = represent_user(instance.user)
         representation.update(user_representation)
         representation.pop('user')
-        return representation
 
+        return representation
 
 class ShowRestaurantSerializer(serializers.ModelSerializer):
     #is_favorite = serializers.SerializerMethodField()

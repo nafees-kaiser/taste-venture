@@ -112,7 +112,7 @@ def update_user_details(request):
 @api_view(['GET'])
 def view_favorite(request, user_id):
     try:
-        user = Users.objects.get(pk=user_id)
+        user = Users.objects.get(user_id=user_id)
         favorite_list = Favorite.objects.filter(user=user)
         favorite_list_serializer = FavoriteSerializer(favorite_list, many=True)
         return Response(favorite_list_serializer.data, status=status.HTTP_200_OK)
@@ -123,7 +123,7 @@ def view_favorite(request, user_id):
 @api_view(['POST'])
 @csrf_exempt
 def add_to_favorite(request):
-    user = Users.objects.get(pk=request.data['user_id'])
+    user = Users.objects.get(user_id=request.data['user_id'])
     restaurant = Restaurant.objects.get(pk=request.data['restaurant_id'])
     object_data = {"user": user.pk, "restaurant": restaurant.pk}
     serializer = FavoriteSerializer(data=object_data)
@@ -137,7 +137,8 @@ def add_to_favorite(request):
 @csrf_exempt
 def remove_from_favorite(request):
     try:
-        favorite = Favorite.objects.get(user=request.data['user_id'], restaurant=request.data['restaurant_id'])
+        user = Users.objects.get(user_id=request.data['user_id'])
+        favorite = Favorite.objects.get(user=user, restaurant=request.data['restaurant_id'])
         favorite.delete()
         return Response('Restaurant removed from Favorite', status=status.HTTP_200_OK)
     except favorite.DoesNotExist:

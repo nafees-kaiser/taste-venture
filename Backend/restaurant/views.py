@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
-from ml_models.model import get_restaurant_sentiment
+from ml_models.model import get_restaurant_sentiment, get_restaurant_recommendation
 from tourspot.models import Booking
 from tourspot.serializers import BookingSerializer
 from usersapp.models import Users
@@ -18,7 +18,7 @@ from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
-
+from django.db.models import Q
 
 # Create your views here.
 @api_view(['POST'])
@@ -129,6 +129,26 @@ def edit_restaurant(request, restaurant_id):
 #     user = Users.objects.get(email=email)
 #     recommended_restaurants = Restaurant.objects.filter(user=user)
 
+@api_view(['GET'])
+def view_recommended_restaurant(request, user_id):
+    try:
+        recommended_ids = get_restaurant_recommendation(user_id)
+        restaurant_list = Restaurant.objects.filter(id__in=recommended_ids)
+        # restaurant_list = Restaurant.objects.filter()
+        paginator = StandardResultsSetPagination()
+        paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
+        # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
+        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+
+        response_data = {
+            "count": restaurant_list.count(),
+            "page_size": StandardResultsSetPagination.page_size,
+            "results": restaurant_list_serializer.data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+    except Restaurant.DoesNotExist:
+        return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def add_restaurant_review(request):
@@ -259,21 +279,27 @@ def reject_reservation(request):
 
 
 @api_view(['GET'])
-def view_restaurant(request):
+def view_restaurant(request, user_id):
     try:
-        restaurant_list = Restaurant.objects.filter()
+        search_query = request.GET.get('search', '')
+        restaurant_list = Restaurant.objects.filter(
+            Q(restaurant_name__icontains=search_query) |
+            Q(cuisine__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
         paginator = StandardResultsSetPagination()
         paginated_restaurants = paginator.paginate_queryset(restaurant_list, request)
-        # restaurant_list_serializer = ShowRestaurantSerializer(paginated_restaurants, many=True)
-        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True)
+        restaurant_list_serializer = RestaurantSerializer(paginated_restaurants, many=True, context={'user_id': user_id})
 
         response_data = {
             "count": restaurant_list.count(),
             "page_size": StandardResultsSetPagination.page_size,
             "results": restaurant_list_serializer.data
         }
-
-        return Response(response_data, status=status.HTTP_200_OK)
+        if restaurant_list.count() > 0:
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
     except Restaurant.DoesNotExist:
         return Response(restaurant_list_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 

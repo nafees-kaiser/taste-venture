@@ -1,0 +1,412 @@
+,userID,latitude,longitude,smoker,drink_level,dress_preference,ambience,transport,marital_status,hijos,birth_year,interest,personality,religion,activity,color,weight,budget,height,Rcuisine,Upayment
+0,U1001,22.139997,-100.978803,false,abstemious,informal,family,on foot,single,independent,1989,variety,thrifty-protector,none,student,black,69,medium,1.77,American,cash
+1,U1002,22.150087,-100.983325,false,abstemious,informal,family,public,single,independent,1990,technology,hunter-ostentatious,Catholic,student,red,40,low,1.87,Mexican,cash
+2,U1003,22.119847,-100.946527,false,social drinker,formal,family,public,single,independent,1989,none,hard-worker,Catholic,student,blue,60,low,1.69,Mexican,cash
+3,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Bakery,cash
+4,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Bakery,bank_debit_cards
+5,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Breakfast-Brunch,cash
+6,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Breakfast-Brunch,bank_debit_cards
+7,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Japanese,cash
+8,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Japanese,bank_debit_cards
+9,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Contemporary,cash
+10,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Contemporary,bank_debit_cards
+11,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Mexican,cash
+12,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Mexican,bank_debit_cards
+13,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Bagels,cash
+14,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Bagels,bank_debit_cards
+15,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Cafe-Coffee_Shop,cash
+16,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Cafe-Coffee_Shop,bank_debit_cards
+17,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Continental-European,cash
+18,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Continental-European,bank_debit_cards
+19,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Cafeteria,cash
+20,U1004,18.867,-99.183,false,abstemious,informal,family,public,single,independent,1940,variety,hard-worker,none,professional,green,44,medium,1.53,Cafeteria,bank_debit_cards
+21,U1005,22.183477,-100.959891,false,abstemious,no preference,family,public,single,independent,1992,none,thrifty-protector,Catholic,student,black,65,medium,1.69,American,cash
+22,U1006,22.15,-100.983,true,social drinker,no preference,friends,car owner,single,independent,1989,variety,hard-worker,none,student,blue,75,medium,1.8,Mexican,cash
+23,U1007,22.118464,-100.938256,false,casual drinker,informal,solitary,public,single,independent,1989,variety,thrifty-protector,Catholic,student,purple,60,low,1.59,Family,cash
+24,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Cafe-Coffee_Shop,cash
+25,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Mexican,cash
+26,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Juice,cash
+27,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Hawaiian,cash
+28,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Hot_Dogs,cash
+29,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Latin_American,cash
+30,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Korean,cash
+31,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,American,cash
+32,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Cafeteria,cash
+33,U1008,22.122989,-100.923811,false,social drinker,formal,solitary,public,single,independent,1989,technology,hard-worker,Catholic,student,green,68,low,1.72,Italian,cash
+34,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Diner,cash
+35,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Fast_Food,cash
+36,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Family,cash
+37,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Cafe-Coffee_Shop,cash
+38,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Deli-Sandwiches,cash
+39,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Cafeteria,cash
+40,U1009,22.159427,-100.990448,false,abstemious,formal,family,on foot,single,kids,1991,variety,thrifty-protector,Catholic,student,green,75,medium,1.78,Mexican,cash
+41,U1010,22.190889,-100.998669,false,social drinker,no preference,friends,car owner,married,kids,1987,technology,hard-worker,none,student,green,40,medium,1.67,Mexican,cash
+42,U1011,23.724972,-99.152856,false,abstemious,no preference,family,public,single,independent,1989,variety,hard-worker,Catholic,student,purple,68,medium,1.78,Mexican,cash
+43,U1012,18.813348,-99.243697,false,casual drinker,formal,family,public,single,independent,1988,technology,hard-worker,Catholic,student,red,98,medium,1.84,Latin_American,cash
+44,U1012,18.813348,-99.243697,false,casual drinker,formal,family,public,single,independent,1988,technology,hard-worker,Catholic,student,red,98,medium,1.84,Latin_American,bank_debit_cards
+45,U1013,22.174624,-100.993873,false,abstemious,no preference,friends,public,widow,independent,1982,retro,thrifty-protector,none,professional,blue,80,medium,1.75,Japanese,MasterCard-Eurocard
+46,U1013,22.174624,-100.993873,false,abstemious,no preference,friends,public,widow,independent,1982,retro,thrifty-protector,none,professional,blue,80,medium,1.75,Japanese,cash
+47,U1014,23.751607,-99.170108,false,abstemious,?,friends,public,single,independent,1990,none,hard-worker,Catholic,student,blue,53,medium,1.69,Japanese,cash
+48,U1014,23.751607,-99.170108,false,abstemious,?,friends,public,single,independent,1990,none,hard-worker,Catholic,student,blue,53,medium,1.69,Fast_Food,cash
+49,U1015,22.12676,-100.905209,true,social drinker,informal,family,public,single,independent,1989,technology,thrifty-protector,Catholic,student,black,87,medium,1.67,Mexican,cash
+50,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Cafe-Coffee_Shop,cash
+51,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Contemporary,cash
+52,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Regional,cash
+53,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Fusion,cash
+54,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Japanese,cash
+55,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Portuguese,cash
+56,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,American,cash
+57,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Indian-Pakistani,cash
+58,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Eastern_European,cash
+59,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Lebanese,cash
+60,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Moroccan,cash
+61,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Barbecue,cash
+62,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Polynesian,cash
+63,U1016,22.156247,-100.977402,false,casual drinker,informal,friends,on foot,single,independent,1991,eco-friendly,thrifty-protector,Catholic,student,green,70,medium,1.67,Polish,cash
+64,U1017,18.952615,-99.201616,false,casual drinker,formal,family,public,single,?,1991,retro,hunter-ostentatious,none,professional,orange,79,medium,1.79,Chinese,cash
+65,U1017,18.952615,-99.201616,false,casual drinker,formal,family,public,single,?,1991,retro,hunter-ostentatious,none,professional,orange,79,medium,1.79,Chinese,VISA
+66,U1018,22.190949,-100.917902,true,casual drinker,formal,friends,public,single,independent,1989,technology,thrifty-protector,Christian,student,blue,65,low,1.83,Mexican,cash
+67,U1019,22.153385,-100.975294,false,casual drinker,no preference,family,public,single,independent,1989,variety,thrifty-protector,Catholic,student,purple,59,medium,1.6,Family,cash
+68,U1020,18.878189,-99.222969,false,abstemious,no preference,friends,public,single,independent,1982,technology,hard-worker,Catholic,professional,blue,40,medium,1.68,Mexican,cash
+69,U1020,18.878189,-99.222969,false,abstemious,no preference,friends,public,single,independent,1982,technology,hard-worker,Catholic,professional,blue,40,medium,1.68,Mexican,bank_debit_cards
+70,U1021,23.730569,-99.171883,false,social drinker,no preference,family,car owner,single,dependent,1984,none,hard-worker,Catholic,student,purple,108,medium,1.62,Pizzeria,cash
+71,U1021,23.730569,-99.171883,false,social drinker,no preference,family,car owner,single,dependent,1984,none,hard-worker,Catholic,student,purple,108,medium,1.62,Regional,cash
+72,U1021,23.730569,-99.171883,false,social drinker,no preference,family,car owner,single,dependent,1984,none,hard-worker,Catholic,student,purple,108,medium,1.62,Chinese,cash
+73,U1021,23.730569,-99.171883,false,social drinker,no preference,family,car owner,single,dependent,1984,none,hard-worker,Catholic,student,purple,108,medium,1.62,Burgers,cash
+74,U1022,22.146708,-100.964355,false,casual drinker,formal,family,car owner,single,independent,1990,variety,hard-worker,Catholic,student,purple,46,medium,1.54,Mexican,cash
+75,U1023,23.752943,-99.166589,false,casual drinker,informal,friends,car owner,single,independent,1988,none,hard-worker,Catholic,student,blue,103,low,1.79,Mexican,cash
+76,U1026,23.733,-99.133,false,abstemious,formal,family,public,single,independent,1989,technology,hunter-ostentatious,Catholic,student,red,49,medium,1.55,Mexican,cash
+77,U1026,23.733,-99.133,false,abstemious,formal,family,public,single,independent,1989,technology,hunter-ostentatious,Catholic,student,red,49,medium,1.55,Mexican,bank_debit_cards
+78,U1027,22.16515,-100.987015,true,social drinker,no preference,?,public,single,independent,1989,retro,thrifty-protector,Catholic,student,purple,60,low,1.65,Family,cash
+79,U1028,23.752874,-99.169242,false,abstemious,no preference,family,public,single,independent,1989,variety,hard-worker,Christian,student,blue,77,medium,1.63,Mexican,cash
+80,U1029,22.151796,-100.989075,true,casual drinker,formal,family,public,single,independent,1990,variety,conformist,Catholic,student,white,58,low,1.6,Mexican,cash
+81,U1030,18.844818,-99.182758,false,casual drinker,formal,family,on foot,single,independent,1991,eco-friendly,hard-worker,Catholic,student,black,64,medium,1.75,Mexican,cash
+82,U1031,23.735698,-99.159851,false,abstemious,informal,solitary,?,married,kids,1992,none,hard-worker,Catholic,unemployed,white,40,medium,1.6,Mexican,cash
+83,U1031,23.735698,-99.159851,false,abstemious,informal,solitary,?,married,kids,1992,none,hard-worker,Catholic,unemployed,white,40,medium,1.6,Mexican,American_Express
+84,U1032,22.169184,-100.986843,false,abstemious,formal,family,public,single,independent,1989,variety,hard-worker,Catholic,student,blue,40,medium,1.75,Mexican,cash
+85,U1033,22.15,-100.983,false,social drinker,no preference,family,on foot,single,?,1991,none,hard-worker,none,student,yellow,54,low,1.6,Mexican,cash
+86,U1034,22.137178,-101.013169,false,casual drinker,informal,family,public,single,independent,1990,technology,thrifty-protector,Catholic,student,yellow,50,medium,1.58,Mexican,cash
+87,U1035,18.839671,-99.223897,true,casual drinker,no preference,friends,car owner,single,independent,1985,variety,hunter-ostentatious,none,student,red,69,medium,1.75,Family,cash
+88,U1035,18.839671,-99.223897,true,casual drinker,no preference,friends,car owner,single,independent,1985,variety,hunter-ostentatious,none,student,red,69,medium,1.75,Family,VISA
+89,U1036,22.160572,-100.989418,false,social drinker,informal,family,public,single,independent,1991,none,hard-worker,Catholic,student,blue,76,medium,1.7,Mexican,cash
+90,U1037,22.15031,-100.900536,false,social drinker,no preference,family,public,single,independent,1990,variety,thrifty-protector,Catholic,student,blue,52,low,1.5,Mexican,cash
+91,U1038,22.125786,-100.943705,true,social drinker,no preference,family,public,single,independent,1930,variety,thrifty-protector,Catholic,student,blue,97,low,1.83,Mexican,cash
+92,U1039,23.738067,-99.139906,false,social drinker,no preference,friends,?,single,independent,1989,none,hard-worker,none,student,yellow,83,medium,1.73,Regional,cash
+93,U1040,18.895187,-99.18039,false,abstemious,no preference,friends,public,single,independent,1994,none,thrifty-protector,Catholic,student,blue,73,medium,1.64,Pizzeria,cash
+94,U1041,18.935191,-99.23624,false,abstemious,no preference,friends,on foot,single,independent,1985,eco-friendly,hunter-ostentatious,Catholic,professional,white,40,medium,1.62,Contemporary,bank_debit_cards
+95,U1041,18.935191,-99.23624,false,abstemious,no preference,friends,on foot,single,independent,1985,eco-friendly,hunter-ostentatious,Catholic,professional,white,40,medium,1.62,Contemporary,cash
+96,U1041,18.935191,-99.23624,false,abstemious,no preference,friends,on foot,single,independent,1985,eco-friendly,hunter-ostentatious,Catholic,professional,white,40,medium,1.62,Contemporary,American_Express
+97,U1041,18.935191,-99.23624,false,abstemious,no preference,friends,on foot,single,independent,1985,eco-friendly,hunter-ostentatious,Catholic,professional,white,40,medium,1.62,Contemporary,VISA
+98,U1042,18.925773,-99.219589,false,abstemious,no preference,family,car owner,single,independent,1943,technology,thrifty-protector,Christian,student,yellow,40,high,1.4,Mexican,bank_debit_cards
+99,U1043,23.77103,-99.167082,false,abstemious,no preference,solitary,public,single,independent,1989,technology,hard-worker,none,student,white,60,medium,1.64,Latin_American,cash
+100,U1044,18.95298,-99.260789,true,social drinker,informal,family,car owner,married,kids,1969,variety,thrifty-protector,Catholic,professional,orange,85,medium,1.73,Mexican,VISA
+101,U1044,18.95298,-99.260789,true,social drinker,informal,family,car owner,married,kids,1969,variety,thrifty-protector,Catholic,professional,orange,85,medium,1.73,Mexican,bank_debit_cards
+102,U1044,18.95298,-99.260789,true,social drinker,informal,family,car owner,married,kids,1969,variety,thrifty-protector,Catholic,professional,orange,85,medium,1.73,Mexican,cash
+103,U1044,18.95298,-99.260789,true,social drinker,informal,family,car owner,married,kids,1969,variety,thrifty-protector,Catholic,professional,orange,85,medium,1.73,Mexican,MasterCard-Eurocard
+104,U1045,22.156724,-100.984268,false,casual drinker,elegant,friends,car owner,single,independent,1991,technology,thrifty-protector,Mormon,student,orange,68,high,1.6,Middle_Eastern,cash
+105,U1045,22.156724,-100.984268,false,casual drinker,elegant,friends,car owner,single,independent,1991,technology,thrifty-protector,Mormon,student,orange,68,high,1.6,Mexican,cash
+106,U1045,22.156724,-100.984268,false,casual drinker,elegant,friends,car owner,single,independent,1991,technology,thrifty-protector,Mormon,student,orange,68,high,1.6,Mongolian,cash
+107,U1045,22.156724,-100.984268,false,casual drinker,elegant,friends,car owner,single,independent,1991,technology,thrifty-protector,Mormon,student,orange,68,high,1.6,Moroccan,cash
+108,U1046,22.144415,-100.933097,false,social drinker,no preference,friends,car owner,single,independent,1990,retro,hard-worker,Catholic,student,black,82,medium,1.84,Bar,cash
+109,U1047,22.142429,-100.949147,false,abstemious,no preference,family,public,single,independent,1992,retro,thrifty-protector,Catholic,student,purple,60,medium,1.63,American,cash
+110,U1048,22.142208,-101.022785,true,casual drinker,no preference,?,public,single,independent,1988,eco-friendly,thrifty-protector,none,student,green,65,medium,1.7,Mexican,cash
+111,U1049,22.15,-100.983,false,casual drinker,informal,solitary,public,single,?,1991,none,hard-worker,none,student,blue,55,?,1.6,Mexican,cash
+112,U1050,23.758815,-99.171216,false,social drinker,no preference,family,car owner,single,independent,1989,variety,hard-worker,none,student,green,73,medium,1.71,Mexican,cash
+113,U1051,18.877719,-99.22299,false,casual drinker,no preference,family,public,single,independent,1979,variety,thrifty-protector,none,professional,blue,74,medium,1.76,Mexican,VISA
+114,U1051,18.877719,-99.22299,false,casual drinker,no preference,family,public,single,independent,1979,variety,thrifty-protector,none,professional,blue,74,medium,1.76,Mexican,cash
+115,U1052,22.138055,-100.936005,true,social drinker,no preference,family,on foot,single,independent,1990,none,conformist,Catholic,student,blue,85,low,1.8,Bakery,cash
+116,U1053,22.175833,-100.986671,false,casual drinker,informal,family,public,single,independent,1990,variety,thrifty-protector,Catholic,student,red,66,low,1.72,Mexican,cash
+117,U1054,22.150683,-100.975342,false,social drinker,formal,family,public,single,independent,1992,technology,thrifty-protector,Catholic,student,blue,59,medium,1.7,Mexican,cash
+118,U1055,22.143289,-100.987683,false,abstemious,no preference,family,car owner,married,dependent,1952,none,hard-worker,Catholic,professional,blue,70,medium,1.66,Breakfast-Brunch,cash
+119,U1056,22.168997,-100.974376,false,social drinker,informal,family,on foot,single,independent,1930,none,hard-worker,Catholic,student,yellow,61,medium,1.62,Mexican,cash
+120,U1057,22.196624,-100.91217,true,casual drinker,formal,friends,public,single,independent,1989,technology,hunter-ostentatious,Catholic,student,yellow,69,medium,1.83,American,cash
+121,U1057,22.196624,-100.91217,true,casual drinker,formal,friends,public,single,independent,1989,technology,hunter-ostentatious,Catholic,student,yellow,69,medium,1.83,American,VISA
+122,U1058,22.205802,-100.986081,false,abstemious,formal,family,public,single,independent,1991,variety,hard-worker,Catholic,student,red,74,low,1.78,Cuban,cash
+123,U1059,18.988278,-99.097023,false,abstemious,formal,friends,on foot,single,independent,1987,technology,thrifty-protector,Catholic,student,blue,57,medium,1.69,Mexican,cash
+124,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Burgers,cash
+125,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Cafeteria,cash
+126,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Pizzeria,cash
+127,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Juice,cash
+128,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,American,cash
+129,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Tex-Mex,cash
+130,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Spanish,cash
+131,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Mexican,cash
+132,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Fast_Food,cash
+133,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Cafe-Coffee_Shop,cash
+134,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Soup,cash
+135,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Hot_Dogs,cash
+136,U1060,23.715238,-99.158864,false,casual drinker,formal,family,public,single,independent,1991,technology,thrifty-protector,Catholic,student,blue,82,medium,1.84,Italian,cash
+137,U1061,22.140388,-100.937321,false,social drinker,no preference,friends,car owner,single,independent,1990,none,hard-worker,Catholic,professional,blue,40,medium,1.76,Mexican,cash
+138,U1061,22.140388,-100.937321,false,social drinker,no preference,friends,car owner,single,independent,1990,none,hard-worker,Catholic,professional,blue,40,medium,1.76,Mexican,bank_debit_cards
+139,U1062,22.195826,-101.006317,false,casual drinker,informal,friends,car owner,single,independent,1985,variety,hard-worker,Catholic,student,yellow,88,medium,1.68,Mexican,VISA
+140,U1062,22.195826,-101.006317,false,casual drinker,informal,friends,car owner,single,independent,1985,variety,hard-worker,Catholic,student,yellow,88,medium,1.68,Mexican,cash
+141,U1063,23.745096,-99.164357,false,casual drinker,formal,family,public,single,independent,1988,eco-friendly,conformist,Catholic,student,red,80,medium,1.78,Mexican,cash
+142,U1064,22.139511,-100.957002,false,casual drinker,formal,solitary,public,single,independent,1991,variety,hunter-ostentatious,none,student,blue,94,medium,1.77,Mexican,cash
+143,U1065,23.733665,-99.105617,false,abstemious,formal,friends,public,single,independent,1989,technology,conformist,Catholic,student,green,55,medium,1.72,Mexican,cash
+144,U1066,18.890695,-99.157104,false,abstemious,informal,solitary,public,single,?,1986,technology,thrifty-protector,Catholic,student,green,45,low,1.45,Mexican,cash
+145,U1066,18.890695,-99.157104,false,abstemious,informal,solitary,public,single,?,1986,technology,thrifty-protector,Catholic,student,green,45,low,1.45,Mexican,bank_debit_cards
+146,U1067,23.752269,-99.168605,false,abstemious,no preference,family,public,single,independent,1987,technology,thrifty-protector,Christian,student,green,92,medium,1.73,Mexican,cash
+147,U1068,23.752269,-99.168605,false,casual drinker,informal,friends,public,single,independent,1988,technology,thrifty-protector,Catholic,student,blue,72,low,1.57,Mexican,cash
+148,U1069,19.347641,-99.130229,false,social drinker,no preference,family,public,single,independent,1983,variety,thrifty-protector,Catholic,professional,black,60,medium,1.56,Mexican,MasterCard-Eurocard
+149,U1069,19.347641,-99.130229,false,social drinker,no preference,family,public,single,independent,1983,variety,thrifty-protector,Catholic,professional,black,60,medium,1.56,Mexican,cash
+150,U1070,23.753237,-99.166868,false,casual drinker,informal,friends,public,single,independent,1991,variety,thrifty-protector,Catholic,student,green,47,low,1.6,Mexican,cash
+151,U1071,22.154339,-100.975342,false,abstemious,formal,friends,car owner,single,independent,1930,none,hunter-ostentatious,none,student,blue,40,high,1.73,Mexican,cash
+152,U1072,18.86826,-99.212033,false,casual drinker,no preference,family,public,single,independent,1984,eco-friendly,thrifty-protector,Christian,student,red,50,medium,1.54,Mexican,bank_debit_cards
+153,U1072,18.86826,-99.212033,false,casual drinker,no preference,family,public,single,independent,1984,eco-friendly,thrifty-protector,Christian,student,red,50,medium,1.54,Mexican,cash
+154,U1073,22.15,-100.983,false,abstemious,informal,solitary,car owner,widow,kids,1989,none,hard-worker,none,unemployed,yellow,118,medium,1.79,American,cash
+155,U1074,18.917,-99.25,true,casual drinker,no preference,family,car owner,single,kids,1967,eco-friendly,hard-worker,Catholic,professional,black,68,medium,1.7,Sushi,bank_debit_cards
+156,U1074,18.917,-99.25,true,casual drinker,no preference,family,car owner,single,kids,1967,eco-friendly,hard-worker,Catholic,professional,black,68,medium,1.7,Sushi,cash
+157,U1075,22.167575,-100.960364,false,casual drinker,informal,family,car owner,single,independent,1991,technology,thrifty-protector,Catholic,student,white,68,medium,1.6,Mexican,cash
+158,U1076,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,VISA
+159,U1076,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,cash
+160,U1076,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,bank_debit_cards
+161,U1077,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,VISA
+162,U1077,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,cash
+163,U1077,22.156469,-100.98554,false,social drinker,elegant,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,65,medium,1.71,Mexican,bank_debit_cards
+164,U1078,22.172109,-100.963199,true,social drinker,informal,solitary,car owner,single,independent,1983,variety,hard-worker,Catholic,professional,blue,69,medium,1.69,Mexican,VISA
+165,U1078,22.172109,-100.963199,true,social drinker,informal,solitary,car owner,single,independent,1983,variety,hard-worker,Catholic,professional,blue,69,medium,1.69,Mexican,bank_debit_cards
+166,U1078,22.172109,-100.963199,true,social drinker,informal,solitary,car owner,single,independent,1983,variety,hard-worker,Catholic,professional,blue,69,medium,1.69,Mexican,cash
+167,U1079,18.917,-99.25,false,abstemious,formal,family,public,single,independent,1992,technology,thrifty-protector,Catholic,?,black,53,medium,1.55,Mexican,cash
+168,U1080,23.743793,-99.163397,true,social drinker,formal,friends,car owner,single,independent,1987,variety,hard-worker,Catholic,student,white,80,low,1.82,Mexican,cash
+169,U1081,22.207749,-100.942383,false,casual drinker,informal,family,public,single,independent,1991,variety,hard-worker,Catholic,student,green,52,low,1.54,Mexican,cash
+170,U1082,23.753061,-99.166095,true,abstemious,informal,friends,public,single,?,1989,variety,hard-worker,Catholic,student,black,63,medium,1.69,Mexican,cash
+171,U1083,22.13392,-101.028373,false,abstemious,?,?,?,?,?,1981,none,hard-worker,none,?,yellow,40,?,1.6,Mexican,cash
+172,U1084,22.172524,-101.005758,true,casual drinker,formal,family,public,single,independent,1991,variety,thrifty-protector,Catholic,student,red,65,medium,1.6,Mexican,cash
+173,U1085,22.196787,-100.936335,false,abstemious,no preference,solitary,car owner,single,independent,1988,technology,thrifty-protector,Catholic,student,black,84,?,1.7,Mexican,cash
+174,U1086,22.157281,-100.98444,false,social drinker,no preference,family,car owner,single,independent,1991,variety,hunter-ostentatious,Catholic,student,red,49,medium,1.59,Italian,VISA
+175,U1086,22.157281,-100.98444,false,social drinker,no preference,family,car owner,single,independent,1991,variety,hunter-ostentatious,Catholic,student,red,49,medium,1.59,Italian,bank_debit_cards
+176,U1086,22.157281,-100.98444,false,social drinker,no preference,family,car owner,single,independent,1991,variety,hunter-ostentatious,Catholic,student,red,49,medium,1.59,Italian,cash
+177,U1087,23.753336,-99.167984,false,abstemious,no preference,solitary,public,single,independent,1989,variety,thrifty-protector,Catholic,student,black,53,medium,1.55,Chinese,cash
+178,U1089,22.162562,-100.99313,true,casual drinker,informal,family,public,single,independent,1990,variety,conformist,Catholic,student,white,54,low,1.6,Mexican,cash
+179,U1090,22.158473,-100.984268,false,social drinker,no preference,friends,car owner,single,independent,1988,variety,thrifty-protector,Catholic,student,blue,50,medium,1.54,Tex-Mex,cash
+180,U1091,22.154677,-100.949013,false,casual drinker,no preference,family,car owner,single,independent,1989,eco-friendly,thrifty-protector,none,student,red,40,low,1.7,American,cash
+181,U1091,22.154677,-100.949013,false,casual drinker,no preference,family,car owner,single,independent,1989,eco-friendly,thrifty-protector,none,student,red,40,low,1.7,Mexican,cash
+182,U1092,22.125365,-100.947888,false,abstemious,formal,solitary,public,single,dependent,1990,variety,thrifty-protector,Catholic,?,red,70,medium,1.69,Game,cash
+183,U1093,18.871654,-99.183251,true,casual drinker,no preference,family,car owner,single,independent,1990,variety,thrifty-protector,Catholic,student,blue,80,medium,1.67,Japanese,American_Express
+184,U1093,18.871654,-99.183251,true,casual drinker,no preference,family,car owner,single,independent,1990,variety,thrifty-protector,Catholic,student,blue,80,medium,1.67,Japanese,VISA
+185,U1094,23.73944,-99.160548,false,abstemious,informal,friends,public,single,independent,1991,variety,thrifty-protector,Catholic,student,green,59,medium,1.71,Mexican,cash
+186,U1095,22.179865,-101.018547,false,abstemious,formal,family,public,married,independent,1986,variety,thrifty-protector,Catholic,student,blue,65,medium,1.65,Italian,cash
+187,U1096,22.1455,-100.939593,false,abstemious,formal,family,public,single,independent,1990,eco-friendly,hard-worker,Catholic,student,black,40,medium,1.2,Mexican,cash
+188,U1097,22.145471,-100.939588,false,abstemious,formal,family,public,single,independent,1990,variety,hard-worker,Catholic,student,black,58,medium,1.64,Mexican,cash
+189,U1098,22.182571,-100.963232,false,social drinker,formal,family,public,single,independent,1991,none,thrifty-protector,Catholic,student,green,68,medium,1.76,Mexican,cash
+190,U1099,22.184862,-100.970535,true,social drinker,informal,family,public,single,independent,1989,technology,conformist,Catholic,student,purple,70,high,2.0,Mexican,cash
+191,U1099,22.184862,-100.970535,true,social drinker,informal,family,public,single,independent,1989,technology,conformist,Catholic,student,purple,70,high,2.0,Mexican,VISA
+192,U1100,18.879729,-99.067106,false,casual drinker,formal,friends,public,single,independent,1990,eco-friendly,hard-worker,Christian,student,black,40,medium,1.65,Mexican,cash
+193,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Chinese,cash
+194,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Italian,cash
+195,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Doughnuts,cash
+196,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Afghan,cash
+197,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Mexican,cash
+198,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Burgers,cash
+199,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Latin_American,cash
+200,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Contemporary,cash
+201,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Cafe-Coffee_Shop,cash
+202,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Family,cash
+203,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Cafeteria,cash
+204,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Bar,cash
+205,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Australian,cash
+206,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Hot_Dogs,cash
+207,U1101,22.150891,-100.974891,false,casual drinker,no preference,friends,car owner,single,independent,1988,eco-friendly,hunter-ostentatious,Catholic,student,white,50,low,1.69,Diner,cash
+208,U1102,22.137131,-100.941151,false,social drinker,no preference,friends,on foot,single,independent,1989,eco-friendly,conformist,none,student,black,90,low,1.78,Pizzeria,cash
+209,U1103,23.752265,-99.16859,false,abstemious,formal,friends,public,single,independent,1989,technology,hard-worker,Jewish,professional,green,120,medium,1.9,Mexican,cash
+210,U1103,23.752265,-99.16859,false,abstemious,formal,friends,public,single,independent,1989,technology,hard-worker,Jewish,professional,green,120,medium,1.9,Mexican,bank_debit_cards
+211,U1104,22.149005,-100.978153,true,social drinker,no preference,family,car owner,single,independent,1991,technology,hunter-ostentatious,Catholic,student,blue,75,medium,1.71,Italian,VISA
+212,U1104,22.149005,-100.978153,true,social drinker,no preference,family,car owner,single,independent,1991,technology,hunter-ostentatious,Catholic,student,blue,75,medium,1.71,Italian,cash
+213,U1105,22.120019,-100.950991,false,social drinker,formal,family,public,single,independent,1991,variety,hard-worker,Christian,student,green,40,medium,1.74,Cafeteria,cash
+214,U1106,18.927072,-99.173584,false,casual drinker,informal,friends,car owner,single,independent,1930,technology,hard-worker,Catholic,professional,blue,65,medium,1.71,Barbecue,bank_debit_cards
+215,U1106,18.927072,-99.173584,false,casual drinker,informal,friends,car owner,single,independent,1930,technology,hard-worker,Catholic,professional,blue,65,medium,1.71,Barbecue,cash
+216,U1107,23.742409,-99.171889,false,abstemious,no preference,friends,car owner,single,independent,1989,variety,hard-worker,Catholic,?,blue,87,high,1.79,Mexican,bank_debit_cards
+217,U1107,23.742409,-99.171889,false,abstemious,no preference,friends,car owner,single,independent,1989,variety,hard-worker,Catholic,?,blue,87,high,1.79,Mexican,cash
+218,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafe-Coffee_Shop,VISA
+219,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafe-Coffee_Shop,cash
+220,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafe-Coffee_Shop,MasterCard-Eurocard
+221,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Sushi,VISA
+222,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Sushi,cash
+223,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Sushi,MasterCard-Eurocard
+224,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Latin_American,VISA
+225,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Latin_American,cash
+226,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Latin_American,MasterCard-Eurocard
+227,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Deli-Sandwiches,VISA
+228,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Deli-Sandwiches,cash
+229,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Deli-Sandwiches,MasterCard-Eurocard
+230,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Mexican,VISA
+231,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Mexican,cash
+232,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Mexican,MasterCard-Eurocard
+233,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Hot_Dogs,VISA
+234,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Hot_Dogs,cash
+235,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Hot_Dogs,MasterCard-Eurocard
+236,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,American,VISA
+237,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,American,cash
+238,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,American,MasterCard-Eurocard
+239,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Fast_Food,VISA
+240,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Fast_Food,cash
+241,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Fast_Food,MasterCard-Eurocard
+242,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Burgers,VISA
+243,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Burgers,cash
+244,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Burgers,MasterCard-Eurocard
+245,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Asian,VISA
+246,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Asian,cash
+247,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Asian,MasterCard-Eurocard
+248,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Pizzeria,VISA
+249,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Pizzeria,cash
+250,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Pizzeria,MasterCard-Eurocard
+251,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Chinese,VISA
+252,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Chinese,cash
+253,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Chinese,MasterCard-Eurocard
+254,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Dessert-Ice_Cream,VISA
+255,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Dessert-Ice_Cream,cash
+256,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Dessert-Ice_Cream,MasterCard-Eurocard
+257,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafeteria,VISA
+258,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafeteria,cash
+259,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Cafeteria,MasterCard-Eurocard
+260,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Japanese,VISA
+261,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Japanese,cash
+262,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Japanese,MasterCard-Eurocard
+263,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Game,VISA
+264,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Game,cash
+265,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Game,MasterCard-Eurocard
+266,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Family,VISA
+267,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Family,cash
+268,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Family,MasterCard-Eurocard
+269,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Seafood,VISA
+270,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Seafood,cash
+271,U1108,22.143524,-100.987562,false,abstemious,informal,solitary,public,single,independent,1983,technology,thrifty-protector,Catholic,student,blue,76,medium,1.81,Seafood,MasterCard-Eurocard
+272,U1109,22.303308,-101.05468,false,abstemious,formal,solitary,public,single,independent,1989,eco-friendly,thrifty-protector,Catholic,student,blue,57,low,1.72,Mexican,cash
+273,U1110,18.871678,-99.183263,false,abstemious,no preference,family,car owner,single,independent,1993,variety,thrifty-protector,Catholic,student,red,85,medium,1.75,Mexican,cash
+274,U1111,22.143078,-100.908523,true,casual drinker,formal,friends,car owner,single,independent,1991,none,hard-worker,Catholic,student,white,69,medium,1.69,Mexican,cash
+275,U1112,22.143078,-100.908523,true,casual drinker,formal,friends,car owner,single,independent,1991,none,hard-worker,Catholic,student,white,69,medium,1.69,Mexican,cash
+276,U1113,22.137343,-100.913935,false,casual drinker,formal,family,public,single,independent,1990,none,thrifty-protector,Catholic,student,blue,75,medium,1.73,Burgers,VISA
+277,U1113,22.137343,-100.913935,false,casual drinker,formal,family,public,single,independent,1990,none,thrifty-protector,Catholic,student,blue,75,medium,1.73,Burgers,cash
+278,U1114,22.177726,-101.014094,false,abstemious,no preference,family,on foot,single,independent,1991,variety,hard-worker,Catholic,student,blue,58,medium,1.68,Mexican,cash
+279,U1115,22.138127,-100.920512,true,social drinker,elegant,friends,public,single,independent,1990,variety,hard-worker,Catholic,student,green,76,low,1.76,Regional,cash
+280,U1116,22.156469,-100.98554,false,social drinker,formal,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,40,medium,1.71,Mexican,cash
+281,U1116,22.156469,-100.98554,false,social drinker,formal,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,40,medium,1.71,Mexican,bank_debit_cards
+282,U1116,22.156469,-100.98554,false,social drinker,formal,family,public,married,kids,1987,technology,thrifty-protector,Catholic,student,blue,40,medium,1.71,Mexican,VISA
+283,U1117,18.875641,-99.220737,false,abstemious,no preference,friends,public,single,independent,1982,technology,thrifty-protector,Catholic,professional,blue,58,medium,1.6,Turkish,bank_debit_cards
+284,U1117,18.875641,-99.220737,false,abstemious,no preference,friends,public,single,independent,1982,technology,thrifty-protector,Catholic,professional,blue,58,medium,1.6,Turkish,cash
+285,U1118,18.940062,-99.228172,true,casual drinker,informal,friends,public,single,independent,1987,technology,thrifty-protector,none,student,black,60,medium,1.68,Pizzeria,cash
+286,U1119,18.96479,-99.260017,false,abstemious,formal,family,public,single,independent,1992,eco-friendly,thrifty-protector,Catholic,student,blue,68,medium,1.68,Mexican,cash
+287,U1120,22.121857,-100.904279,false,abstemious,informal,friends,public,single,independent,1930,variety,hard-worker,none,student,green,47,low,1.57,Mexican,cash
+288,U1121,18.871674,-99.183253,false,social drinker,no preference,family,public,married,independent,1987,variety,thrifty-protector,Catholic,working-class,black,90,medium,1.6,Mexican,cash
+289,U1121,18.871674,-99.183253,false,social drinker,no preference,family,public,married,independent,1987,variety,thrifty-protector,Catholic,working-class,black,90,medium,1.6,Mexican,bank_debit_cards
+290,U1123,23.753112,-99.168567,false,abstemious,informal,family,?,single,independent,1987,technology,hard-worker,Catholic,student,green,110,medium,1.75,Mexican,cash
+291,U1124,22.137072,-100.918865,false,casual drinker,informal,friends,public,single,independent,1991,none,hard-worker,Catholic,student,blue,51,low,1.2,Mexican,cash
+292,U1125,22.19204,-100.956935,false,casual drinker,formal,friends,public,single,independent,1990,technology,hard-worker,Catholic,student,white,57,low,1.67,Mexican,cash
+293,U1126,22.15421,-100.942233,false,casual drinker,formal,friends,on foot,single,independent,1990,technology,hard-worker,Catholic,student,purple,65,low,1.63,Mexican,cash
+294,U1127,18.943935,-99.206532,false,abstemious,no preference,solitary,public,single,independent,1992,variety,hard-worker,Catholic,student,black,65,low,1.76,Mexican,cash
+295,U1128,22.187236,-100.994213,false,casual drinker,no preference,friends,public,single,independent,1986,variety,thrifty-protector,Catholic,student,red,66,low,1.72,Cafeteria,cash
+296,U1128,22.187236,-100.994213,false,casual drinker,no preference,friends,public,single,independent,1986,variety,thrifty-protector,Catholic,student,red,66,low,1.72,Hot_Dogs,cash
+297,U1128,22.187236,-100.994213,false,casual drinker,no preference,friends,public,single,independent,1986,variety,thrifty-protector,Catholic,student,red,66,low,1.72,Pizzeria,cash
+298,U1128,22.187236,-100.994213,false,casual drinker,no preference,friends,public,single,independent,1986,variety,thrifty-protector,Catholic,student,red,66,low,1.72,Mexican,cash
+299,U1129,23.728798,-99.134047,false,casual drinker,no preference,friends,public,single,independent,1989,variety,thrifty-protector,none,student,purple,69,low,1.69,Mexican,cash
+300,U1131,22.138245,-100.910948,true,social drinker,no preference,friends,car owner,married,kids,1990,eco-friendly,hard-worker,none,student,black,90,medium,1.8,Mexican,cash
+301,U1132,22.15,-100.983,false,casual drinker,informal,solitary,public,single,?,1991,none,hard-worker,none,student,blue,55,?,1.6,Mexican,cash
+302,U1133,18.886698,-99.114979,false,abstemious,no preference,family,car owner,single,independent,1991,none,hard-worker,none,student,orange,60,medium,1.57,Mexican,bank_debit_cards
+303,U1133,18.886698,-99.114979,false,abstemious,no preference,family,car owner,single,independent,1991,none,hard-worker,none,student,orange,60,medium,1.57,Mexican,cash
+304,U1134,22.149654,-100.99861,false,casual drinker,no preference,family,public,single,independent,1991,variety,hard-worker,Catholic,student,black,52,medium,1.65,Mexican,cash
+305,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Organic-Healthy,cash
+306,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Steaks,cash
+307,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Middle_Eastern,cash
+308,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Mediterranean,cash
+309,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,British,cash
+310,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Austrian,cash
+311,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Israeli,cash
+312,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Doughnuts,cash
+313,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Pizzeria,cash
+314,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Seafood,cash
+315,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Fast_Food,cash
+316,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Moroccan,cash
+317,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Hot_Dogs,cash
+318,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Russian-Ukrainian,cash
+319,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Malaysian,cash
+320,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Burgers,cash
+321,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Fusion,cash
+322,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Korean,cash
+323,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Japanese,cash
+324,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Vegetarian,cash
+325,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Turkish,cash
+326,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Peruvian,cash
+327,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Juice,cash
+328,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Tapas,cash
+329,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Eclectic,cash
+330,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,African,cash
+331,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Basque,cash
+332,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Canadian,cash
+333,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Afghan,cash
+334,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Diner,cash
+335,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Irish,cash
+336,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Sushi,cash
+337,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Polynesian,cash
+338,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Bagels,cash
+339,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Tex-Mex,cash
+340,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Cuban,cash
+341,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Southwestern,cash
+342,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Cafe-Coffee_Shop,cash
+343,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Continental-European,cash
+344,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Family,cash
+345,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Indian-Pakistani,cash
+346,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Tea_House,cash
+347,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,International,cash
+348,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Pacific_Northwest,cash
+349,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Australian,cash
+350,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,German,cash
+351,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Regional,cash
+352,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Spanish,cash
+353,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Persian,cash
+354,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Ethiopian,cash
+355,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Romanian,cash
+356,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Cambodian,cash
+357,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Pacific_Rim,cash
+358,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Tunisian,cash
+359,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Filipino,cash
+360,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Dim_Sum,cash
+361,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Breakfast-Brunch,cash
+362,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Contemporary,cash
+363,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Greek,cash
+364,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Thai,cash
+365,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Swiss,cash
+366,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Bar,cash
+367,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Soup,cash
+368,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,American,cash
+369,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Mongolian,cash
+370,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Cajun-Creole,cash
+371,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Armenian,cash
+372,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Indigenous,cash
+373,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Bar_Pub_Brewery,cash
+374,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Hawaiian,cash
+375,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Cafeteria,cash
+376,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Lebanese,cash
+377,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Chinese,cash
+378,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Portuguese,cash
+379,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Caribbean,cash
+380,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Indonesian,cash
+381,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Hungarian,cash
+382,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Bakery,cash
+383,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Dutch-Belgian,cash
+384,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Deli-Sandwiches,cash
+385,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Kosher,cash
+386,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Fine_Dining,cash
+387,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Jamaican,cash
+388,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Tibetan,cash
+389,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Latin_American,cash
+390,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Southeast_Asian,cash
+391,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Eastern_European,cash
+392,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Mexican,cash
+393,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Burmese,cash
+394,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,California,cash
+395,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Game,cash
+396,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Italian,cash
+397,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Scandinavian,cash
+398,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Chilean,cash
+399,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Polish,cash
+400,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,North_African,cash
+401,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Asian,cash
+402,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Vietnamese,cash
+403,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Barbecue,cash
+404,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,French,cash
+405,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Brazilian,cash
+406,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Southern,cash
+407,U1135,22.170396,-100.949936,false,casual drinker,informal,family,on foot,single,kids,1988,variety,hunter-ostentatious,Catholic,student,purple,66,low,1.54,Dessert-Ice_Cream,cash
+408,U1136,22.149607,-100.997235,true,social drinker,no preference,friends,car owner,single,independent,1990,retro,thrifty-protector,Catholic,student,black,50,low,1.6,Mexican,cash
+409,U1137,22.144803,-100.944623,false,social drinker,formal,family,public,single,independent,1989,eco-friendly,hard-worker,Catholic,student,blue,72,low,1.78,Mexican,cash
+410,U1138,22.152884,-100.939663,false,social drinker,formal,friends,public,single,independent,1991,variety,thrifty-protector,none,student,blue,54,medium,1.55,Pizzeria,cash

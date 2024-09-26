@@ -260,7 +260,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                             "assets/tourVenue.png",
                                             width: double.infinity,
                                             height: 80,
-                                            fit: BoxFit.fitHeight,
+                                            fit: BoxFit.fitWidth,
                                           ),
                                         ),
                                       ),
