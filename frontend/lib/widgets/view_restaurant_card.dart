@@ -87,7 +87,7 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                     height: 120,
                   )
                 : Image.network(
-                    ApiSettings(endPoint: widget.restaurants[widget.i]['image'])
+                    ApiSettings(endPoint: widget.restaurants[widget.i]['image'].substring(1))
                         .getUri(),
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => const Image(

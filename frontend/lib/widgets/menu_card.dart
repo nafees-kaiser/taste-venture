@@ -107,7 +107,9 @@ class _MenuCard2State extends State<MenuCard2> {
         // if (image is String) {
         //   image = ApiSettings(endPoint: widget.image).getUri();
         // }
-        image = ApiSettings(endPoint: widget.menuItem['image']).getUri();
+        var imageUrl = widget.menuItem['image'] as String;
+        imageUrl = imageUrl.substring(1);
+        image = ApiSettings(endPoint: imageUrl).getUri();
       });
     }
   }
