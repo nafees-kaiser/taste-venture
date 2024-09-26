@@ -9,6 +9,7 @@ import 'package:frontend/utils/navigation.dart';
 import 'package:frontend/widgets/view_restaurant_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:frontend/widgets/customer_sidebar.dart';
 
 class Restaurant extends StatefulWidget {
   final bool isPersonalizedView;
@@ -84,6 +85,7 @@ class _RestaurantState extends State<Restaurant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomerSidebar(),
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
         title: Row(
@@ -253,9 +255,11 @@ class _RestaurantState extends State<Restaurant> {
                       //   '/restaurant/information',
                       //   arguments: restaurants[i],
                       // ),
-                      onTap: ()=>Navigation(context: context).materialNavigation('/restaurant-info',
-                        ()=>RestaurantInfo.withRestaurant(restaurant: restaurants[i])
-                      ),
+                      onTap: () => Navigation(context: context)
+                          .materialNavigation(
+                              '/restaurant-info',
+                              () => RestaurantInfo.withRestaurant(
+                                  restaurant: restaurants[i])),
                       child: Container(
                         margin: EdgeInsets.only(bottom: 14),
                         child: Stack(

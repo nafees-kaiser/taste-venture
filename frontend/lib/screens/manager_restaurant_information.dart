@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/information_card.dart';
+import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerRestaurantInformation extends StatefulWidget {
@@ -173,6 +174,7 @@ class _ManagerRestaurantInformationState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: const Text(
           "Restaurant information",

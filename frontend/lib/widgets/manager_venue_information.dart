@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/custom_theme.dart';
 import 'package:frontend/widgets/information_card.dart';
+import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:http/http.dart' as http;
 import 'package:frontend/utils/api_settings.dart';
@@ -71,6 +72,7 @@ class _ManagerVenueInformationState extends State<ManagerVenueInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: const Text("Venue Information"),
       ),

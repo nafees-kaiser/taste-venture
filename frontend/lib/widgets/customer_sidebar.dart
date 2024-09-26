@@ -74,19 +74,6 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.account_circle),
-                      title: const Text("Account settings"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/profile');
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.history),
-                      title: const Text("Visiting History"),
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/visiting-history'),
-                    ),
                   ],
                 );
               } else {
@@ -107,6 +94,46 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
               }
             },
           ),
+          FutureBuilder(
+            future: getData('users/get-user'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text("Home"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/customer-homepage'),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.account_circle),
+                      title: const Text("Account settings"),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/profile');
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.history),
+                      title: const Text("Visiting History"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/visiting-history'),
+                    ),
+                  ],
+                );
+              } else
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text("Home"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/customer-homepage'),
+                    ),
+                  ],
+                );
+            },
+          ),
           // ListTile(
           //   leading: const Icon(Icons.favorite),
           //   title: const Text("Favorites"),
@@ -119,6 +146,7 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
           //   title: const Text("Notifications"),
           //   onTap: () => Navigator.pushNamed(context, '/notification'),
           // ),
+
           FutureBuilder<Map<String, dynamic>>(
               future: getData('users/get-user'),
               builder: (context, snapshot) {
