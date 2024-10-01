@@ -78,6 +78,8 @@ class ShowRestaurantSerializer(serializers.ModelSerializer):
 
     def get_favorite(self, obj):
         id = self.context.get('user_id')
+        if id == 0:
+            return False
         user = Users.objects.get(user_id=id)
         return Favorite.objects.filter(user=user, restaurant=obj).exists()
 
