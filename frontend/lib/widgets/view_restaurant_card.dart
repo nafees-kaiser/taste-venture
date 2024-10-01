@@ -25,9 +25,8 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
     setState(() {
       widget.restaurants[i]['favorite'] = !widget.restaurants[i]['favorite'];
     });
-    ApiSettings addApi = ApiSettings(endPoint: '/users/add-to-favorite');
-    ApiSettings removeApi =
-        ApiSettings(endPoint: '/users/remove-from-favorite');
+    ApiSettings addApi = ApiSettings(endPoint: 'users/add-to-favorite');
+    ApiSettings removeApi = ApiSettings(endPoint: 'users/remove-from-favorite');
     if (widget.restaurants[i]['favorite']) {
       postFavorite(i, addApi);
     } else {
@@ -38,15 +37,34 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
   Future<void> postFavorite(int i, ApiSettings api) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.get('userId');
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to add restaurant to favorites'),
+        ),
+      );
+
+      // Navigator.pop(context);
+      Navigator.pushNamed(context, "/login");
+    }
     final response = await api.postMethod(jsonEncode(
         {"user_id": userId, "restaurant_id": widget.restaurants[i]['id']}));
-    print(widget.restaurants[i]['restaurant_id']);
+    print(userId);
+    print(widget.restaurants[i]['id']);
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(widget.restaurants[i]['favorite']
               ? 'Restaurant added to favorites'
               : 'Restaurant removed from favorites'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(widget.restaurants[i]['favorite']
+              ? 'Failed to add restaurant to favorites'
+              : 'Failed to remove restaurant from favorites'),
         ),
       );
     }
@@ -89,7 +107,7 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                 : Image.network(
                     // ApiSettings(endPoint: widget.restaurants[widget.i]['image'].substring(1))
                     //     .getUri(),
-                     widget.restaurants[widget.i]['image'],
+                    widget.restaurants[widget.i]['image'],
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => const Image(
                       image: AssetImage('assets/image_filler.png'),
