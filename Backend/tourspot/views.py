@@ -106,6 +106,8 @@ def view_tourspot_list(request):
     #     tourspots = tourspots.filter(entry_fee__lte=price_max)
 
     # Sorting
+    if not sort_by:
+        sort_by = 'id'
     if sort_order == 'desc':
         sort_by = f'-{sort_by}'  # Reverse the sort order if 'desc'
 
