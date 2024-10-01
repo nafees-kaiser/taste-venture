@@ -27,7 +27,8 @@ class RestaurantDetail extends StatelessWidget {
                         fit: BoxFit.cover,
                       )
                     : Image.network(
-                        ApiSettings(endPoint: data['image']).getUri(),
+                        // ApiSettings(endPoint: data['image']).getUri(),
+                        data['image'],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             const Image(

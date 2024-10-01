@@ -51,7 +51,8 @@ class _TopTourCardState extends State<TopTourCard> {
                           height: 80,
                         )
                       : Image.network(
-                          ApiSettings(endPoint: urlModify(widget.tourImage)).getUri(),
+                          // ApiSettings(endPoint: urlModify(widget.tourImage)).getUri(),
+                          widget.tourImage,
                           fit: BoxFit.cover,
                           width: 80,
                           height: 80,

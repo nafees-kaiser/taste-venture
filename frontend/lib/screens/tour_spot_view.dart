@@ -238,10 +238,11 @@ class _TourSpotState extends State<TourSpot> {
                                             height: 120,
                                           )
                                         : Image.network(
-                                            ApiSettings(
-                                                    endPoint: urlModify(tourSpots[i]
-                                                        ['image']))
-                                                .getUri(),
+                                            // ApiSettings(
+                                            //         endPoint: urlModify(tourSpots[i]
+                                            //             ['image']))
+                                            //     .getUri(),
+                                            tourSpots[i]['image'],
                                             fit: BoxFit.cover,
                                             height: 120,
                                             errorBuilder:

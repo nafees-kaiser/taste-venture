@@ -77,7 +77,8 @@ class TourSpotDetailsPageContents extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          ApiSettings(endPoint: urlModify(tourspotData['image'])).getUri(),
+                          // ApiSettings(endPoint: urlModify(tourspotData['image'])).getUri(),
+                          tourspotData['image'],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               const Image(
