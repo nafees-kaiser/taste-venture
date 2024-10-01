@@ -81,6 +81,27 @@ class _AddReviewState extends State<AddReview> {
     }
   }
 
+  Future<void> addNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+    Map<String, dynamic> data = {
+      "user_id": userId,
+      "spot_id": widget.id,
+      "restaurant": widget.isRestaurant,
+      "text": "Your reservation has been accepted. Have a good day!!!"
+    };
+
+    ApiSettings apiSettings = ApiSettings(endPoint: 'users/add-notification');
+    try {
+      final response = await apiSettings.postMethod(json.encode(data));
+      if (response.statusCode == 201) {
+        print("Successfully added");
+      }
+    } catch (e) {
+      print("Error to add notification");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

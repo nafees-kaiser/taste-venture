@@ -183,9 +183,17 @@ def get_notifications(request, user_id):
 @api_view(['POST'])
 def add_notification(request):
     try:
-        customer = AppUser.objects.get(email=request.data['email'])
-        user = Users.objects.get(user=customer)
-        heading = request.data.get('heading')
+        user = Users.objects.get(user_id=request.data['user_id'])
+        is_restaurant = request.data['restaurant']
+        if is_restaurant:
+            spot = Restaurant.objects.get(id=request.data['spot_id'])
+            serializer = RestaurantSerializer(spot, many=False)
+            heading = serializer.data.get('restaurant_name')
+        else:
+            spot = Tourspot.objects.get(id=request.data['spot_id'])
+            serializer = TourspotSerializer(spot, many=False)
+            heading = serializer.data.get('tourspot_name')
+
         text = request.data.get('text')
         notification = Notification.objects.create(user=user, heading=heading, text=text)
         notification.save()

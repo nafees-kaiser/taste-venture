@@ -62,14 +62,6 @@ class _ManagerHomeState extends State<ManagerHome> {
       drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: Text(spotName ?? ''),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/notification');
-            },
-            icon: const Icon(Icons.notifications),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
