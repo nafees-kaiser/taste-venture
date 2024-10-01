@@ -25,7 +25,7 @@ class _ReservationManagerState extends State<ReservationManager> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final email = prefs.get('userEmail');
     try {
-      var response = await ApiSettings(endPoint: '/restaurant/reservation')
+      var response = await ApiSettings(endPoint: 'restaurant/reservation')
           .postMethod(jsonEncode({"email": email}));
 
       if (response.statusCode == 200) {
