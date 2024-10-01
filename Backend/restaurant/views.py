@@ -384,6 +384,10 @@ def restaurant_selling_info(request, restaurant_id):
         first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
         last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
 
+        total_reservation = Reservation.objects.filter(
+            restaurant_id=restaurant_id
+        )
+
         current_month_reservations = Reservation.objects.filter(
             restaurant_id=restaurant_id,
             date__gte=first_day_of_current_month
@@ -395,6 +399,7 @@ def restaurant_selling_info(request, restaurant_id):
             date__lte=last_day_of_previous_month
         )
 
+        total_customers = set(reservation.user.id for reservation in total_reservation)
         total_customers_current = set(reservation.user.id for reservation in current_month_reservations)
         total_orders_current = current_month_reservations.count()
 
@@ -444,8 +449,8 @@ def restaurant_selling_info(request, restaurant_id):
             daywise_customer_count[day] += 1
 
         response_data = {
-            'total_customers': len(total_customers_current),
-            'total_orders': total_orders_current,
+            'total_customers': len(total_customers),
+            'total_orders': total_reservation.count(),
             'total_revenue': 0,
             'total_product': total_product,
             'customer_change_percentage': customer_change_percentage,
