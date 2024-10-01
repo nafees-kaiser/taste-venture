@@ -40,7 +40,15 @@ class _RestaurantState extends State<Restaurant> {
 
   Future<void> fetchRestaurants() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userId = prefs.get('userId');
+    var userId = prefs.get('userId');
+    if (userId == null) {
+      userId = 0;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to view restaurants'),
+        ),
+      );
+    }
     try {
       ApiSettings api = ApiSettings(
           endPoint:

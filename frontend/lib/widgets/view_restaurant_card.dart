@@ -37,13 +37,15 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
   Future<void> postFavorite(int i, ApiSettings api) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.get('userId');
-    if(userId == null) {
+    if (userId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please login to add restaurant to favorites'),
         ),
       );
-      return;
+
+      // Navigator.pop(context);
+      Navigator.pushNamed(context, "/login");
     }
     final response = await api.postMethod(jsonEncode(
         {"user_id": userId, "restaurant_id": widget.restaurants[i]['id']}));
