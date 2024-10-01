@@ -40,7 +40,7 @@ class BookingHistoryPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData ||
-              (snapshot.data!['tourspot'].isEmpty)) {
+              (snapshot.data!['tour-spot'].isEmpty)) {
             return Center(child: Text('No Booking history available.'));
           }
 
