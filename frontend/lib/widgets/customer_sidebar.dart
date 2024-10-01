@@ -72,6 +72,11 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
         onTap: () => Navigator.pushNamed(context, '/profile'),
       ),
       ListTile(
+        leading: const Icon(Icons.notifications),
+        title: const Text("Notifications"),
+        onTap: () => Navigator.pushNamed(context, '/notification'),
+      ),
+      ListTile(
         leading: const Icon(Icons.history),
         title: const Text("Visiting History"),
         onTap: () => Navigator.pushNamed(context, '/visiting-history'),

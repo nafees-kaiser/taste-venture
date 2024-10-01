@@ -18,19 +18,20 @@ class CustomerHomepage extends StatefulWidget {
 
 class _CustomerHomepageState extends State<CustomerHomepage> {
   late Future<List<RestaurantAndRatings>> topRestaurants;
-  late Future<bool> emailPresent;
+  String? emailPresent = null;
 
   @override
   void initState() {
     super.initState();
     topRestaurants = fetchTopRestaurants();
-    emailPresent = getInfo();
+    getInfo();
   }
 
-  Future<bool> getInfo() async {
+  Future<void> getInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('userEmail');
-    return email != null;
+    setState(() {
+      emailPresent = prefs.getString('userEmail');
+    });
   }
 
   Future<List<RestaurantAndRatings>> fetchTopRestaurants() async {
@@ -78,17 +79,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
       appBar: AppBar(
         title: Container(
           width: double.infinity,
-          // alignment: Alignment.center,
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Icon(
-              //   Icons.pin_drop,
-              //   size: 18,
-              // ),
-              // SizedBox(
-              //   width: 10,
-              // ),
               Text(
                 // "Jatrabari, Dhaka-1236",
                 "TasteVenture",
@@ -101,39 +94,16 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
           ),
         ),
         centerTitle: true,
-        // actions: [
-        //   FutureBuilder<bool>(
-        //     future: emailPresent,
-        //     builder: (context, snapshot) {
-        //       /*if (false /*snapshot.connectionState == ConnectionState.waiting*/) {
-        //         return Container(); // Can display a loader here if needed
-        //       } else if (true /*snapshot.hasData && snapshot.data == true*/) {*/
-        //       return IconButton(
-        //         onPressed: () => Navigator.pushNamed(context, '/notification'),
-        //         icon: const Icon(Icons.notifications),
-        //       );
-        //       /*} else {
-        //         return Container(
-        //           height: 40,
-        //           padding: const EdgeInsets.symmetric(horizontal: 20),
-        //           child: ElevatedButton(
-        //             style: ElevatedButton.styleFrom(
-        //               backgroundColor: SECONDARY_COLOR,
-        //               shape: RoundedRectangleBorder(
-        //                 borderRadius: BorderRadius.circular(10),
-        //               ),
-        //             ),
-        //             onPressed: () => Navigator.pushNamed(context, '/login'),
-        //             child: const Text(
-        //               "Login",
-        //               style: TextStyle(fontSize: 16, color: Colors.white),
-        //             ),
-        //           ),
-        //         );
-        //       }*/
-        //     },
-        //   ),
-        // ],
+        actions: [
+          if (emailPresent != null) ...[
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/notification');
+              },
+              icon: Icon(Icons.notifications),
+            ),
+          ]
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -329,7 +299,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     future: topRestaurants,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: const CircularProgressIndicator());
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       } else if (snapshot.hasError) {
                         return Text('Unable to fetch data');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -373,7 +345,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                 const Text(
                                   'See all',
                                   style: TextStyle(
-                                    color: PRIMARY_COLOR,
+                                    color: SECONDARY_COLOR,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -381,7 +353,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                   scaleX: -1,
                                   child: const Icon(
                                     Icons.arrow_back_ios,
-                                    color: PRIMARY_COLOR,
+                                    color: SECONDARY_COLOR,
                                     size: 14,
                                   ),
                                 )

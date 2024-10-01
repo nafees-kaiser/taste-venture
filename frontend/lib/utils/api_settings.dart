@@ -24,6 +24,17 @@ class ApiSettings {
     }
   }
 
+  Future<http.Response> deleteMethod() async {
+    try {
+      final response = await http.delete(
+        Uri.parse(uri),
+      );
+      return response;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future<http.Response> postMethodWithDiffEndPoint(
       String data, String ep) async {
     try {

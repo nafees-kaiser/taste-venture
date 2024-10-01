@@ -3,6 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from restaurant.serializers import RestaurantSerializer
+from tourspot.serializers import TourspotSerializer
 from .serializers import *
 from rest_framework_simplejwt.tokens import RefreshToken
 from common.models import OTPAuthentication
@@ -50,19 +53,24 @@ def login(request):
             }
 
             spot_id = None
+            spot_name = None
             if serializer.data.get('user_type') == 'tour_manager':
                 tourspot = Tourspot.objects.get(user_id=manager_id)
+                serializer = TourspotSerializer(tourspot)
                 spot_id = tourspot.id
-                print(spot_id)
+                spot_name = serializer.data['tourspot_name']
 
             elif serializer.data.get('user_type') == 'res_manager':
                 restaurant = Restaurant.objects.get(user_id=manager_id)
+                serializer = RestaurantSerializer(restaurant)
                 spot_id = restaurant.id
+                spot_name = serializer.data['restaurant_name']
 
             response_data = {
                 'user': serializer.data,
                 'tokens': token,
                 'spot_id': spot_id,
+                'spot_name': spot_name
             }
 
             return Response(response_data, status=status.HTTP_200_OK)
@@ -155,5 +163,55 @@ def get_manager_info(request):
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
     except Users.DoesNotExist:
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_notifications(request, user_id):
+    try:
+        user = Users.objects.get(user_id=user_id)
+        notification = Notification.objects.filter(user=user)
+        notificationSerializers = NotificationSerializer(notification, many=True)
+        return Response(notificationSerializers.data, status=status.HTTP_200_OK)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_notification(request):
+    try:
+        user = Users.objects.get(user_id=request.data['user_id'])
+        is_restaurant = request.data['restaurant']
+        if is_restaurant:
+            spot = Restaurant.objects.get(id=request.data['spot_id'])
+            serializer = RestaurantSerializer(spot, many=False)
+            heading = serializer.data.get('restaurant_name')
+        else:
+            spot = Tourspot.objects.get(id=request.data['spot_id'])
+            serializer = TourspotSerializer(spot, many=False)
+            heading = serializer.data.get('tourspot_name')
+
+        text = request.data.get('text')
+        notification = Notification.objects.create(user=user, heading=heading, text=text)
+        notification.save()
+        serializer = NotificationSerializer(notification)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except AppUser.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def delete_notification(request, user_id):
+    try:
+        user = Users.objects.get(user_id=user_id)
+        deleted_count, _ = Notification.objects.filter(user=user).delete()
+        return Response(deleted_count, status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
