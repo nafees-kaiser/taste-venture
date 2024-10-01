@@ -44,7 +44,7 @@ class _VisitingHistoryCardState extends State<VisitingHistoryCard> {
                 color: SECONDARY_BACKGROUND,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Image(image: AssetImage(widget.spotImage)),
+              child: Image(image: AssetImage('assets/image_filler.png')),
             ),
             SizedBox(width: 13),
             Expanded(
