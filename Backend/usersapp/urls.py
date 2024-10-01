@@ -10,4 +10,7 @@ urlpatterns = [
     path('add-to-favorite', views.add_to_favorite, name='add_to_favorite'),
     path('remove-from-favorite', views.remove_from_favorite, name='remove_from_favorite'),
     path('get-manager-info', views.get_manager_info, name='get_manager_info'),
+    path('get-notifications/<int:user_id>', views.get_notifications, name='get_notifications'),
+    path('add-notification', views.add_notification, name='add_notification'),
+    path('remove-notification/<int:user_id>', views.delete_notification, name='remove_notification'),
 ]

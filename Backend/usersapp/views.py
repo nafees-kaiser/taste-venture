@@ -165,3 +165,45 @@ def get_manager_info(request):
         return Response("User not found", status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_notifications(request, user_id):
+    try:
+        user = Users.objects.get(user_id=user_id)
+        notification = Notification.objects.filter(user=user)
+        notificationSerializers = NotificationSerializer(notification, many=True)
+        return Response(notificationSerializers.data, status=status.HTTP_200_OK)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_notification(request):
+    try:
+        customer = AppUser.objects.get(email=request.data['email'])
+        user = Users.objects.get(user=customer)
+        heading = request.data.get('heading')
+        text = request.data.get('text')
+        notification = Notification.objects.create(user=user, heading=heading, text=text)
+        notification.save()
+        serializer = NotificationSerializer(notification)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except AppUser.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Users.DoesNotExist:
+        return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def delete_notification(request, user_id):
+    try:
+        user = Users.objects.get(user_id=user_id)
+        deleted_count, _ = Notification.objects.filter(user=user).delete()
+        return Response(deleted_count, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

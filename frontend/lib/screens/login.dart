@@ -130,7 +130,9 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Email Address
+                const SizedBox(
+                  height: 100,
+                ),
                 const Text(
                   "Email address",
                   style: TextStyle(
