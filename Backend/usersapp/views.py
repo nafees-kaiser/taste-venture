@@ -3,6 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from restaurant.serializers import RestaurantSerializer
+from tourspot.serializers import TourspotSerializer
 from .serializers import *
 from rest_framework_simplejwt.tokens import RefreshToken
 from common.models import OTPAuthentication
@@ -50,19 +53,24 @@ def login(request):
             }
 
             spot_id = None
+            spot_name = None
             if serializer.data.get('user_type') == 'tour_manager':
                 tourspot = Tourspot.objects.get(user_id=manager_id)
+                serializer = TourspotSerializer(tourspot)
                 spot_id = tourspot.id
-                print(spot_id)
+                spot_name = serializer.data['tourspot_name']
 
             elif serializer.data.get('user_type') == 'res_manager':
                 restaurant = Restaurant.objects.get(user_id=manager_id)
+                serializer = RestaurantSerializer(restaurant)
                 spot_id = restaurant.id
+                spot_name = serializer.data['restaurant_name']
 
             response_data = {
                 'user': serializer.data,
                 'tokens': token,
                 'spot_id': spot_id,
+                'spot_name': spot_name
             }
 
             return Response(response_data, status=status.HTTP_200_OK)

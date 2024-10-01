@@ -12,6 +12,7 @@ import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:frontend/widgets/review_overview.dart';
 import 'package:frontend/widgets/top_customer.dart';
 import 'package:frontend/widgets/user_indivisual_review.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ManagerHome extends StatefulWidget {
@@ -22,9 +23,11 @@ class ManagerHome extends StatefulWidget {
 }
 
 class _ManagerHomeState extends State<ManagerHome> {
+  String? spotName;
   @override
   void initState() {
     super.initState();
+    loadName();
   }
 
   Future<Map<String, dynamic>> getData(String url) async {
@@ -42,6 +45,13 @@ class _ManagerHomeState extends State<ManagerHome> {
     }
   }
 
+  Future<void> loadName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      spotName = prefs.getString('spotName');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final args =
@@ -51,6 +61,7 @@ class _ManagerHomeState extends State<ManagerHome> {
     return Scaffold(
       drawer: const ManagerSidebar(),
       appBar: AppBar(
+        title: Text(spotName ?? ''),
         actions: [
           IconButton(
             onPressed: () {
@@ -67,13 +78,6 @@ class _ManagerHomeState extends State<ManagerHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Welcome to the ${userType == 'tour_manager' ? 'Tour Spot Dashboard' : 'Restaurant Dashboard'}!',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
               FutureBuilder(
                 future: getData(userType == 'tour_manager'
                     ? 'tourspot/get-tourspot-selling-details'

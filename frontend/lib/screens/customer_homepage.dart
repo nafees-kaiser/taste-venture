@@ -329,7 +329,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                     future: topRestaurants,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: const CircularProgressIndicator());
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       } else if (snapshot.hasError) {
                         return Text('Unable to fetch data');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -373,7 +375,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                 const Text(
                                   'See all',
                                   style: TextStyle(
-                                    color: PRIMARY_COLOR,
+                                    color: SECONDARY_COLOR,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -381,7 +383,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                   scaleX: -1,
                                   child: const Icon(
                                     Icons.arrow_back_ios,
-                                    color: PRIMARY_COLOR,
+                                    color: SECONDARY_COLOR,
                                     size: 14,
                                   ),
                                 )
