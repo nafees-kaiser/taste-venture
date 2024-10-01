@@ -3,6 +3,7 @@ from rest_framework.fields import ImageField
 
 from usersapp.models import Users
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -36,6 +37,7 @@ class MenuItem(models.Model):
     size = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     image = models.ImageField(upload_to='images/restaurant/menu/', null=True, default=None)
+    # image = CloudinaryField('image')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='menu_item')
 
     def __str__(self):

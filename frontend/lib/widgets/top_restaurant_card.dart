@@ -83,15 +83,16 @@ class _TopResCardState extends State<TopResCard> {
                   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: widget.restaurantImage == null
+                    child: (widget.restaurantImage == null)
                         ? const Image(
                             image: AssetImage('assets/image_filler.png'),
                             fit: BoxFit.cover,
                             height: 120,
                           )
                         : Image.network(
-                            ApiSettings(endPoint: widget.restaurantImage.substring(1))
-                                .getUri(),
+                            // ApiSettings(endPoint: widget.restaurantImage.substring(1))
+                            //     .getUri(),
+                            widget.restaurantImage,
                             fit: BoxFit.cover,
                             height: 120,
                             errorBuilder: (context, error, stackTrace) =>
