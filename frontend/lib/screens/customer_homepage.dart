@@ -337,7 +337,6 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                       } else {
                         return Row(
                           children: snapshot.data!.map((restaurant) {
-                            print(restaurant);
                             return TopResCard(
                               id: restaurant.id,
                               restaurantImage: restaurant.image ?? '',
