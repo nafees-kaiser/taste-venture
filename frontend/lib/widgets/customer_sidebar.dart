@@ -49,7 +49,9 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
           FutureBuilder<Map<String, dynamic>>(
             future: getData('users/get-user'),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              if (snapshot.connectionState == 'waiting') {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return Column(
                   children: [
                     UserAccountsDrawerHeader(
