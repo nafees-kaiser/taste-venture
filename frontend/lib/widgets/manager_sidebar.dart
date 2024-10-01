@@ -132,6 +132,16 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
                               context, '/tourspot/booking-list');
                         },
                       ),
+                    if (snapshot.data!['user_type'] == 'tour_manager')
+                      ListTile(
+                        leading: const Icon(Icons.history),
+                        title: const Text("Booking History"),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, '/tourspot/booking-history');
+                          // print('reservations tapped'),
+                        },
+                      )
                   ],
                 );
               } else {

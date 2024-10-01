@@ -326,42 +326,43 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                              child:
-                                  // GestureDetector(
-                                  //   onTap: () async {
-                                  //     // Parse the time string to TimeOfDay
-                                  //     String time = "9:00 am";
-                                  //     final parsedTime = TimeOfDay(
-                                  //       hour: int.parse(time.split(':')[0]),
-                                  //       minute:
-                                  //           int.parse(time.split(':')[1].split(' ')[0]),
-                                  //     );
+                            child:
+                                // GestureDetector(
+                                //   onTap: () async {
+                                //     // Parse the time string to TimeOfDay
+                                //     String time = "9:00 am";
+                                //     final parsedTime = TimeOfDay(
+                                //       hour: int.parse(time.split(':')[0]),
+                                //       minute:
+                                //           int.parse(time.split(':')[1].split(' ')[0]),
+                                //     );
 
-                                  //     TimeOfDay? newTimeOfDay = await showTimePicker(
-                                  //         context: context,
-                                  //         initialTime: parsedTime,
-                                  //         initialEntryMode:
-                                  //             TimePickerEntryMode.inputOnly);
-                                  //     if (newTimeOfDay != null) {
-                                  //       setState(() {
-                                  //         _openingTimeController.text =
-                                  //             newTimeOfDay.format(context);
-                                  //       });
-                                  //     }
-                                  //   },
-                                  // )
+                                //     TimeOfDay? newTimeOfDay = await showTimePicker(
+                                //         context: context,
+                                //         initialTime: parsedTime,
+                                //         initialEntryMode:
+                                //             TimePickerEntryMode.inputOnly);
+                                //     if (newTimeOfDay != null) {
+                                //       setState(() {
+                                //         _openingTimeController.text =
+                                //             newTimeOfDay.format(context);
+                                //       });
+                                //     }
+                                //   },
+                                // )
 
-                                  //     CustomInputField(
-                                  //   label: 'Opening time',
-                                  //   hintText: 'eg hh:mm:ss AM',
-                                  //   onChanged: (_) => checkAllFieldsFilled(),
-                                  //   controller: _openingTimeController,
-                                  // ),
-                                  _buildTimeCard(
-                                      context,
-                                      "Opening time",
-                                      _openingTimeController.text,
-                                      _openingTimeController)),
+                                CustomInputField(
+                              label: 'Opening time',
+                              hintText: 'eg hh:mm:ss AM',
+                              onChanged: (_) => checkAllFieldsFilled(),
+                              controller: _openingTimeController,
+                            ),
+                          ),
+                          // _buildTimeCard(
+                          //     context,
+                          //     "Opening time",
+                          //     _openingTimeController.text,
+                          //     _openingTimeController)),
                           SizedBox(width: 16),
                           Expanded(
                             child: CustomInputField(
