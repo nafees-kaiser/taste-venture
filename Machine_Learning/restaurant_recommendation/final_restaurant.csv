@@ -1,0 +1,216 @@
+,placeID,Rcuisine,Rpayment,parking_lot,latitude,longitude,name,address,city,state,country,price,Rambience,area
+0,135109,Italian,cash,no,18.9217848,-99.2353499,Paniroles,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,medium,quiet,closed
+1,135106,Mexican,cash,no,22.1497088,-100.9760928,El Rincón de San Francisco,Universidad 169,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,open
+2,135106,Mexican,VISA,no,22.1497088,-100.9760928,El Rincón de San Francisco,Universidad 169,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,open
+3,135106,Mexican,MasterCard-Eurocard,no,22.1497088,-100.9760928,El Rincón de San Francisco,Universidad 169,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,open
+4,135104,Mexican,cash,yes,23.7529821,-99.1684341,vips,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+5,135104,Mexican,VISA,yes,23.7529821,-99.1684341,vips,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+6,135104,Mexican,MasterCard-Eurocard,yes,23.7529821,-99.1684341,vips,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+7,135088,Cafeteria,cash,public,18.8760113,-99.2198896,Cafeteria cenidet,Interior Internado Palmira SN,Cuernavaca,Morelos,Mexico,low,quiet,closed
+8,135086,Burgers,cash,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+9,135086,Burgers,VISA,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+10,135086,Burgers,MasterCard-Eurocard,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+11,135086,Fast_Food,cash,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+12,135086,Fast_Food,VISA,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+13,135086,Fast_Food,MasterCard-Eurocard,yes,22.141421,-101.013955,Mcdonalds Parque Tangamanga,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+14,135085,Fast_Food,cash,public,22.150802,-100.98268,Tortas Locas Hipocampo,Venustiano Carranza 719 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+15,135079,Chinese,cash,no,22.156376,-100.998355,Koye Sushi,Nereo Rodriguez Barragan 450 E Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+16,135079,Chinese,American_Express,no,22.156376,-100.998355,Koye Sushi,Nereo Rodriguez Barragan 450 E Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+17,135075,Seafood,cash,yes,22.139573,-100.991564,Mariscos El Pescador,Himno Nacional 2104 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+18,135074,Contemporary,cash,public,22.149689,-100.999525,Restaurante la Parroquia Potosina,Venustiano Carranza 303 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+19,135074,Contemporary,VISA,public,22.149689,-100.999525,Restaurante la Parroquia Potosina,Venustiano Carranza 303 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+20,135074,Contemporary,MasterCard-Eurocard,public,22.149689,-100.999525,Restaurante la Parroquia Potosina,Venustiano Carranza 303 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+21,135073,Bar,cash,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+22,135073,Bar,VISA,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+23,135073,Bar,MasterCard-Eurocard,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+24,135073,Bar_Pub_Brewery,cash,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+25,135073,Bar_Pub_Brewery,VISA,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+26,135073,Bar_Pub_Brewery,MasterCard-Eurocard,yes,22.147175,-100.974269,Restaurante Bar El Gallinero,Pascual M. Hernandez 210 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+27,135072,Japanese,cash,no,22.149192,-101.002936,Sushi Itto,Venustiano Carranza 1809 C Polanco,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+28,135072,Japanese,VISA,no,22.149192,-101.002936,Sushi Itto,Venustiano Carranza 1809 C Polanco,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+29,135072,Japanese,MasterCard-Eurocard,no,22.149192,-101.002936,Sushi Itto,Venustiano Carranza 1809 C Polanco,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+30,135072,Japanese,American_Express,no,22.149192,-101.002936,Sushi Itto,Venustiano Carranza 1809 C Polanco,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+31,135071,Bar,cash,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+32,135071,Bar,VISA,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+33,135071,Bar,MasterCard-Eurocard,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+34,135071,Bar,American_Express,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+35,135071,Bar_Pub_Brewery,cash,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+36,135071,Bar_Pub_Brewery,VISA,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+37,135071,Bar_Pub_Brewery,MasterCard-Eurocard,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+38,135071,Bar_Pub_Brewery,American_Express,yes,22.126375,-100.910926,Restaurante la Cantina,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+39,135069,Bar,cash,yes,22.140129,-100.944872,Abondance Restaurante Bar,Industrias 908 Valle Dorado,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+40,135060,Seafood,cash,no,22.156883,-100.978485,Restaurante Marisco Sam,Ignacio Allende 785 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+41,135059,Bar,cash,yes,22.145108,-100.989547,Restaurant Bar Hacienda los Martinez,Santos Degollado 745 los Alamitos,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+42,135058,Pizzeria,cash,public,22.165587,-101.001273,Restaurante Tiberius,Munoz Sn Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+43,135058,Pizzeria,VISA,public,22.165587,-101.001273,Restaurante Tiberius,Munoz Sn Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+44,135058,Pizzeria,MasterCard-Eurocard,public,22.165587,-101.001273,Restaurante Tiberius,Munoz Sn Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+45,135057,Bar,cash,yes,22.145992,-100.955118,El Herradero Restaurante and Bar,Costado Sur Central Camionera Km 2,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+46,135057,Bar,VISA,yes,22.145992,-100.955118,El Herradero Restaurante and Bar,Costado Sur Central Camionera Km 2,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+47,135057,Bar,MasterCard-Eurocard,yes,22.145992,-100.955118,El Herradero Restaurante and Bar,Costado Sur Central Camionera Km 2,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+48,135057,Bar,American_Express,yes,22.145992,-100.955118,El Herradero Restaurante and Bar,Costado Sur Central Camionera Km 2,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+49,135055,Mexican,cash,yes,22.148854,-101.008472,la Cochinita Pibil Restaurante Yucateco,Venustiano Carranza 2175 Jardin,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+50,135055,Mexican,VISA,yes,22.148854,-101.008472,la Cochinita Pibil Restaurante Yucateco,Venustiano Carranza 2175 Jardin,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+51,135055,Mexican,MasterCard-Eurocard,yes,22.148854,-101.008472,la Cochinita Pibil Restaurante Yucateco,Venustiano Carranza 2175 Jardin,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+52,135055,Mexican,American_Express,yes,22.148854,-101.008472,la Cochinita Pibil Restaurante Yucateco,Venustiano Carranza 2175 Jardin,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+53,135054,Seafood,cash,yes,22.140626,-100.915657,Restaurante y Pescaderia Tampico,Ricardo B. Anaya 2700 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+54,135054,Seafood,VISA,yes,22.140626,-100.915657,Restaurante y Pescaderia Tampico,Ricardo B. Anaya 2700 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+55,135054,Seafood,MasterCard-Eurocard,yes,22.140626,-100.915657,Restaurante y Pescaderia Tampico,Ricardo B. Anaya 2700 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+56,135053,Cafeteria,cash,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+57,135053,Cafeteria,VISA,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+58,135053,Cafeteria,MasterCard-Eurocard,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+59,135053,Cafeteria,American_Express,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+60,135053,Fast_Food,cash,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+61,135053,Fast_Food,VISA,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+62,135053,Fast_Food,MasterCard-Eurocard,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+63,135053,Fast_Food,American_Express,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+64,135053,Pizzeria,cash,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+65,135053,Pizzeria,VISA,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+66,135053,Pizzeria,MasterCard-Eurocard,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+67,135053,Pizzeria,American_Express,yes,22.178931,-101.012861,La Fontana Pizza Restaurante and Cafe,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+68,135052,Bar,cash,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+69,135052,Bar,VISA,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+70,135052,Bar,MasterCard-Eurocard,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+71,135052,Bar_Pub_Brewery,cash,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+72,135052,Bar_Pub_Brewery,VISA,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+73,135052,Bar_Pub_Brewery,MasterCard-Eurocard,no,22.150981,-100.977412,La Cantina Restaurante,Ignacio Aldama 300 Centro,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+74,135049,Seafood,cash,no,22.135011,-101.0286,Restaurante de Mariscos la Langosta,Cordillera de Los Alpes 675 Loma Verde,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+75,135048,Bar,cash,yes,22.142017,-100.999246,Restaurante Bar Fu-hao,Jesus Goytortua 390 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+76,135048,Bar,VISA,yes,22.142017,-100.999246,Restaurante Bar Fu-hao,Jesus Goytortua 390 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+77,135048,Bar,MasterCard-Eurocard,yes,22.142017,-100.999246,Restaurante Bar Fu-hao,Jesus Goytortua 390 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+78,135048,Bar,American_Express,yes,22.142017,-100.999246,Restaurante Bar Fu-hao,Jesus Goytortua 390 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+79,135046,Fast_Food,cash,yes,22.141282,-101.002958,Restaurante El Reyecito,Agricultura 595 del Valle,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+80,135046,Fast_Food,VISA,yes,22.141282,-101.002958,Restaurante El Reyecito,Agricultura 595 del Valle,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+81,135046,Fast_Food,MasterCard-Eurocard,yes,22.141282,-101.002958,Restaurante El Reyecito,Agricultura 595 del Valle,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+82,135044,Chinese,cash,no,22.141848,-100.997475,Restaurant Wu Zhuo Yi,Himno Nacional 100 Avenida,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+83,135043,Fast_Food,cash,no,22.185756,-100.944518,pizza clasica,524 Soledad de Graciano Sanchez,Soledad,San Luis Potosi,Mexico,medium,familiar,closed
+84,135043,Pizzeria,cash,no,22.185756,-100.944518,pizza clasica,524 Soledad de Graciano Sanchez,Soledad,San Luis Potosi,Mexico,medium,familiar,closed
+85,135042,Chinese,cash,no,22.159357,-100.973411,Restaurant Oriental Express,Tangamanga 7 Tangamanga,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+86,135041,Bar,cash,no,22.15106,-100.977659,Luna Cafe,Francisco I. Madero 215,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+87,135041,Cafeteria,cash,no,22.15106,-100.977659,Luna Cafe,Francisco I. Madero 215,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+88,135039,Seafood,cash,yes,22.145893,-100.97487,Restaurant de Mariscos de Picon,Miguel Barragan 46 Centro,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+89,135035,Italian,cash,yes,22.145813,-101.018032,El Mundo de la Pasta,Rio Papaloapan 265 Lomas de San Luis (3),San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+90,135035,Italian,VISA,yes,22.145813,-101.018032,El Mundo de la Pasta,Rio Papaloapan 265 Lomas de San Luis (3),San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+91,135035,Italian,MasterCard-Eurocard,yes,22.145813,-101.018032,El Mundo de la Pasta,Rio Papaloapan 265 Lomas de San Luis (3),San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+92,135035,Italian,American_Express,yes,22.145813,-101.018032,El Mundo de la Pasta,Rio Papaloapan 265 Lomas de San Luis (3),San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+93,135034,Japanese,cash,no,22.140517,-101.021422,Michiko Restaurant Japones,Cordillera de Los Alpes 160 Lomas 2 Seccion,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+94,135034,Japanese,VISA,no,22.140517,-101.021422,Michiko Restaurant Japones,Cordillera de Los Alpes 160 Lomas 2 Seccion,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+95,135034,Japanese,MasterCard-Eurocard,no,22.140517,-101.021422,Michiko Restaurant Japones,Cordillera de Los Alpes 160 Lomas 2 Seccion,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+96,135034,Japanese,American_Express,no,22.140517,-101.021422,Michiko Restaurant Japones,Cordillera de Los Alpes 160 Lomas 2 Seccion,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+97,135032,Cafeteria,cash,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+98,135032,Cafeteria,VISA,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+99,135032,Cafeteria,MasterCard-Eurocard,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+100,135032,Contemporary,cash,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+101,135032,Contemporary,VISA,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+102,135032,Contemporary,MasterCard-Eurocard,public,22.152481,-100.973486,Cafeteria y Restaurant El Pacifico,Constitucion 200 Centro,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+103,135030,Cafe-Coffee_Shop,cash,no,22.14788,-100.989472,Preambulo Wifi Zone Cafe,Anahuac 805,San Luis Potosi,San Luis Potosi,Mexico,medium,quiet,closed
+104,135030,Cafeteria,cash,no,22.14788,-100.989472,Preambulo Wifi Zone Cafe,Anahuac 805,San Luis Potosi,San Luis Potosi,Mexico,medium,quiet,closed
+105,135028,Mexican,cash,no,22.146658,-100.987219,La Virreina,Av. Carranza 830,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+106,135028,Mexican,VISA,no,22.146658,-100.987219,La Virreina,Av. Carranza 830,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+107,135028,Mexican,MasterCard-Eurocard,no,22.146658,-100.987219,La Virreina,Av. Carranza 830,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+108,135028,Mexican,American_Express,no,22.146658,-100.987219,La Virreina,Av. Carranza 830,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+109,135027,Mexican,cash,no,22.147145,-100.974494,Restaurant Orizatlan,Pascual M. Hernandez 240,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+110,135027,Mexican,VISA,no,22.147145,-100.974494,Restaurant Orizatlan,Pascual M. Hernandez 240,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+111,135027,Mexican,MasterCard-Eurocard,no,22.147145,-100.974494,Restaurant Orizatlan,Pascual M. Hernandez 240,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+112,135027,Mexican,American_Express,no,22.147145,-100.974494,Restaurant Orizatlan,Pascual M. Hernandez 240,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+113,135025,Mexican,cash,no,22.14955,-100.97797,El Rincon de San Francisco,1a. de Lozada 1,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+114,135025,Mexican,VISA,no,22.14955,-100.97797,El Rincon de San Francisco,1a. de Lozada 1,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+115,135025,Mexican,MasterCard-Eurocard,no,22.14955,-100.97797,El Rincon de San Francisco,1a. de Lozada 1,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+116,135025,Mexican,American_Express,no,22.14955,-100.97797,El Rincon de San Francisco,1a. de Lozada 1,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+117,135021,Fast_Food,cash,public,18.933537,-99.222497,Subway,Rio Mayo 17 Vista Hermosa,Cuernavaca,Morelos,Mexico,low,familiar,closed
+118,135018,Mexican,cash,yes,18.859803,-99.222164,El Oceano Dorado,Libramiento Burgos Colonia Las Animas,Cuernavaca,Morelos,Mexico,medium,familiar,open
+119,135018,Mexican,VISA,yes,18.859803,-99.222164,El Oceano Dorado,Libramiento Burgos Colonia Las Animas,Cuernavaca,Morelos,Mexico,medium,familiar,open
+120,135018,Mexican,MasterCard-Eurocard,yes,18.859803,-99.222164,El Oceano Dorado,Libramiento Burgos Colonia Las Animas,Cuernavaca,Morelos,Mexico,medium,familiar,open
+121,135018,Mexican,bank_debit_cards,yes,18.859803,-99.222164,El Oceano Dorado,Libramiento Burgos Colonia Las Animas,Cuernavaca,Morelos,Mexico,medium,familiar,open
+122,134983,Bar,cash,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+123,134983,Bar,VISA,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+124,134983,Bar,MasterCard-Eurocard,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+125,134983,Bar_Pub_Brewery,cash,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+126,134983,Bar_Pub_Brewery,VISA,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+127,134983,Bar_Pub_Brewery,MasterCard-Eurocard,yes,18.948657,-99.235361,Restaurant and Bar and Clothesline Carlos N Charlies,Domingo 10 711 El Empleado,Cuernavaca,Morelos,Mexico,high,familiar,closed
+128,132958,American,cash,no,22.1449787,-101.0056829,tacos los volcanes,avenida hivno nacional,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+129,132958,American,VISA,no,22.1449787,-101.0056829,tacos los volcanes,avenida hivno nacional,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+130,132958,American,MasterCard-Eurocard,no,22.1449787,-101.0056829,tacos los volcanes,avenida hivno nacional,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+131,132958,American,American_Express,no,22.1449787,-101.0056829,tacos los volcanes,avenida hivno nacional,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+132,132958,American,bank_debit_cards,no,22.1449787,-101.0056829,tacos los volcanes,avenida hivno nacional,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+133,132955,Bar_Pub_Brewery,cash,no,22.147622,-101.0102749,emilianos,venustiano carranza,San Luis Potosi,Mexico,Mexico,low,familiar,closed
+134,132955,Bar_Pub_Brewery,VISA,no,22.147622,-101.0102749,emilianos,venustiano carranza,San Luis Potosi,Mexico,Mexico,low,familiar,closed
+135,132955,Bar_Pub_Brewery,MasterCard-Eurocard,no,22.147622,-101.0102749,emilianos,venustiano carranza,San Luis Potosi,Mexico,Mexico,low,familiar,closed
+136,132955,Bar_Pub_Brewery,bank_debit_cards,no,22.147622,-101.0102749,emilianos,venustiano carranza,San Luis Potosi,Mexico,Mexico,low,familiar,closed
+137,132955,Bar_Pub_Brewery,Carte_Blanche,no,22.147622,-101.0102749,emilianos,venustiano carranza,San Luis Potosi,Mexico,Mexico,low,familiar,closed
+138,132954,Breakfast-Brunch,cash,yes,22.1603808,-100.9880447,la parroquia,venustiano carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+139,132954,Breakfast-Brunch,VISA,yes,22.1603808,-100.9880447,la parroquia,venustiano carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+140,132954,Breakfast-Brunch,MasterCard-Eurocard,yes,22.1603808,-100.9880447,la parroquia,venustiano carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+141,132954,Breakfast-Brunch,bank_debit_cards,yes,22.1603808,-100.9880447,la parroquia,venustiano carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+142,132951,American,cash,yes,22.1544736,-100.9858091,VIPS,NICOLAS ZAPATA 300,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+143,132937,Bar,cash,no,22.1500193,-100.9799203,rockabilly ,agustin de iturbide,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,closed
+144,132925,Mexican,cash,no,22.1534997,-100.976243,el pueblito,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+145,132922,Cafeteria,cash,no,22.1511348,-100.9823115,cafe punta del cielo,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+146,132921,Bar,cash,no,22.150305,-100.9891337,crudalia,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,open
+147,132885,Cafeteria,cash,public,22.1795169,-100.9584358,Hamburguesas saul,Av. Saan Luis enttre moctezuma y salinas,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+148,132875,Japanese,cash,valet parking,22.1499013,-100.9937793,shi ro ie,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,open
+149,132875,Japanese,VISA,valet parking,22.1499013,-100.9937793,shi ro ie,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,open
+150,132875,Japanese,MasterCard-Eurocard,valet parking,22.1499013,-100.9937793,shi ro ie,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,open
+151,132875,Japanese,American_Express,valet parking,22.1499013,-100.9937793,shi ro ie,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,open
+152,132875,Japanese,bank_debit_cards,valet parking,22.1499013,-100.9937793,shi ro ie,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,open
+153,132872,American,cash,public,22.1735955,-100.9946027,Pizzeria Julios,Satelite 606 Satelite,San Luis Potosi,Mexico,Mexico,medium,familiar,closed
+154,132872,American,bank_debit_cards,public,22.1735955,-100.9946027,Pizzeria Julios,Satelite 606 Satelite,San Luis Potosi,Mexico,Mexico,medium,familiar,closed
+155,132870,Burgers,cash,no,22.1430781,-100.9354788,Tortas y hamburguesas el gordo,Ricardo B. Anaya,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+156,132869,Pizzeria,cash,yes,22.1412384,-100.9239252,Dominos Pizza,Ricardo B. Anaya,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+157,132866,Bakery,cash,yes,22.1412198,-100.9313107,Chaires,Ricardo B. Anaya,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+158,132866,Cafeteria,cash,yes,22.1412198,-100.9313107,Chaires,Ricardo B. Anaya,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+159,132862,International,cash,valet parking,22.1506429,-100.9870148,La Posada del Virrey,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+160,132862,International,VISA,valet parking,22.1506429,-100.9870148,La Posada del Virrey,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+161,132862,International,MasterCard-Eurocard,valet parking,22.1506429,-100.9870148,La Posada del Virrey,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+162,132862,International,American_Express,valet parking,22.1506429,-100.9870148,La Posada del Virrey,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+163,132862,International,bank_debit_cards,valet parking,22.1506429,-100.9870148,La Posada del Virrey,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,high,familiar,closed
+164,132861,Burgers,cash,yes,22.1480965,-101.0173023,Carls Jr,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+165,132861,Burgers,VISA,yes,22.1480965,-101.0173023,Carls Jr,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+166,132861,Burgers,MasterCard-Eurocard,yes,22.1480965,-101.0173023,Carls Jr,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+167,132861,Burgers,American_Express,yes,22.1480965,-101.0173023,Carls Jr,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+168,132861,Burgers,bank_debit_cards,yes,22.1480965,-101.0173023,Carls Jr,Av. V. Carranza,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+169,132858,Burgers,cash,no,22.1312917,-100.9371941,Hamburguesas Valle Dorado,Av. Coral,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+170,132856,Italian,cash,no,22.1513782,-100.9746337,Unicols Pizza,Plaza del Carmen,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+171,132854,International,cash,yes,22.1378633,-100.9383273,Sirlone,carr. mexico,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+172,132854,International,VISA,yes,22.1378633,-100.9383273,Sirlone,carr. mexico,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+173,132854,International,bank_debit_cards,yes,22.1378633,-100.9383273,Sirlone,carr. mexico,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+174,132851,American,cash,yes,22.136872,-100.9345736,KFC,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+175,132851,Game,cash,yes,22.136872,-100.9345736,KFC,De La Estrella 2005 Estrella de Oriente,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+176,132846,International,cash,no,22.1422732,-100.9426537,el lechon potosino ,circuito oriente esq. carretera 57,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,open
+177,132845,Mexican,cash,no,22.1262926,-100.9007764,Cenaduria El RincÃ³n de Tlaquepaque,av. seminario,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+178,132834,Mexican,cash,public,22.156469,-100.98554,Gorditas Doa Gloria,sevilla y olmedo 715 a,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+179,132825,Mexican,cash,no,22.1473922,-100.983092,puesto de tacos,esquina santos degollado y leon guzman,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,open
+180,132773,Family,cash,no,18.8699929,-99.2103195,El cotorreo,Emiliano Zapata Col. Tres de Mayo,Cuernavaca,Morelos,Mexico,low,familiar,open
+181,132773,Mexican,cash,no,18.8699929,-99.2103195,El cotorreo,Emiliano Zapata Col. Tres de Mayo,Cuernavaca,Morelos,Mexico,low,familiar,open
+182,132768,Family,cash,no,18.9257734,-99.2326355,Mariscos Tia Licha,avenida salvador montiel ,Cuernavaca,Morelos,Mexico,medium,familiar,closed
+183,132768,Family,bank_debit_cards,no,18.9257734,-99.2326355,Mariscos Tia Licha,avenida salvador montiel ,Cuernavaca,Morelos,Mexico,medium,familiar,closed
+184,132767,Vietnamese,cash,yes,18.8820871,-99.1630268,Restaurant Familiar El Chino,Paseo de las Fuentes,Jiutepec,Morelos,Mexico,medium,familiar,open
+185,132767,Vietnamese,VISA,yes,18.8820871,-99.1630268,Restaurant Familiar El Chino,Paseo de las Fuentes,Jiutepec,Morelos,Mexico,medium,familiar,open
+186,132767,Vietnamese,American_Express,yes,18.8820871,-99.1630268,Restaurant Familiar El Chino,Paseo de las Fuentes,Jiutepec,Morelos,Mexico,medium,familiar,open
+187,132766,Japanese,cash,yes,18.9101777,-99.2315438,Mikasa,Himno nacional esq. Blvd. Juarez,Cuernavaca,Morelos,Mexico,medium,familiar,closed
+188,132755,Mexican,cash,public,22.153324,-101.0195459,La Estrella de Dimas,Av. de los Pintores,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+189,132755,Mexican,VISA,public,22.153324,-101.0195459,La Estrella de Dimas,Av. de los Pintores,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+190,132755,Mexican,American_Express,public,22.153324,-101.0195459,La Estrella de Dimas,Av. de los Pintores,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+191,132755,Mexican,bank_debit_cards,public,22.153324,-101.0195459,La Estrella de Dimas,Av. de los Pintores,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+192,132754,Mexican,cash,no,22.1477379,-100.9906163,Cabana Huasteca,Cuauhtemoc 455,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+193,132740,Mexican,cash,no,23.7521965,-99.1666317,Carreton de Flautas y Migadas,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,low,familiar,open
+194,132733,Pizzeria,cash,yes,23.7527071,-99.1625655,Little Cesarz,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+195,132733,Pizzeria,VISA,yes,23.7527071,-99.1625655,Little Cesarz,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+196,132733,Pizzeria,MasterCard-Eurocard,yes,23.7527071,-99.1625655,Little Cesarz,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+197,132733,Pizzeria,bank_debit_cards,yes,23.7527071,-99.1625655,Little Cesarz,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+198,132732,Mexican,cash,no,23.7543569,-99.171288,Taqueria EL amigo ,Calle Mezquite Fracc Framboyanes,Cd Victoria,Tamaulipas,Mexico,low,familiar,open
+199,132723,Mexican,cash,public,22.1489337,-101.019845,Gordas de morales,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+200,132723,Mexican,VISA,public,22.1489337,-101.019845,Gordas de morales,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+201,132717,Fast_Food,cash,public,23.7318602,-99.1504365,tortas hawai,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,medium,familiar,closed
+202,132715,Mexican,cash,no,23.7324226,-99.1586602,tacos de la estacion,Satelite 606 Satelite,San Luis Potosi,San Luis Potosi,Mexico,low,quiet,open
+203,132706,Mexican,cash,public,23.7292162,-99.1323571,Gorditas Dona Tota,Zaragoza entre Francisco Zarco y Lopez Velarde,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+204,132706,Mexican,VISA,public,23.7292162,-99.1323571,Gorditas Dona Tota,Zaragoza entre Francisco Zarco y Lopez Velarde,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+205,132667,Armenian,cash,no,23.7526973,-99.1633594,little pizza Emilio Portes Gil,calle emilio portes gil,Ciudad Victoria,Tamaulipas,Mexico,low,familiar,closed
+206,132626,Italian,cash,yes,23.7375834,-99.1351318,la perica hamburguesa,Zaragoza entre Francisco Zarco y Lopez Velarde,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+207,132626,Italian,American_Express,yes,23.7375834,-99.1351318,la perica hamburguesa,Zaragoza entre Francisco Zarco y Lopez Velarde,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+208,132613,Mexican,cash,yes,23.7529035,-99.165076,carnitas_mata,lic. Emilio portes gil,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+209,132609,Fast_Food,cash,yes,23.7602683,-99.1658646,Pollo_Frito_Buenos_Aires,tampico,Ciudad Victoria,Tamaulipas,Mexico,low,quiet,closed
+210,132608,Mexican,cash,public,23.7588052,-99.1651297,Hamburguesas La perica,cd. mier,Ciudad Victoria,Tamaulipas,Mexico,low,quiet,open
+211,132594,Mexican,cash,public,23.7521677,-99.165709,tacos de barbacoa enfrente del Tec,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,low,familiar,open
+212,132584,Mexican,cash,yes,23.7523648,-99.1652879,Gorditas Dona Tota,Calle Mezquite Fracc Framboyanes,Ciudad Victoria,Tamaulipas,Mexico,medium,familiar,closed
+213,132572,Cafeteria,cash,yes,22.1416471,-100.9927118,Cafe Chaires,Lateral Salvador Nava Martinez 3145,San Luis Potosi,San Luis Potosi,Mexico,low,familiar,closed
+214,132560,Regional,cash,public,23.7523041,-99.1669133,puesto de gorditas,frente al tecnologico,Ciudad Victoria,Tamaulipas,Mexico,low,familiar,open

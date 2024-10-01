@@ -2,6 +2,7 @@ import pickle
 import re
 import numpy as np
 import fasttext
+# from Machine_Learning.restaurant_recommendation.res_rec_v1 import RecommendationModel
 
 
 def get_restaurant_sentiment(review):
@@ -66,10 +67,21 @@ def get_dayTourSpot_sentiment(review):
 
     return prediction
 
-def get_restaurant_recommendation(user_id):
 
+def get_restaurant_recommendation(user_id):
     # Load the model
     with open(r'..\Machine_Learning\restaurant_recommendation\recommendation_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+
+    recommendation = model.recommend(user_id)
+    print(recommendation)
+
+    return recommendation
+
+
+def get_res_rec(user_id):
+    # Load the model
+    with open(r'..\Machine_Learning\restaurant_recommendation\rec_model.pkl', 'rb') as f:
         model = pickle.load(f)
 
     recommendation = model.recommend(user_id)
