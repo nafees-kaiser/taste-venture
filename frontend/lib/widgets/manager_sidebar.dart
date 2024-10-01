@@ -81,6 +81,12 @@ class _ManagerSidebarState extends State<ManagerSidebar> {
           title: const Text("Booking"),
           onTap: () => Navigator.pushNamed(context, '/tourspot/booking-list'),
         ),
+        ListTile(
+          leading: const Icon(Icons.history),
+          title: const Text("Booking History"),
+          onTap: () =>
+              Navigator.pushNamed(context, '/tourspot/booking-history'),
+        )
       ] else if (_userType == 'res_manager') ...[
         ListTile(
           leading: const Icon(Icons.info),
