@@ -22,7 +22,7 @@ class _TourSpotState extends State<TourSpot> {
   int currentPage = 1;
   List<Map<String, dynamic>> tourSpots = [];
 
-  String sortBy; // Default sorting option
+  String sortBy = ''; // Default sorting option
   String sortOrder = 'asc'; // Default sort order
   final TextEditingController searchController = TextEditingController();
   String dropdownValue = 'Rating low-to-high';
