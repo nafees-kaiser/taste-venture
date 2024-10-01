@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/api_settings.dart';
-import 'package:frontend/widgets/customer_sidebar.dart';
+import 'package:frontend/widgets/manager_sidebar.dart';
 import 'package:frontend/widgets/visiting_history_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +28,7 @@ class BookingHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const CustomerSidebar(),
+      drawer: const ManagerSidebar(),
       appBar: AppBar(
         title: const Text("Booking History"),
       ),
@@ -40,7 +40,7 @@ class BookingHistoryPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData ||
-              (snapshot.data!['tourspot'].isEmpty)) {
+              (snapshot.data!['tour-spot'].isEmpty)) {
             return Center(child: Text('No Booking history available.'));
           }
 

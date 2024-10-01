@@ -75,8 +75,8 @@ def view_tourspot_list(request):
     # Extract query parameters for filtering
     search_query = request.GET.get('search', '')
     # cuisine_filter = request.GET.getlist('cuisine')  # Multiple values
-    price_min = request.GET.get('price_min')
-    price_max = request.GET.get('price_max')
+    # price_min = request.GET.get('price_min')
+    # price_max = request.GET.get('price_max')
     sort_by = request.GET.get('sort_by', 'id')  # Default sort by ID
     sort_order = request.GET.get('sort_order', 'asc')  # Default sort order
 
@@ -100,12 +100,14 @@ def view_tourspot_list(request):
     #     )
 
     # Filtering based on price range
-    if price_min is not None:
-        tourspots = tourspots.filter(entry_fee__gte=price_min)
-    if price_max is not None:
-        tourspots = tourspots.filter(entry_fee__lte=price_max)
+    # if price_min is not None:
+    #     tourspots = tourspots.filter(entry_fee__gte=price_min)
+    # if price_max is not None:
+    #     tourspots = tourspots.filter(entry_fee__lte=price_max)
 
     # Sorting
+    if not sort_by:
+        sort_by = 'id'
     if sort_order == 'desc':
         sort_by = f'-{sort_by}'  # Reverse the sort order if 'desc'
 

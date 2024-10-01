@@ -22,6 +22,11 @@ class _TourSpotState extends State<TourSpot> {
   int currentPage = 1;
   List<Map<String, dynamic>> tourSpots = [];
 
+  String sortBy = ''; // Default sorting option
+  String sortOrder = 'asc'; // Default sort order
+  final TextEditingController searchController = TextEditingController();
+  String dropdownValue = 'Rating low-to-high';
+
   @override
   void initState() {
     super.initState();
@@ -29,8 +34,9 @@ class _TourSpotState extends State<TourSpot> {
   }
 
   Future<void> fetchTourSpots() async {
-    ApiSettings api =
-        ApiSettings(endPoint: 'tourspot/view-list?page=$currentPage');
+    ApiSettings api = ApiSettings(
+        endPoint:
+            'tourspot/view-list?page=$currentPage&search=${searchController.text}&sort_by=$sortBy&sort_order=$sortOrder');
     final response = await api.getMethod();
 
     if (response.statusCode == 200) {
@@ -66,27 +72,28 @@ class _TourSpotState extends State<TourSpot> {
       drawer: const CustomerSidebar(),
       appBar: AppBar(
         backgroundColor: Color(0xFFF7F7F7),
-        title: Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+        title:
+            // Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // children: [
             // Icon(
             //   Icons.location_on,
             //   color: Color.fromARGB(255, 2, 2, 2),
             // ),
             // SizedBox(width: 8),
             Text(
-              // 'Mirpur 12, Dhaka',
-              "TasteVenture",
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
-                letterSpacing: -0.2,
-                color: Color.fromARGB(255, 2, 2, 2),
-              ),
-            ),
-          ],
+          // 'Mirpur 12, Dhaka',
+          "TasteVenture",
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.w500,
+            fontSize: 15,
+            letterSpacing: -0.2,
+            color: Color.fromARGB(255, 2, 2, 2),
+          ),
         ),
+        // ],
+        // ),
         centerTitle: true,
         // actions: [
         //   IconButton(
@@ -101,6 +108,44 @@ class _TourSpotState extends State<TourSpot> {
           children: [
             Container(
               color: Color(0xFFF9F9F9),
+              // child: Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 15),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Expanded(
+              //         child: TextField(
+              //           controller: searchController,
+              //           decoration: InputDecoration(
+              //             hintText: 'Search',
+              //             hintStyle: TextStyle(color: Colors.grey),
+              //             border: OutlineInputBorder(),
+              //           ),
+              //           onSubmitted: (value) {
+              //             fetchTourSpots(); // Fetch data on search
+              //           },
+              //         ),
+              //       ),
+              //       DropdownButton<String>(
+              //         value: sortOrder, // The current selected value
+              //         icon: const Icon(Icons.arrow_drop_down),
+              //         items: <String>['asc', 'desc']
+              //             .map<DropdownMenuItem<String>>((String value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value,
+              //             child: Text(value.toUpperCase()),
+              //           );
+              //         }).toList(),
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             sortOrder = newValue!;
+              //             fetchTourSpots(); // Fetch data with new sort order
+              //           });
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ),
               padding: EdgeInsets.only(bottom: 16.7),
               child: Column(
                 children: [
@@ -108,6 +153,7 @@ class _TourSpotState extends State<TourSpot> {
                     width: 350,
                     height: 50,
                     child: SearchBar(
+                      controller: searchController,
                       elevation: const WidgetStatePropertyAll(1),
                       backgroundColor: WidgetStatePropertyAll(Colors.grey[300]),
                       hintText: "Search",
@@ -116,6 +162,9 @@ class _TourSpotState extends State<TourSpot> {
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       )),
+                      onSubmitted: (value) {
+                        fetchTourSpots(); // Fetch data on search
+                      },
                       leading: const Padding(
                         padding: EdgeInsets.all(3.0),
                         child: Icon(
@@ -137,30 +186,30 @@ class _TourSpotState extends State<TourSpot> {
                   SizedBox(height: 14),
                   Container(
                     color: Color(0xFFF9F9F9),
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    padding: EdgeInsets.fromLTRB(12, 8, 25, 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 18,
-                              height: 12,
-                              child: SvgPicture.asset(
-                                  'assets/vectors/vector_31_x2.svg'),
-                            ),
-                            SizedBox(width: 11),
-                            Text(
-                              'Filters',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                                color: Color(0xFF222222),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     SizedBox(
+                        //       width: 18,
+                        //       height: 12,
+                        //       child: SvgPicture.asset(
+                        //           'assets/vectors/vector_31_x2.svg'),
+                        //     ),
+                        //     SizedBox(width: 11),
+                        //     Text(
+                        //       'Filters',
+                        //       style: GoogleFonts.inter(
+                        //         fontWeight: FontWeight.w400,
+                        //         fontSize: 11,
+                        //         color: Color(0xFF222222),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         Row(
                           children: [
                             SizedBox(
@@ -170,16 +219,119 @@ class _TourSpotState extends State<TourSpot> {
                                   'assets/vectors/vector_8_x2.svg'),
                             ),
                             SizedBox(width: 11),
+                            // "Sort by" label
                             Text(
-                              'Sort by',
+                              'Sort by:',
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Color(0xFF222222),
+                              ),
+                            ),
+                            SizedBox(
+                                width: 10), // Space between text and dropdown
+                            // Dropdown menu
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: Icon(Icons.arrow_drop_down,
+                                  color: Color(0xFF222222), size: 14),
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 11,
                                 color: Color(0xFF222222),
                               ),
+                              underline: Container(
+                                height: 0, // Hide the default underline
+                              ),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                  // Map dropdown options to sort order values
+                                  sortOrder =
+                                      dropdownValue == 'Rating low-to-high'
+                                          ? 'asc'
+                                          : 'desc';
+                                  sortBy = 'average_rating';
+                                  // Fetch sorted tour spots
+                                  fetchTourSpots();
+                                });
+                              },
+                              // Dropdown options
+                              items: <String>[
+                                'Rating low-to-high',
+                                'Rating high-to-low'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),
+
+                        // Row(
+                        //   children: [
+                        //     SizedBox(
+                        //       width: 14,
+                        //       height: 18,
+                        //       child: SvgPicture.asset(
+                        //           'assets/vectors/vector_8_x2.svg'),
+                        //     ),
+                        //     SizedBox(width: 11),
+                        //     DropdownButton<String>(
+                        //       value: dropdownValue,
+                        //       icon: Icon(Icons.arrow_drop_down,
+                        //           color: Color(0xFF222222), size: 14),
+                        //       style: GoogleFonts.inter(
+                        //         fontWeight: FontWeight.w400,
+                        //         fontSize: 11,
+                        //         color: Color(0xFF222222),
+                        //       ),
+                        //       underline: Container(
+                        //         height: 0, // Hide the default underline
+                        //       ),
+                        //       onChanged: (String? newValue) {
+                        //         setState(() {
+                        //           dropdownValue = newValue!;
+                        //           sortOrder = dropdownValue == 'Ascending'
+                        //               ? 'asc'
+                        //               : 'desc';
+                        //           fetchTourSpots();
+                        //         });
+                        //       },
+                        //       items: <String>[
+                        //         'Rating low-to-high',
+                        //         'Rating high-to-low'
+                        //       ].map<DropdownMenuItem<String>>((String value) {
+                        //         return DropdownMenuItem<String>(
+                        //           value: value,
+                        //           child: Text(value),
+                        //         );
+                        //       }).toList(),
+                        //     ),
+                        //   ],
+                        // ),
+
+                        // Row(
+                        //   children: [
+                        //     SizedBox(
+                        //       width: 14,
+                        //       height: 18,
+                        //       child: SvgPicture.asset(
+                        //           'assets/vectors/vector_8_x2.svg'),
+                        //     ),
+                        //     SizedBox(width: 11),
+                        //     Text(
+                        //       'Sort by',
+                        //       style: GoogleFonts.inter(
+                        //         fontWeight: FontWeight.w400,
+                        //         fontSize: 11,
+                        //         color: Color(0xFF222222),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

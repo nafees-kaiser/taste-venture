@@ -40,7 +40,15 @@ class _RestaurantState extends State<Restaurant> {
 
   Future<void> fetchRestaurants() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userId = prefs.get('userId');
+    var userId = prefs.get('userId');
+    if (userId == null) {
+      userId = 0;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to view restaurants'),
+        ),
+      );
+    }
     try {
       ApiSettings api = ApiSettings(
           endPoint:
@@ -50,7 +58,7 @@ class _RestaurantState extends State<Restaurant> {
         //List<dynamic> data = jsonDecode(response.body);
         dynamic data = jsonDecode(response.body);
         List<dynamic> restaurantsData = data["results"];
-        // print(data);
+        print(data);
         setState(() {
           restaurants = restaurantsData
               .map((item) => item as Map<String, dynamic>)
