@@ -90,8 +90,9 @@ class _TopResCardState extends State<TopResCard> {
                             height: 120,
                           )
                         : Image.network(
-                            ApiSettings(endPoint: widget.restaurantImage.substring(1))
-                                .getUri(),
+                            // ApiSettings(endPoint: widget.restaurantImage.substring(1))
+                            //     .getUri(),
+                            widget.restaurantImage,
                             fit: BoxFit.cover,
                             height: 120,
                             errorBuilder: (context, error, stackTrace) =>

@@ -30,9 +30,10 @@ class _ManagerMenuCardState extends State<ManagerMenuCard> {
     super.initState();
     if (widget.image != null && widget.image!.isNotEmpty) {
       setState(() {
-        String img = widget.image!;
-        img = img.substring(1);
-        imageUri = ApiSettings(endPoint: img).getUri();
+        // String img = widget.image!;
+        // img = img.substring(1);
+        // imageUri = ApiSettings(endPoint: img).getUri();
+        imageUri = widget.image;
       });
     }
   }
