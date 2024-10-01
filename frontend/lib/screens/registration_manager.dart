@@ -160,71 +160,60 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
 
   Widget _buildTimeCard(BuildContext context, String label, String time,
       TextEditingController controller) {
-    return GestureDetector(
-      onTap: () async {
-        // Parse the time string to TimeOfDay
-        final parsedTime = TimeOfDay(
-          hour: int.parse(time.split(':')[0]),
-          minute: int.parse(time.split(':')[1].split(' ')[0]),
-        );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.getFont(
+              'Inter',
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: Color(0xFF020D07),
+            ),
+          ),
+          const SizedBox(height: 7),
+          TextField(
+            controller: controller,
+            readOnly: true,
+            onTap: () async {
+              // Parse the time string to TimeOfDay
+              final parsedTime = TimeOfDay(
+                hour: int.parse(time.split(':')[0]),
+                minute: int.parse(time.split(':')[1].split(' ')[0]),
+              );
 
-        TimeOfDay? newTimeOfDay = await showTimePicker(
-            context: context,
-            initialTime: parsedTime,
-            initialEntryMode: TimePickerEntryMode.inputOnly);
-        if (newTimeOfDay != null && newTimeOfDay.toString().isNotEmpty) {
-          setState(() {
-            controller.text = newTimeOfDay.format(context);
-          });
-        }
-      },
-      child: Container(
-        width: 170,
-        margin: Theme.of(context).subSectionDividerPadding,
-        padding: Theme.of(context).insideCardPadding,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: const Offset(2, 3),
+              TimeOfDay? newTimeOfDay = await showTimePicker(
+                  context: context,
+                  initialTime: parsedTime,
+                  initialEntryMode: TimePickerEntryMode.inputOnly);
+              if (newTimeOfDay != null && newTimeOfDay.toString().isNotEmpty) {
+                setState(() {
+                  controller.text = newTimeOfDay.format(context);
+                });
+              }
+            },
+            style: GoogleFonts.getFont(
+              'Inter',
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+              color: Color(0xFF020D07),
             ),
-          ],
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                  ),
-                ),
-                Text(
-                  time,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ],
+            decoration: InputDecoration(
+              // border: InputBorder.none,
+              border: OutlineInputBorder(),
+              hintText: time,
+              hintStyle: GoogleFonts.getFont(
+                'Inter',
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: Color(0xFF9CA3AF),
+              ),
             ),
-            const Icon(
-              Icons.edit,
-              size: 20.0,
-              color: Colors.black,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -326,51 +315,18 @@ class _RegistrationVenueManagerState extends State<RegistrationVenueManager> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                              child:
-                                  // GestureDetector(
-                                  //   onTap: () async {
-                                  //     // Parse the time string to TimeOfDay
-                                  //     String time = "9:00 am";
-                                  //     final parsedTime = TimeOfDay(
-                                  //       hour: int.parse(time.split(':')[0]),
-                                  //       minute:
-                                  //           int.parse(time.split(':')[1].split(' ')[0]),
-                                  //     );
-
-                                  //     TimeOfDay? newTimeOfDay = await showTimePicker(
-                                  //         context: context,
-                                  //         initialTime: parsedTime,
-                                  //         initialEntryMode:
-                                  //             TimePickerEntryMode.inputOnly);
-                                  //     if (newTimeOfDay != null) {
-                                  //       setState(() {
-                                  //         _openingTimeController.text =
-                                  //             newTimeOfDay.format(context);
-                                  //       });
-                                  //     }
-                                  //   },
-                                  // )
-
-                                  //     CustomInputField(
-                                  //   label: 'Opening time',
-                                  //   hintText: 'eg hh:mm:ss AM',
-                                  //   onChanged: (_) => checkAllFieldsFilled(),
-                                  //   controller: _openingTimeController,
-                                  // ),
-                                  _buildTimeCard(
-                                      context,
-                                      "Opening time",
-                                      _openingTimeController.text,
-                                      _openingTimeController)),
+                              child: _buildTimeCard(
+                                  context,
+                                  "Opening time",
+                                  _openingTimeController.text,
+                                  _openingTimeController)),
                           SizedBox(width: 16),
                           Expanded(
-                            child: CustomInputField(
-                              label: 'Closing time',
-                              hintText: 'eg hh:mm:ss PM',
-                              onChanged: (_) => checkAllFieldsFilled(),
-                              controller: _closingTimeController,
-                            ),
-                          ),
+                              child: _buildTimeCard(
+                                  context,
+                                  "Closing time",
+                                  _closingTimeController.text,
+                                  _closingTimeController)),
                         ],
                       ),
                       CustomInputField(
