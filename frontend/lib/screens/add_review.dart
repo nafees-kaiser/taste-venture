@@ -73,6 +73,7 @@ class _AddReviewState extends State<AddReview> {
     });
 
     if (response.statusCode == 201 || response.statusCode == 200) {
+      addNotification();
       successToast("Review added successfully");
       Navigator.pushNamed(context, '/customer-homepage');
     } else {
@@ -88,7 +89,7 @@ class _AddReviewState extends State<AddReview> {
       "user_id": userId,
       "spot_id": widget.id,
       "restaurant": widget.isRestaurant,
-      "text": "Your reservation has been accepted. Have a good day!!!"
+      "text": "Review added successfully"
     };
 
     ApiSettings apiSettings = ApiSettings(endPoint: 'users/add-notification');

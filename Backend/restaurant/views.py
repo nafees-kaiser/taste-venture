@@ -13,7 +13,7 @@ from common.utils import send_otp
 from ml_models.model import get_restaurant_sentiment, get_restaurant_recommendation
 from tourspot.models import Booking
 from tourspot.serializers import BookingSerializer
-from usersapp.models import Users
+from usersapp.models import Users, Notification
 from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
@@ -260,6 +260,11 @@ def accept_reservation(request):
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
+        serializer = ReservationSerializer(reservation)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['restaurant']['restaurant_name']
+        Notification.objects.create(user=user, heading=heading, text="Reservation Accepted")
         return Response("Reservation Accepted", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
@@ -273,6 +278,12 @@ def reject_reservation(request):
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
+        serializer = ReservationSerializer(reservation)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['restaurant']['restaurant_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Reservation Rejected")
+        notification.save()
         return Response("Reservation Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)

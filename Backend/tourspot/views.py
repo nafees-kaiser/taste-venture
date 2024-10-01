@@ -17,7 +17,7 @@ from ml_models.model import get_dayTourSpot_sentiment
 from tourspot.models import Tourspot, Booking, Review
 from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer, \
     DayTourSpotAndAvgRating, StandardResultsSetPagination
-from usersapp.models import Users
+from usersapp.models import Users, Notification
 from datetime import date
 
 from usersapp.serializers import UserSerializer
@@ -229,6 +229,12 @@ def accept_booking(request):
         setattr(booking, 'status', "accepted")
         setattr(booking, 'message', request.data['message'])
         booking.save()
+        serializer = BookingSerializer(booking)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['tourspot']['tourspot_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Tourspot Booking Accepted")
+        notification.save()
         return Response("Tourspot Booking Accepted", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
@@ -242,6 +248,12 @@ def reject_booking(request):
         setattr(booking, 'status', "rejected")
         setattr(booking, 'message', request.data['message'])
         booking.save()
+        serializer = BookingSerializer(booking)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['tourspot']['tourspot_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Tourspot Booking Rejected.")
+        notification.save()
         return Response("Tourspot Booking Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
