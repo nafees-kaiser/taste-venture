@@ -51,30 +51,6 @@ class _ManagerHomeState extends State<ManagerHome> {
     return Scaffold(
       drawer: const ManagerSidebar(),
       appBar: AppBar(
-        title: Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.pin_drop,
-                size: 18,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Jatrabari, Dhaka-1236",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 15,
-                ),
-              ),
-            ],
-          ),
-        ),
-        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {

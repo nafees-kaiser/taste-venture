@@ -57,6 +57,14 @@ class ManagerSidebarTourspot extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.book_online),
+            title: const Text("Booking History"),
+            onTap: () {
+              Navigator.pushNamed(context, '/tourspot/booking-history');
+              // print('reservations tapped'),
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.notifications),
             title: const Text("Notifications"),
             onTap: () {

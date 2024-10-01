@@ -310,9 +310,11 @@ def view_restaurant(request, user_id):
 
 
 @api_view(['GET'])
-def visiting_history(request, user_id):
+def visiting_history(request, appUser_id):
     try:
         today = date.today()
+        user = Users.objects.get(user_id=appUser_id)
+        user_id = user.id
         reservations = Reservation.objects.filter(user_id=user_id, status="accepted", date__lt=today)
         bookings = Booking.objects.filter(user_id=user_id, date__lt=today, status="accepted")
         reservationSerializer = ReservationSerializer(reservations, many=True)
