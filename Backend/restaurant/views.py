@@ -19,7 +19,7 @@ from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
-from ml_models.rec_model import RecModel
+# from ml_models.rec_model import RecModel
 
 # Create your views here.
 @api_view(['POST'])
