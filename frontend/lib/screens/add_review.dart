@@ -172,9 +172,8 @@ class _AddReviewState extends State<AddReview> {
                                 child: widget.isRestaurant
                                     ? data['image'] != null
                                         ? Image.network(data['image'])
-                                        : Image.network(
-                                            data['tourspot']['image'])
-                                    : Image.asset('assets/image_filler.png'),
+                                        : Image.asset('assets/image_filler.png')
+                                    : Image.network(data['tourspot']['image']),
                               ),
                             ),
                             Container(
