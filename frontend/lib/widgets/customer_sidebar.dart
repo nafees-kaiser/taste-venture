@@ -81,11 +81,11 @@ class _CustomerSidebarState extends State<CustomerSidebar> {
         title: const Text("Visiting History"),
         onTap: () => Navigator.pushNamed(context, '/visiting-history'),
       ),
-      ListTile(
-        leading: const Icon(Icons.favorite),
-        title: const Text("Favorites"),
-        onTap: () => Navigator.pushNamed(context, '/favorite'),
-      ),
+      // ListTile(
+      //   leading: const Icon(Icons.favorite),
+      //   title: const Text("Favorites"),
+      //   onTap: () => Navigator.pushNamed(context, '/favorite'),
+      // ),
       ListTile(
         leading: const Icon(Icons.logout),
         title: const Text("Logout"),
