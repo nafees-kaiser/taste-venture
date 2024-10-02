@@ -50,9 +50,14 @@ class _RestaurantState extends State<Restaurant> {
       );
     }
     try {
+      
       ApiSettings api = ApiSettings(
           endPoint:
               'restaurant/view-restaurant/$userId?page=${(searchController.text.isNotEmpty) ? currentPage : 1}&search=${searchController.text}&order-by=$orderBy&order-type=$orderType');
+
+      if(widget.isPersonalizedView && userId != null){
+        api = ApiSettings(endPoint: 'restaurant/view-recommended-restaurant/$userId');
+      }
       final response = await api.getMethod();
       if (response.statusCode == 200) {
         //List<dynamic> data = jsonDecode(response.body);
@@ -171,165 +176,166 @@ class _RestaurantState extends State<Restaurant> {
                     Column(
                       children: [
                         SizedBox(height: 14),
-                        // ElevatedButton(
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             Restaurant(isPersonalizedView: true),
-                        //       ),
-                        //     );
-                        //   },
-                        //   style: ElevatedButton.styleFrom(
-                        //     backgroundColor: PRIMARY_COLOR,
-                        //     padding: EdgeInsets.symmetric(
-                        //         vertical: 8, horizontal: 55),
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(8),
-                        //     ),
-                        //   ),
-                        //   child: Text(
-                        //     'See Personalized Suggestion',
-                        //     style: GoogleFonts.inter(
-                        //       fontWeight: FontWeight.w600,
-                        //       fontSize: 16,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Restaurant(isPersonalizedView: true),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: PRIMARY_COLOR,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 55),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'See Personalized Suggestion',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ),
-                  Container(
-                    color: Color(0xFFF9F9F9),
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                    if(!widget.isPersonalizedView)
+                      Container(
+                        color: Color(0xFFF9F9F9),
+                        padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: 18,
-                              height: 12,
-                              child: SvgPicture.asset(
-                                  'assets/vectors/vector_31_x2.svg'),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 18,
+                                  height: 12,
+                                  child: SvgPicture.asset(
+                                      'assets/vectors/vector_31_x2.svg'),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  'Filters',
+                                  style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 11,
+                                    color: Color(0xFF222222),
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 5),
-                            Text(
-                              'Filters',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                                color: Color(0xFF222222),
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text('Sort by',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
+                                          ListTile(
+                                            title: Text('Rating'),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                IconButton(
+                                                  icon: Icon(Icons.arrow_upward),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      orderBy = 'rating';
+                                                      orderType = 'asc';
+                                                    });
+                                                    fetchRestaurants();
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.arrow_downward),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      orderBy = 'rating';
+                                                      orderType = 'desc';
+                                                    });
+                                                    fetchRestaurants();
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: Text('Restaurant Name'),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                IconButton(
+                                                  icon: Icon(Icons.arrow_upward),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      orderBy = 'restaurant_name';
+                                                      orderType = 'asc';
+                                                    });
+                                                    fetchRestaurants();
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.arrow_downward),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      orderBy = 'restaurant_name';
+                                                      orderType = 'desc';
+                                                    });
+                                                    fetchRestaurants();
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 14,
+                                    height: 18,
+                                    child: SvgPicture.asset(
+                                        'assets/vectors/vector_8_x2.svg'),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'Sort by',
+                                    style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 11,
+                                      color: Color(0xFF222222),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  padding: EdgeInsets.all(20),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text('Sort by',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold)),
-                                      ListTile(
-                                        title: Text('Rating'),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(Icons.arrow_upward),
-                                              onPressed: () {
-                                                setState(() {
-                                                  orderBy = 'rating';
-                                                  orderType = 'asc';
-                                                });
-                                                fetchRestaurants();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.arrow_downward),
-                                              onPressed: () {
-                                                setState(() {
-                                                  orderBy = 'rating';
-                                                  orderType = 'desc';
-                                                });
-                                                fetchRestaurants();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      ListTile(
-                                        title: Text('Restaurant Name'),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(Icons.arrow_upward),
-                                              onPressed: () {
-                                                setState(() {
-                                                  orderBy = 'restaurant_name';
-                                                  orderType = 'asc';
-                                                });
-                                                fetchRestaurants();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.arrow_downward),
-                                              onPressed: () {
-                                                setState(() {
-                                                  orderBy = 'restaurant_name';
-                                                  orderType = 'desc';
-                                                });
-                                                fetchRestaurants();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 14,
-                                height: 18,
-                                child: SvgPicture.asset(
-                                    'assets/vectors/vector_8_x2.svg'),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'Sort by',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11,
-                                  color: Color(0xFF222222),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
                 ],
               ),
             ),

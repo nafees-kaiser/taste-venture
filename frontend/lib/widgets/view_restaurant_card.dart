@@ -201,8 +201,9 @@ class _ViewRestaurantCardState extends State<ViewRestaurantCard> {
                     const Expanded(child: SizedBox()),
 
                     // Favorite
+                    
                     GestureDetector(
-                      child: widget.restaurants[widget.i]['favorite']
+                      child: (widget.restaurants[widget.i]['favorite'] != null && widget.restaurants[widget.i]['favorite'] == true)
                           ? const Icon(
                               Icons.favorite,
                               color: Colors.pink,

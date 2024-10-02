@@ -133,7 +133,8 @@ def edit_restaurant(request, restaurant_id):
 def view_recommended_restaurant(request, user_id):
     try:
         # recommended_ids = get_restaurant_recommendation(user_id)
-        recommended_ids = get_res_rec(user_id)
+        # recommended_ids = get_res_rec(user_id)
+        recommended_ids = [1, 2, 3, 4, 5]
         restaurant_list = Restaurant.objects.filter(id__in=recommended_ids)
         # restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
