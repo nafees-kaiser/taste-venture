@@ -19,7 +19,7 @@ from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
-from ml_models.rec_model import RecModel
+# from ml_models.rec_model import RecModel
 
 # Create your views here.
 @api_view(['POST'])
@@ -136,9 +136,9 @@ def view_recommended_restaurant(request, user_id):
         # recommended_ids = get_restaurant_recommendation(user_id)
         # recommended_ids = get_res_rec(user_id)
 
-        rec_model = RecModel()
-        recommended_ids = rec_model.recommend(user_id)
-        # recommended_ids = [1, 2, 3, 4, 5]
+        # rec_model = RecModel()
+        # recommended_ids = rec_model.recommend(user_id)
+        recommended_ids = [1, 2, 3, 4, 5]
         restaurant_list = Restaurant.objects.filter(id__in=recommended_ids)
         # restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
