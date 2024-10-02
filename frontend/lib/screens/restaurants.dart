@@ -45,7 +45,7 @@ class _RestaurantState extends State<Restaurant> {
       userId = 0;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please login to view restaurants'),
+          content: Text('Please login to add restaurants to favorites'),
         ),
       );
     }
