@@ -30,3 +30,13 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    heading = models.TextField()
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text

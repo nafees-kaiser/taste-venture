@@ -73,6 +73,7 @@ class _LoginState extends State<Login> {
           var user = jsonResponse['user'] as Map<String, dynamic>;
           var token = jsonResponse['tokens']['access'];
           var spotId = jsonResponse['spot_id'];
+          var spotName = jsonResponse['spot_name'];
           String userType = user['user_type'] as String;
           // print(token);
           // print(spotId);
@@ -84,6 +85,7 @@ class _LoginState extends State<Login> {
           await prefs.setString('userType', userType);
           if (spotId != null) {
             await prefs.setInt('spotId', spotId as int);
+            await prefs.setString('spotName', spotName);
           }
           await prefs.setString('userId', user['id'].toString());
 
@@ -120,9 +122,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login Page"),
-      ),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -131,7 +130,9 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Email Address
+                const SizedBox(
+                  height: 100,
+                ),
                 const Text(
                   "Email address",
                   style: TextStyle(

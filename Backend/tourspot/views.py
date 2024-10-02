@@ -17,7 +17,7 @@ from ml_models.model import get_dayTourSpot_sentiment
 from tourspot.models import Tourspot, Booking, Review
 from tourspot.serializers import TourspotSerializer, BookingSerializer, TourSpotReviewSerializer, \
     DayTourSpotAndAvgRating, StandardResultsSetPagination
-from usersapp.models import Users
+from usersapp.models import Users, Notification
 from datetime import date
 
 from usersapp.serializers import UserSerializer
@@ -75,8 +75,8 @@ def view_tourspot_list(request):
     # Extract query parameters for filtering
     search_query = request.GET.get('search', '')
     # cuisine_filter = request.GET.getlist('cuisine')  # Multiple values
-    price_min = request.GET.get('price_min')
-    price_max = request.GET.get('price_max')
+    # price_min = request.GET.get('price_min')
+    # price_max = request.GET.get('price_max')
     sort_by = request.GET.get('sort_by', 'id')  # Default sort by ID
     sort_order = request.GET.get('sort_order', 'asc')  # Default sort order
 
@@ -100,12 +100,14 @@ def view_tourspot_list(request):
     #     )
 
     # Filtering based on price range
-    if price_min is not None:
-        tourspots = tourspots.filter(entry_fee__gte=price_min)
-    if price_max is not None:
-        tourspots = tourspots.filter(entry_fee__lte=price_max)
+    # if price_min is not None:
+    #     tourspots = tourspots.filter(entry_fee__gte=price_min)
+    # if price_max is not None:
+    #     tourspots = tourspots.filter(entry_fee__lte=price_max)
 
     # Sorting
+    if not sort_by:
+        sort_by = 'id'
     if sort_order == 'desc':
         sort_by = f'-{sort_by}'  # Reverse the sort order if 'desc'
 
@@ -227,6 +229,12 @@ def accept_booking(request):
         setattr(booking, 'status', "accepted")
         setattr(booking, 'message', request.data['message'])
         booking.save()
+        serializer = BookingSerializer(booking)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['tourspot']['tourspot_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Tourspot Booking Accepted")
+        notification.save()
         return Response("Tourspot Booking Accepted", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
@@ -240,6 +248,12 @@ def reject_booking(request):
         setattr(booking, 'status', "rejected")
         setattr(booking, 'message', request.data['message'])
         booking.save()
+        serializer = BookingSerializer(booking)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['tourspot']['tourspot_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Tourspot Booking Rejected.")
+        notification.save()
         return Response("Tourspot Booking Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during booking process", status=status.HTTP_400_BAD_REQUEST)
@@ -377,6 +391,9 @@ def tourSpot_selling_info(request, tourSpot_id):
         first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
         last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
 
+        total_bookings = Booking.objects.filter(
+            tourspot_id=tourSpot_id
+        )
         current_month_bookings = Booking.objects.filter(
             tourspot_id=tourSpot_id,
             date__gte=first_day_of_current_month
@@ -388,8 +405,10 @@ def tourSpot_selling_info(request, tourSpot_id):
             date__lte=last_day_of_previous_month
         )
 
+        total_customers = set(booking.user.id for booking in total_bookings)
         total_customers_current = set(booking.user.id for booking in current_month_bookings)
         total_orders_current = current_month_bookings.count()
+        total_revenue = sum(booking.subtotal for booking in total_bookings)
         total_revenue_current = sum(booking.subtotal for booking in current_month_bookings)
 
         total_customers_previous = set(booking.user.id for booking in previous_month_bookings)
@@ -426,9 +445,9 @@ def tourSpot_selling_info(request, tourSpot_id):
             daywise_customer_count[day] += 1
 
         response_data = {
-            'total_customers': len(total_customers_current),
-            'total_orders': total_orders_current,
-            'total_revenue': total_revenue_current,
+            'total_customers': len(total_customers),
+            'total_orders': total_bookings.count(),
+            'total_revenue': total_revenue,
             'total_product': 0,
             'customer_change_percentage': customer_change_percentage,
             'order_change_percentage': order_change_percentage,

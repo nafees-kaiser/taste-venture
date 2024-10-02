@@ -13,7 +13,7 @@ from common.utils import send_otp
 from ml_models.model import get_restaurant_sentiment, get_restaurant_recommendation, get_res_rec
 from tourspot.models import Booking
 from tourspot.serializers import BookingSerializer
-from usersapp.models import Users
+from usersapp.models import Users, Notification
 from usersapp.serializers import UserSerializer
 from .models import MenuItem, Restaurant, Review, Reservation
 from .serializers import *
@@ -261,6 +261,11 @@ def accept_reservation(request):
         setattr(reservation, 'status', "accepted")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
+        serializer = ReservationSerializer(reservation)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['restaurant']['restaurant_name']
+        Notification.objects.create(user=user, heading=heading, text="Reservation Accepted")
         return Response("Reservation Accepted", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
@@ -274,6 +279,12 @@ def reject_reservation(request):
         setattr(reservation, 'status', "rejected")
         setattr(reservation, 'message', request.data['message'])
         reservation.save()
+        serializer = ReservationSerializer(reservation)
+        id = serializer.data['user']['id']
+        user = Users.objects.get(pk=id)
+        heading = serializer.data['restaurant']['restaurant_name']
+        notification = Notification.objects.create(user=user, heading=heading, text="Reservation Rejected")
+        notification.save()
         return Response("Reservation Rejected", status=status.HTTP_200_OK)
     except:
         return Response("Error occurred during reservation processing", status=status.HTTP_400_BAD_REQUEST)
@@ -311,9 +322,11 @@ def view_restaurant(request, user_id):
 
 
 @api_view(['GET'])
-def visiting_history(request, user_id):
+def visiting_history(request, appUser_id):
     try:
         today = date.today()
+        user = Users.objects.get(user_id=appUser_id)
+        user_id = user.id
         reservations = Reservation.objects.filter(user_id=user_id, status="accepted", date__lt=today)
         bookings = Booking.objects.filter(user_id=user_id, date__lt=today, status="accepted")
         reservationSerializer = ReservationSerializer(reservations, many=True)
@@ -383,6 +396,10 @@ def restaurant_selling_info(request, restaurant_id):
         first_day_of_previous_month = (first_day_of_current_month - datetime.timedelta(days=1)).replace(day=1)
         last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(days=1)
 
+        total_reservation = Reservation.objects.filter(
+            restaurant_id=restaurant_id
+        )
+
         current_month_reservations = Reservation.objects.filter(
             restaurant_id=restaurant_id,
             date__gte=first_day_of_current_month
@@ -394,6 +411,7 @@ def restaurant_selling_info(request, restaurant_id):
             date__lte=last_day_of_previous_month
         )
 
+        total_customers = set(reservation.user.id for reservation in total_reservation)
         total_customers_current = set(reservation.user.id for reservation in current_month_reservations)
         total_orders_current = current_month_reservations.count()
 
@@ -443,8 +461,8 @@ def restaurant_selling_info(request, restaurant_id):
             daywise_customer_count[day] += 1
 
         response_data = {
-            'total_customers': len(total_customers_current),
-            'total_orders': total_orders_current,
+            'total_customers': len(total_customers),
+            'total_orders': total_reservation.count(),
             'total_revenue': 0,
             'total_product': total_product,
             'customer_change_percentage': customer_change_percentage,
