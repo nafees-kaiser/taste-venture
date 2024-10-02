@@ -122,7 +122,6 @@ class _AddReviewState extends State<AddReview> {
                 return Center(child: Text('No data available'));
               } else {
                 final data = snapshot.data!;
-                print(data);
                 return SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -170,9 +169,12 @@ class _AddReviewState extends State<AddReview> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: data['image'] != null
-                                    ? Image.network(data['image'])
-                                    : Image.asset('assets/restaurant.png'),
+                                child: widget.isRestaurant
+                                    ? data['image'] != null
+                                        ? Image.network(data['image'])
+                                        : Image.network(
+                                            data['tourspot']['image'])
+                                    : Image.asset('assets/image_filler.png'),
                               ),
                             ),
                             Container(
