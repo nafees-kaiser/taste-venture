@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from common.models import OTPAuthentication, AppUser
 from common.utils import send_otp
-from ml_models.model import get_restaurant_sentiment, get_restaurant_recommendation
+from ml_models.model import get_restaurant_sentiment, get_restaurant_recommendation, get_res_rec
 from tourspot.models import Booking
 from tourspot.serializers import BookingSerializer
 from usersapp.models import Users, Notification
@@ -132,7 +132,9 @@ def edit_restaurant(request, restaurant_id):
 @api_view(['GET'])
 def view_recommended_restaurant(request, user_id):
     try:
-        recommended_ids = get_restaurant_recommendation(user_id)
+        # recommended_ids = get_restaurant_recommendation(user_id)
+        # recommended_ids = get_res_rec(user_id)
+        recommended_ids = [1, 2, 3, 4, 5]
         restaurant_list = Restaurant.objects.filter(id__in=recommended_ids)
         # restaurant_list = Restaurant.objects.filter()
         paginator = StandardResultsSetPagination()
