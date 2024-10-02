@@ -73,11 +73,33 @@ class _AddReviewState extends State<AddReview> {
     });
 
     if (response.statusCode == 201 || response.statusCode == 200) {
+      addNotification();
       successToast("Review added successfully");
       Navigator.pushNamed(context, '/customer-homepage');
     } else {
       Navigator.pushNamed(context, '/customer-homepage');
       // Optionally handle other statuses or errors
+    }
+  }
+
+  Future<void> addNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+    Map<String, dynamic> data = {
+      "user_id": userId,
+      "spot_id": widget.id,
+      "restaurant": widget.isRestaurant,
+      "text": "Review added successfully"
+    };
+
+    ApiSettings apiSettings = ApiSettings(endPoint: 'users/add-notification');
+    try {
+      final response = await apiSettings.postMethod(json.encode(data));
+      if (response.statusCode == 201) {
+        print("Successfully added");
+      }
+    } catch (e) {
+      print("Error to add notification");
     }
   }
 

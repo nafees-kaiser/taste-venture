@@ -70,7 +70,7 @@ class VisitingHistoryPage extends StatelessWidget {
                       return GestureDetector(
                         child: VisitingHistoryCard(
                           spotImage: restaurant['restaurant']['image'] ??
-                              'assets/NorthEnd_second.jpg',
+                              'assets/image_filler.png',
                           spotName:
                               "${restaurant['restaurant']['restaurant_name']}",
                           spotLocation:
@@ -105,7 +105,7 @@ class VisitingHistoryPage extends StatelessWidget {
                       return GestureDetector(
                         child: VisitingHistoryCard(
                           spotImage: tourSpot['tourspot']['image'] ??
-                              'assets/NorthEnd_second.jpg',
+                              'assets/image_filler.png',
                           spotName: '${tourSpot['tourspot']['tourspot_name']}',
                           spotLocation: '${tourSpot['tourspot']['address']}',
                           visitingDate: date,

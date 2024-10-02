@@ -30,12 +30,23 @@ class UserSerializer(serializers.ModelSerializer):
         representation.update(user_representation)
         representation.pop('user')
         return representation
-    
-    
+
+
 class FavoriteSerializer(serializers.ModelSerializer):
     restaurant = serializers.PrimaryKeyRelatedField(queryset=Restaurant.objects.all())
+
     class Meta:
         model = Favorite
         fields = '__all__'
-        
-        
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    date = serializers.SerializerMethodField()
+    user = UserSerializer()
+
+    class Meta:
+        model = Notification
+        fields = ['date', 'text', 'heading', 'user']
+
+    def get_date(self, obj):
+        return obj.date.strftime('%d %B, %Y') if obj.date else None

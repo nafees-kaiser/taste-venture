@@ -54,22 +54,22 @@ class _InformationCardState extends State<InformationCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.heading,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+          Expanded(
+            // Allow the text area to expand as much as needed
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.heading,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-              isEditing
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 8.0),
-                      width: 240,
-                      child: TextField(
+                const SizedBox(height: 8.0),
+                isEditing
+                    ? TextField(
                         controller: _controller,
                         decoration: const InputDecoration(
                           hintText: 'Enter text',
@@ -77,21 +77,29 @@ class _InformationCardState extends State<InformationCard> {
                             horizontal: 10,
                             vertical: 5,
                           ),
+                          border:
+                              OutlineInputBorder(), // Optional: Add a border to the input field
                         ),
+                        maxLines:
+                            null, // Allows the TextField to expand vertically
                         onSubmitted: (newValue) {
                           _handleSave();
                         },
+                      )
+                    : Text(
+                        widget.text,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1,
+                        ),
+                        overflow: TextOverflow
+                            .ellipsis, // Optional: Handles overflow gracefully
+                        maxLines:
+                            5, // Limits the number of lines shown when not editing
                       ),
-                    )
-                  : Text(
-                      widget.text,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 1,
-                      ),
-                    ),
-            ],
+              ],
+            ),
           ),
           GestureDetector(
             onTap: () {

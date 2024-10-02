@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/tourspot.dart';
 import 'package:frontend/screens/add_menu_page.dart';
 import 'package:frontend/screens/add_tourspot_additional_info.dart';
+import 'package:frontend/screens/booking_history.dart';
 import 'package:frontend/screens/booking_manager.dart';
 import 'package:frontend/screens/customer_preferences_page.dart';
 import 'package:frontend/screens/customer_homepage.dart';
@@ -117,6 +118,7 @@ Future<void> main() async {
       '/tourspot-view': (context) => TourSpot(),
       '/notification': (context) => NotificationPage(),
       '/visiting-history': (contex) => VisitingHistoryPage(),
+      '/tourspot/booking-history': (contex) => BookingHistoryPage(),
       '/add-menu': (context) => AddMenuPage(),
       '/initial-menu': (context) => InitialMenu(),
       '/forget-password': (context) => ForgetPassword(),

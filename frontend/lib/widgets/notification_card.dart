@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/constant.dart';
 import 'package:frontend/widgets/small_circle_inside_bigger_circle.dart';
-import 'package:intl/intl.dart';
 
 class NotificationCard extends StatelessWidget {
   final String spotName;
   final String userName;
-  final DateTime notificationDate;
+  final String notificationDate;
   final String notification;
   const NotificationCard({
-    super.key, required this.spotName, required this.userName, required this.notificationDate, required this.notification,
+    super.key,
+    required this.spotName,
+    required this.userName,
+    required this.notificationDate,
+    required this.notification,
   });
 
   @override
@@ -45,7 +48,7 @@ class NotificationCard extends StatelessWidget {
                 ),
                 SizedBox(width: 8),
                 Text(
-                  DateFormat('dd MMM, yyyy').format(notificationDate),
+                  notificationDate,
                   style: TextStyle(
                     color: SECONDARY_BACKGROUND,
                     fontSize: 14,
