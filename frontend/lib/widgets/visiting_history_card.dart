@@ -36,15 +36,20 @@ class _VisitingHistoryCardState extends State<VisitingHistoryCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 60,
-              height: 80,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: SECONDARY_BACKGROUND,
-                borderRadius: BorderRadius.circular(8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Image.network(
+                widget.spotImage,
+                fit: BoxFit.cover,
+                height: 60,
+                width: 80,
+                errorBuilder: (context, error, stackTrace) => const Image(
+                  image: AssetImage('assets/image_filler.png'),
+                  fit: BoxFit.cover,
+                  height: 60,
+                  width: 80,
+                ),
               ),
-              child: Image(image: AssetImage('assets/image_filler.png')),
             ),
             SizedBox(width: 13),
             Expanded(
