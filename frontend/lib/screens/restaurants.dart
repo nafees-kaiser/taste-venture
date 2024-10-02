@@ -172,7 +172,7 @@ class _RestaurantState extends State<Restaurant> {
                       color: Color(0xFF222222),
                     ),
                   ),
-                  if (!widget.isPersonalizedView)
+                  if (!widget.isPersonalizedView && userId != 0)
                     Column(
                       children: [
                         SizedBox(height: 14),
